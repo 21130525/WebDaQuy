@@ -5,8 +5,8 @@
   Time: 13:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Product" %>
+<%--<%@ page import="java.util.ArrayList" %>--%>
+<%--<%@ page import="model.Product" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
@@ -98,7 +98,7 @@
             <div class="header-btn">
                 <ul class="header-list">
                     <li class="header-item header-search">
-                        <form role="search" action="../SearchController" method="get">
+                        <form class="Search-form" role="search" action="../SearchController" method="get">
                             <input type="hidden" name="index" value="1">
                             <input
                                     type="search"

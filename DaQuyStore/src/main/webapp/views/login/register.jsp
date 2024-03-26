@@ -26,12 +26,13 @@
 </head>
 
 <body>
+<%--<jsp:include page = "/views/header.jsp"/>--%>
 <div><h1 style="color:red"><%=(request.getAttribute("announced")!=null?request.getAttribute("announced"):"")%></h1></div>
 <div id="container">
     <div class="img-register">
         <img src="${pageContext.request.contextPath}/img/banner/TTN-2.png">
     </div>
-    <form action="<%=request.getContextPath()%>/register" method="post" onsubmit="return validatePassword()">
+    <form class="form-register" action="<%=request.getContextPath()%>/register" method="post" onsubmit="return validatePassword()">
 
         <div class="logo">
             <img src="${pageContext.request.contextPath}/img/logo.png">
@@ -64,6 +65,11 @@
             <br>
             <input type="text" name="fullname" placeholder="Họ tên" id="fullname">
             <br>
+<%--            &lt;%&ndash;gender&ndash;%&gt;--%>
+<%--            <label for="gender">Giới tính:</label>--%>
+<%--            <br>--%>
+<%--            <input type="button" name="gender" placeholder="Giới tính:" id="gender">--%>
+<%--            <br>--%>
             <%--date--%>
             <label for="date">Ngày sinh:</label>
             <br>

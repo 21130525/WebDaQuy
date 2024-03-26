@@ -144,9 +144,7 @@ public class UserDAO implements DAOInterface<User> {
         return null;
     }
 
-    public static void main(String[] args) throws SQLException {
-        System.out.println(new UserDAO().selectAll().toString());
-    }
+
 
 
 //TODO
@@ -176,5 +174,11 @@ public class UserDAO implements DAOInterface<User> {
         pst.close();
         DAOConnection.getConnection().close();
         return users;
+    }
+    public static void main(String[] args) throws SQLException {
+//        User u = new User("un01", "111", "@","nam","le tam","","","vietnam","coutomer");
+//        new UserDAO().insert(u);
+        System.out.println( new UserDAO().getListUserName());
+        System.out.println(new UserDAO().selectAll().toString());
     }
 }

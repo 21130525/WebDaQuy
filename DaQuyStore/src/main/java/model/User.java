@@ -62,6 +62,21 @@ public class User {
         this.type_login = "";
     }
 
+    public User(String userName, String password, String email,String gender, String fullname, String date, String phone, String address, String customer) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.fullName =fullname;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.avatar = "";
+        this.status="";
+        this.role = customer;
+        this.address = address;
+        this.type_login = "web";
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -209,6 +224,6 @@ public class User {
                 ", address='" + address + '\'' +
                 ", birthday=" + birthday +
                 ", type_login='" + type_login + '\'' +
-                '}';
+                "} \n\n";
     }
 }

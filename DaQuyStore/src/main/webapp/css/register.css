@@ -20,7 +20,7 @@
     height: 600px;
 }
 
-form{
+.form-register{
     float: right;
     width: 58%;
     border: 5px black solid;
@@ -30,7 +30,7 @@ form{
     background-color: #f1e7d0;
 }
 
-form img{
+.form-register img{
     width: 100px;
     height: 100px;
     margin-top: 10px;

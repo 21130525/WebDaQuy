@@ -298,7 +298,7 @@ header .box nav .navigation-list .navigation-item:hover .dropdown-gem{
     background-color: #fff;
 }
 
-form[role='search'] {
+.Search-form[role='search'] {
     display: flex;
     justify-content: flex-end;
     position: relative;

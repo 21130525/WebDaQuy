@@ -27,13 +27,14 @@
 
 </head>
 <body>
+<%--<jsp:include page = "/views/header.jsp"/>--%>
 <div id="container">
     <div style="color:red"><%=(request.getAttribute("notify") != null ? request.getAttribute("notify") : "")%>
     </div>
     <div class="img-ttn">
         <img src="${pageContext.request.contextPath}/img/banner/TTN.png">
     </div>
-    <form action="<%=request.getContextPath()%>/login" method="post">
+    <form class="form-login" action="<%=request.getContextPath()%>/login" method="post">
         <div id="logo">
             <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
         </div>
