@@ -1,0 +1,323 @@
+
+doby{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+}
+
+.container{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 10px;
+    margin: 0;
+    list-style-type: none;
+}
+
+.breadcrumb-item {
+    display: inline;
+    margin-right: 5px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #007bff; /* Màu chữ link */
+    font-size: 15px;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for the section header */
+.bg-light-border-bottom {
+    background-color: #f8f9fa; /* Màu nền */
+    border-bottom: 1px solid #dee2e6; /* Viền đáy */
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.container h2 {
+    color: #343a40; /* Màu chữ tiêu đề */
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: "/";
+    margin: 0 5px; /* Khoảng cách giữa "/" và đường link */
+}
+
+
+/* Additional styling for responsive layout */
+@media (max-width: 768px) {
+    .container h2 {
+        font-size: 24px;
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.category {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.category img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.categogies-grid-container{
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 40px;
+}
+
+.footer{
+    background-color: #454242;
+}
+.social-media{
+    background-color: #f8f8f8;
+    display:  flex;
+    justify-items: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+.zalo img{
+    width: 20px;
+    height: 20px;
+}
+.way{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    padding-top: 30px;
+    /* border: 1px solid black; */
+    width: 80%;
+}
+.phone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    font-size: 15px;
+    gap: 10px;
+    /* border: 1px solid black; */
+}
+.social-meida-way{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.social-meida-way i{
+    font-size: 20px;
+}
+
+.zalo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.label{
+    font-weight: bold;
+    font-size: 18px;
+}
+.social-meida-way div{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.zalo-phone-num{
+    padding-left: 10px;
+    font-size: 15px;
+}
+.end-footer{
+    background-color: #454242;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5vh;
+}
+.customer-care-label{
+    color: #eaeaea;
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+.customer-care ul li a{
+    text-decoration: none;
+    color: #e1f2f2;
+    font-size: 15px;
+}
+.customer-care ul li{
+    list-style: none;
+}
+.about-us-label{
+    color: #eaeaea;
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+.about-us-box ul li a{
+    text-decoration: none;
+    color: #e1f2f2;
+    font-size: 15px;
+}
+.about-us-box ul li{
+    list-style: none;
+}
+.about-us-box{
+    display: flex;
+    flex-direction: row;
+    gap:  4vw;
+}
+.customer-about{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 40%;
+}
+.line{
+    width: 70%;
+    border: 0.5px solid #929191;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+}
+.disigner{
+    color: #929191;
+    font-size: 10px;
+    text-align: center;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    /*background-color: #717171;*/
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+    .prev, .next,.text {font-size: 11px}
+}
+
+/*caroudsel*/
+
+.status{
+    margin-top: -50px;
+    position: absolute;
+    margin-left: 90px;
+    color: black;
+    font-weight: bold;
+}
+
+.title-h2{
+    color: black;
+    font-family: 'Playfair Display', serif;
+    text-align: center ;
+    font-size: 50px;
+}
