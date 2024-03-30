@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 
 public class User {
+
     private String id;
     private String userName;
     private String password;
@@ -226,4 +227,13 @@ public class User {
                 ", type_login='" + type_login + '\'' +
                 "} \n\n";
     }
+}
+ enum role {
+    admin, user
+}
+ enum gender{
+    nu,nam
+}
+enum typeLogin{
+    google, web, facebook
 }

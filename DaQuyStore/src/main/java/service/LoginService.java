@@ -11,8 +11,5 @@ public class LoginService {
         ArrayList<User> listuser= UserDAO.getInstance().selectAll();
         return listuser;
     }
-    public String getEmail(String username) throws SQLException {
-        String email= UserDAO.getInstance().getEmailforLogin(username);
-        return email;
-    }
+
 }

@@ -15,30 +15,37 @@ public class UserDAO implements DAOInterface<User> {
         return new UserDAO();
     }
 
+    public static void main(String[] args) throws SQLException {
+//        User u = new User("un01", "111", "@","nam","le tam","","","vietnam","coutomer");
+//        new UserDAO().insert(u);
+        System.out.println(new UserDAO().getListUserName());
+        System.out.println(new UserDAO().selectAll().toString());
+    }
+
     @Override
     public boolean insert(User user) throws SQLException {
         Connection con = DAOConnection.getConnection();
-        String sql = "insert into users(username,password,full_name,email,phone,avatar,status,role,address,birthday,type_login,gender) values "
-                +"(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into users(username,password,full_name,gender,birthday, email,phone,address,avatar,role,status,type_login) " +
+                "values (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
 
         ps.setString(1, user.getUserName());
         ps.setString(2, user.getPassword());
         ps.setString(3, user.getFullName());
-        ps.setString(4, user.getEmail());
-        ps.setString(5, user.getPhone());
-        ps.setString(6, user.getAvatar());
-        ps.setString(7, user.getStatus());
-        ps.setString(8, user.getRole());
-        ps.setString(9, user.getAddress());
-        ps.setDate(10, user.getBirthday());
-        ps.setString(11, user.getType_login());
-        ps.setString(12, user.getGender());
+        ps.setString(4, user.getGender());
+        ps.setDate(5, user.getBirthday());
+        ps.setString(6, user.getEmail());
+        ps.setString(7, user.getPhone());
+        ps.setString(8, user.getAddress());
+        ps.setString(9, user.getAvatar());
+        ps.setString(10, user.getRole());
+        ps.setString(11, user.getStatus());
+        ps.setString(12, user.getType_login());
 
         int res = ps.executeUpdate();
         ps.close();
         con.close();
-        return res>=1;
+        return res >= 1;
     }
 
     @Override
@@ -46,28 +53,28 @@ public class UserDAO implements DAOInterface<User> {
         try {
             Connection con = DAOConnection.getConnection();
             String sql = "update users u set " +
-                    "u.username=?, u.password=?,u.full_name=?, u.email=?,u.phone=?,u.avatar=?, " +
-                    "u.updated_at=CURRENT_TIMESTAMP, u.status=? ,u.role=?,u.address=?, u.birthday=?," +
-                    "u.type_login=?,u.gender =?  where u.id=?;";
+                "u.username=?, u.password=?,u.full_name=?, u.gender =?,u.birthday=?,u.email=?,u.phone=?,u.address=?," +
+                "u.avatar=?, u.updated_at=CURRENT_TIMESTAMP,u.role=?, u.status=? ,u.type_login=?  " +
+                "where u.id=?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFullName());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPhone());
-            ps.setString(6, user.getAvatar());
-            ps.setString(7, user.getStatus());
-            ps.setString(8, user.getRole());
-            ps.setString(9, user.getAddress());
-            ps.setDate(10, user.getBirthday());
-            ps.setString(11, user.getType_login());
-            ps.setString(12, user.getGender());
+            ps.setString(4, user.getGender());
+            ps.setDate(5, user.getBirthday());
+            ps.setString(6, user.getEmail());
+            ps.setString(7, user.getPhone());
+            ps.setString(8, user.getAddress());
+            ps.setString(9, user.getAvatar());
+            ps.setString(10, user.getRole());
+            ps.setString(11, user.getStatus());
+            ps.setString(12, user.getType_login());
             ps.setString(13, user.getId());
 
             int res = ps.executeUpdate();
             ps.close();
             con.close();
-            return res>=1;
+            return res >= 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,7 +95,7 @@ public class UserDAO implements DAOInterface<User> {
         User user = null;
         if (rs.next()) {
             user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"),rs.getString("gender"),
+                    rs.getString("full_name"), rs.getString("gender"),
                     rs.getString("email"), rs.getString("phone"), rs.getString("avatar"),
                     rs.getDate("created_at"), rs.getDate("updated_at"), rs.getDate("deleted_at"),
                     rs.getString("status"), rs.getString("role"), rs.getString("address"), rs.getDate("birthday"),
@@ -99,6 +106,7 @@ public class UserDAO implements DAOInterface<User> {
         DAOConnection.getConnection().close();
         return user;
     }
+
     public User selectByUserName(String name) throws SQLException {
         String sql = " select * from users where username = ? ";
 
@@ -108,7 +116,7 @@ public class UserDAO implements DAOInterface<User> {
         User user = null;
         if (rs.next()) {
             user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"),rs.getString("gender"),
+                    rs.getString("full_name"), rs.getString("gender"),
                     rs.getString("email"), rs.getString("phone"), rs.getString("avatar"),
                     rs.getDate("created_at"), rs.getDate("updated_at"), rs.getDate("deleted_at"),
                     rs.getString("status"), rs.getString("role"), rs.getString("address"), rs.getDate("birthday"),
@@ -119,6 +127,7 @@ public class UserDAO implements DAOInterface<User> {
         DAOConnection.getConnection().close();
         return user;
     }
+
     @Override
     public ArrayList<User> selectAll() throws SQLException {
         String sql = " select * from users ";
@@ -127,7 +136,7 @@ public class UserDAO implements DAOInterface<User> {
         ArrayList<User> users = new ArrayList<>();
         while (rs.next()) {
             User user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"),rs.getString("gender"), rs.getString("email"), rs.getString("phone"),
+                    rs.getString("full_name"), rs.getString("gender"), rs.getString("email"), rs.getString("phone"),
                     rs.getString("avatar"), rs.getDate("created_at"), rs.getDate("updated_at"),
                     rs.getDate("deleted_at"), rs.getString("status"), rs.getString("role"),
                     rs.getString("address"), rs.getDate("birthday"), rs.getString("type_login"));
@@ -140,14 +149,6 @@ public class UserDAO implements DAOInterface<User> {
     }
 
 
-    public String getEmailforLogin(String username) {
-        return null;
-    }
-
-
-
-
-//TODO
     public List<String> getListEmail() throws SQLException {
         String sql = " select email  from users ";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
@@ -161,7 +162,8 @@ public class UserDAO implements DAOInterface<User> {
         DAOConnection.getConnection().close();
         return emails;
     }
-//TODO
+
+
     public List<String> getListUserName() throws SQLException {
         String sql = " select username  from users ";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
@@ -174,11 +176,5 @@ public class UserDAO implements DAOInterface<User> {
         pst.close();
         DAOConnection.getConnection().close();
         return users;
-    }
-    public static void main(String[] args) throws SQLException {
-//        User u = new User("un01", "111", "@","nam","le tam","","","vietnam","coutomer");
-//        new UserDAO().insert(u);
-        System.out.println( new UserDAO().getListUserName());
-        System.out.println(new UserDAO().selectAll().toString());
     }
 }
