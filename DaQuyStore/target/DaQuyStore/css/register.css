@@ -1,0 +1,96 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+#container{
+    box-shadow: aliceblue;
+    width: 1000px;
+    padding: 10px;
+    background-color: #F1E88BFF;
+    min-height: 630px;
+    margin-left: 100px;
+    margin-top: 5px;
+}
+
+#container .img-register{
+    float: left;
+    width: 300px;
+    height: 600px;
+}
+
+.form-register{
+    float: right;
+    width: 58%;
+    border: 5px black solid;
+    height: 600px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f1e7d0;
+}
+
+.form-register img{
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+#register h2{
+    padding: 20px;
+    font-size: 25px;
+}
+
+#inform{
+    border: black 1px solid;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: #D9C19EFF;
+    height: 395px;
+}
+
+#inform label{
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 14px;
+}
+
+#inform input{
+    float: right;
+    height: 30px;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.commit{
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: left;
+    float: left;
+    display: flex;
+}
+
+.commit input{
+    width: 400px;
+}
+
+#btn{
+    padding: 5px;
+    width: 100px;
+    height: 50px;
+    margin-top: 10px;
+    font-size: 20px;
+    border-radius: 20px;
+    background-color: #e2c16c;
+}
+
+#policy{
+    font-size: 15px;
+    float: left;
+}
+
+#btn:hover{
+    background-color: #f5db62;
+}
+
