@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+<jsp:include page="admin_header.jsp"></jsp:include>
+<jsp:include page="admin_menu.jsp"></jsp:include>
 <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
 <table id="table_id" class="table table-striped">
     <thead>

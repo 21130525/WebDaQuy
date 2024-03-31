@@ -25,7 +25,7 @@
     $(document).ready(function () {
         $('#btn_bar').click(function () {
             $.ajax({
-                url: 'data.json',
+                url: '../../json/datachart.json',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
