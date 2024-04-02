@@ -11,11 +11,10 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="admin_menu.css">
+    <link rel="stylesheet" href="../../css/admin_menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -56,18 +55,18 @@
                         <a href="#" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Quản lí đơn hàng</span></a>
                     </li>
-                    <%--                    <li>--%>
-                    <%--                                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">--%>
-                    <%--                                                    <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>--%>
-                    <%--                        <ul class="collapse nav flex-column ms-1" data-bs-parent="#menu">--%>
-                    <%--                            <li class="w-100">--%>
-                    <%--                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>--%>
-                    <%--                            </li>--%>
-                    <%--                            <li>--%>
-                    <%--                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>--%>
-                    <%--                            </li>--%>
-                    <%--                        </ul>--%>
-                    <%--                    </li>--%>
+<%--                    <li>--%>
+<%--                                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">--%>
+<%--                                                    <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>--%>
+<%--                        <ul class="collapse nav flex-column ms-1" data-bs-parent="#menu">--%>
+<%--                            <li class="w-100">--%>
+<%--                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>--%>
+<%--                            </li>--%>
+<%--                            <li>--%>
+<%--                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>--%>
+<%--                            </li>--%>
+<%--                        </ul>--%>
+<%--                    </li>--%>
                     <li>
                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
@@ -113,44 +112,8 @@
             </div>
         </div>
         <div class="col py-3">
-            <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Muc luc</option>
-                <option value="1">Loại</option>
-                <option value="2">Giá</option>
-                <option value="3">Bán chạy</option>
-                <option value="4">Giảm gia</option>
-            </select>
-            <table id="table_id" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Col1</th>
-                    <th>Col2</th>
-                    <th>Col3</th>
-                </tr>
-                </thead>
-                <tbody id="body">
-                <tr>
-                    <td>data-1a</td>
-                    <td>data-1b</td>
-                    <td>data-1c</td>
-                </tr>
-                <tr>
-                    <td>data-2a</td>
-                    <td>data-2b</td>
-                    <td>data-2c</td>
-                </tr>
-                <tr>
-                    <td>data-3a</td>
-                    <td>data-3b</td>
-                    <td>data-3c</td>
-                </tr>
-                <tr>
-                    <td>data-4a</td>
-                    <td>data-4b</td>
-                    <td>data-4c</td>
-                </tr>
-                </tbody>
+            <table>
+
             </table>
         </div>
     </div>

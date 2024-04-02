@@ -5,7 +5,7 @@
   Time: 9:24 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%--<%@include file="taglib.jsp"%>--%>
+<%@include file="/common/taglib.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -15,14 +15,13 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
-<jsp:include page="admin_header.jsp"></jsp:include>
-<jsp:include page="admin_menu.jsp"></jsp:include>
+<%--<body>--%>
+<%--<jsp:include page="admin_header.jsp"></jsp:include>--%>
+<%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
+<%--&lt;%&ndash;<section class="container">&ndash;%&gt;--%>
+<%--&lt;%&ndash;    <div class="row">&ndash;%&gt;--%>
 
-<%--<section class="container">--%>
-<%--    <div class="row">--%>
-
-<%--    </div>--%>
+<%--&lt;%&ndash;    </div>&ndash;%&gt;--%>
 <%--</section>--%>
 <%--<jsp:include page="admin_header.jsp"></jsp:include>--%>
 <%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
