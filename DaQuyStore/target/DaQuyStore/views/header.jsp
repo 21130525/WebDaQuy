@@ -44,6 +44,7 @@
     }
 
 
+
 </style>
 
 <header class="container-fluid border-bottom border-dark">
@@ -115,11 +116,14 @@
                     <li class="nav-item  pt-2" style="list-style-type: none;">
                         <button class="btn btn-outline-primary border-0">
                             <a class="nav-link" aria-current="page"
-                               href="${pageContext.request.contextPath}/views/web/cart/cart.jsp">
+                               href="${pageContext.request.contextPath}/views/shoppingcart.jsp">
                                 <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="cart-count">0</span>
                             </a>
                         </button>
                     </li>
+
+
                     <!-- login -->
                     <% if (session.getAttribute("username") == null) {%>
                     <li class="nav-item ms-3 me-3 pt-2" style="list-style-type: none;">
