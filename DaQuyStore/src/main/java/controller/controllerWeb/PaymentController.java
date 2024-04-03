@@ -11,7 +11,6 @@ import model.Config;
 
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -21,19 +20,14 @@ public class PaymentController extends HttpServlet {
     //trang servlet se dem thong tin mua hang sang cho trang sandbox vnpay de nhap cac thong tin thanh toan
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getLink(req,resp);
-
-    }
-
-    public String getLink(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
+        String vnp_OrderInfo = req.getParameter("vnp_OrderInfo");
 //        String orderType = req.getParameter("ordertype");
-        String orderType = "other";
+        String orderType="other";
 
         String vnp_TxnRef = Config.getRandomNumber(8);
-        String vnp_IpAddr = Config.getIpAddress(request);
+        String vnp_IpAddr = Config.getIpAddress(req);
         String vnp_TmnCode = Config.vnp_TmnCode;
 
         int amount = 10000 * 100;
@@ -55,7 +49,7 @@ public class PaymentController extends HttpServlet {
 //        if (locate != null && !locate.isEmpty()) {
 //            vnp_Params.put("vnp_Locale", locate);
 //        } else {
-        vnp_Params.put("vnp_Locale", "vn");
+            vnp_Params.put("vnp_Locale", "vn");
 //        }
         vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
@@ -70,9 +64,9 @@ public class PaymentController extends HttpServlet {
         //Add Params of 2.1.0 Version
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
         //Billing
-        vnp_Params.put("vnp_Bill_Mobile", request.getParameter("txt_billing_mobile"));
-        vnp_Params.put("vnp_Bill_Email", request.getParameter("txt_billing_email"));
-        String fullName = (request.getParameter("txt_billing_fullname")).trim();
+        vnp_Params.put("vnp_Bill_Mobile", req.getParameter("txt_billing_mobile"));
+        vnp_Params.put("vnp_Bill_Email", req.getParameter("txt_billing_email"));
+        String fullName = (req.getParameter("txt_billing_fullname")).trim();
         if (fullName != null && !fullName.isEmpty()) {
             int idx = fullName.indexOf(' ');
             String firstName = fullName.substring(0, idx);
@@ -81,20 +75,20 @@ public class PaymentController extends HttpServlet {
             vnp_Params.put("vnp_Bill_LastName", lastName);
 
         }
-        vnp_Params.put("vnp_Bill_Address", request.getParameter("txt_inv_addr1"));
-        vnp_Params.put("vnp_Bill_City", request.getParameter("txt_bill_city"));
-        vnp_Params.put("vnp_Bill_Country", request.getParameter("txt_bill_country"));
-        if (request.getParameter("txt_bill_state") != null && !request.getParameter("txt_bill_state").isEmpty()) {
-            vnp_Params.put("vnp_Bill_State", request.getParameter("txt_bill_state"));
+        vnp_Params.put("vnp_Bill_Address", req.getParameter("txt_inv_addr1"));
+        vnp_Params.put("vnp_Bill_City", req.getParameter("txt_bill_city"));
+        vnp_Params.put("vnp_Bill_Country", req.getParameter("txt_bill_country"));
+        if (req.getParameter("txt_bill_state") != null && !req.getParameter("txt_bill_state").isEmpty()) {
+            vnp_Params.put("vnp_Bill_State", req.getParameter("txt_bill_state"));
         }
         // Invoice
-        vnp_Params.put("vnp_Inv_Phone", request.getParameter("txt_inv_mobile"));
-        vnp_Params.put("vnp_Inv_Email", request.getParameter("txt_inv_email"));
-        vnp_Params.put("vnp_Inv_Customer", request.getParameter("txt_inv_customer"));
-        vnp_Params.put("vnp_Inv_Address", request.getParameter("txt_inv_addr1"));
-        vnp_Params.put("vnp_Inv_Company", request.getParameter("txt_inv_company"));
-        vnp_Params.put("vnp_Inv_Taxcode", request.getParameter("txt_inv_taxcode"));
-        vnp_Params.put("vnp_Inv_Type", request.getParameter("cbo_inv_type"));
+        vnp_Params.put("vnp_Inv_Phone", req.getParameter("txt_inv_mobile"));
+        vnp_Params.put("vnp_Inv_Email", req.getParameter("txt_inv_email"));
+        vnp_Params.put("vnp_Inv_Customer", req.getParameter("txt_inv_customer"));
+        vnp_Params.put("vnp_Inv_Address", req.getParameter("txt_inv_addr1"));
+        vnp_Params.put("vnp_Inv_Company", req.getParameter("txt_inv_company"));
+        vnp_Params.put("vnp_Inv_Taxcode", req.getParameter("txt_inv_taxcode"));
+        vnp_Params.put("vnp_Inv_Type", req.getParameter("cbo_inv_type"));
         //Build data to hash and querystring
         List fieldNames = new ArrayList(vnp_Params.keySet());
         Collections.sort(fieldNames);
@@ -128,8 +122,7 @@ public class PaymentController extends HttpServlet {
         job.addProperty("message", "success");
         job.addProperty("data", paymentUrl);
         Gson gson = new Gson();
-//        response.getWriter().write(gson.toJson(job));
-        return paymentUrl;
+        resp.getWriter().write(gson.toJson(job));
+        resp.sendRedirect(paymentUrl);
     }
-
 }
