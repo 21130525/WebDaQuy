@@ -24,7 +24,6 @@
 
 <section>
 <div class="main">
-
         <div class="banner-about">
             <h1 class="title_1">Về chúng tôi</h1>
             <p class="content_1">Với gần 10 năm thành lập, TTN luôn chú trọng xây dựng nền tảng của mình. Tiền thân là người
