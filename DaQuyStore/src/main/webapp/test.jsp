@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-<a href="<%= request.getContextPath() %> /register?checkVerify=true">a</a>
+<%--<a href="<%= request.getContextPath() %> /register?checkVerify=true">a</a>--%>
+<form  action="testpay" method="post">
+    <input type="submit" value="TestPayment">
+</form>
 </body>
 </html>
