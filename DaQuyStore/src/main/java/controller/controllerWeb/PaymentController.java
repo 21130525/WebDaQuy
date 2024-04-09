@@ -9,16 +9,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Config;
 
-import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-@WebServlet("/testpay")
+@WebServlet("/test")
 public class PaymentController extends HttpServlet {
-    //trang servlet se dem thong tin mua hang sang cho trang sandbox vnpay de nhap cac thong tin thanh toan
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
@@ -49,7 +46,7 @@ public class PaymentController extends HttpServlet {
 //        if (locate != null && !locate.isEmpty()) {
 //            vnp_Params.put("vnp_Locale", locate);
 //        } else {
-            vnp_Params.put("vnp_Locale", "vn");
+        vnp_Params.put("vnp_Locale", "vn");
 //        }
         vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
