@@ -9,36 +9,39 @@ public class User {
     private String password;
     private String fullName;
     private String gender;
+    private Date birthday;
     private String email;
     private String phone;
+    private String address;
     private String avatar;
     private Date create_at;
     private Date update_at;
     private Date delete_at;
-    private String status;
     private String role;
-    private String address;
-    private Date birthday;
+    private String status;
     private String type_login;
 
-    public User(String id, String userName, String password,String fullName,String gender, String email, String phone,
-                String avatar, Date create_at, Date update_at, Date delete_at,String status, String role,
-                String address, Date birthday, String type_login) {
+    public User(String id, String userName, String password,
+                String fullName, String gender, Date birthday,
+                String email, String phone, String address,
+                String avatar, Date create_at, Date update_at,
+                Date delete_at, String role, String status,
+                String type_login) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.fullName = fullName;
         this.gender = gender;
+        this.birthday = birthday;
         this.email = email;
         this.phone = phone;
+        this.address = address;
         this.avatar = avatar;
         this.create_at = create_at;
         this.update_at = update_at;
         this.delete_at = delete_at;
-        this.status=status;
         this.role = role;
-        this.address = address;
-        this.birthday = birthday;
+        this.status = status;
         this.type_login = type_login;
     }
 

@@ -5,7 +5,6 @@
   Time: 23:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,61 +12,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
-    <link rel="icon" href="img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Font+Name">
-    <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-    <link href="../../css/login.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        #loginPage .container-register {
+            width: 1000px;
+            padding: 5px;
+            margin: auto;
+            margin-top: 30px;
+        }
 
+        #loginPage .logo img {
+            height: 150px;
+            width: 150px;
+        }
+        #loginPage .bg{
+            background-color: #FCF7DC;
+            border: 5px solid black; /* Định dạng viền: 2px độ dày, solid kiểu viền, black màu sắc */
+            border-radius: 3%;
+        }
+        #loginPage .username_password input{
+            margin-left: 50px;
+            margin-top: 15px;
+            width: 500px;
+        }
+
+
+        #loginPage .bg-bt{
+            background-color: #F5DB62;
+        }
+        #loginPage .bg-bt:hover{
+            background-color: #ffffff;
+
+        }
+        #loginPage .line{
+            height: 3px; /* Độ dày của đường thẳng */
+            width: 30%; /* Độ rộng của đường thẳng */
+            background-color: black; /* Màu của đường thẳng */
+            margin:  auto; /* Căn giữa theo chiều ngang */
+            margin-top: -15px;
+        }
+
+    </style>
 </head>
 <body>
 <jsp:include page = "/views/header.jsp"/>
-<div id="container login">
+<section id="loginPage">
     <div style="color:red"><%=(request.getAttribute("notify") != null ? request.getAttribute("notify") : "")%>
     </div>
-    <div class="img-ttn">
-        <img src="${pageContext.request.contextPath}/img/banner/TTN.png">
+    <div class="container-register ">
+        <div class="row ">
+            <!-- anh hien thi  -->
+            <div class="col-4">
+                <img src="<%=request.getContextPath()%>/img/banner/TTN.png" alt="">
+            </div>
+            <!-- form nhap du lieu  -->
+            <div class="col-8 bg">
+                <form class="form-login" action="<%=request.getContextPath()%>/login" method="post">
+                    <div class="row text-center">
+                        <div class="logo mt-3">
+                            <img src="<%=request.getContextPath()%>/img/logo.png" alt="logo">
+                        </div>
+                        <div id="log_in">
+                            <h1>Đăng nhập</h1>
+                        </div>
+                    </div>
+
+                    <div class="username_password" >
+                        <label for="username">Tài khoản:</label>
+                        <input type="text" name="username" placeholder="username" value="" id="username">
+                        <br>
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" name="password" placeholder="password" value="" id="password">
+                    </div>
+
+                    <div class="row text-center mt-3 fw-bold">
+                        <div id="login">
+                            <button id="submit" class="border-2 rounded bg-bt">
+                                <h3>Đăng nhập</h3>
+                            </button>
+                        </div>
+                        <a href="<%=request.getContextPath()%>/views/login/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
+                        <span>Hoặc</span> <div class="d-flex">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    </div>
+                    <div class="d-flex justify-content-center fs-5 ">
+                        <p>Đăng nhập với:</p>
+                        <a href="" class="ms-3 me-2 pt-2">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="" class="ms-3 pt-2">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </div>
+                    <div class=" fs-5 d-flex justify-content-end">
+
+                        <div id="register" class=" btn border border-dark" >
+                            <a href="${pageContext.request.contextPath}/views/login/register.jsp" class="fw-bold text-decoration-none">
+                                Đăng ký</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <form class="form-login" action="<%=request.getContextPath()%>/login" method="post">
-        <div id="logo">
-            <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
-        </div>
-        <div id="log_in">
-            <h1>Đăng nhập</h1>
-        </div>
-        <div id="username_password">
-            <label for="username">Tài khoản:</label>
-            <input type="text" name="username" placeholder="username" value="" id="username">
-            <br>
-            <label for="password">Mật khẩu:</label>
-            <input type="password" name="password" placeholder="password" value="" id="password">
-        </div>
+</section>
 
-        <div id="login" >
-            <button id="submit" >
-                <h3>Đăng nhập</h3>
-            </button>
-        </div>
-        <div id="register_forget">
-            <div id="register">
-                <a href="${pageContext.request.contextPath}/views/login/register.jsp">Đăng ký</a>
-            </div>
-            <div id="forget_pass">
-                <a href="${pageContext.request.contextPath}/views/login/forgotPassword.jsp">Quên mật khẩu ?</a>
-            </div>
-        </div>
-    </form>
-</div>
 
-<%--<jsp:include page="<%=request.getContextPath()%>/views/footer.jsp"/>--%>
+<jsp:include page="/views/footer.jsp"/>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+
 </html>

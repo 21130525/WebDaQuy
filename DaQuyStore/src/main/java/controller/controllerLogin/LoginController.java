@@ -60,7 +60,7 @@ public class LoginController  extends HttpServlet {
 
                         session.setAttribute("username", username);
                         request.getRequestDispatcher("/views/admin/admin.jsp").forward(request, response);
-                    } else if (user.getRole().equals("customer")) {
+                    } else if (user.getRole().equals("user")) {
                         session.setAttribute("idUser", idUser);
                         session.setAttribute("username", username);
                         response.sendRedirect(request.getContextPath()+ "/views/index.jsp");
