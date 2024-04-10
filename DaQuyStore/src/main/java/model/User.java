@@ -45,10 +45,12 @@ public class User {
         this.type_login = type_login;
     }
 
-    public User(String userName, String password, String role){
+    public User(String userName, String password,String email, String role,String type_login){
         this.userName = userName;
         this.password = password;
+        this.email = email;
         this.role = role;
+        this.type_login = type_login;
     }
     // register user
     public User( String userName, String password, String email, String customer) {

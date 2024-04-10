@@ -3,7 +3,9 @@ package controller.controllerLogin;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import model.ActivacationCode;
 import model.User;
+import service.EncryptAndDencrypt;
 import service.RegisterService;
 
 import javax.servlet.RequestDispatcher;
@@ -20,6 +22,7 @@ import java.util.Properties;
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
+    private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,56 +31,42 @@ public class RegisterController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String email = request.getParameter("email");
-        String gender = request.getParameter("gender");
-        String fullname = request.getParameter("fullname");
-        String date = request.getParameter("date");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        boolean verify = Boolean.parseBoolean(request.getParameter("checkVerify"));
-        HttpSession session = request.getSession(false);
-
-        try {
-            if (!verify) {
-                session.setAttribute("username",username);
-                session.setAttribute("password",password);
-                session.setAttribute("email",email);
-                session.setAttribute("gender",gender);
-                session.setAttribute("fullname",fullname);
-                session.setAttribute("date",date);
-                session.setAttribute("phone",phone);
-                session.setAttribute("address",address);
-                checkRegister(request, response, username, email);
-                sendEmail(request, response, username,email, registerService);
-            }
-            if (verify) {
-                String Susername = (String) session.getAttribute("user");
-                String Spassword = (String) session.getAttribute("pass");
-                String Semail = (String) session.getAttribute("email");
-                String Sgender = (String) session.getAttribute("gender");
-                String Sfullname = (String) session.getAttribute("fullname");
-                String Sdate = (String) session.getAttribute("date");
-                String Sphone = (String) session.getAttribute("phone");
-                String Saddress = (String) session.getAttribute("address");
-                User user = new User(Susername, Spassword, Semail,Sgender,Sfullname,Sdate,Sphone,Saddress, "customer");
-                if (registerService.insertUser(user)) {
-                    request.setAttribute("announced", "Đăng ký thành công vui lòng kiểm tra email để xác nhận");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/login/login.jsp");
-                    requestDispatcher.forward(request, response);
-                } else {
-                    request.setAttribute("announced", "Đăng ký thất bại vui long thử lại");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/login/register.jsp");
-                    requestDispatcher.forward(request, response);
+        String action = request.getParameter("action");
+        switch (action) {
+            case "RegisterWeb":
+                String username = request.getParameter("user");
+                String password = encryptAndDencrypt.encrypt( request.getParameter("pass"));
+                String email = request.getParameter("email");
+                //kiểm tra user namme và email
+                try {
+                    checkRegister(request,response,username,email);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                // đang nhập
+                try {
+                    loginWeb(request,response,username,password,email);
+                } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                }
+                break;
+            case "RegisterGoogle":
+                break;
+            case "RegisterFacebook":
+                break;
         }
     }
 
-    protected void sendEmail(HttpServletRequest request, HttpServletResponse response, String username,String email, RegisterService registerService) throws IOException {
+
+    private void loginWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
+        HttpSession session = request.getSession(false);
+        checkRegister(request, response, username, email);
+        String code = registerService.createActivationCode(username,password,email);
+        sendEmail(request,response,code,email);
+    }
+
+    protected void sendEmail(HttpServletRequest request, HttpServletResponse response, String code,String email) throws IOException {
+
         try {
             final String HOST_NAME = "smtp.gmail.com";
             final int SSL_PORT = 465; // Port for SSL
@@ -108,10 +97,10 @@ public class RegisterController extends HttpServlet {
             try {
                 MimeMessage message = new MimeMessage(session);
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(RECEIVE_EMAIL));
-                String url = "<a href=\"http://localhost:8080/DaQuyStore_war/verifyregister\">Click vào đây để xác nhận</a>";
+                String url = "<a href=\"http://localhost:8080/DaQuyStore_war/verifyregister?code="+code+"\">Click vào đây để xác nhận</a>";
 
-                message.setSubject("Chúc mừng! Bạn đã đăng ký thành công");
-                message.setContent("<h1>Chúc mừng! Bạn đã đăng ký thành công</h1>" + url, "text/html;charset=utf-8");
+                message.setSubject("Xác nhận tài khoản!");
+                message.setContent("<h1>Xác nhận tài khoản:</h1>" + url, "text/html;charset=utf-8");
 
                 // send message
                 Transport.send(message);
@@ -125,7 +114,7 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void checkRegister(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String email) throws ServletException, IOException, SQLException {
-        // Case 1: All fields are empty
+
 
         if (registerService.checkDuplicatedUsername(username)) {
             servletRequest.setAttribute("announced", "Tài khoản đã tồn tại");

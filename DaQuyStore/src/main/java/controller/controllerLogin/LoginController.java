@@ -2,6 +2,7 @@ package controller.controllerLogin;
 
 import jakarta.mail.internet.AddressException;
 import model.User;
+import service.EncryptAndDencrypt;
 import service.LoginService;
 
 import javax.servlet.RequestDispatcher;
@@ -17,8 +18,11 @@ import java.util.ArrayList;
 
 @WebServlet("/login")
 public class LoginController  extends HttpServlet {
+    EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("/views/login/login.jsp");
         dispatcher.forward(req, resp);
     }
@@ -26,17 +30,29 @@ public class LoginController  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            checkLogin(req, resp);
+            String action = (String) req.getParameter("action");
+            switch (action) {
+                case "web":
+                    loginWeb(req, resp);
+                    break;
+                case "google":
+
+                    break;
+                case "facebook":
+
+                    break;
+
+            }
         } catch (SQLException | AddressException e) {
             throw new RuntimeException(e);
         }
     }
-    protected void checkLogin(HttpServletRequest request, HttpServletResponse response)
+    protected void loginWeb(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException, AddressException {
         LoginService loginService = new LoginService();
         String idUser = "";
         String username = request.getParameter("username");
-        String pass = request.getParameter("password");
+        String pass =request.getParameter("password");
         ArrayList<User> list = loginService.getAllUser();
         HttpSession session = request.getSession(true);
         if (username == null || pass == null) {
@@ -46,11 +62,10 @@ public class LoginController  extends HttpServlet {
             boolean isvalid = false;
             User user = null;
             for (User u : list) {
-                if (u.getUserName().equals(username) && u.getPassword().equals(pass)) {
+                if (u.getUserName().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(pass)) {
                     isvalid = true;
                     idUser = u.getId();
                     user = u;
-
                     break;
                 }
             }

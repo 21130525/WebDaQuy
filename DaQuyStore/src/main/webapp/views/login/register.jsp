@@ -80,8 +80,9 @@
             <div class="col-8 bg-form fs-6">
                 <form class="form-register" action="<%=request.getContextPath()%>/register" method="post"
                       onsubmit="return validatePassword()">
+                    <%--action--%>
+                    <input type="hidden" name="action" value="RegisterWeb">
                     <div class="row text-center">
-
                         <div class="logo">
                             <img src="<%=request.getContextPath()%>/img/logo.png">
                         </div>
