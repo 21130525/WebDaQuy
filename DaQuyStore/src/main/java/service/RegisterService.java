@@ -1,12 +1,16 @@
 package service;
 
+import dao.ActivacationCodeDao;
 import dao.UserDAO;
+import model.ActivacationCode;
 import model.User;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Random;
 public class RegisterService {
+    private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
     public boolean insertUser(User user) throws SQLException {
         UserDAO userDAO = UserDAO.getInstance();
         return userDAO.insert(user);
@@ -43,12 +47,32 @@ public class RegisterService {
         return null;
     }
 
-    public static void main(String[] args) {
-        RegisterService registerService = new RegisterService();
-        try {
-            System.out.println(registerService.getEmailforAuth("tantt121"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+    public String createActivationCode(String name,String password,String email) throws SQLException {
+        String id = generateRandomString(10);
+        ActivacationCode res = new ActivacationCode(id,name,password, email);
+        ActivacationCodeDao acd = new ActivacationCodeDao();
+        acd.insert(res);
+        return id;
+    }
+    public static String generateRandomString(int length) {
+        // Khai báo một mảng chứa các ký tự có thể sử dụng
+        String candidateChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+
+        // Khởi tạo đối tượng Random
+        Random random = new Random();
+
+        // Khai báo một StringBuilder để xây dựng chuỗi ngẫu nhiên
+        StringBuilder sb = new StringBuilder();
+        sb.append(LocalDate.now());
+        // Tạo chuỗi ngẫu nhiên bằng cách chọn ngẫu nhiên ký tự từ mảng candidateChars
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(candidateChars.length());
+            char randomChar = candidateChars.charAt(index);
+            sb.append(randomChar);
         }
+
+        // Trả về chuỗi ngẫu nhiên đã được tạo
+        return sb.toString();
     }
 }

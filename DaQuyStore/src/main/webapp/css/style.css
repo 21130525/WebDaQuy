@@ -1,5 +1,5 @@
 
-doby{
+.doby{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -7,11 +7,11 @@ doby{
     font-size: 18px;
 }
 
-.container{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+/*.container{*/
+/*    width: 100%;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
 
 .main{
     padding: 0;

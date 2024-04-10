@@ -7,19 +7,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class UserDAO implements DAOInterface<User> {
+    private String id;
+    private String username;
+    private String password;
+    private String fullName;
+    private String gender;
+    private Date birthday;
+    private String email;
+    private String phoneNumber;
+    private String address;
+    private String avatar;
+    private Date createAt;
+    private Date updateAt;
+    private Date deleteAt;
+    private String role;
+    private String status;
+    private String typeLogin;
+
+
+
 
     public static UserDAO getInstance() {
         return new UserDAO();
-    }
-
-    public static void main(String[] args) throws SQLException {
-//        User u = new User("un01", "111", "@","nam","le tam","","","vietnam","coutomer");
-//        new UserDAO().insert(u);
-        System.out.println(new UserDAO().getListUserName());
-        System.out.println(new UserDAO().selectAll().toString());
     }
 
     @Override
@@ -94,13 +107,24 @@ public class UserDAO implements DAOInterface<User> {
         ResultSet rs = pst.executeQuery();
         User user = null;
         if (rs.next()) {
-            user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"), rs.getString("gender"),
-                    rs.getString("email"), rs.getString("phone"), rs.getString("avatar"),
-                    rs.getDate("created_at"), rs.getDate("updated_at"), rs.getDate("deleted_at"),
-                    rs.getString("status"), rs.getString("role"), rs.getString("address"), rs.getDate("birthday"),
-                    rs.getString("type_login"));
+            id = rs.getString("id");
+            username = rs.getString("username");
+            password = rs.getString("password");
+            fullName= rs.getString("full_name");
+            gender = rs.getString("gender");
+            birthday = rs.getDate("birthday");
+            email = rs.getString("email");
+            phoneNumber = rs.getString("phone");
+            address = rs.getString("address");
+            avatar = rs.getString("avatar");
+            createAt= rs.getDate("created_at");
+            updateAt= rs.getDate("updated_at");
+            deleteAt= rs.getDate("delete_at");
+            role = rs.getString("role");
+            status = rs.getString("status");
+            typeLogin = rs.getString("type_login");
         }
+        user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
@@ -115,13 +139,25 @@ public class UserDAO implements DAOInterface<User> {
         ResultSet rs = pst.executeQuery();
         User user = null;
         if (rs.next()) {
-            user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"), rs.getString("gender"),
-                    rs.getString("email"), rs.getString("phone"), rs.getString("avatar"),
-                    rs.getDate("created_at"), rs.getDate("updated_at"), rs.getDate("deleted_at"),
-                    rs.getString("status"), rs.getString("role"), rs.getString("address"), rs.getDate("birthday"),
-                    rs.getString("type_login"));
+            id = rs.getString("id");
+            username = rs.getString("username");
+            password = rs.getString("password");
+            fullName= rs.getString("full_name");
+            gender = rs.getString("gender");
+            birthday = rs.getDate("birthday");
+            email = rs.getString("email");
+            phoneNumber = rs.getString("phone");
+            address = rs.getString("address");
+            avatar = rs.getString("avatar");
+            createAt= rs.getDate("created_at");
+            updateAt= rs.getDate("updated_at");
+            deleteAt= rs.getDate("delete_at");
+            role = rs.getString("role");
+            status = rs.getString("status");
+            typeLogin = rs.getString("type_login");
         }
+        user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
+
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
@@ -135,11 +171,23 @@ public class UserDAO implements DAOInterface<User> {
         ResultSet rs = pst.executeQuery();
         ArrayList<User> users = new ArrayList<>();
         while (rs.next()) {
-            User user = new User(rs.getString("id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("full_name"), rs.getString("gender"), rs.getString("email"), rs.getString("phone"),
-                    rs.getString("avatar"), rs.getDate("created_at"), rs.getDate("updated_at"),
-                    rs.getDate("deleted_at"), rs.getString("status"), rs.getString("role"),
-                    rs.getString("address"), rs.getDate("birthday"), rs.getString("type_login"));
+            id = rs.getString("id");
+            username = rs.getString("username");
+            password = rs.getString("password");
+            fullName= rs.getString("full_name");
+            gender = (rs.getString("gender")==null?"":rs.getString("gender"));
+            birthday = (rs.getDate("birthday") == null ? null : rs.getDate("birthday"));
+            email = rs.getString("email");
+            phoneNumber = (rs.getString("phone")==null?"":rs.getString("phone"));
+            address = (rs.getString("address")==null?"":rs.getString("address"));
+            avatar = (rs.getString("avatar")==null?"":rs.getString("avatar"));
+            createAt= (rs.getDate("created_at")==null?null:rs.getDate("created_at"));
+            updateAt= (rs.getDate("updated_at")==null?null:rs.getDate("updated_at"));
+            deleteAt= rs.getDate("delete_at")==null?null:rs.getDate("delete_at");
+            role = rs.getString("role")==null?"user":rs.getString("role");
+            status = rs.getString("status")==null?"":rs.getString("status");
+            typeLogin = rs.getString("type_login")==null?"web":rs.getString("type_login");
+            User user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
             users.add(user);
         }
         rs.close();
