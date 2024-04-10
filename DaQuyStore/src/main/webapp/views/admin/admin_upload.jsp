@@ -15,50 +15,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/admin-upload" method="post" enctype="multipart/form-data" class="file">
-    <div class="file_content">
-        <input type="file" name="file" accept="image/*" id="file_1">
-        <label for="file_1">
-            <i class="fa-solid fa-image"></i>
-            Choose a photo</label>
+<form action="#" method="post">
+    <div class="form-group">
+        <label>Bootstrap style button 1</label>
+        <input type="file" id="BSbtndanger">
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/admin-upload" method="post" enctype="multipart/form-data" class="file">
-    <div class="file_content">
-        <input type="file" name="file" accept="image/*" id="file_2">
-        <label for="file_2">
-            <i class="fa-solid fa-image"></i>
-            Choose a photo</label>
+<form action="#" method="post">
+    <div class="form-group">
+        <label>Bootstrap style button 2</label>
+        <input type="file" id="BSbtnsuccess">
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/admin-upload" method="post" enctype="multipart/form-data" class="file">
-    <div class="file_content">
-        <input type="file" name="file" accept="image/*" id="file_3">
-        <label for="file_3">
-            <i class="fa-solid fa-image"></i>
-            Choose a photo</label>
+<form action="#" method="post">
+    <div class="form-group">
+        <label>Bootstrap style button 3</label>
+        <input type="file" id="BSbtninfo">
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/admin-upload" method="post" enctype="multipart/form-data" class="file">
-    <div class="file_content">
-        <input type="file" name="file" accept="image/*" id="file_4">
-        <label for="file_4">
-            <i class="fa-solid fa-image"></i>
-            Choose a photo</label>
-    </div>
-</form>
-<form action="${pageContext.request.contextPath}/admin-upload" method="post" enctype="multipart/form-data" class="file">
-    <div class="file_content">
-        <input type="file" name="file" accept="image/*" id="file_5">
-        <label for="file_5">
-            <i class="fa-solid fa-image"></i>
-            Choose a photo</label>
-    </div>
-</form>
-
-
-
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $('#BSbtndanger').filestyle({
+        buttonName : 'btn-danger',
+        buttonText : ' File selection'
+    });
+    $('#BSbtnsuccess').filestyle({
+        buttonName : 'btn-success',
+        buttonText : ' Open'
+    });
+    $('#BSbtninfo').filestyle({
+        buttonName : 'btn-info',
+        buttonText : ' Select a File'
+    });
+</script>
 </html>
