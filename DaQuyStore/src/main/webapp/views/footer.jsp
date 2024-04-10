@@ -72,7 +72,7 @@
                         <a href="#" class="btn text-white">Quy định thanh toán</a>
                     </div>
                     <div class="row">
-                        <a href="#" class="btn text-white">Chính sách bảo mật</a>
+                        <a href="#" class="btn text-white">Chính sách bảo hành</a>
                     </div>
                 </div>
                 <div class="col-3 align-items-end mb-n3">
@@ -80,7 +80,7 @@
                         <a href="#" class="btn text-white text-end ">Trang chủ</a>
                     </div>
                     <div class="row">
-                        <a href="#" class="btn text-white text-end ">Bảo mật</a>
+                        <a href="#" class="btn text-white text-end ">Bảo hành</a>
                     </div>
                     <div class="row">
                         <a href="#" class="btn text-white text-end">Blog</a>

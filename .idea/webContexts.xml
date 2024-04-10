@@ -3,8 +3,10 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/checkout.jsp" value="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/header.jsp" value="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/login/register.jsp" value="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/policy.jsp" value="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/web/product/listProduct.jsp" value="file://$PROJECT_DIR$/DaQuyStore/src/main/webapp/views/web/product" />
       </map>
     </option>

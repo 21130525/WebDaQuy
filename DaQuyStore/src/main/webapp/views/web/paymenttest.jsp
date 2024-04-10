@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: ADMIN
-  Date: 14/3/2024
-  Time: 19:44
+  User: ngoke
+  Date: 4/8/2024
+  Time: 5:07 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-<a href="<%= request.getContextPath() %> /register?checkVerify=true">a</a>
+<form action="${pageContext.request.contextPath}/test" method="post">
+  <input type="submit" value="Test">
+</form>
 </body>
 </html>

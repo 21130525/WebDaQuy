@@ -5,7 +5,7 @@
   Time: 9:24 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@include file="taglib.jsp"%>
+<%@include file="/common/taglib.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,6 +26,9 @@
 <%--<jsp:include page="admin_header.jsp"></jsp:include>--%>
 <%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
 </body>
+<form method="post" action="<%=request.getContextPath()%>/login">
+    <input type="submit" value="test">
+</form>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
