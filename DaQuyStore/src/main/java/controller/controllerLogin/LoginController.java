@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet("/login")
+@WebServlet(value = "/login", urlPatterns = "/web")
 public class LoginController  extends HttpServlet {
     EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
     @Override
