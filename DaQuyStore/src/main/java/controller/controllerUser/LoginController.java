@@ -1,9 +1,16 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.mail.internet.AddressException;
+import model.google.GoogleInfo;
+import model.google.TokenGoogle;
 import model.User;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
 import service.EncryptAndDencrypt;
-import service.LoginService;
+import service.user.LoginService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,37 +23,37 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(value = "/login", urlPatterns = "/web")
+@WebServlet(urlPatterns={ "/loginWeb" ,"/loginGoogle","/loginFaceBook"})
 public class LoginController  extends HttpServlet {
     EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String servletPath = req.getServletPath();
+        if ("/loginWeb".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/loginWeb"
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/views/login/login.jsp");
+            dispatcher.forward(req, resp);
+        } else if ("/loginGoogle".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/loginGoogle"
+            loginGoogle(req,resp);
+        } else if ("/loginFaceBook".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/loginFaceBook"
+        } else {
+            // Xử lý khi không phân biệt được URL
+        }
 
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/login/login.jsp");
-        dispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String action = (String) req.getParameter("action");
-            switch (action) {
-                case "web":
-                    loginWeb(req, resp);
-                    break;
-                case "google":
-
-                    break;
-                case "facebook":
-
-                    break;
-
-            }
+            loginWeb(req, resp);
         } catch (SQLException | AddressException e) {
             throw new RuntimeException(e);
         }
     }
+
     protected void loginWeb(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException, AddressException {
         LoginService loginService = new LoginService();
@@ -87,6 +94,35 @@ public class LoginController  extends HttpServlet {
             }
 
         }
-
     }
+
+    private void loginGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String code = req.getParameter("code");
+        String token =  getToken(code);
+        GoogleInfo user = getUserInfo(token);
+        System.out.println(user);
+    }
+    public static String getToken(String code) throws ClientProtocolException, IOException {
+        // call api to get token
+        String response = Request.Post(TokenGoogle.GOOGLE_LINK_GET_TOKEN)
+                .bodyForm(Form.form().add("client_id", TokenGoogle.GOOGLE_CLIENT_ID)
+                        .add("client_secret", TokenGoogle.GOOGLE_CLIENT_SECRET)
+                        .add("redirect_uri", TokenGoogle.GOOGLE_REDIRECT_URI).add("code", code)
+                        .add("grant_type", TokenGoogle.GOOGLE_GRANT_TYPE).build())
+                .execute().returnContent().asString();
+
+        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
+        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
+        return accessToken;
+    }
+
+    public static GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+        String link = TokenGoogle.GOOGLE_LINK_GET_USER_INFO + accessToken;
+        String response = Request.Get(link).execute().returnContent().asString();
+
+        GoogleInfo googlePojo = new Gson().fromJson(response, GoogleInfo.class);
+
+        return googlePojo;
+    }
+
 }

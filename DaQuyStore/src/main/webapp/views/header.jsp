@@ -130,7 +130,7 @@
                     <li class="nav-item ms-3 me-3 pt-2" style="list-style-type: none;">
                         <button class="btn btn-outline-primary border-0 ">
                             <strong>
-                                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/login">Đăng
+                                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/loginWeb">Đăng
                                     nhập</a>
                             </strong>
                         </button>

@@ -1,6 +1,5 @@
-package service;
+package service.user;
 
-import dao.DAOConnection;
 import dao.UserDAO;
 import model.User;
 

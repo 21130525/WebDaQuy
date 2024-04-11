@@ -1,9 +1,10 @@
-package service;
+package service.user;
 
 import dao.ActivacationCodeDao;
 import dao.UserDAO;
 import model.ActivacationCode;
 import model.User;
+import service.EncryptAndDencrypt;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

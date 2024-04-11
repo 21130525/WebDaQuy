@@ -1,12 +1,10 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import model.ActivacationCode;
-import model.User;
 import service.EncryptAndDencrypt;
-import service.RegisterService;
+import service.user.RegisterService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
