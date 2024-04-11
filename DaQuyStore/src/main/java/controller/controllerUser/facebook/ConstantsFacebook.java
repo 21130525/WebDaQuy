@@ -1,4 +1,4 @@
-package controller.controllerLogin.facebook;
+package controller.controllerUser.facebook;
 
 public class ConstantsFacebook {
     //ben may cua ngo thanh tan

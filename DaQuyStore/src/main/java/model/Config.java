@@ -1,18 +1,16 @@
 package model;
 
-
+import javax.servlet.http.HttpServletRequest;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class Config extends HttpServlet {
+public class Config {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     //tham so thu 2 là tham số dùng để chuyen trang sau khi thanh toan thanh cong,tham so tuy chinh
     public static String vnp_Returnurl = "http://localhost:8080/vnpay_jsp/vnpay_return.jsp";

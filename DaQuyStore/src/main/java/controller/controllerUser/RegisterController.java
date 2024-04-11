@@ -1,10 +1,8 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import model.ActivacationCode;
-import model.User;
 import service.EncryptAndDencrypt;
 import service.user.RegisterService;
 
