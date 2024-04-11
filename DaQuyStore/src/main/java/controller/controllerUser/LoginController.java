@@ -31,7 +31,7 @@ public class LoginController  extends HttpServlet {
         String servletPath = req.getServletPath();
         if ("/loginWeb".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginWeb"
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/views/login/login.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/login.jsp");
             dispatcher.forward(req, resp);
         } else if ("/loginGoogle".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginGoogle"

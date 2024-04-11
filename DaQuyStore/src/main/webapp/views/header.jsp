@@ -149,10 +149,10 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item "
-                                   href="${pageContext.request.contextPath}/views/login/changepassword.jsp">Đổi mật
+                                   href="${pageContext.request.contextPath}/views/user/changepassword.jsp">Đổi mật
                                 khẩu</a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/views/login/profile.jsp">Hồ sơ</a></li>
+                                   href="${pageContext.request.contextPath}/views/user/profile.jsp">Hồ sơ</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

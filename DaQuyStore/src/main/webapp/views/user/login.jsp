@@ -90,7 +90,7 @@
                                 <h3>Đăng nhập</h3>
                             </button>
                         </div>
-                        <a href="<%=request.getContextPath()%>/views/login/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
+                        <a href="<%=request.getContextPath()%>/views/user/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
                         <span>Hoặc</span> <div class="d-flex">
                         <div class="line"></div>
                         <div class="line"></div>
@@ -110,7 +110,7 @@
                     <div class=" fs-5 d-flex justify-content-end">
 
                         <div id="register" class=" btn border border-dark" >
-                            <a href="${pageContext.request.contextPath}/views/login/register.jsp" class="fw-bold text-decoration-none">
+                            <a href="${pageContext.request.contextPath}/register" class="fw-bold text-decoration-none">
                                 Đăng ký</a>
                         </div>
 

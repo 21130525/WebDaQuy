@@ -57,16 +57,7 @@
                 </div>
                 <%--list product--%>
                 <jsp:include page="web/product/listProduct.jsp"></jsp:include>
-                <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a class="active" href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">&raquo;</a>
-                </div>
+
             </div>
             <div class="categogies-new">
                 <h2 class="title-h2"> SẢN PHẨM MỚI</h2>

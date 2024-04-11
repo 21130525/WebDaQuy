@@ -62,6 +62,13 @@
             background-color: #F5DB62;
             font-weight: bold;
         }
+        #register .line{
+            height: 3px; /* Độ dày của đường thẳng */
+            width: 30%; /* Độ rộng của đường thẳng */
+            background-color: black; /* Màu của đường thẳng */
+            margin:  auto; /* Căn giữa theo chiều ngang */
+            margin-top: -15px;
+        }
     </style>
 </head>
 
@@ -83,9 +90,9 @@
                     <%--action--%>
                     <input type="hidden" name="action" value="RegisterWeb">
                     <div class="row text-center">
-                        <div class="logo">
-                            <img src="<%=request.getContextPath()%>/img/logo.png">
-                        </div>
+<%--                        <div class="logo">--%>
+<%--                            <img src="<%=request.getContextPath()%>/img/logo.png">--%>
+<%--                        </div>--%>
                         <div class="mt-2">
                             <h2>Đăng ký</h2>
                         </div>
@@ -141,6 +148,21 @@
 
                         <div class="d-block text-center mx-auto ">
                             <button class="" type="submit" >Đăng ký</button>
+                        </div>
+                        <div class="text-center ">
+                            <span>Hoặc</span> <div class="d-flex">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                            <div class="d-flex justify-content-center fs-5 ">
+                                <p>Đăng nhập với:</p>
+                                <a href="" class="ms-3 me-2 pt-2">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                <a href="" class="ms-3 pt-2">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </form>
