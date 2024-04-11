@@ -17,21 +17,33 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@WebServlet("/register")
+@WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       doPost(req,resp);
+        String servletPath = req.getServletPath();
+        if ("/register".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/register"
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/register.jsp");
+            dispatcher.forward(req, resp);
+        } else if ("/registerGoogle".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/loginGoogle"
+
+        } else if ("/registerFacebook".equals(servletPath)) {
+            // Xử lý khi client đến từ URL "/loginFaceBook"
+
+        } else {
+            // Xử lý khi không phân biệt được URL
+        }
+
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        switch (action) {
-            case "RegisterWeb":
                 String username = request.getParameter("user");
                 String password = encryptAndDencrypt.encrypt( request.getParameter("pass"));
                 String email = request.getParameter("email");
@@ -41,22 +53,15 @@ public class RegisterController extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                // đang nhập
+                // đang ky
                 try {
-                    loginWeb(request,response,username,password,email);
+                    registerWeb(request,response,username,password,email);
                 } catch (SQLException e) {
                         throw new RuntimeException(e);
                 }
-                break;
-            case "RegisterGoogle":
-                break;
-            case "RegisterFacebook":
-                break;
-        }
     }
 
-
-    private void loginWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
+    private void registerWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession(false);
         checkRegister(request, response, username, email);
         String code = registerService.createActivationCode(username,password,email);
@@ -64,7 +69,6 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void sendEmail(HttpServletRequest request, HttpServletResponse response, String code,String email) throws IOException {
-
         try {
             final String HOST_NAME = "smtp.gmail.com";
             final int SSL_PORT = 465; // Port for SSL
@@ -126,4 +130,5 @@ public class RegisterController extends HttpServlet {
         }
 
     }
+
 }
