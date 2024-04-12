@@ -1,4 +1,4 @@
-package model.google;
+package controller.controllerUser.google;
 
 public class GoogleInfo {
     private String id;

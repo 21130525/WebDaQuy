@@ -1,8 +1,23 @@
 package controller.controllerUser;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import controller.controllerUser.google.GoogleInfo;
+import controller.controllerUser.google.TokenGoogle;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import service.EncryptAndDencrypt;
 import service.user.RegisterService;
 
@@ -13,9 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
+
 
 @WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
 public class RegisterController extends HttpServlet {
@@ -31,16 +44,16 @@ public class RegisterController extends HttpServlet {
             dispatcher.forward(req, resp);
         } else if ("/registerGoogle".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginGoogle"
-
+            registerGoogle(req,resp);
         } else if ("/registerFacebook".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginFaceBook"
 
         } else {
             // Xử lý khi không phân biệt được URL
         }
-
-
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -131,4 +144,31 @@ public class RegisterController extends HttpServlet {
 
     }
 
+    private void registerGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String code = req.getParameter("code");
+        String token =  getToken(code);
+        GoogleInfo user = getUserInfo(token);
+//        User u = new User(user.getName())
+
+        System.out.println(user);
+    }
+
+    public  String getToken(String code) throws ClientProtocolException, IOException {
+        // call api to get token
+        String response = Request.Post(TokenGoogle.GOOGLE_LINK_GET_TOKEN)
+                .bodyForm(Form.form().add("client_id", TokenGoogle.GOOGLE_CLIENT_ID_REGISTER)
+                        .add("client_secret", TokenGoogle.GOOGLE_CLIENT_SECRET_REGISTER)
+                        .add("redirect_uri", TokenGoogle.GOOGLE_REDIRECT_URI_REGISTER).add("code", code)
+                        .add("grant_type", TokenGoogle.GOOGLE_GRANT_TYPE).build())
+                .execute().returnContent().asString();
+        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
+        return jobj.get("access_token").toString().replaceAll("\"", "");
+    }
+
+    public  GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+        String link = TokenGoogle.GOOGLE_LINK_GET_USER_INFO + accessToken;
+        String response = Request.Get(link).execute().returnContent().asString();
+        System.out.println(response);
+        return new Gson().fromJson(response, GoogleInfo.class);
+    }
 }
