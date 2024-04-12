@@ -3,7 +3,7 @@ package controller.controllerLogin;
 import jakarta.mail.internet.AddressException;
 import model.User;
 import service.EncryptAndDencrypt;
-import service.LoginService;
+import service.user.LoginService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

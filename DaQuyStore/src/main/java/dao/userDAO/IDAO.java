@@ -1,9 +1,9 @@
-package dao;
+package dao.userDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface DAOInterface<T> {
+public interface IDAO<T>{
     public boolean insert(T t) throws SQLException;
     public boolean update(T t)throws SQLException;
     public int delete(String id)throws SQLException;

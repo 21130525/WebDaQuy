@@ -1,6 +1,6 @@
 package controller.controllerLogin;
 
-import service.ChangePasswordService;
+import service.user.ChangePasswordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

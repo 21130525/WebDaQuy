@@ -1,8 +1,9 @@
-package model;
+package model.modelAdmin;
+
 
 import java.sql.Date;
 
-public class User {
+public class AdminUsers {
     private String id;
     private String username;
     private String password;
@@ -20,7 +21,10 @@ public class User {
     private String status;
     private String typeLogin;
 
-    public User(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
+    public AdminUsers() {
+    }
+
+    public AdminUsers(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -166,6 +170,5 @@ public class User {
     public void setTypeLogin(String typeLogin) {
         this.typeLogin = typeLogin;
     }
-
 
 }

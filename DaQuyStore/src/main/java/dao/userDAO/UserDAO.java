@@ -1,5 +1,6 @@
-package dao;
+package dao.userDAO;
 
+import connector.DAOConnection;
 import model.User;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
-public class UserDAO implements DAOInterface<User> {
+public class UserDAO implements IDAO<User> {
     private String id;
     private String username;
     private String password;
@@ -42,18 +43,18 @@ public class UserDAO implements DAOInterface<User> {
                 "values (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
 
-        ps.setString(1, user.getUserName());
+        ps.setString(1, user.getUsername());
         ps.setString(2, user.getPassword());
         ps.setString(3, user.getFullName());
         ps.setString(4, user.getGender());
         ps.setDate(5, user.getBirthday());
         ps.setString(6, user.getEmail());
-        ps.setString(7, user.getPhone());
+        ps.setString(7, user.getPhoneNumber());
         ps.setString(8, user.getAddress());
         ps.setString(9, user.getAvatar());
         ps.setString(10, user.getRole());
         ps.setString(11, user.getStatus());
-        ps.setString(12, user.getType_login());
+        ps.setString(12, user.getTypeLogin());
 
         int res = ps.executeUpdate();
         ps.close();
@@ -70,18 +71,18 @@ public class UserDAO implements DAOInterface<User> {
                 "u.avatar=?, u.updated_at=CURRENT_TIMESTAMP,u.role=?, u.status=? ,u.type_login=?  " +
                 "where u.id=?;";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, user.getUserName());
+            ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFullName());
             ps.setString(4, user.getGender());
             ps.setDate(5, user.getBirthday());
             ps.setString(6, user.getEmail());
-            ps.setString(7, user.getPhone());
+            ps.setString(7, user.getPhoneNumber());
             ps.setString(8, user.getAddress());
             ps.setString(9, user.getAvatar());
             ps.setString(10, user.getRole());
             ps.setString(11, user.getStatus());
-            ps.setString(12, user.getType_login());
+            ps.setString(12, user.getTypeLogin());
             ps.setString(13, user.getId());
 
             int res = ps.executeUpdate();

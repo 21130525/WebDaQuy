@@ -1,7 +1,7 @@
-package dao;
+package dao.userDAO;
 
+import connector.DAOConnection;
 import model.ActivacationCode;
-import model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ActivacationCodeDao implements DAOInterface<ActivacationCode>{
+public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     private String code;
     private String username;
     private String password;
