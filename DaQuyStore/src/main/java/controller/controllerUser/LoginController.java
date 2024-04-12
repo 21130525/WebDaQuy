@@ -3,8 +3,8 @@ package controller.controllerUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.mail.internet.AddressException;
-import model.google.GoogleInfo;
-import model.google.TokenGoogle;
+import controller.controllerUser.google.GoogleInfo;
+import controller.controllerUser.google.TokenGoogle;
 import model.User;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
@@ -41,8 +41,6 @@ public class LoginController  extends HttpServlet {
         } else {
             // Xử lý khi không phân biệt được URL
         }
-
-
     }
 
     @Override
@@ -64,7 +62,7 @@ public class LoginController  extends HttpServlet {
         HttpSession session = request.getSession(true);
         if (username == null || pass == null) {
             request.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");
-            request.getRequestDispatcher("/views/login/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
         } else {
             boolean isvalid = false;
             User user = null;
@@ -90,7 +88,7 @@ public class LoginController  extends HttpServlet {
                 }
             } else {
                 request.setAttribute("notify", "Tài khoản hoặc mật khẩu không tồn tại");
-                request.getRequestDispatcher("/views/login/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
             }
 
         }
@@ -102,27 +100,22 @@ public class LoginController  extends HttpServlet {
         GoogleInfo user = getUserInfo(token);
         System.out.println(user);
     }
-    public static String getToken(String code) throws ClientProtocolException, IOException {
+    public  String getToken(String code) throws ClientProtocolException, IOException {
         // call api to get token
         String response = Request.Post(TokenGoogle.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", TokenGoogle.GOOGLE_CLIENT_ID)
-                        .add("client_secret", TokenGoogle.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", TokenGoogle.GOOGLE_REDIRECT_URI).add("code", code)
+                .bodyForm(Form.form().add("client_id", TokenGoogle.GOOGLE_CLIENT_ID_LOGIN)
+                        .add("client_secret", TokenGoogle.GOOGLE_CLIENT_SECRET_LOGIN)
+                        .add("redirect_uri", TokenGoogle.GOOGLE_REDIRECT_URI_LOGIN).add("code", code)
                         .add("grant_type", TokenGoogle.GOOGLE_GRANT_TYPE).build())
                 .execute().returnContent().asString();
-
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
+        return jobj.get("access_token").toString().replaceAll("\"", "");
     }
 
-    public static GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public  GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = TokenGoogle.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
-
-        GoogleInfo googlePojo = new Gson().fromJson(response, GoogleInfo.class);
-
-        return googlePojo;
+        return new Gson().fromJson(response, GoogleInfo.class);
     }
 
 }

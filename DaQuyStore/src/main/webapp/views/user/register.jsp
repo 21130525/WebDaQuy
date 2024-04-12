@@ -140,7 +140,7 @@
                             <input type="checkbox" name="policy" id="policy" class=""
                                    title="Bạn có chấp nhận chính sách của chúng tôi không" required>
                             <label for="policy">
-                                *Tôi cam kết đã đọc và
+                                *Tôi cam kết đã đọc <và></và>
                                 chấp nhận tất cả điều khoản
                                 và điều kiện của dịch vụ/sản phẩm này.
                             </label>
@@ -159,7 +159,9 @@
                                 <a href="" class="ms-3 me-2 pt-2">
                                     <i class="fab fa-facebook"></i>
                                 </a>
-                                <a href="" class="ms-3 pt-2">
+                                <a
+                                    href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/DaQuyStore_war/registerGoogle&response_type=code&client_id=154679706679-r317sjkakuutsobdj1d050mvjtvbp6ve.apps.googleusercontent.com&approval_prompt=force"
+                                    class="ms-3 pt-2">
                                     <i class="fab fa-google"></i>
                                 </a>
                             </div>
