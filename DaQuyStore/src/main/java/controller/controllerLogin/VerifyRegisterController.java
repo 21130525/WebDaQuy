@@ -1,7 +1,7 @@
 package controller.controllerLogin;
 
-import dao.ActivacationCodeDao;
-import dao.UserDAO;
+import dao.userDAO.ActivacationCodeDao;
+import dao.userDAO.UserDAO;
 import model.ActivacationCode;
 import model.User;
 
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet("/verifyregister")
@@ -31,7 +30,6 @@ public class VerifyRegisterController extends HttpServlet {
                 requestDispatcher.forward(req, resp);
             }
            if(ac!=null){
-
                User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"user","web");
                UserDAO uDao = new UserDAO();
                System.out.println(u.toString());

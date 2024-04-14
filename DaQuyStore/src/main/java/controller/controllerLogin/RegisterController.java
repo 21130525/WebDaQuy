@@ -6,7 +6,7 @@ import jakarta.mail.internet.MimeMessage;
 import model.ActivacationCode;
 import model.User;
 import service.EncryptAndDencrypt;
-import service.RegisterService;
+import service.user.RegisterService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

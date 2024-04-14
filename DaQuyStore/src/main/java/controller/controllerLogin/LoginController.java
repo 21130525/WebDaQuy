@@ -3,7 +3,7 @@ package controller.controllerLogin;
 import jakarta.mail.internet.AddressException;
 import model.User;
 import service.EncryptAndDencrypt;
-import service.LoginService;
+import service.user.LoginService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-@WebServlet(value = "/login", urlPatterns = "/web")
+//urlPatterns = "/web"
+@WebServlet(value = "/login")
 public class LoginController  extends HttpServlet {
     EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
     @Override
@@ -62,7 +62,7 @@ public class LoginController  extends HttpServlet {
             boolean isvalid = false;
             User user = null;
             for (User u : list) {
-                if (u.getUserName().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(pass)) {
+                if (u.getUsername().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(pass)) {
                     isvalid = true;
                     idUser = u.getId();
                     user = u;

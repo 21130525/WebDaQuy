@@ -19,32 +19,148 @@
 <table id="table_id" class="table table-striped">
     <thead>
     <tr>
-        <th>Col1</th>
-        <th>Col2</th>
-        <th>Col3</th>
+        <th>Tai khoan</th>
+        <th>Mat khau</th>
+        <th>Ho ten</th>
+        <th>Gioi tinh</th>
+        <th>Ngay sinh</th>
+        <th>Email</th>
+        <th>SDT</th>
+        <th>Dia chi</th>
+        <th>Avatar</th>
+        <th>Ngay tao</th>
+        <th>Ngay cap nhat</th>
+        <th>Vai tro</th>
+        <th>Trang thai</th>
     </tr>
     </thead>
     <tbody id="body">
-    <tr>
-        <td>data-1a</td>
-        <td>data-1b</td>
-        <td>data-1c</td>
-    </tr>
-    <tr>
-        <td>data-2a</td>
-        <td>data-2b</td>
-        <td>data-2c</td>
-    </tr>
-    <tr>
-        <td>data-3a</td>
-        <td>data-3b</td>
-        <td>data-3c</td>
-    </tr>
-    <tr>
-        <td>data-4a</td>
-        <td>data-4b</td>
-        <td>data-4c</td>
-    </tr>
+    <%--    <tr>--%>
+    <%--        <td>data-1a</td>--%>
+    <%--        <td>data-1b</td>--%>
+    <%--        <td>data-1c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-2a</td>--%>
+    <%--        <td>data-2b</td>--%>
+    <%--        <td>data-2c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-3a</td>--%>
+    <%--        <td>data-3b</td>--%>
+    <%--        <td>data-3c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-4a</td>--%>
+    <%--        <td>data-4b</td>--%>
+    <%--        <td>data-4c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-4a</td>--%>
+    <%--        <td>data-4b</td>--%>
+    <%--        <td>data-4c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-4a</td>--%>
+    <%--        <td>data-4b</td>--%>
+    <%--        <td>data-4c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
+    <%--    <tr>--%>
+    <%--        <td>data-4a</td>--%>
+    <%--        <td>data-4b</td>--%>
+    <%--        <td>data-4c</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+    <%--        --%>
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--        <td>3</td>--%>
+    <%--        <td>4</td>--%>
+
+    <%--        <td>1</td>--%>
+    <%--        <td>2</td>--%>
+    <%--    </tr>--%>
     </tbody>
 </table>
 </body>
@@ -57,8 +173,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $("#table_id").DataTable();
     })
+    var $tbody = $('#body')
+    $(document).ready(function () {
+        $.ajax({
+            url: '<%=request.getContextPath()%>/getuser',
+            method: 'GET',
+            dataType: 'JSON',
+            success: function (response) {
+                $.each(response, function (index, value) {
+                        var value_item=Object.keys(value)
+                        var $row = $('<tr>')
+                        value_item.forEach(function(key){
+                            var value_item_key=value[key]
+                            var $cell=$('<td>').text(value_item_key)
+                            $row.append($cell)
+                        })
+                        $tbody.append($row);
+                    }
+                )
+
+            }
+        })
+    });
+
 </script>
 </html>
