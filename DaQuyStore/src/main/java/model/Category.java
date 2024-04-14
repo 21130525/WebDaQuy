@@ -3,6 +3,7 @@ package model;
 import java.util.Date;
 
 public class Category {
+    private int id ;
     private String category_name;
     private Date create_at;
     private Date update_at;
@@ -17,6 +18,9 @@ public class Category {
         this.delete_at = delete_at;
         this.status = status;
         this.img = img;
+    }
+    public Category() {
+
     }
 
     public String getCategory_name() {
@@ -66,4 +70,8 @@ public class Category {
     public void setImg(String img) {
         this.img = img;
     }
+
+    public int getId(){return id;}
+
+    public void setId(int id){this.id = id;}
 }
