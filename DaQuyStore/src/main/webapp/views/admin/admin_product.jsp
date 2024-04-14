@@ -30,47 +30,61 @@
 <table id="table_id" class="table table-striped">
     <thead>
     <tr>
-        <th>Col1</th>
-        <th>Col2</th>
-        <th>Col3</th>
+        <th>Ten san pham</th>
+        <th>Gia</th>
+        <th>Tinh trang</th>
+        <th>Giam gia</th>
+        <th>Hot</th>
+        <th>Color</th>
     </tr>
     </thead>
     <tbody id="body">
-    <tr>
-        <td>data-1a</td>
-        <td>data-1b</td>
-        <td>data-1c</td>
-    </tr>
-    <tr>
-        <td>data-2a</td>
-        <td>data-2b</td>
-        <td>data-2c</td>
-    </tr>
-    <tr>
-        <td>data-3a</td>
-        <td>data-3b</td>
-        <td>data-3c</td>
-    </tr>
-    <tr>
-        <td>data-4a</td>
-        <td>data-4b</td>
-        <td>data-4c</td>
-    </tr>
+
     </tbody>
-    <!-- Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thong bao</h1>
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Ban co muon luu thay doi khong
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-name" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="product-name"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="price"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="status"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sale" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="sale"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hot" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="hot"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="color" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="color"></textarea>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huy</button>
-                    <button type="button" class="btn btn-primary">Luu thay doi</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
                 </div>
             </div>
         </div>
@@ -86,6 +100,58 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
+    var $tbody = $('#body')
+    $(document).ready(function () {
+        $.ajax({
+            url: '<%=request.getContextPath()%>/getproduct_admin',
+            method: 'GET',
+            dataType: 'JSON',
+            success: function (response) {
+                $.each(response, function (index, value) {
+                        var value_item=Object.keys(value)
+                        var $row = $('<tr>')
+                        value_item.forEach(function(key){
+                            var value_item_key=value[key]
+                            var $cell=$('<td>').text(value_item_key)
+                            $row.append($cell)
+                        })
+                        $tbody.append($row);
+                    }
+                )
+
+            }
+        })
+    });
+    $(document).ready(function (){
+        $('#btn_accept').click(function (){
+            $.ajax({
+                url:'<%=request.getContextPath()%>/addproduct_admin',
+                method:'GET',
+                data:JSON.stringify(product={
+                    product_name:input.value,
+                    price:input.value,
+                    status:input.value,
+                    sale:input.value,
+                    hot:input.value,
+                    color:input.value
+                }),
+                contentType:'application/json',
+                success:function (response){
+                    alert('Them san pham thanh cong')
+                    window.location.href='#'
+                },
+                error:function(error){
+                    alert('Them san pham khong thanh cong')
+                    window.location.href='#'
+                }
+            })
+        })
+    })
+    $(document).ready(function(){
+        $('#btn_taolao').click(function(){
+            $('#btn_taolao').hide()
+        })
+    })
     $(document).ready(function (){
         $("#table_id").DataTable();
     })

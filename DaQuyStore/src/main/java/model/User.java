@@ -39,6 +39,14 @@ public class User {
         this.typeLogin = typeLogin;
     }
 
+    public User(String username, String password, String email, String role, String typeLogin) {
+        this.username=username;
+        this.password=password;
+        this.email=email;
+        this.role=role;
+        this.typeLogin=typeLogin;
+    }
+
     public String getId() {
         return id;
     }

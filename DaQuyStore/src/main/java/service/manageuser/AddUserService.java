@@ -12,10 +12,7 @@ import java.sql.SQLException;
 //truyền kiểu dữ liệu cho Generic và 1 object rỗng để xử lí logic
 public class AddUserService  extends HttpServlet {
     public void add(HttpServletRequest request) throws SQLException {
-        AbsAdminDAO<AdminUsers> usersAbsAdminDAO=UserAdminDAO.getInstance();
-        AdminUsers adminUsers=new AdminUsers();
-        usersAbsAdminDAO.callSelect(adminUsers);
-        Gson gson=new Gson();
+
 
     }
 }

@@ -1,7 +1,7 @@
 package model.modelAdmin;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 public class AdminUsers {
     private String id;
@@ -20,8 +20,24 @@ public class AdminUsers {
     private String role;
     private String status;
     private String typeLogin;
+    public AdminUsers(){
 
-    public AdminUsers() {
+    }
+
+    public AdminUsers(String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, String role, String status) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.avatar = avatar;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.role = role;
+        this.status = status;
     }
 
     public AdminUsers(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
