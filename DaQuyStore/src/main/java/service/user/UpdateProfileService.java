@@ -12,7 +12,7 @@ public class UpdateProfileService {
     public static boolean update(String userName,String name, String phone, String email, String address, String gender, String birthday) throws SQLException {
         User user = UserDAO.getInstance().selectByUserName(userName);
         user.setFullName(name);
-        user.setPhone(phone);
+        user.setPhoneNumber(phone);
         user.setEmail(email);
         user.setAddress(address);
         user.setGender(gender);
