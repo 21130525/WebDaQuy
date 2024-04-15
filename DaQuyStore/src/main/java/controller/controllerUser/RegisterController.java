@@ -13,12 +13,14 @@ import controller.controllerUser.google.TokenGoogle;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import service.EncryptAndDencrypt;
+import service.user.LoginService;
 import service.user.RegisterService;
 
 import javax.servlet.RequestDispatcher;
@@ -33,6 +35,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
+    private LoginService loginService = new LoginService();
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override
@@ -44,7 +47,11 @@ public class RegisterController extends HttpServlet {
             dispatcher.forward(req, resp);
         } else if ("/registerGoogle".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginGoogle"
-            registerGoogle(req,resp);
+            try {
+                registerGoogle(req,resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if ("/registerFacebook".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginFaceBook"
 
@@ -73,7 +80,9 @@ public class RegisterController extends HttpServlet {
                         throw new RuntimeException(e);
                 }
     }
-
+    /*
+    * đăng ký tài khoản trên web
+    * */
     private void registerWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession(false);
         checkRegister(request, response, username, email);
@@ -81,6 +90,9 @@ public class RegisterController extends HttpServlet {
         sendEmail(request,response,code,email);
     }
 
+    /*
+    * gửi email
+    * */
     protected void sendEmail(HttpServletRequest request, HttpServletResponse response, String code,String email) throws IOException {
         try {
             final String HOST_NAME = "smtp.gmail.com";
@@ -129,8 +141,6 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void checkRegister(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String email) throws ServletException, IOException, SQLException {
-
-
         if (registerService.checkDuplicatedUsername(username)) {
             servletRequest.setAttribute("announced", "Tài khoản đã tồn tại");
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
@@ -144,13 +154,23 @@ public class RegisterController extends HttpServlet {
 
     }
 
-    private void registerGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    /*
+    * Đăng ký tài khoản google
+    * */
+    private void registerGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
+        HttpSession session = req.getSession(false);
         String code = req.getParameter("code");
         String token =  getToken(code);
         GoogleInfo user = getUserInfo(token);
-//        User u = new User(user.getName())
-
-        System.out.println(user);
+        checkRegister(req,resp,user.getEmail(),user.getEmail());
+        // email: username; id: password;
+        User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
+        if(registerService.insertUser(u)){
+            System.out.println(u);
+            session.setAttribute("username", u.getUserName());
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     public  String getToken(String code) throws ClientProtocolException, IOException {
@@ -168,7 +188,7 @@ public class RegisterController extends HttpServlet {
     public  GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = TokenGoogle.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
-        System.out.println(response);
         return new Gson().fromJson(response, GoogleInfo.class);
     }
+
 }

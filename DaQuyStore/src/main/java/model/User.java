@@ -45,43 +45,24 @@ public class User {
         this.type_login = type_login;
     }
 
-    public User(String userName, String password,String email, String role,String type_login){
+    public User(String userName, String password,String email,String type_login,String avatar,String fullname){
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.role = "user";
+        this.type_login = type_login;
+        this.avatar = avatar;
+        this.fullName = fullname;
+    }
+    public User(String userName, String password,String email,String type_login){
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = "user";
         this.type_login = type_login;
     }
-    // register user
-    public User( String userName, String password, String email, String customer) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.fullName = "";
-        this.gender = "";
-        this.email = email;
-        this.phone = "";
-        this.avatar = "";
-        this.status="";
-        this.role = customer;
-        this.address = "";
-        this.type_login = "";
-    }
 
-    public User(String userName, String password, String email,String gender, String fullname, String date, String phone, String address, String customer) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.fullName =fullname;
-        this.email = email;
-        this.gender = gender;
-        this.phone = phone;
-        this.avatar = "";
-        this.status="";
-        this.role = customer;
-        this.address = address;
-        this.type_login = "web";
-    }
+
 
     public String getUserName() {
         return userName;

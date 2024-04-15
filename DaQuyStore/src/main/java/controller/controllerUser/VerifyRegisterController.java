@@ -30,8 +30,7 @@ public class VerifyRegisterController extends HttpServlet {
                 requestDispatcher.forward(req, resp);
             }
            if(ac!=null){
-
-               User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"user","web");
+               User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"web");
                UserDAO uDao = new UserDAO();
                System.out.println(u.toString());
                uDao.insert(u);

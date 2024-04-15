@@ -225,4 +225,36 @@ public class UserDAO implements DAOInterface<User> {
         DAOConnection.getConnection().close();
         return users;
     }
+
+    public ArrayList<User> selectAllByTypeLogin(String typeLogin) throws SQLException {
+        String sql = " select * from users where type_login=?";
+        PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
+        pst.setString(1, typeLogin);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<User> users = new ArrayList<>();
+        while (rs.next()) {
+            id = rs.getString("id");
+            username = rs.getString("username");
+            password = rs.getString("password");
+            fullName= rs.getString("full_name");
+            gender = (rs.getString("gender")==null?"":rs.getString("gender"));
+            birthday = (rs.getDate("birthday") == null ? null : rs.getDate("birthday"));
+            email = rs.getString("email");
+            phoneNumber = (rs.getString("phone")==null?"":rs.getString("phone"));
+            address = (rs.getString("address")==null?"":rs.getString("address"));
+            avatar = (rs.getString("avatar")==null?"":rs.getString("avatar"));
+            createAt= (rs.getDate("created_at")==null?null:rs.getDate("created_at"));
+            updateAt= (rs.getDate("updated_at")==null?null:rs.getDate("updated_at"));
+            deleteAt= rs.getDate("delete_at")==null?null:rs.getDate("delete_at");
+            role = rs.getString("role")==null?"user":rs.getString("role");
+            status = rs.getString("status")==null?"":rs.getString("status");
+            typeLogin = rs.getString("type_login")==null?"web":rs.getString("type_login");
+            User user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
+            users.add(user);
+        }
+        rs.close();
+        pst.close();
+        DAOConnection.getConnection().close();
+        return users;
+    }
 }
