@@ -102,7 +102,7 @@
                             <i class="fab fa-facebook"></i>
                         </a>
                         <a
-                            href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8080/DaQuyStore_war/loginGoogle&response_type=code&client_id=154679706679-29nmsp8c4r1phddtk3d4gcr1u5b5hic7.apps.googleusercontent.com&approval_prompt=force"
+                            href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/DaQuyStore_war/loginGoogle&response_type=code&client_id=154679706679-29nmsp8c4r1phddtk3d4gcr1u5b5hic7.apps.googleusercontent.com&approval_prompt=force"
                             class="ms-3 pt-2">
                             <i class="fab fa-google"></i>
                         </a>
