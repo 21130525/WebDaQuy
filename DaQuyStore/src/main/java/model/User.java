@@ -39,13 +39,29 @@ public class User {
         this.typeLogin = typeLogin;
     }
 
-    public User(String username, String password, String email, String role, String typeLogin) {
-        this.username=username;
-        this.password=password;
-        this.email=email;
-        this.role=role;
-        this.typeLogin=typeLogin;
+    public User(String userName, String password,String email,String type_login,String avatar,String fullname){
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = "user";
+        this.type_login = type_login;
+        this.avatar = avatar;
+        this.fullName = fullname;
     }
+    public User(String userName, String password,String email,String type_login){
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = "user";
+        this.type_login = type_login;
+    }
+
+
+
+    public String getUserName() {
+        return userName;
+    }
+
 
     public String getId() {
         return id;

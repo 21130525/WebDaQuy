@@ -1,4 +1,4 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +15,7 @@ public class LogoutController extends HttpServlet {
         HttpSession session=req.getSession(false);
         if(session!=null){
             session.invalidate();
-            resp.sendRedirect(req.getContextPath()+"/login");
-        }else{
-            resp.sendRedirect(req.getContextPath()+"/login");
         }
+        resp.sendRedirect(req.getContextPath()+"/loginWeb");
     }
 }

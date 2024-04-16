@@ -62,6 +62,13 @@
             background-color: #F5DB62;
             font-weight: bold;
         }
+        #register .line{
+            height: 3px; /* Độ dày của đường thẳng */
+            width: 30%; /* Độ rộng của đường thẳng */
+            background-color: black; /* Màu của đường thẳng */
+            margin:  auto; /* Căn giữa theo chiều ngang */
+            margin-top: -15px;
+        }
     </style>
 </head>
 
@@ -83,9 +90,9 @@
                     <%--action--%>
                     <input type="hidden" name="action" value="RegisterWeb">
                     <div class="row text-center">
-                        <div class="logo">
-                            <img src="<%=request.getContextPath()%>/img/logo.png">
-                        </div>
+<%--                        <div class="logo">--%>
+<%--                            <img src="<%=request.getContextPath()%>/img/logo.png">--%>
+<%--                        </div>--%>
                         <div class="mt-2">
                             <h2>Đăng ký</h2>
                         </div>
@@ -133,7 +140,7 @@
                             <input type="checkbox" name="policy" id="policy" class=""
                                    title="Bạn có chấp nhận chính sách của chúng tôi không" required>
                             <label for="policy">
-                                *Tôi cam kết đã đọc và
+                                *Tôi cam kết đã đọc <và></và>
                                 chấp nhận tất cả điều khoản
                                 và điều kiện của dịch vụ/sản phẩm này.
                             </label>
@@ -141,6 +148,23 @@
 
                         <div class="d-block text-center mx-auto ">
                             <button class="" type="submit" >Đăng ký</button>
+                        </div>
+                        <div class="text-center ">
+                            <span>Hoặc</span> <div class="d-flex">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                            <div class="d-flex justify-content-center fs-5 ">
+                                <p>Đăng nhập với:</p>
+                                <a href="" class="ms-3 me-2 pt-2">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                <a
+                                    href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/DaQuyStore_war/registerGoogle&response_type=code&client_id=154679706679-r317sjkakuutsobdj1d050mvjtvbp6ve.apps.googleusercontent.com&approval_prompt=force"
+                                    class="ms-3 pt-2">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </form>

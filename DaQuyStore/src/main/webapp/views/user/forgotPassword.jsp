@@ -24,8 +24,8 @@
             <div>
                 <button type="submit">Xác nhận</button>
             </div>
-            <a href="<%=request.getContextPath()%>/views/login/login.jsp" id="login">Đăng nhập</a>
-            <a href="<%=request.getContextPath()%>/views/login/register.jsp" id="register">Đăng kí</a>
+            <a href="<%=request.getContextPath()%>/views/user/login.jsp" id="login">Đăng nhập</a>
+            <a href="<%=request.getContextPath()%>/views/user/register.jsp" id="register">Đăng kí</a>
         </div>
 
     </form>

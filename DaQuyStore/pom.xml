@@ -87,37 +87,7 @@
       <version>8.0.33</version>
     </dependency>
 
-        <!--login google-->
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
-    <dependency>
-      <groupId>org.apache.httpcomponents.client5</groupId>
-      <artifactId>httpclient5-fluent</artifactId>
-      <version>5.3.1</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
-    <dependency>
-      <groupId>org.apache.httpcomponents.client5</groupId>
-      <artifactId>httpclient5</artifactId>
-      <version>5.3.1</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5 -->
-    <dependency>
-      <groupId>org.apache.httpcomponents.core5</groupId>
-      <artifactId>httpcore5</artifactId>
-      <version>5.2.4</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
-    <dependency>
-      <groupId>com.restfb</groupId>
-      <artifactId>restfb</artifactId>
-      <version>2024.2.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc -->
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>fluent-hc</artifactId>
-      <version>4.5.13</version>
-    </dependency>
+
         <!-- giu anh len server dam may-->
     <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
     <dependency>
@@ -125,13 +95,94 @@
       <artifactId>cloudinary-http44</artifactId>
       <version>1.38.0</version>
     </dependency>
+    <!--login google-->
+        <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.32.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>1.39.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client-gson -->
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-gson</artifactId>
+            <version>1.39.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client-apache-v2 -->
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-apache-v2</artifactId>
+            <version>1.39.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.14</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+
+        <!--login facebook-->
+        <!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
+        <dependency>
+            <groupId>com.restfb</groupId>
+            <artifactId>restfb</artifactId>
+            <version>2024.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5-fluent</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5</artifactId>
+            <version>5.2.4</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.5</version>
         </dependency>
-
-
     </dependencies>
 </project>
+
+
+
+<!--        &lt;!&ndash;login google&ndash;&gt;-->
+
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc &ndash;&gt;-->
+<!--<dependency>-->
+<!--<groupId>org.apache.httpcomponents</groupId>-->
+<!--<artifactId>fluent-hc</artifactId>-->
+<!--<version>4.5.13</version>-->
+<!--</dependency>-->
