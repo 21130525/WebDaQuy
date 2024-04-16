@@ -1,4 +1,4 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
 import dao.userDAO.ActivacationCodeDao;
 import dao.userDAO.UserDAO;

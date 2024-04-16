@@ -1,6 +1,6 @@
-package controller.controllerLogin.google;
+package controller.controllerUser.google;
 
-public class GooglePojo {
+public class GoogleInfo {
     private String id;
     private String email;
     private boolean verified_email;
@@ -75,7 +75,7 @@ public class GooglePojo {
         this.picture = picture;
     }
 
-    public GooglePojo(String id, String email, boolean verified_email, String name, String given_name, String family_name, String link, String picture) {
+    public GoogleInfo(String id, String email, boolean verified_email, String name, String given_name, String family_name, String link, String picture) {
         this.id = id;
         this.email = email;
         this.verified_email = verified_email;
@@ -84,5 +84,19 @@ public class GooglePojo {
         this.family_name = family_name;
         this.link = link;
         this.picture = picture;
+    }
+
+    @Override
+    public String toString() {
+        return "GoogleInfo{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", verified_email=" + verified_email +
+                ", name='" + name + '\'' +
+                ", given_name='" + given_name + '\'' +
+                ", family_name='" + family_name + '\'' +
+                ", link='" + link + '\'' +
+                ", picture='" + picture + '\'' +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package controller.controllerLogin;
+package controller.controllerUser;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

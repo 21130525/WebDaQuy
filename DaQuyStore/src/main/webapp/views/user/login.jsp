@@ -66,8 +66,7 @@
             </div>
             <!-- form nhap du lieu  -->
             <div class="col-8 bg">
-                <form class="form-login" action="<%=request.getContextPath()%>/login" method="post">
-                    <input type="hidden" name="action" value="web">
+                <form class="form-login" action="<%=request.getContextPath()%>/loginWeb" method="post">
                     <div class="row text-center">
                         <div class="logo mt-3">
                             <img src="<%=request.getContextPath()%>/img/logo.png" alt="logo">
@@ -91,7 +90,7 @@
                                 <h3>Đăng nhập</h3>
                             </button>
                         </div>
-                        <a href="<%=request.getContextPath()%>/views/login/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
+                        <a href="<%=request.getContextPath()%>/views/user/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
                         <span>Hoặc</span> <div class="d-flex">
                         <div class="line"></div>
                         <div class="line"></div>
@@ -103,7 +102,7 @@
                             <i class="fab fa-facebook"></i>
                         </a>
                         <a
-                            href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8080/DaQuyStore_war/login&response_type=code&client_id=154679706679-29nmsp8c4r1phddtk3d4gcr1u5b5hic7.apps.googleusercontent.com&approval_prompt=force"
+                            href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/DaQuyStore_war/loginGoogle&response_type=code&client_id=154679706679-29nmsp8c4r1phddtk3d4gcr1u5b5hic7.apps.googleusercontent.com&approval_prompt=force"
                             class="ms-3 pt-2">
                             <i class="fab fa-google"></i>
                         </a>
@@ -111,7 +110,7 @@
                     <div class=" fs-5 d-flex justify-content-end">
 
                         <div id="register" class=" btn border border-dark" >
-                            <a href="${pageContext.request.contextPath}/views/login/register.jsp" class="fw-bold text-decoration-none">
+                            <a href="${pageContext.request.contextPath}/register" class="fw-bold text-decoration-none">
                                 Đăng ký</a>
                         </div>
 
