@@ -1,8 +1,9 @@
-package model;
+package model.modelAdmin;
 
-import java.sql.Date;
 
-public class User {
+import java.util.Date;
+
+public class AdminUsers {
     private String id;
     private String username;
     private String password;
@@ -19,8 +20,27 @@ public class User {
     private String role;
     private String status;
     private String typeLogin;
+    public AdminUsers(){
 
-    public User(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
+    }
+
+    public AdminUsers(String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, String role, String status) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.avatar = avatar;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.role = role;
+        this.status = status;
+    }
+
+    public AdminUsers(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -38,30 +58,6 @@ public class User {
         this.status = status;
         this.typeLogin = typeLogin;
     }
-
-    public User(String userName, String password,String email,String type_login,String avatar,String fullname){
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.role = "user";
-        this.type_login = type_login;
-        this.avatar = avatar;
-        this.fullName = fullname;
-    }
-    public User(String userName, String password,String email,String type_login){
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.role = "user";
-        this.type_login = type_login;
-    }
-
-
-
-    public String getUserName() {
-        return userName;
-    }
-
 
     public String getId() {
         return id;
@@ -190,6 +186,5 @@ public class User {
     public void setTypeLogin(String typeLogin) {
         this.typeLogin = typeLogin;
     }
-
 
 }

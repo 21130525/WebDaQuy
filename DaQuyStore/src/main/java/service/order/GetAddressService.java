@@ -34,7 +34,7 @@ public class GetAddressService {
             in.close();
             connection.disconnect();
 
-            System.out.println(informationString);
+            System.out.println(informationString.toString());
 
 
         }

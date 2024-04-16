@@ -1,20 +1,20 @@
-package controller.controllerWeb;
+package controller.controllerWeb.payment;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import model.Config;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Config;
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-@WebServlet("/test")
+@WebServlet("/payment")
 public class PaymentController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String vnp_Version = "2.1.0";

@@ -1,7 +1,7 @@
 package service.user;
 
-import dao.ActivacationCodeDao;
-import dao.UserDAO;
+import dao.userDAO.ActivacationCodeDao;
+import dao.userDAO.UserDAO;
 import model.ActivacationCode;
 import model.User;
 import service.EncryptAndDencrypt;
