@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<%=HttpServletResponse.SC_NOT_FOUND%>
+loi 404
 </body>
 </html>

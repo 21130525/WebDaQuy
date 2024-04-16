@@ -1,4 +1,4 @@
-package controller.controllerUser.facebook;
+package controller.controllerLogin.facebook;
 
 import com.google.gson.Gson;
 import com.restfb.DefaultFacebookClient;

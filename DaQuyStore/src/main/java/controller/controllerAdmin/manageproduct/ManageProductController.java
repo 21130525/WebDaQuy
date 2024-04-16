@@ -4,7 +4,6 @@ import com.mysql.cj.x.protobuf.MysqlxCrud;
 import service.manageproduct.AddProductService;
 import service.manageproduct.DeleteProductService;
 import service.manageproduct.GetProductService;
-import service.manageproduct.UploadImageService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name="ManageProductController",urlPatterns = {"/addproduct_admin","/deleteproduct_admin","/filterproduct_admin","/updateproduct_admin","/findproduct_admin","/getproduct_admin","/uploadimage_admin"})
+@WebServlet(name="ManageProductController",urlPatterns = {"/addproduct_admin","/deleteproduct_admin","/filterproduct_admin","/updateproduct_admin","/findproduct_admin","/getproduct_admin"})
 public class ManageProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,11 +36,7 @@ public class ManageProductController extends HttpServlet {
             // Xử lý cập nhật sản phẩm
         } else if (url.endsWith("/findproduct")) {
             // Xử lý tìm kiếm sản phẩm
-        }else  if(url.endsWith("/uploadimage_admin")){
-            UploadImageService imageService=new UploadImageService();
-            imageService.add(req,resp);
-        }
-        else if (url.endsWith("/getproduct_admin")) {
+        } else if (url.endsWith("/getproduct_admin")) {
             // Xử lý lấy thông tin sản phẩm
             try {
                 GetProductService getProductService=new GetProductService();

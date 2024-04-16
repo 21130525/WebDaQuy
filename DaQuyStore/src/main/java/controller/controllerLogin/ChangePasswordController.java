@@ -1,4 +1,4 @@
-package controller.controllerUser;
+package controller.controllerLogin;
 
 import service.user.ChangePasswordService;
 

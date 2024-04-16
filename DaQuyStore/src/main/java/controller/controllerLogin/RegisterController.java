@@ -1,26 +1,11 @@
-package controller.controllerUser;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
+package controller.controllerLogin;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
-
-import controller.controllerUser.google.GoogleInfo;
-import controller.controllerUser.google.TokenGoogle;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import model.ActivacationCode;
 import model.User;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import service.EncryptAndDencrypt;
-import service.user.LoginService;
 import service.user.RegisterService;
 
 import javax.servlet.RequestDispatcher;
@@ -30,40 +15,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
 
-
-@WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
+@WebServlet("/register")
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
-    private LoginService loginService = new LoginService();
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String servletPath = req.getServletPath();
-        if ("/register".equals(servletPath)) {
-            // Xử lý khi client đến từ URL "/register"
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/views/user/register.jsp");
-            dispatcher.forward(req, resp);
-        } else if ("/registerGoogle".equals(servletPath)) {
-            // Xử lý khi client đến từ URL "/loginGoogle"
-            try {
-                registerGoogle(req,resp);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("/registerFacebook".equals(servletPath)) {
-            // Xử lý khi client đến từ URL "/loginFaceBook"
-
-        } else {
-            // Xử lý khi không phân biệt được URL
-        }
+       doPost(req,resp);
     }
-
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        switch (action) {
+            case "RegisterWeb":
                 String username = request.getParameter("user");
                 String password = encryptAndDencrypt.encrypt( request.getParameter("pass"));
                 String email = request.getParameter("email");
@@ -73,27 +43,30 @@ public class RegisterController extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                // đang ky
+                // đang nhập
                 try {
-                    registerWeb(request,response,username,password,email);
+                    loginWeb(request,response,username,password,email);
                 } catch (SQLException e) {
                         throw new RuntimeException(e);
                 }
+                break;
+            case "RegisterGoogle":
+                break;
+            case "RegisterFacebook":
+                break;
+        }
     }
-    /*
-    * đăng ký tài khoản trên web
-    * */
-    private void registerWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
+
+
+    private void loginWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession(false);
         checkRegister(request, response, username, email);
         String code = registerService.createActivationCode(username,password,email);
         sendEmail(request,response,code,email);
     }
 
-    /*
-    * gửi email
-    * */
     protected void sendEmail(HttpServletRequest request, HttpServletResponse response, String code,String email) throws IOException {
+
         try {
             final String HOST_NAME = "smtp.gmail.com";
             final int SSL_PORT = 465; // Port for SSL
@@ -141,6 +114,8 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void checkRegister(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String email) throws ServletException, IOException, SQLException {
+
+
         if (registerService.checkDuplicatedUsername(username)) {
             servletRequest.setAttribute("announced", "Tài khoản đã tồn tại");
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
@@ -153,42 +128,4 @@ public class RegisterController extends HttpServlet {
         }
 
     }
-
-    /*
-    * Đăng ký tài khoản google
-    * */
-    private void registerGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
-        HttpSession session = req.getSession(false);
-        String code = req.getParameter("code");
-        String token =  getToken(code);
-        GoogleInfo user = getUserInfo(token);
-        checkRegister(req,resp,user.getEmail(),user.getEmail());
-        // email: username; id: password;
-        User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
-        if(registerService.insertUser(u)){
-            System.out.println(u);
-            session.setAttribute("username", u.getUserName());
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
-            requestDispatcher.forward(req, resp);
-        }
-    }
-
-    public  String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
-        String response = Request.Post(TokenGoogle.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", TokenGoogle.GOOGLE_CLIENT_ID_REGISTER)
-                        .add("client_secret", TokenGoogle.GOOGLE_CLIENT_SECRET_REGISTER)
-                        .add("redirect_uri", TokenGoogle.GOOGLE_REDIRECT_URI_REGISTER).add("code", code)
-                        .add("grant_type", TokenGoogle.GOOGLE_GRANT_TYPE).build())
-                .execute().returnContent().asString();
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        return jobj.get("access_token").toString().replaceAll("\"", "");
-    }
-
-    public  GoogleInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = TokenGoogle.GOOGLE_LINK_GET_USER_INFO + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-        return new Gson().fromJson(response, GoogleInfo.class);
-    }
-
 }

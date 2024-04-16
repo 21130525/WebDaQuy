@@ -130,7 +130,7 @@
                     <li class="nav-item ms-3 me-3 pt-2" style="list-style-type: none;">
                         <button class="btn btn-outline-primary border-0 ">
                             <strong>
-                                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/loginWeb">Đăng
+                                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/login">Đăng
                                     nhập</a>
                             </strong>
                         </button>
@@ -149,10 +149,10 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item "
-                                   href="${pageContext.request.contextPath}/views/user/changepassword.jsp">Đổi mật
+                                   href="${pageContext.request.contextPath}/views/login/changepassword.jsp">Đổi mật
                                 khẩu</a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/views/user/profile.jsp">Hồ sơ</a></li>
+                                   href="${pageContext.request.contextPath}/views/login/profile.jsp">Hồ sơ</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
