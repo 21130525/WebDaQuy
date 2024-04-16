@@ -97,7 +97,7 @@ public class LoginController  extends HttpServlet {
         User account = loginService.checkLogin(user.getEmail(),user.getId(),"google");
         System.out.println(account);
         if(account != null) {
-            session.setAttribute("username", account.getUserName());
+            session.setAttribute("username", account.getUsername());
             req.getRequestDispatcher("/home").forward(req,resp);
         }else{
             req.getRequestDispatcher("/error").forward(req,resp);

@@ -167,7 +167,7 @@ public class RegisterController extends HttpServlet {
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
         if(registerService.insertUser(u)){
             System.out.println(u);
-            session.setAttribute("username", u.getUserName());
+            session.setAttribute("username", u.getUsername());
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
             requestDispatcher.forward(req, resp);
         }

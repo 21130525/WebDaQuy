@@ -53,7 +53,7 @@ public class LoginController  extends HttpServlet {
         String idUser = "";
         String username = request.getParameter("username");
         String pass =request.getParameter("password");
-        ArrayList<User> list = loginService.getAllUser();
+        ArrayList<User> list = loginService.getAllUser("web");
         HttpSession session = request.getSession(true);
         if (username == null || pass == null) {
             request.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");

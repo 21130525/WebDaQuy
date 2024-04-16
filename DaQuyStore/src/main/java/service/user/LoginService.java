@@ -1,6 +1,6 @@
 package service.user;
 
-import dao.UserDAO;
+import dao.userDAO.UserDAO;
 import model.User;
 import service.EncryptAndDencrypt;
 
@@ -17,7 +17,7 @@ public class LoginService {
         ArrayList<User> list = getAllUser(typeLogin);
         User user = null;
         for (User u : list) {
-            if (u.getUserName().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(password)) {
+            if (u.getUsername().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(password)) {
                 return u;
             }
         }

@@ -33,3 +33,8 @@ public class AdminChart extends HttpServlet {
         resp.getWriter().println("Da them thanh cong du lieu");
     }
 }
+class Student {
+    String name;
+    String grade;
+    public Student(String name, String grade) {}
+}

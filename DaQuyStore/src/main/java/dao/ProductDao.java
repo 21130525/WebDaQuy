@@ -1,5 +1,7 @@
 package dao;
 
+import connector.DAOConnection;
+import dao.userDAO.IDAO;
 import model.Product;
 import model.User;
 import service.ProductService;
@@ -11,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ProductDao implements DAOInterface<Product>{
+public class ProductDao implements IDAO<Product> {
 
 
     private int id;
