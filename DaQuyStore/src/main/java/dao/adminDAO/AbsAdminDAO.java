@@ -30,7 +30,7 @@ public  abstract class AbsAdminDAO<T> implements IDAOAdmin<T> {
     }
 
     @Override
-    public void delete(T obj) {
+    public void delete(T obj) throws SQLException {
         if(obj instanceof AdminUsers){
 
         }else if(obj instanceof AdminProduct){
@@ -39,12 +39,12 @@ public  abstract class AbsAdminDAO<T> implements IDAOAdmin<T> {
     }
 
     @Override
-    public void filter(T obj) {
+    public void filter(T obj) throws SQLException {
 
     }
 
     @Override
-    public void findbyCreatedat(T obj) {
+    public void findbyName(T obj,String name) throws SQLException {
 
     }
 
