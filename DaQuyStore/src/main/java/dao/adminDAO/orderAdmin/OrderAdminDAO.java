@@ -1,8 +1,11 @@
 package dao.adminDAO.orderAdmin;
 
+import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
 import model.modelAdmin.AdminOrderDetail;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -19,18 +22,36 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     }
 
     @Override
-    public void delete(AdminOrderDetail obj) {
+    public void delete(AdminOrderDetail obj) throws SQLException {
+        String sql="Delete from order_details where name=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,"");
+        pr.executeUpdate();
+    }
+
+    @Override
+    public void filter(AdminOrderDetail obj) throws SQLException {
+        String sql="Select ... from order_details where created_at=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,"");
+        ResultSet rs= pr.executeQuery();
+        while(rs.next()){
+
+        }
 
     }
 
     @Override
-    public void filter(AdminOrderDetail obj) {
+    public void findbyName(AdminOrderDetail obj,String input) throws SQLException {
+        String sql="Select quantity_total,total_price from order_details where name=?";
+        PreparedStatement pr= DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,input);
+        ResultSet rs=pr.executeQuery();
+        while(rs.next()){
 
-    }
-
-    @Override
-    public void findbyCreatedat(AdminOrderDetail obj) {
-
+        }
+        pr.close();
+        rs.close();
     }
 
     @Override

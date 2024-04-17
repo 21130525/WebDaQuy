@@ -15,7 +15,7 @@ public interface IDAOAdmin<T> {
 
     public void filter(T obj) throws SQLException;
 
-    public void findbyCreatedat(T obj);
+    public void findbyName(T obj,String name) throws SQLException;
     public ArrayList<T> callSelect(T obj) throws SQLException;
     public void callAdd(T obj) throws SQLException;
     public void callDelete(T obj) throws SQLException;
