@@ -19,6 +19,7 @@ import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import service.EncryptAndDencrypt;
+import service.user.LoginService;
 import service.user.RegisterService;
 
 import javax.servlet.RequestDispatcher;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
+    private LoginService loginService = new LoginService();
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override

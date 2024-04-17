@@ -12,4 +12,6 @@ public class LoginService {
         return listuser;
     }
 
+    public User checkLogin(String email, String id, String google) {
+    }
 }

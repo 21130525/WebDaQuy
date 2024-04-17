@@ -26,6 +26,7 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns={ "/loginWeb" ,"/loginGoogle","/loginFaceBook"})
 public class LoginController  extends HttpServlet {
     EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
+    LoginService loginService = new LoginService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String servletPath = req.getServletPath();
@@ -35,7 +36,11 @@ public class LoginController  extends HttpServlet {
             dispatcher.forward(req, resp);
         } else if ("/loginGoogle".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginGoogle"
-            loginGoogle(req,resp);
+            try {
+                loginGoogle(req,resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if ("/loginFaceBook".equals(servletPath)) {
             // Xử lý khi client đến từ URL "/loginFaceBook"
         } else {
@@ -58,26 +63,16 @@ public class LoginController  extends HttpServlet {
         String idUser = "";
         String username = request.getParameter("username");
         String pass =request.getParameter("password");
-        ArrayList<User> list = loginService.getAllUser();
+
         HttpSession session = request.getSession(true);
         if (username == null || pass == null) {
             request.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");
-            request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/home").forward(request, response);
         } else {
-            boolean isvalid = false;
-            User user = null;
-            for (User u : list) {
-                if (u.getUserName().equals(username) && encryptAndDencrypt.decrypt(u.getPassword()).equals(pass)) {
-                    isvalid = true;
-                    idUser = u.getId();
-                    user = u;
-                    break;
-                }
-            }
-            if (isvalid) {
+            User user = loginService.checkLogin(username, pass,"web");
+            if (user != null) {
                 if (session != null) {
                     if (user.getRole().equals("admin")) {
-
                         session.setAttribute("username", username);
                         request.getRequestDispatcher("/views/admin/admin.jsp").forward(request, response);
                     } else if (user.getRole().equals("user")) {
@@ -94,11 +89,20 @@ public class LoginController  extends HttpServlet {
         }
     }
 
-    private void loginGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void loginGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        HttpSession session = req.getSession(true);
         String code = req.getParameter("code");
         String token =  getToken(code);
         GoogleInfo user = getUserInfo(token);
         System.out.println(user);
+        User account = loginService.checkLogin(user.getEmail(),user.getId(),"google");
+        System.out.println(account);
+        if(account != null) {
+            session.setAttribute("username", account.getUserName());
+            req.getRequestDispatcher("/home").forward(req,resp);
+        }else{
+            req.getRequestDispatcher("/error").forward(req,resp);
+        }
     }
     public  String getToken(String code) throws ClientProtocolException, IOException {
         // call api to get token
