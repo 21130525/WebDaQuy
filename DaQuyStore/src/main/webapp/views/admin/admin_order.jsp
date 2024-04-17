@@ -16,6 +16,7 @@
 </head>
 <body>
 <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
+<button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-plus"></i>Tim kiem</button>
 <select class="form-select" aria-label="Default select example">
     <option selected>Muc luc</option>
     <option value="1">Loại</option>
@@ -69,6 +70,22 @@
     })
     $(document).ready(function (){
         $("#dt-search-0").attr('name','search')
+    })
+    $(document).ready(function (){
+        $("#btn").click(function(){
+            $.ajax({
+                url:'',
+                method:'GET',
+                dataType:'JSON',
+                data:$('#dt-search-0').value,
+                success:function (response){
+
+                },
+                error:function (error){
+
+                }
+            })
+        })
     })
 </script>
 </html>
