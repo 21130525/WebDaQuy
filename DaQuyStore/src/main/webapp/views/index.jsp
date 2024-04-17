@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <%--list product--%>
-                <jsp:include page="web/product/listProduct.jsp"></jsp:include>
+                <jsp:include page="web/product/listProduct.jsp"/>
 
             </div>
             <div class="categogies-new">

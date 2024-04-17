@@ -76,6 +76,7 @@ public class LoginController  extends HttpServlet {
                     } else if (user.getRole().equals("user")) {
                         session.setAttribute("idUser", idUser);
                         session.setAttribute("username", username);
+                        session.setAttribute("avatar", user.getAvatar());
                         response.sendRedirect(request.getContextPath()+ "/views/index.jsp");
                     }
                 }
@@ -97,6 +98,7 @@ public class LoginController  extends HttpServlet {
         System.out.println(account);
         if(account != null) {
             session.setAttribute("username", account.getUsername());
+            session.setAttribute("avatar", account.getAvatar());
             req.getRequestDispatcher("/home").forward(req,resp);
         }else{
             req.getRequestDispatcher("/error").forward(req,resp);

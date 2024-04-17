@@ -54,6 +54,7 @@ public class User {
         this.email = email;
         this.role = "user";
         this.typeLogin = typeLogin;
+        this.avatar = "../img/avatar.png";
     }
 
 
@@ -191,5 +192,25 @@ public class User {
         this.typeLogin = typeLogin;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                ", deleteAt=" + deleteAt +
+                ", role='" + role + '\'' +
+                ", status='" + status + '\'' +
+                ", typeLogin='" + typeLogin + '\'' +
+                '}';
+    }
 }

@@ -61,10 +61,10 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
 
     }
 
-    @Override
-    public void findbyCreatedat(AdminUsers obj) {
-
-    }
+//    @Override
+//    public void findbyCreatedat(AdminUsers obj) {
+//
+//    }
 
     public ArrayList<AdminUsers> callSelect(AdminUsers obj) throws SQLException {
        ArrayList<AdminUsers> list= super.select(obj);
