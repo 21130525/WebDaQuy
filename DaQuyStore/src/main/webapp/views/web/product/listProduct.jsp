@@ -1,6 +1,7 @@
 <%@ page import="model.Product" %>
-<%@ page import="service.ProductService" %>
+<%@ page import="service.manageUser.product.ProductService" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.SQLException" %>
 <%--
 Created by IntelliJ IDEA.
   User: ADMIN
@@ -9,7 +10,6 @@ Created by IntelliJ IDEA.
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- link bootstrap -->
 <style>
     .list-product {
         width: 1080px;
@@ -69,7 +69,12 @@ Created by IntelliJ IDEA.
         <div class="row products">
             <%
                 ProductService ps = new ProductService();
-                ArrayList<Product> lists = ps.getProductPerPage(1);
+                ArrayList<Product> lists = null;
+                try {
+                    lists = ps.getProductPerPage(1);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 int index =0;
                 for(Product p : lists) {
                     if(index==4){

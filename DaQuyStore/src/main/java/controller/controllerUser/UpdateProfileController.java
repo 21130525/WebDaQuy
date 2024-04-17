@@ -1,6 +1,6 @@
 package controller.controllerUser;
 
-import service.user.UpdateProfileService;
+import service.manageUser.registerAndLogin.UpdateProfileService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,6 +1,6 @@
 package controller.controllerUser;
 
-import service.user.ChangePasswordService;
+import service.manageUser.registerAndLogin.ChangePasswordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class ChangePasswordController  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+
     }
 
     @Override
