@@ -62,7 +62,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
 
     @Override
-    public void findbyCreatedat(AdminUsers obj) {
+    public void findbyName(AdminUsers obj,String name) {
 
     }
 
