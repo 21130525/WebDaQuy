@@ -39,27 +39,27 @@ public class User {
         this.typeLogin = typeLogin;
     }
 
-    public User(String userName, String password,String email,String type_login,String avatar,String fullname){
-        this.userName = userName;
+    public User(String username, String password,String email,String typeLogin,String avatar,String fullname){
+        this.username = username;
         this.password = password;
         this.email = email;
         this.role = "user";
-        this.type_login = type_login;
+        this.typeLogin = typeLogin;
         this.avatar = avatar;
         this.fullName = fullname;
     }
-    public User(String userName, String password,String email,String type_login){
-        this.userName = userName;
+    public User(String username, String password,String email,String typeLogin){
+        this.username = username;
         this.password = password;
         this.email = email;
         this.role = "user";
-        this.type_login = type_login;
+        this.typeLogin = typeLogin;
     }
 
 
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
 
@@ -71,11 +71,11 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getusername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setusername(String username) {
         this.username = username;
     }
 
