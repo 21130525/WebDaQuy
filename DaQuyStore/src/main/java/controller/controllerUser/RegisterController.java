@@ -1,8 +1,4 @@
 package controller.controllerUser;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,9 +15,9 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import service.EncryptAndDencrypt;
-import service.user.LoginService;
-import service.user.RegisterService;
+import service.manageUser.security.EncryptAndDencrypt;
+import service.manageUser.registerAndLogin.LoginService;
+import service.manageUser.registerAndLogin.RegisterService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -1,7 +1,0 @@
-.menu-items:hover {
-    background-color: cyan;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    cursor: pointer;
-    transform: scale(1.1);
-}

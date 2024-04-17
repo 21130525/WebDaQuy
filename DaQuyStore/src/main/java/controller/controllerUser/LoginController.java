@@ -9,8 +9,8 @@ import model.User;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-import service.EncryptAndDencrypt;
-import service.user.LoginService;
+import service.manageUser.security.EncryptAndDencrypt;
+import service.manageUser.registerAndLogin.LoginService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @WebServlet(urlPatterns={ "/loginWeb" ,"/loginGoogle","/loginFaceBook"})
 public class LoginController  extends HttpServlet {

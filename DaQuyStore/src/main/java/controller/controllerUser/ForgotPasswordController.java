@@ -3,7 +3,7 @@ package controller.controllerUser;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import service.user.ForgotPasswordService;
+import service.manageUser.registerAndLogin.ForgotPasswordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,22 +63,14 @@ public class ForgotPasswordController extends HttpServlet {
                     Transport.send(message);
                     request.setAttribute("email",email);
                     request.getRequestDispatcher("/views/login/updatepassword.jsp").forward(request,response);
-                } catch (MessagingException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ServletException e) {
+                } catch (MessagingException | IOException | ServletException e) {
                     throw new RuntimeException(e);
                 }
             }else{
                 request.setAttribute("notification","Email không tồn tại");
                 request.getRequestDispatcher("/views/login/forgotPassword.jsp").forward(request,response);
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (RuntimeException | ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
