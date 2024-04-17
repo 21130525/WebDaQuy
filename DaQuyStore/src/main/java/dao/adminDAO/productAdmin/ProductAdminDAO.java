@@ -66,7 +66,7 @@ public class ProductAdminDAO<A> extends AbsAdminDAO<AdminProduct> {
     }
 
     @Override
-    public void findbyCreatedat(AdminProduct obj) {
+    public void findbyName(AdminProduct obj,String name) {
 
     }
 
