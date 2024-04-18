@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+<button type="button" class="btn btn-primary" id="btn-promp">Trạng thái</button>
 <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
 <table id="table_id" class="table table-striped">
     <thead>
@@ -163,6 +164,7 @@
     <%--    </tr>--%>
     </tbody>
 </table>
+<%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -176,6 +178,8 @@
     $(document).ready(function () {
         $("#table_id").DataTable();
     })
+
+
     var $tbody = $('#body')
     $(document).ready(function () {
         $.ajax({
@@ -184,11 +188,11 @@
             dataType: 'JSON',
             success: function (response) {
                 $.each(response, function (index, value) {
-                        var value_item=Object.keys(value)
+                        var value_item = Object.keys(value)
                         var $row = $('<tr>')
-                        value_item.forEach(function(key){
-                            var value_item_key=value[key]
-                            var $cell=$('<td>').text(value_item_key)
+                        value_item.forEach(function (key) {
+                            var value_item_key = value[key]
+                            var $cell = $('<td>').text(value_item_key)
                             $row.append($cell)
                         })
                         $tbody.append($row);
@@ -198,6 +202,27 @@
             }
         })
     });
-
+    $(document).ready(function (){
+        $('#btn-promp').click(function(){
+            let input_account = window.prompt('Mời bạn nhập tài khoản');
+            if(input_account !== null){
+                let inform_account = confirm('Bạn có muốn chuyển đổi quyền của tài khoản không?');
+                if(inform_account === true){
+                    $.ajax({
+                        url: 'url_cua_ban', // Thay 'url_cua_ban' bằng URL thực tế của bạn
+                        data: JSON.stringify({account: input_account}), // Ép input_account thành chuỗi JSON
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function (response){
+                            alert('Chuyển đổi quyền thành công')
+                        },
+                        error: function(error){
+                            alert('Chuyển đổi quyền không thành công');
+                        }
+                    });
+                }
+            }
+        });
+    });
 </script>
 </html>
