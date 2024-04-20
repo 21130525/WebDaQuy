@@ -27,37 +27,37 @@
 <div class="">
     <%--main--%>
     <div class="main">
-        <div class="banner">
-            <img class="background-image" src="../img/banner/banner.png" alt="Background Image">
-            <div class="content">
-                <h1 class="title-name"> TTN STORE </h1>
-                <p class="intro">TTN Shop tự hào là điểm đến lý tưởng cho những người yêu thích đá quý. Với một bộ sưu
-                    tập
-                    đa dạng, chúng tôi cung cấp những sản phẩm chất lượng cao, từ đá quý tự nhiên đến các mảnh nghệ
-                    thuật
-                    thủ công tinh tế. Khám phá sự đẹp tinh khôi của tự nhiên tại TTN Shop ngay hôm nay!</p>
-            </div>
-        </div>
-        <div class="categogies-grid-container">
-            <%--            <jsp:include page="/category/category.jsp"></jsp:include>--%>
-            <div class="jewelry-categogies">
-                <h2 class="title-h2"> TRANG SỨC </h2>
-                <div class="banner-jewelry">
-                    <div class="w3-content w3-section" style="max-width:100%">
-                        <img class="mySlides" src="../img/banner/jewelry.png" style="width:100%">
-                        <img class="mySlides" src="../img/banner/jewelry-2.png" style="width:100%">
-                        <img class="mySlides" src="../img/banner/jewelry-3.png" style="width:100%">
-                    </div>
-                </div>
+<%--        <div class="banner">--%>
+<%--            <img class="background-image" src="../img/banner/banner.png" alt="Background Image">--%>
+<%--            <div class="content">--%>
+<%--                <h1 class="title-name"> TTN STORE </h1>--%>
+<%--                <p class="intro">TTN Shop tự hào là điểm đến lý tưởng cho những người yêu thích đá quý. Với một bộ sưu--%>
+<%--                    tập--%>
+<%--                    đa dạng, chúng tôi cung cấp những sản phẩm chất lượng cao, từ đá quý tự nhiên đến các mảnh nghệ--%>
+<%--                    thuật--%>
+<%--                    thủ công tinh tế. Khám phá sự đẹp tinh khôi của tự nhiên tại TTN Shop ngay hôm nay!</p>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="categogies-grid-container">--%>
+<%--            &lt;%&ndash;            <jsp:include page="/category/category.jsp"></jsp:include>&ndash;%&gt;--%>
+<%--            <div class="jewelry-categogies">--%>
+<%--                <h2 class="title-h2"> TRANG SỨC </h2>--%>
+<%--                <div class="banner-jewelry">--%>
+<%--                    <div class="w3-content w3-section" style="max-width:100%">--%>
+<%--                        <img class="mySlides" src="../img/banner/jewelry.png" style="width:100%">--%>
+<%--                        <img class="mySlides" src="../img/banner/jewelry-2.png" style="width:100%">--%>
+<%--                        <img class="mySlides" src="../img/banner/jewelry-3.png" style="width:100%">--%>
+<%--                    </div>--%>
+<%--                </div>--%>
                 <%--list product--%>
                 <jsp:include page="web/product/listProduct.jsp"/>
 
-            </div>
-            <div class="categogies-new">
-                <h2 class="title-h2"> SẢN PHẨM MỚI</h2>
-                <%--                <jsp:include page="product/products-new.jsp"></jsp:include>--%>
-            </div>
-        </div>
+<%--            </div>--%>
+<%--            <div class="categogies-new">--%>
+<%--                <h2 class="title-h2"> SẢN PHẨM MỚI</h2>--%>
+<%--                &lt;%&ndash;                <jsp:include page="product/products-new.jsp"></jsp:include>&ndash;%&gt;--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 </div>
 <%--footer--%>

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="model.User" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 20/3/2024
@@ -14,6 +14,7 @@
 
 </head>
 <body>
+<% User u = (User) session.getAttribute("user");%>
 <jsp:include page="../header.jsp"/>
 <section id="profile" class="mt-2">
     <div class="container ">
@@ -24,18 +25,24 @@
 
                     <div class="avatar d-flex mb-2">
                         <div class="img-thrum">
-                            <img src="../src/main/webapp/img/avatar.png" alt="" class="rounded-5 border">
+                            <img src="<%=u.getAvatar()%>" alt="" class="rounded-5 border">
                         </div>
 
                         <div class=" d-flex  ms-3">
-                            <p class="m-auto "> <strong>username</strong></p>
+                            <p class="m-auto "><strong><%=u.getusername()%>></strong></p>
                         </div>
                     </div>
                     <ul class="context-profile list-group list-group-flush">
-                        <li class="list-group-item" style="background-color: #F5F5F5;"><button id="btnProfile"
-                                                                                               class="btn actived">Hồ sơ của tôi</button></li>
-                        <li class="list-group-item" style="background-color: #F5F5F5;"><button id="btnOrder"
-                                                                                               class="btn  ">Đơn đã mua</button></li>
+                        <li class="list-group-item" style="background-color: #F5F5F5;">
+                            <button id="btnProfile"
+                                    class="btn actived">Hồ sơ của tôi
+                            </button>
+                        </li>
+                        <li class="list-group-item" style="background-color: #F5F5F5;">
+                            <button id="btnOrder"
+                                    class="btn  ">Đơn đã mua
+                            </button>
+                        </li>
 
                     </ul>
                 </div>
@@ -55,17 +62,23 @@
                                     <div class="">
                                         <div class="row my-2">
                                             <p class="col-4 text-end ">Tên đăng nhập:</p>
-                                            <p class="col-8">username</p>
+                                            <p class="col-8"><%=u.getusername()%>
+                                            </p>
                                         </div>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Họ và tên:</p>
-                                            <p class=" col-8"><input class=" w-100" type="text" name="fullName"
-                                                                     value=""></p>
+                                            <p class=" col-8"><% if (u.getFullName() == "" || u.getFullName() == null) { %>
+                                                <input class=" w-100" type="text" name="fullName"
+                                                       value="">
+                                                <%} else { %>
+                                                <%=u.getFullName()%>
+                                                <%}%>
+                                            </p>
                                         </div>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Email:</p>
                                             <div class="col-8 d-flex">
-                                                <p id="showEmail" class="w-75">hi @gmail.com</p>
+                                                <p id="showEmail" class="w-75"><%=u.getEmail()%></p>
                                                 <button type="button" id="btnChangeEmail"
                                                         class="btn btn-link  p-0  ms-3" style="height: 24px;">
                                                     <i class="fas fa-edit"></i>
@@ -75,7 +88,7 @@
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Số điện thoại:</p>
                                             <div class="col-8 d-flex">
-                                                <p id="showPhoneNUmber" class="w-75">0112211</p>
+                                                <p id="showPhoneNUmber" class="w-75"><%=u.getPhoneNumber()%></p>
                                                 <input class="w-75" type="text" name="phoneNumber"
                                                        id="ipphoneNumber" value="" disabled>
                                                 <button type="button" id="btnPhoneNumber" value="thay đổi"
@@ -86,7 +99,7 @@
                                         <div class="row my-2">
                                             <p class=" col-4 text-end">Địa chỉ:</p>
                                             <div class="col-8 d-flex">
-                                                <p id="showAddress" class="w-75">hochi minh</p>
+                                                <p id="showAddress" class="w-75"><%=u.getAddress()%></p>
                                                 <input type="text" class="w-75 " name="ipAddress" id="ipAddress"
                                                        value="" disabled>
                                                 <button id="btnAddress" type="button" class="btn btn-link  p-0 ms-3"
@@ -97,29 +110,39 @@
                                         <div class="row my-2">
                                             <p class=" col-4 text-end">Giới Tính:</p>
                                             <div class=" col-8 ">
+
+
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label" for="inlineCheckbox1">Nữ</label>
                                                     <input class="form-check-input" type="radio" name="sex"
-                                                           id="inlineCheckbox1" value="NU">
+                                                           id="inlineCheckbox1" value="NU"
+                                                    <% if(u.getGender() =="nu"){%>
+                                                        checked
+                                                    <%}%>>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
                                                            for="inlineCheckbox2">Nam</label>
                                                     <input class="form-check-input" type="radio" name="sex"
-                                                           id="inlineCheckbox2" value="Nam">
+                                                           id="inlineCheckbox2" value="Nam"
+                                                        <% if(u.getGender() =="nam"){%>
+                                                           checked
+                                                        <%}%>>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
                                                            for="inlineCheckbox3">khác</label>
                                                     <input class="form-check-input" type="radio" name="sex"
-                                                           id="inlineCheckbox3" value="Khac" checked>
+                                                           id="inlineCheckbox3" value="Khac" <% if(u.getGender() =="khac"){%>
+                                                           checked
+                                                        <%}%>>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Ngày Sinh:</p>
                                             <div class=" col-8 d-flex"><input type="date" name="birthday"
-                                                                              id="birthday"></div>
+                                                                              id="birthday" value="<%=u.getBirthday()%>"></div>
                                         </div>
 
                                     </div>
@@ -129,7 +152,7 @@
                                 </div>
                                 <div class="col-4 border-start">
                                     <div class="text-center my-5">
-                                        <img id="imgAvatar" src="../src/main/webapp/img/avatar.png" alt="">
+                                        <img id="imgAvatar" src="<%=u.getAvatar()%>" alt="">
                                     </div>
                                     <div class="mb-3 text-center">
                                         <input class="form-control d-inline" type="file" id="formFile">
@@ -147,18 +170,21 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <button id="nav-all" class="navButton nav-link active" aria-current="page"
-                                        href="#">Tất cả</button>
+                                        href="#">Tất cả
+                                </button>
                             </li>
                             <li class="nav-item">
                                 <button id="nav-waitingPay" class="navButton nav-link" href="#">Chờ thanh
-                                    toán</button>
+                                    toán
+                                </button>
                             </li>
                             <li class="nav-item">
                                 <button id="nav-transport" class="navButton nav-link" href="#">Vận chuyển</button>
                             </li>
                             <li class="nav-item">
                                 <button id="nav-waitingForDelivery" class="navButton nav-link" href="#">chờ Giao
-                                    Hàng</button>
+                                    Hàng
+                                </button>
                             </li>
                             <li class="nav-item">
                                 <button id="nav-done" class="navButton nav-link" href="#">Hoàn thành</button>
@@ -168,7 +194,8 @@
                             </li>
                             <li class="nav-item">
                                 <button id="nav-returnProduct" class="navButton nav-link" href="#">Trả hàng/Hoàn
-                                    tiền</button>
+                                    tiền
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -332,6 +359,7 @@
             }
         }
     });
+
     function isValidPhoneNumber(phone) {
         // Biểu thức chính quy kiểm tra xem chuỗi chỉ chứa ký tự chữ cái hay không
         const pattern = /^(\+\d{1,3}[- ]?)?\d{10}$/;
@@ -343,7 +371,7 @@
             alert('số điện thoại không hợp lệ.');
             return false;
         }
-    };
+    }
 
     // thay đổi địa chỉ
     const btnAddress = document.getElementById('btnAddress');

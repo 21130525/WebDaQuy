@@ -74,9 +74,7 @@ public class LoginController  extends HttpServlet {
                         session.setAttribute("username", username);
                         request.getRequestDispatcher("/views/admin/admin.jsp").forward(request, response);
                     } else if (user.getRole().equals("user")) {
-                        session.setAttribute("idUser", idUser);
-                        session.setAttribute("username", username);
-                        session.setAttribute("avatar", user.getAvatar());
+                        session.setAttribute("user", user);
                         response.sendRedirect(request.getContextPath()+ "/views/index.jsp");
                     }
                 }
@@ -97,8 +95,7 @@ public class LoginController  extends HttpServlet {
         User account = loginService.checkLogin(user.getEmail(),user.getId(),"google");
         System.out.println(account);
         if(account != null) {
-            session.setAttribute("username", account.getUsername());
-            session.setAttribute("avatar", account.getAvatar());
+            session.setAttribute("user", account);
             req.getRequestDispatcher("/home").forward(req,resp);
         }else{
             req.getRequestDispatcher("/error").forward(req,resp);

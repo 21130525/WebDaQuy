@@ -126,7 +126,7 @@
 
 
                     <!-- login -->
-                    <% if (session.getAttribute("username") == null) {%>
+                    <% if (session.getAttribute("user") == null) {%>
                     <li class="nav-item dropdown ms-3 me-3 pt-2"  style="list-style-type: none;">
                         <a class="  nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                             <button class="btn btn-outline-primary border-0 ">
@@ -145,17 +145,16 @@
                         <button class="btn  border-1  nav-link dropdown-toggle"   data-bs-toggle="dropdown" aria-expanded="false">
                             <strong>
                                <%
-                                   String user = (String) session.getAttribute("username");
-                                   String avatar = (String) session.getAttribute("avatar");
+                                   User u = (User) session.getAttribute("user");
 
                                %>
 
-                                <img src="<%=avatar%>" alt="" class="rounded-5 mx-auto d-block border-2" style="height: 32px; width: 32px;">
+                                <img src="<%=u.getAvatar()%>" alt="" class="rounded-5 mx-auto d-block border-2" style="height: 32px; width: 32px;">
 
                             </strong>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li class="text-center"><Strong ><%=user%></Strong></li>
+                            <li class="text-center"><Strong ><%=u.getusername()%></Strong></li>
                             <li><a class="dropdown-item "
                                    href="${pageContext.request.contextPath}/views/user/changepassword.jsp">Đổi mật
                                 khẩu</a></li>

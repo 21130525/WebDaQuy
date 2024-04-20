@@ -32,10 +32,8 @@ public class VerifyRegisterController extends HttpServlet {
            if(ac!=null){
                User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"web");
                UserDAO uDao = new UserDAO();
-               System.out.println(u.toString());
                if(uDao.insert(u)) {
-                   session.setAttribute("username", u.getUsername());
-                   session.setAttribute("avatar", u.getAvatar());
+                   session.setAttribute("user", u);
                    req.getRequestDispatcher("/home").forward(req,resp);
                }
            }
