@@ -21,7 +21,7 @@ public class VerifyRegisterController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
 //        req.getSession(false); lấy phiên hiện tại nếu có tông tại ko có trả về null
-            HttpSession session = req.getSession(false);
+            HttpSession session = req.getSession(true);
             String code = req.getParameter("code");
             ActivacationCodeDao dao = new ActivacationCodeDao();
             ActivacationCode ac = dao.selectById(code);
