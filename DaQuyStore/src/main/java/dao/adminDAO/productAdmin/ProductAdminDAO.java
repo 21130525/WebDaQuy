@@ -64,11 +64,10 @@ public class ProductAdminDAO<A> extends AbsAdminDAO<AdminProduct> {
     public void filter(AdminProduct obj) {
 
     }
+    @Override
+    public void findbyName(AdminProduct obj,String name) {
 
-//    @Override
-//    public void findbyCreatedat(AdminProduct obj) {
-//
-//    }
+    }
 
     public static void main(String[] args) throws SQLException {
         AdminProduct adminProduct=new AdminProduct();
