@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
-public class UserDAO implements IDAO<User> {
+public class UserDAO extends AbsDAO<User> implements IDAO<User> {
     private String id;
     private String username;
     private String password;
@@ -28,9 +28,6 @@ public class UserDAO implements IDAO<User> {
     private String role;
     private String status;
     private String typeLogin;
-
-
-
 
     public static UserDAO getInstance() {
         return new UserDAO();
@@ -59,6 +56,7 @@ public class UserDAO implements IDAO<User> {
         int res = ps.executeUpdate();
         ps.close();
         con.close();
+        super.insert(user);
         return res >= 1;
     }
 
@@ -88,6 +86,7 @@ public class UserDAO implements IDAO<User> {
             int res = ps.executeUpdate();
             ps.close();
             con.close();
+            super.update(user);
             return res >= 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -129,14 +128,16 @@ public class UserDAO implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
+        super.selectById(id);
         return user;
     }
 
-    public User selectByUserName(String name) throws SQLException {
+    @Override
+    public User selectByName(String username) throws SQLException {
         String sql = " select * from users where username = ? ";
 
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
-        pst.setString(1, name);
+        pst.setString(1, username);
         ResultSet rs = pst.executeQuery();
         User user = null;
         if (rs.next()) {
@@ -162,8 +163,10 @@ public class UserDAO implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
+        super.selectByName(username);
         return user;
     }
+
 
     @Override
     public ArrayList<User> selectAll() throws SQLException {
@@ -256,6 +259,7 @@ public class UserDAO implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
+        super.selectById("login");
         return users;
     }
 }
