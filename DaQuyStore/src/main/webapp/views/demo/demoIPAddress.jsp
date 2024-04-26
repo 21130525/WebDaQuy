@@ -1,4 +1,4 @@
-<%@ page import="service.manageUser.serviceIPAddress" %>
+<%@ page import="service.manageUser.ServiceIPAddress" %>
 <%@ page import="java.net.InetAddress" %>
 <%@ page import="java.net.UnknownHostException" %><%--
   Created by IntelliJ IDEA.

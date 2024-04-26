@@ -9,13 +9,13 @@ public abstract   class AbsDAO<T extends IModel> implements IDAO<T>{
 
     @Override
     public boolean insert(T t) throws SQLException {
-        LogDao.insert(t,"register");
+        LogDao.getInstance().insert(t,"register");
         return true;
     }
 
     @Override
     public boolean update(T t) throws SQLException {
-        LogDao.update(t);
+        LogDao.getInstance().update(t);
         return true;
     }
 
@@ -26,14 +26,14 @@ public abstract   class AbsDAO<T extends IModel> implements IDAO<T>{
 
     @Override
     public T selectById(String id) throws SQLException {
-        LogDao.selectById(id);
+        LogDao.getInstance().selectById(id);
         return null;
     }
 
     @Override
     public T selectByName(String name) throws SQLException {
 
-        LogDao.selectByName(name,"login");
+        LogDao.getInstance().selectByName(name,"login");
         return null;
     }
 
