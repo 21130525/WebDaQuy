@@ -1,18 +1,22 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Log {
     private String id;
+    private String ip;
+    private String action;
     private String level;
     private String address;
-    private Object previousValue;
-    private Object currentValue;
+    private String previousValue;
+    private String currentValue;
     private Date created_at;
     private Date updated_at;
 
-    public Log(String id, String level, String address, Object previousValue, Object currentValue, Date created_at, Date updated_at) {
+    public Log(String id,String ip,String action, String level, String address, String previousValue, String currentValue, Date created_at, Date updated_at) {
         this.id = id;
+        this.action=action;
+        this.ip = ip;
         this.level = level;
         this.address = address;
         this.previousValue = previousValue;
@@ -20,6 +24,17 @@ public class Log {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
+    public Log(String ip,String action,String level, String address, String previousValue, String currentValue, Date created_at, Date updated_at) {
+        this.ip = ip;
+        this.action=action;
+        this.level = level;
+        this.address = address;
+        this.previousValue = previousValue;
+        this.currentValue = currentValue;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
 
     public String getId() {
         return id;
@@ -45,23 +60,23 @@ public class Log {
         this.address = address;
     }
 
-    public Object getPreviousValue() {
+    public String getPreviousValue() {
         return previousValue;
     }
 
-    public void setPreviousValue(Object previousValue) {
+    public void setPreviousValue(String previousValue) {
         this.previousValue = previousValue;
     }
 
-    public Object getCurrentValue() {
+    public String getCurrentValue() {
         return currentValue;
     }
 
-    public void setCurrentValue(Object currentValue) {
+    public void setCurrentValue(String currentValue) {
         this.currentValue = currentValue;
     }
 
-    public Date getCreated_at() {
+    public java.sql.Date getCreated_at() {
         return created_at;
     }
 
@@ -69,11 +84,27 @@ public class Log {
         this.created_at = created_at;
     }
 
-    public Date getUpdated_at() {
+    public java.sql.Date getUpdated_at() {
         return updated_at;
     }
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

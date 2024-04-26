@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class User {
+public class User implements IModel {
     private String id;
     private String username;
     private String password;
@@ -39,7 +39,7 @@ public class User {
         this.typeLogin = typeLogin;
     }
 
-    public User(String username, String password,String email,String typeLogin,String avatar,String fullname){
+    public User(String username, String password, String email, String typeLogin, String avatar, String fullname) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -48,20 +48,19 @@ public class User {
         this.avatar = avatar;
         this.fullName = fullname;
     }
-    public User(String username, String password,String email,String typeLogin){
+
+    public User(String username, String password, String email, String typeLogin) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = "user";
         this.typeLogin = typeLogin;
+        this.avatar = "../img/avatar.png";
     }
-
-
 
     public String getUsername() {
         return username;
     }
-
 
     public String getId() {
         return id;
@@ -189,6 +188,43 @@ public class User {
 
     public void setTypeLogin(String typeLogin) {
         this.typeLogin = typeLogin;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                ", deleteAt=" + deleteAt +
+                ", role='" + role + '\'' +
+                ", status='" + status + '\'' +
+                ", typeLogin='" + typeLogin + '\'' +
+                '}';
+    }
+
+    @Override
+    public String getTable() {
+        return "User";
+    }
+
+    @Override
+    public String getDataBefore() {
+        return this.toString();
+    }
+
+    @Override
+    public String getDataAfter() {
+        return this.toString();
     }
 
 

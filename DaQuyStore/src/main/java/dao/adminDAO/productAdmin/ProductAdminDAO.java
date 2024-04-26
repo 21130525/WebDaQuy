@@ -64,7 +64,6 @@ public class ProductAdminDAO<A> extends AbsAdminDAO<AdminProduct> {
     public void filter(AdminProduct obj) {
 
     }
-
     @Override
     public void findbyName(AdminProduct obj,String name) {
 

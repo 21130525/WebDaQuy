@@ -15,13 +15,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/verifyregister")
+@WebServlet("/verifyRegister")
 public class VerifyRegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
 //        req.getSession(false); lấy phiên hiện tại nếu có tông tại ko có trả về null
-            HttpSession session = req.getSession(false);
+            HttpSession session = req.getSession(true);
             String code = req.getParameter("code");
             ActivacationCodeDao dao = new ActivacationCodeDao();
             ActivacationCode ac = dao.selectById(code);
@@ -32,18 +32,13 @@ public class VerifyRegisterController extends HttpServlet {
            if(ac!=null){
                User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"web");
                UserDAO uDao = new UserDAO();
-               System.out.println(u.toString());
-               uDao.insert(u);
-               req.setAttribute("notify", "Đăng Ký Thành Công :))");
-               RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
-               requestDispatcher.forward(req, resp);
+               if(uDao.insert(u)) {
+                   session.setAttribute("user", u);
+                   req.getRequestDispatcher("/home").forward(req,resp);
+               }
            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }

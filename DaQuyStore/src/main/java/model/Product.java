@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.Map;
 
-public class Product {
+public class Product implements IModel{
     private int id;
     private String category;
     private String name;
@@ -53,10 +53,6 @@ public class Product {
     public Category getCategory() {
         return null;
     }
-
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
 
     public double getPrice() {
         return price;
@@ -207,5 +203,20 @@ public class Product {
                 ", img_extra3='" + img_extra3 + '\'' +
                 ", img_extra4='" + img_extra4 + '\'' +
                 "} \n";
+    }
+
+    @Override
+    public String getTable() {
+        return "product";
+    }
+
+    @Override
+    public String getDataBefore() {
+        return "";
+    }
+
+    @Override
+    public String getDataAfter() {
+        return "";
     }
 }

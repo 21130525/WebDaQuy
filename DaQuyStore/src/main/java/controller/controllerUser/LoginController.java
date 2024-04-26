@@ -57,31 +57,29 @@ public class LoginController  extends HttpServlet {
         }
     }
 
-    protected void loginWeb(HttpServletRequest request, HttpServletResponse response)
+    protected void loginWeb(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, ServletException, IOException, AddressException {
         String idUser = "";
-        String username = request.getParameter("username");
-        String pass =request.getParameter("password");
-        HttpSession session = request.getSession(true);
+        String username = req.getParameter("username");
+        String pass =req.getParameter("password");
+        HttpSession session = req.getSession(true);
         if (username == null || pass == null) {
-            request.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");
-            request.getRequestDispatcher("/home").forward(request, response);
+            req.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");
+            req.getRequestDispatcher("/home").forward(req, resp);
         } else {
-            User user = loginService.checkLogin(username, pass,"web");
+            User user = loginService.login(username, pass,"web");
             if (user != null) {
                 if (session != null) {
+                    session.setAttribute("user", username);
                     if (user.getRole().equals("admin")) {
-                        session.setAttribute("username", username);
-                        request.getRequestDispatcher("/views/admin/admin.jsp").forward(request, response);
+                        req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
                     } else if (user.getRole().equals("user")) {
-                        session.setAttribute("idUser", idUser);
-                        session.setAttribute("username", username);
-                        response.sendRedirect(request.getContextPath()+ "/views/index.jsp");
+                        req.getRequestDispatcher("/home").forward(req,resp);
                     }
                 }
             } else {
-                request.setAttribute("notify", "Tài khoản hoặc mật khẩu không tồn tại");
-                request.getRequestDispatcher("/views/user/login.jsp").forward(request, response);
+                req.setAttribute("notify", "Tài khoản hoặc mật khẩu không tồn tại");
+                req.getRequestDispatcher("/views/user/login.jsp").forward(req, resp);
             }
 
         }
@@ -92,12 +90,14 @@ public class LoginController  extends HttpServlet {
         String code = req.getParameter("code");
         String token =  getToken(code);
         GoogleInfo user = getUserInfo(token);
-        System.out.println(user);
-        User account = loginService.checkLogin(user.getEmail(),user.getId(),"google");
-        System.out.println(account);
+        User account = loginService.login(user.getEmail(),user.getId(),"google");
         if(account != null) {
-            session.setAttribute("username", account.getUsername());
-            req.getRequestDispatcher("/home").forward(req,resp);
+            session.setAttribute("user", account);
+            if (account.getRole().equals("admin")) {
+                req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
+            } else if (account.getRole().equals("user")) {
+                req.getRequestDispatcher("/home").forward(req,resp);
+            }
         }else{
             req.getRequestDispatcher("/error").forward(req,resp);
         }
