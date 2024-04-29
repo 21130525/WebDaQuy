@@ -2,47 +2,54 @@ package dao.adminDAO.productAdmin;
 
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
-import model.modelAdmin.AdminProduct;
+import model.modelAdmin.ProductAdmin;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProductAdminDAO<A> extends AbsAdminDAO<AdminProduct> {
+public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
     public static ProductAdminDAO getInstance(){
         return new ProductAdminDAO();
     }
     @Override
-    public ArrayList<AdminProduct> callSelect(AdminProduct obj) throws SQLException {
-        ArrayList<AdminProduct> products=super.select(obj);
+    public ArrayList callSelect(ProductAdmin obj) throws SQLException {
+        ArrayList<ProductAdmin> products=super.select(obj);
         return products;
     }
 
     @Override
-    public void callAdd(AdminProduct obj) throws SQLException {
+    public void callAdd(ProductAdmin obj) throws SQLException {
 
     }
 
     @Override
-    public void callDelete(AdminProduct obj) throws SQLException {
-        super.delete(obj);
+    public boolean callDelete(ProductAdmin obj, int id) throws SQLException {
+        return false;
+    }
+
+
+
+    @Override
+    public void callFilter(ProductAdmin obj) throws SQLException {
+
     }
 
     @Override
-    public void callFilter(AdminProduct obj) throws SQLException {
-
+    public ArrayList callSearch(ProductAdmin obj, String name) throws SQLException {
+        return null;
     }
 
     @Override
-    public ArrayList select(AdminProduct obj) throws SQLException {
-        ArrayList<AdminProduct> products=new ArrayList<>();
-      String sql="Select product_name,price,status,sale,hot,color from products";
+    public ArrayList select(ProductAdmin obj) throws SQLException {
+        ArrayList<ProductAdmin> products=new ArrayList<>();
+      String sql="Select id,product_name,price,status,sale,hot from products";
         PreparedStatement pr= DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs=pr.executeQuery();
-        AdminProduct adminProduct;
+        ProductAdmin adminProduct;
         while(rs.next()){
-            adminProduct=new AdminProduct(rs.getString("product_name"),rs.getInt("price"),rs.getString("status"),rs.getInt("sale"),rs.getInt("hot"),rs.getString("color"));
+            adminProduct=new ProductAdmin(rs.getInt("id"),rs.getString("product_name"),rs.getInt("price"),rs.getString("status"),rs.getInt("sale"),rs.getInt("hot"));
             products.add(adminProduct);
         }
         rs.close();
@@ -51,28 +58,49 @@ public class ProductAdminDAO<A> extends AbsAdminDAO<AdminProduct> {
     }
 
     @Override
-    public void add(AdminProduct obj) {
+    public void add(ProductAdmin obj) {
 
     }
 
     @Override
-    public void delete(AdminProduct obj) {
+    public void delete(ProductAdmin obj) {
 
     }
 
     @Override
-    public void filter(AdminProduct obj) {
+    public void filter(ProductAdmin obj) {
 
     }
-
     @Override
-    public void findbyName(AdminProduct obj,String name) {
+    public void findbyName(ProductAdmin obj,String name) {
 
     }
-
+    public ProductAdmin getAfterValueByID(int id) throws SQLException {
+        String sql="Select id,product_name,price,status,sale,hot from products where id=?";
+        PreparedStatement pr= DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs=pr.executeQuery();
+        ProductAdmin adminProduct=null;
+        while(rs.next()){
+            adminProduct=new ProductAdmin(rs.getInt("id"),rs.getString("product_name"),rs.getInt("price"),rs.getString("status"),rs.getInt("sale"),rs.getInt("hot"));
+        }
+        rs.close();
+        pr.close();
+        return adminProduct;
+    }
+    public ProductAdmin getPrevValueByID(int id) throws SQLException {
+        String sql="Select id,product_name,price,status,sale,hot from products where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs=pr.executeQuery();
+        ProductAdmin adminProduct=null;
+        while(rs.next()){
+            adminProduct=new ProductAdmin(rs.getInt("id"),rs.getString("product_name"),rs.getInt("price"),rs.getString("status"),rs.getInt("sale"),rs.getInt("hot"));
+        }
+        rs.close();
+        pr.close();
+        return adminProduct;
+    }
     public static void main(String[] args) throws SQLException {
-        AdminProduct adminProduct=new AdminProduct();
-        System.out.println(ProductAdminDAO.getInstance().callSelect(adminProduct));
+
 
     }
 }

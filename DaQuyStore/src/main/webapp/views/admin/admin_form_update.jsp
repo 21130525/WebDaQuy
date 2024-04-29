@@ -1,20 +1,42 @@
 <%--
   Created by IntelliJ IDEA.
   User: ngoke
-  Date: 3/9/2024
-  Time: 9:25 AM
+  Date: 4/23/2024
+  Time: 10:54 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quan li nguoi dung</title>
+    <title>Cap nhat san pham</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        margin-top: 10px;
+    }
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+</style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -48,6 +70,7 @@
                         <a href="<%=request.getContextPath()%>/views/admin/admin_user.jsp" class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
                         </a>
+
                     </li>
                 </ul>
 
@@ -56,27 +79,45 @@
             </div>
         </div>
         <div class="col py-3">
-            <table id="table_id" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Tai khoan</th>
-                    <th>Mat khau</th>
-                    <th>Ho ten</th>
-                    <th>Gioi tinh</th>
-                    <th>Ngay sinh</th>
-                    <th>Email</th>
-                    <th>SDT</th>
-                    <th>Dia chi</th>
-                    <th>Avatar</th>
-                    <th>Ngay tao</th>
-                    <th>Ngay cap nhat</th>
-                    <th>Vai tro</th>
-                    <th>Trang thai</th>
-                </tr>
-                </thead>
-                <tbody id="body">
-                </tbody>
-            </table>
+            <h2>Thông tin sản phẩm</h2>
+            <form>
+                <div class="form-group">
+                    <label for="productName">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                </div>
+                <div class="form-group">
+                    <label for="price">Giá tiền:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">VNĐ</span>
+                        </div>
+                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status">Tình trạng:</label>
+                    <select class="form-control" id="status">
+                        <option>Đang còn hàng</option>
+                        <option>Hết hàng</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="discount">Giảm giá (%):</label>
+                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)">
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="hot">
+                    <label class="form-check-label" for="hot">Sản phẩm hot</label>
+                </div>
+                <div class="form-group">
+                    <label for="color">Màu sắc:</label>
+                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Lưu thông tin</button>
+            </form>
+
+
+            </form>
         </div>
     </div>
 </div>
@@ -91,36 +132,9 @@
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#submenu_1").hide();
-        $("#menu_1").click(function () {
-            $("#submenu_1").slideToggle();
-        })
-    })
-    $(document).ready(function () {
         $("#table_id").DataTable();
     })
-    var $tbody = $('#body')
-    $(document).ready(function () {
-        $.ajax({
-            url: '<%=request.getContextPath()%>/getuser',
-            method: 'GET',
-            dataType: 'JSON',
-            success: function (response) {
-                $.each(response, function (index, value) {
-                        var value_item=Object.keys(value)
-                        var $row = $('<tr>')
-                        value_item.forEach(function(key){
-                            var value_item_key=value[key]
-                            var $cell=$('<td>').text(value_item_key)
-                            $row.append($cell)
-                        })
-                        $tbody.append($row);
-                    }
-                )
 
-            }
-        })
-    });
     $(document).ready(function (){
         $('.dt-empty').hide()
     })

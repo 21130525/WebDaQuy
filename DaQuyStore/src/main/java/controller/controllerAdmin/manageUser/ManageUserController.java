@@ -1,6 +1,6 @@
 package controller.controllerAdmin.manageUser;
 
-import service.manegeAdmin.manageUser.GetUserService;
+import service.manageAdmin.manageUser.GetUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
