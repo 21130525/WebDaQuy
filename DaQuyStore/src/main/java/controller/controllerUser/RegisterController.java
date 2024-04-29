@@ -31,7 +31,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/register","/registerGoogle","/registerFacebook"})
 public class RegisterController extends HttpServlet {
     private RegisterService registerService = new RegisterService();
-    private LoginService loginService = new LoginService();
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
 
     @Override
@@ -84,6 +83,7 @@ public class RegisterController extends HttpServlet {
         checkRegister(request, response, username, email);
         String code = registerService.createActivationCode(username,password,email);
         sendEmail(request,response,code,email);
+        request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
     }
 
     /*
@@ -120,7 +120,7 @@ public class RegisterController extends HttpServlet {
             try {
                 MimeMessage message = new MimeMessage(session);
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(RECEIVE_EMAIL));
-                String url = "<a href=\"http://localhost:8080/DaQuyStore_war/verifyregister?code="+code+"\">Click vào đây để xác nhận</a>";
+                String url = "<a href=\"http://localhost:8080/DaQuyStore_war/verifyRegister?code="+code+"\">Click vào đây để xác nhận</a>";
 
                 message.setSubject("Xác nhận tài khoản!");
                 message.setContent("<h1>Xác nhận tài khoản:</h1>" + url, "text/html;charset=utf-8");
@@ -137,15 +137,19 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void checkRegister(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String email) throws ServletException, IOException, SQLException {
+        String announced =null;
         if (registerService.checkDuplicatedUsername(username)) {
-            servletRequest.setAttribute("announced", "Tài khoản đã tồn tại");
-            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
-            requestDispatcher.forward(servletRequest, servletResponse);
+            announced= "Tài khoản đã tồn tại,";
+
         }
         if (registerService.checkDuplicatedEmail(email)) {
+            announced += " email đã tồn tại";
+//            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
+//            requestDispatcher.forward(servletRequest, servletResponse);
+        }
+        if(announced!=null){
             servletRequest.setAttribute("announced", " email đã tồn tại");
-            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
-            requestDispatcher.forward(servletRequest, servletResponse);
+            servletResponse.sendRedirect("/views/login/register.jsp");
         }
 
     }
@@ -163,7 +167,7 @@ public class RegisterController extends HttpServlet {
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
         if(registerService.insertUser(u)){
             System.out.println(u);
-            session.setAttribute("username", u.getUsername());
+            session.setAttribute("user", u);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
             requestDispatcher.forward(req, resp);
         }

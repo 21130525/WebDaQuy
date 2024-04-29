@@ -113,17 +113,30 @@ Created by IntelliJ IDEA.
             %>
         </div>
 
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a class="active" href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+        <!-- pagination -->
+        <div class="pagination d-flex justify-content-center mt-3">
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item " aria-current="page">
+                        <button class=" active page-link">1</button>
+                    </li>
+                    <li class="page-item"><button class="page-link" href="#">2</button></li>
+                    <li class="page-item"><button class="page-link" href="#">3</button></li>
+                </ul>
+            </nav>
         </div>
 
     </div>
     </div>
+    <script>
+        const pagination = document.querySelectorAll('.page-link');
+        pagination.forEach(item =>{
+            item.addEventListener('click', function () {
+                pagination.forEach(btn =>{
+                    btn.classList.remove('active');
+                })
+                item.classList.add('active')
+            })
+        })
+    </script>
 </section>

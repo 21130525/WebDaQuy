@@ -22,6 +22,7 @@ public class UpLoadFileProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         try {
             // Lấy phần tải lên từ request
             Part part = req.getPart("file");

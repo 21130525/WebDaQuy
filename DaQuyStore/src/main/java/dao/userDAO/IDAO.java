@@ -8,7 +8,7 @@ public interface IDAO<T>{
     public boolean update(T t)throws SQLException;
     public int delete(String id)throws SQLException;
     public T selectById(String id)throws SQLException;
-
+    public T selectByName(String name)throws SQLException;
     public ArrayList<T> selectAll()throws SQLException;
 
 }
