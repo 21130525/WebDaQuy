@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import connector.DAOConnection;
 import model.IModel;
 import model.Log;
+import model.User;
+
 
 import java.sql.Connection;
 import java.sql.Date;

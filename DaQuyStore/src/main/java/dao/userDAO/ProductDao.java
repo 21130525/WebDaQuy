@@ -54,6 +54,11 @@ public class ProductDao implements IDAO<Product> {
     }
 
     @Override
+    public Product selectByName(String id) throws SQLException {
+        return null;
+    }
+
+    @Override
     public ArrayList<Product> selectAll() throws SQLException {
         String sql = " select * from products join product_image on products.image_product = product_image.id ";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);

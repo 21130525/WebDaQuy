@@ -64,6 +64,11 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     }
 
     @Override
+    public ActivacationCode selectByName(String id) throws SQLException {
+        return null;
+    }
+
+    @Override
     public ArrayList<ActivacationCode> selectAll() throws SQLException {
         return null;
     }

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Log {
     private String id;
@@ -77,7 +77,7 @@ public class Log {
     }
 
     public java.sql.Date getCreated_at() {
-        return (java.sql.Date) created_at;
+        return created_at;
     }
 
     public void setCreated_at(Date created_at) {
@@ -85,7 +85,7 @@ public class Log {
     }
 
     public java.sql.Date getUpdated_at() {
-        return (java.sql.Date) updated_at;
+        return updated_at;
     }
 
     public void setUpdated_at(Date updated_at) {

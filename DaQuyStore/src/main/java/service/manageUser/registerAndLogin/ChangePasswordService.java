@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class ChangePasswordService {
     public boolean updatePassword(String username, String newpassword) throws SQLException {
         UserDAO userDAO=UserDAO.getInstance();
-        User u = userDAO.selectByUserName(username);
+        User u = userDAO.selectByName(username);
         u.setPassword(newpassword);
         if(userDAO.update(u)){
             return true;
