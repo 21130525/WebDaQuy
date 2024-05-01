@@ -75,6 +75,11 @@
                 </ul>
 
                 <hr>
+            <%for (int i=0;i<10;i++){%>
+                <%for(int j=0;j<10;j++){%>
+
+                <%}%>
+            <%}%>
 
             </div>
         </div>
@@ -83,7 +88,7 @@
             <form>
                 <div class="form-group">
                     <label for="productName">Tên sản phẩm:</label>
-                    <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm">
+                    <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>">
                 </div>
                 <div class="form-group">
                     <label for="price">Giá tiền:</label>
@@ -91,7 +96,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">VNĐ</span>
                         </div>
-                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền">
+                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>">
                     </div>
                 </div>
                 <div class="form-group">

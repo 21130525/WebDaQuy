@@ -2,17 +2,17 @@ package controller.controllerAdmin.manageProduct;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import dao.adminDAO.productAdmin.ProductAdminDAO;
+import model.modelAdmin.ProductAdmin;
 import service.manageAdmin.manageProduct.DeleteProductService;
 import service.manageAdmin.manageProduct.GetProductService;
 import service.manageAdmin.manageProduct.SearchProductService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -76,15 +76,15 @@ public class ManageProductController extends HttpServlet {
 
         } else if (url.endsWith("/searchproduct")) {
             // Xử lý tim kiem sản phẩm
-            String search=req.getParameter("search");
-            SearchProductService service=new SearchProductService();
+            String search = req.getParameter("search");
+            SearchProductService service = new SearchProductService();
             try {
-                resp.getWriter().println( service.getJSONResult(search));
+                resp.getWriter().println(service.getJSONResult(search));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            };
-        } else if (url.endsWith("/updateproduct")) {
-            // Xử lý cập nhật sản phẩm
+            }
+            ;
+
         } else if (url.endsWith("/findproduct")) {
             // Xử lý tìm kiếm sản phẩm
 
@@ -106,10 +106,27 @@ public class ManageProductController extends HttpServlet {
             }
         } else if (uri.endsWith("/deleteproduct_admin")) {
             // Xử lý xóa sản phẩm
-            int id=Integer.parseInt(req.getParameter("id"));
+            int id = Integer.parseInt(req.getParameter("id"));
             DeleteProductService deleteProductService = new DeleteProductService();
             try {
-                deleteProductService.delete(req, resp,id);
+                deleteProductService.delete(req, resp, id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else if (uri.endsWith("/updateproduct_admin")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            // Xử lý cập nhật sản phẩm
+            ProductAdminDAO productAdminDAO=ProductAdminDAO.getInstance();
+
+            try {
+            ProductAdmin productAdmin=    productAdminDAO.selectByID(id);
+                HttpSession session=req.getSession(true);
+                session.setAttribute("productname",productAdmin.getProduct_name());
+                session.setAttribute("price",productAdmin.getPrice());
+                session.setAttribute("status",productAdmin.getStatus());
+                RequestDispatcher rd=session.getServletContext().getRequestDispatcher("/views/admin/admin_form_update.jsp");
+                rd.forward(req,resp);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

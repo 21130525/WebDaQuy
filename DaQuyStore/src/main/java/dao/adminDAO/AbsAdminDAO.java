@@ -33,12 +33,12 @@ public  abstract class AbsAdminDAO<T> implements IDAOAdmin<T> {
         if(obj instanceof AdminUsers){
 
         }else if(obj instanceof ProductAdmin){
-           ProductAdminDAO.getInstance().deletebyID((ProductAdmin) obj,id);
+         ProductAdminDAO.getInstance().deletebyID((ProductAdmin) obj,id);
         }
         return false;
     }
 
-    public abstract void delete(T obj);
+
 
     @Override
     public void filter(T obj) throws SQLException {

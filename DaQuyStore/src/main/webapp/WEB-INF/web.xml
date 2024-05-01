@@ -6,6 +6,13 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
     <display-name>Archetype Created Web Application</display-name>
+<!--    <jsp-config>-->
+<!--&lt;!&ndash;        <jsp-property-group>&ndash;&gt;-->
+<!--&lt;!&ndash;            <url-pattern>*.jsp</url-pattern>&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-ignored>false</el-ignored>&ndash;&gt;-->
+<!--&lt;!&ndash;            <scripting-invalid>false</scripting-invalid>&ndash;&gt;-->
+<!--&lt;!&ndash;        </jsp-property-group>&ndash;&gt;-->
+<!--    </jsp-config>-->
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

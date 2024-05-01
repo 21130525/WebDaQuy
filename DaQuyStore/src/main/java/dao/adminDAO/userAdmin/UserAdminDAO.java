@@ -56,10 +56,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
 return false;
     }
 
-    @Override
-    public void delete(AdminUsers obj) {
 
-    }
 
     @Override
     public void filter(AdminUsers obj) {

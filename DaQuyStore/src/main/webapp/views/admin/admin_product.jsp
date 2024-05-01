@@ -66,6 +66,7 @@
         <div class="col py-3">
             <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
             <button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-plus"></i>Tim kiem</button>
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuat Excel</button>
             <select class="form-select" aria-label="Default select example">
                 <option selected>Muc luc</option>
                 <option value="1">Loại</option>
@@ -82,7 +83,6 @@
                     <th>Tinh trang</th>
                     <th>Giam gia</th>
                     <th>Hot</th>
-                    <th>Color</th>
                     <th>Thao tac</th>
                 </tr>
                 </thead>
@@ -105,6 +105,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
 <script>
 
     var $tbody = $('#body');
@@ -126,24 +127,25 @@
                     var $icon2 = $('<i class="fa-solid fa-wrench"></i>');
                     var $cell_with_icon = $('<td>').append($icon1).append($icon2);
                     $row.append($cell_with_icon);
-                    $row.attr("id", index + 1);
+                    $row.attr('id',value.id)
                     $icon1.click(function () {
                         $.ajax({
                             url: '<%=request.getContextPath()%>/deleteproduct_admin',
                             method: 'GET',
                             dataType: 'JSON',
-                            data: {id: $row.prop('id')},
-                            success: function (success) {
-                                alert('Xoa du lieu thanh cong')
-                                $row.hide();
+                            data: {id:$row.prop('id') },
+                            success: function(success) {
+                                alert(success)
+                               $row.remove()
                             },
-                            error: function (error) {
-                                alert('Xoa du lieu that bai')
+                            error: function (mistake) {
+                                alert(mistake)
                             }
                         })
                     })
                     $icon2.click(function (){
-                        window.location.href='https://www.youtube.com/'
+                        var productId = $row.prop('id');
+                        window.location.href='<%=request.getContextPath()%>/updateproduct_admin?id=' + productId;
                     })
                     $tbody.append($row);
                     // $tbody.empty();
@@ -165,5 +167,12 @@
         $('.dt-empty').hide();
     })
    
+</script>
+<script>
+    function converttoExcel(){
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table"));
+    }
+
 </script>
 </html>

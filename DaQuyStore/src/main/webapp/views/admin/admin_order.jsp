@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ngoke
@@ -79,33 +80,45 @@
             </div>
         </div>
         <div class="col py-3">
-            <form action="https://www.youtube.com/watch?v=vKuHQRTS20U" method="post">
-                <button class="button-status text-black" name="btn" value="Cho xac nhan">Cho xac nhan</button>
-                <button class="button-status text-black" name="btn" value="Cho giao">Cho giao</button>
-                <button class="button-status text-black" name="btn" value="Dang giao">Dang giao</button>
-                <button class="button-status text-black" name="btn">Da giao</button>
-            </form>
+            <button class="button-status text-black" name="btn" value="Cho xac nhan" id="waiting">Cho xac nhan</button>
+            <button class="button-status text-black" name="btn" value="Cho giao" id=" for-giving">Cho giao</button>
+            <button class="button-status text-black" name="btn" value="Dang giao" id="giving">Dang giao</button>
+            <button class="button-status text-black" name="btn" id="gived">Da giao</button>
 
 
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Tai khoan</th>
-                    <th>Mat khau</th>
-                    <th>Ho ten</th>
-                    <th>Gioi tinh</th>
-                    <th>Ngay sinh</th>
-                    <th>Email</th>
-                    <th>SDT</th>
-                    <th>Dia chi</th>
-                    <th>Avatar</th>
-                    <th>Ngay tao</th>
-                    <th>Ngay cap nhat</th>
-                    <th>Vai tro</th>
+                    <%--                    <th>Tai khoan</th>--%>
+                    <%--                    <th>Mat khau</th>--%>
+                    <%--                    <th>Ho ten</th>--%>
+                    <%--                    <th>Gioi tinh</th>--%>
+                    <%--                    <th>Ngay sinh</th>--%>
+                    <%--                    <th>Email</th>--%>
+                    <%--                    <th>SDT</th>--%>
+                    <%--                    <th>Dia chi</th>--%>
+                    <%--                    <th>Avatar</th>--%>
+                    <%--                    <th>Ngay tao</th>--%>
+                    <%--                    <th>Ngay cap nhat</th>--%>
+                    <%--                    <th>Vai tro</th>--%>
+                    <th>STT</th>
                     <th>Trang thai</th>
                 </tr>
                 </thead>
                 <tbody id="body">
+                <%--                <c:set var="list" value="${sessionScope.list}">--%>
+
+                <%--                </c:set>--%>
+                <%--                <c:forEach items="${list}" var="name">--%>
+
+                <%--                </c:forEach>--%>
+                <%--                <c:set var="list_map">--%>
+                <%--                 <c:choose>--%>
+                <%--                     <c:when test="${10>9}"></c:when>--%>
+                <%--                     <c:when test="${7>10}"></c:when>--%>
+                <%--                     <c:otherwise></c:otherwise>--%>
+                <%--                 </c:choose>--%>
+                <%--                </c:set>--%>
                 </tbody>
             </table>
         </div>
@@ -123,6 +136,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
+     var $tbody=$('#body')
     $(document).ready(function () {
         $("#submenu_1").hide();
         $("#menu_1").click(function () {
@@ -136,23 +150,39 @@
         $("#dt-search-0").attr('name', 'search')
     })
     $(document).ready(function () {
-        $("#btn").click(function () {
+        $('#waiting').click(function(){
+            $tbody.empty()
             $.ajax({
-                url: '',
-                method: 'GET',
+                url:'<%=request.getContextPath()%>/getorder_waiting',
+                method:'GET',
                 dataType: 'JSON',
-                data: $('#dt-search-0').value,
-                success: function (response) {
+                success:function(response){
+                    $.each(response,function(index,value){
+                        var $row=$('<tr>')
+                        $.each(value,function(key,value_item){
+                            var $cell=$('<td>').text(value_item)
+                            $row.append($cell)
+                        })
+                        $tbody.append($row)
+                    })
+
 
                 },
-                error: function (error) {
-
+                error:function(error){
+                    alert('Lay du lieu khong thanh cong')
                 }
             })
         })
     })
     $(document).ready(function () {
         $('.dt-empty').hide()
+    })
+</script>
+<script>
+    $(document).ready(function (){
+        $('#gived').click(function (){
+            $tbody.empty()
+        })
     })
 </script>
 </html>
