@@ -1,37 +1,40 @@
 package dao.userDAO;
 
 import com.google.gson.Gson;
-import com.mysql.cj.AbstractQuery;
 import connector.DAOConnection;
 import model.IModel;
 import model.Log;
-import model.User;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class LogDao  {
 
-    public  void insert(IModel user,String action) throws SQLException {
+    public  void insert(IModel user,String action,String id) throws SQLException {
         Gson gson = new Gson();
         String jsonBefore = gson.toJson(user.getDataBefore());
         String jsonAfter = gson.toJson(user.getDataAfter());
-        Log log = new Log("",action,"info",user.getTable(),jsonBefore,jsonAfter,Date.valueOf( LocalDate.now()));
+        Log log = new Log(id,action,"info",user.getTable(),jsonBefore,jsonAfter,Date.valueOf( LocalDate.now()));
         insertLog(log);
     }
 
-    public  <T extends IModel> void update(T t) {
+    public  <T extends IModel> void update(T t,  String action,String id) throws SQLException {
     }
 
-    public  void selectById(String id) {
+    public  void selectById(String id,String action) throws SQLException {
 
     }
 
-    public  void selectByName(String name,String action) throws SQLException {
-        Log log = new Log("",action,"info","user",null,null,Date.valueOf( LocalDate.now()));
+    public  void selectByName(String name,String action,String ip) throws SQLException {
+        Log log = new Log(ip,action,"info","user",null,null,Date.valueOf( LocalDate.now()));
+        insertLog(log);
+    }
+    public  void selectByName(IModel b, String action, String ip) throws SQLException {
+        Log log = new Log(ip,action,"info","user",b.getDataBefore(),b.getDataAfter(),Date.valueOf( LocalDate.now()));
         insertLog(log);
     }
     public void insertLog(Log log) throws SQLException {

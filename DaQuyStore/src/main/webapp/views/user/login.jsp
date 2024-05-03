@@ -66,7 +66,7 @@
             </div>
             <!-- form nhap du lieu  -->
             <div class="col-8 bg">
-                <form class="form-login" action="<%=request.getContextPath()%>/loginWeb" method="post">
+                <form class="form-login" action="<%=request.getContextPath()%>/loginWeb" method="POST">
                     <div class="row text-center">
                         <div class="logo mt-3">
                             <img src="<%=request.getContextPath()%>/img/logo.png" alt="logo">

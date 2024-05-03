@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Random;
 public class RegisterService {
     private EncryptAndDencrypt encryptAndDencrypt = new EncryptAndDencrypt();
-    public boolean insertUser(User user) throws SQLException {
+    public boolean insertUser(User user,String action,String ipAddress) throws SQLException {
         UserDAO userDAO = UserDAO.getInstance();
-        return userDAO.insert(user);
+        return userDAO.insert(user,action,ipAddress);
     }
 
 
@@ -49,11 +49,11 @@ public class RegisterService {
     }
 
 
-    public String createActivationCode(String name,String password,String email) throws SQLException {
+    public String createActivationCode(String name,String password,String email,String action,String ipAddress) throws SQLException {
         String id = generateRandomString(10);
         ActivacationCode res = new ActivacationCode(id,name,password, email);
         ActivacationCodeDao acd = new ActivacationCodeDao();
-        acd.insert(res);
+        acd.insert(res,action,ipAddress);
         return id;
     }
     public static String generateRandomString(int length) {

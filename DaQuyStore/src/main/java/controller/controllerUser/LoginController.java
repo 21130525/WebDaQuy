@@ -9,6 +9,7 @@ import model.User;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import service.manageUser.ServiceIPAddress;
 import service.manageUser.security.EncryptAndDencrypt;
 import service.manageUser.registerAndLogin.LoginService;
 
@@ -51,7 +52,7 @@ public class LoginController  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            loginWeb(req, resp);
+            loginWeb(req,resp);
         } catch (SQLException | AddressException e) {
             throw new RuntimeException(e);
         }
@@ -65,12 +66,13 @@ public class LoginController  extends HttpServlet {
         HttpSession session = req.getSession(true);
         if (username == null || pass == null) {
             req.setAttribute("notify", "Vui lòng nhập đầy đủ thông tin");
-            req.getRequestDispatcher("/home").forward(req, resp);
+            req.getRequestDispatcher(req.getContextPath()+"/views/index.jsp").forward(req, resp);
         } else {
-            User user = loginService.login(username, pass,"web");
+            String ipAddress = ServiceIPAddress.convertToIPv4(req.getRemoteAddr());
+            User user = loginService.login(username, pass,"web","login web",ipAddress);
             if (user != null) {
                 if (session != null) {
-                    session.setAttribute("user", username);
+                    session.setAttribute("user", user);
                     if (user.getRole().equals("admin")) {
                         req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
                     } else if (user.getRole().equals("user")) {
@@ -90,7 +92,8 @@ public class LoginController  extends HttpServlet {
         String code = req.getParameter("code");
         String token =  getToken(code);
         GoogleInfo user = getUserInfo(token);
-        User account = loginService.login(user.getEmail(),user.getId(),"google");
+        String ipAddress = ServiceIPAddress.convertToIPv4(req.getRemoteAddr());
+        User account = loginService.login(user.getEmail(),user.getId(),"google","login google",ipAddress);
         if(account != null) {
             session.setAttribute("user", account);
             if (account.getRole().equals("admin")) {
@@ -99,7 +102,9 @@ public class LoginController  extends HttpServlet {
                 req.getRequestDispatcher("/home").forward(req,resp);
             }
         }else{
-            req.getRequestDispatcher("/error").forward(req,resp);
+            req.setAttribute("notify","tài khoản không tồn tại!");
+
+            req.getRequestDispatcher("/loginWeb").forward(req,resp);
         }
     }
     public  String getToken(String code) throws ClientProtocolException, IOException {

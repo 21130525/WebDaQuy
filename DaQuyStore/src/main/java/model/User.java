@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.sql.Date;
 
 public class User implements IModel {
@@ -20,6 +22,10 @@ public class User implements IModel {
     private String status;
     private String typeLogin;
 
+    private User data;
+    private Gson gson = new Gson();
+    private int count = 0;
+
     public User(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.id = id;
         this.username = username;
@@ -37,6 +43,11 @@ public class User implements IModel {
         this.role = role;
         this.status = status;
         this.typeLogin = typeLogin;
+        setData();
+    }
+
+    private void setData() {
+        this.data = this;
     }
 
     public User(String username, String password, String email, String typeLogin, String avatar, String fullname) {
@@ -47,6 +58,7 @@ public class User implements IModel {
         this.typeLogin = typeLogin;
         this.avatar = avatar;
         this.fullName = fullname;
+        setData();
     }
 
     public User(String username, String password, String email, String typeLogin) {
@@ -56,6 +68,7 @@ public class User implements IModel {
         this.role = "user";
         this.typeLogin = typeLogin;
         this.avatar = "../img/avatar.png";
+        setData();
     }
 
     public String getUsername() {
@@ -68,6 +81,7 @@ public class User implements IModel {
 
     public void setId(String id) {
         this.id = id;
+        count++;
     }
 
     public String getusername() {
@@ -76,6 +90,7 @@ public class User implements IModel {
 
     public void setusername(String username) {
         this.username = username;
+        count++;
     }
 
     public String getPassword() {
@@ -84,6 +99,7 @@ public class User implements IModel {
 
     public void setPassword(String password) {
         this.password = password;
+        count++;
     }
 
     public String getFullName() {
@@ -92,6 +108,7 @@ public class User implements IModel {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+        count++;
     }
 
     public String getGender() {
@@ -100,6 +117,7 @@ public class User implements IModel {
 
     public void setGender(String gender) {
         this.gender = gender;
+        count++;
     }
 
     public Date getBirthday() {
@@ -108,6 +126,7 @@ public class User implements IModel {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+        count++;
     }
 
     public String getEmail() {
@@ -116,6 +135,7 @@ public class User implements IModel {
 
     public void setEmail(String email) {
         this.email = email;
+        count++;
     }
 
     public String getPhoneNumber() {
@@ -124,6 +144,7 @@ public class User implements IModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        count++;
     }
 
     public String getAddress() {
@@ -132,6 +153,7 @@ public class User implements IModel {
 
     public void setAddress(String address) {
         this.address = address;
+        count++;
     }
 
     public String getAvatar() {
@@ -140,6 +162,7 @@ public class User implements IModel {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+        count++;
     }
 
     public Date getCreateAt() {
@@ -148,6 +171,7 @@ public class User implements IModel {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+        count++;
     }
 
     public Date getUpdateAt() {
@@ -156,6 +180,7 @@ public class User implements IModel {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+        count++;
     }
 
     public Date getDeleteAt() {
@@ -164,6 +189,7 @@ public class User implements IModel {
 
     public void setDeleteAt(Date deleteAt) {
         this.deleteAt = deleteAt;
+        count++;
     }
 
     public String getRole() {
@@ -172,6 +198,7 @@ public class User implements IModel {
 
     public void setRole(String role) {
         this.role = role;
+        count++;
     }
 
     public String getStatus() {
@@ -180,6 +207,7 @@ public class User implements IModel {
 
     public void setStatus(String status) {
         this.status = status;
+        count++;
     }
 
     public String getTypeLogin() {
@@ -188,6 +216,7 @@ public class User implements IModel {
 
     public void setTypeLogin(String typeLogin) {
         this.typeLogin = typeLogin;
+        count++;
     }
 
     @Override
@@ -216,16 +245,19 @@ public class User implements IModel {
     public String getTable() {
         return "User";
     }
-
     @Override
     public String getDataBefore() {
-        return this.toString();
+        if(count==0)
+            return null;
+        // chuyen du lieu cu sang json
+        String dataBefore = gson.toJson(data);
+        // gan du lieu moi thay doi
+        data = this;
+        return  dataBefore;
     }
 
     @Override
     public String getDataAfter() {
-        return this.toString();
+        return gson.toJson(data);
     }
-
-
 }

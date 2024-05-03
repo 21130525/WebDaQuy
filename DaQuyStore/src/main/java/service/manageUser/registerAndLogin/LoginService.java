@@ -9,10 +9,13 @@ import java.util.ArrayList;
 
 public class LoginService {
 
-    public User login(String username, String password,String typeLogin) throws SQLException {
+    public User login(String username, String password,String typeLogin,String action,String ipAddress) throws SQLException {
         EncryptAndDencrypt encryptAndDencrypt =new EncryptAndDencrypt();
         UserDAO userDAO =  UserDAO.getInstance();
-        User u = userDAO.selectByName(username);
+        User u = userDAO.selectByName(username,action,ipAddress);
+        if(u==null){
+            return null;
+        }
         if (encryptAndDencrypt.decrypt(u.getPassword()).equals(password)) {
             return u;
         }

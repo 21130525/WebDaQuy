@@ -1,5 +1,6 @@
 package controller.controllerUser;
 
+import service.manageUser.ServiceIPAddress;
 import service.manageUser.registerAndLogin.ChangePasswordService;
 
 import javax.servlet.ServletException;
@@ -26,12 +27,13 @@ public class ChangePasswordController  extends HttpServlet {
         String newpassword = req.getParameter("newpassword");
         String repeatpassword = req.getParameter("repeatpassword");
         HttpSession session = req.getSession();
+        String ipAddress = ServiceIPAddress.convertToIPv4(req.getRemoteAddr());
         if (session != null) {
             String username = (String) session.getAttribute("username");
             if (!currentpassword.equals(newpassword)) {
                 if (newpassword.equals(repeatpassword)) {
                     try {
-                        if (changePasswordService.updatePassword(username, newpassword)) {
+                        if (changePasswordService.updatePassword(username, newpassword,"chage password",ipAddress)) {
                             req.setAttribute("notify", "Đổi mật khẩu thành công");
                             req.getRequestDispatcher("/views/login/changepassword.jsp").forward(req, resp);
                         } else {

@@ -117,7 +117,7 @@
                     <li class="nav-item  pt-2" style="list-style-type: none;">
                         <button class="btn btn-outline-primary border-0">
                             <a class="nav-link" aria-current="page"
-                               href="${pageContext.request.contextPath}/views/shoppingcart.jsp">
+                               href="${pageContext.request.contextPath}/views/web/cart/shoppingcart.jsp">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="cart-count">0</span>
                             </a>
@@ -146,7 +146,6 @@
                             <strong>
                                <%
                                    User u = (User) session.getAttribute("user");
-
                                %>
 
                                 <img src="<%=u.getAvatar()%>" alt="" class="rounded-5 mx-auto d-block border-2" style="height: 32px; width: 32px;">
