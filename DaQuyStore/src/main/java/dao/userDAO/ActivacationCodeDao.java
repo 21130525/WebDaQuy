@@ -15,7 +15,7 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     private String password;
     private String email;
     @Override
-    public boolean insert(ActivacationCode activacationCode) throws SQLException {
+    public boolean insert(ActivacationCode activacationCode,String action,String ipAddress) throws SQLException {
         Connection con = DAOConnection.getConnection();
         String sql = "insert into activacation_code(activationCode,username,password,email) " +
                 "values (?,?,?,?)";
@@ -32,17 +32,17 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     }
 
     @Override
-    public boolean update(ActivacationCode activacationCode) throws SQLException {
+    public boolean update(ActivacationCode activacationCode,String action,String ipAddress) throws SQLException {
         return false;
     }
 
     @Override
-    public int delete(String id) throws SQLException {
+    public int delete(ActivacationCode ac,String action,String ipAddress) throws SQLException {
         return 0;
     }
 
     @Override
-    public ActivacationCode selectById(String id) throws SQLException {
+    public ActivacationCode selectById(String id,String action,String ipAddress) throws SQLException {
         String sql = " select * from activacation_code where activationCode = ? ";
 
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
@@ -64,7 +64,7 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     }
 
     @Override
-    public ActivacationCode selectByName(String id) throws SQLException {
+    public ActivacationCode selectByName(String id,String action,String ipAddress) throws SQLException {
         return null;
     }
 

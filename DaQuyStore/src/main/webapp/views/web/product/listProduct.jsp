@@ -89,7 +89,7 @@ Created by IntelliJ IDEA.
             <!-- product -->
             <div class="product col card  border-0 d-flex align-items-center justify-content-center m-0 p-0 ">
                 <div class="position-relative">
-                    <a href="">
+                    <a href="<%=request.getContextPath()%>/productDetail?id=<%=p.getId()%>">
                         <img class="card-img-top border-2 "
                              src="<%=p.getImg_main()%>"
                              alt="anh">

@@ -13,7 +13,7 @@ public class Log {
     private Date created_at;
     private Date updated_at;
 
-    public Log(String id,String ip,String action, String level, String address, String previousValue, String currentValue, Date created_at, Date updated_at) {
+    public Log(String id,String ip,String action, String level, String address, String previousValue, String currentValue, Date created_at) {
         this.id = id;
         this.action=action;
         this.ip = ip;
@@ -24,7 +24,7 @@ public class Log {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
-    public Log(String ip,String action,String level, String address, String previousValue, String currentValue, Date created_at, Date updated_at) {
+    public Log(String ip,String action,String level, String address, String previousValue, String currentValue, Date created_at) {
         this.ip = ip;
         this.action=action;
         this.level = level;
