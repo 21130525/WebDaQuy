@@ -52,9 +52,11 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
 
     @Override
-    public void delete(AdminUsers obj) {
-
+    public boolean deletebyID(AdminUsers obj,int id) {
+return false;
     }
+
+
 
     @Override
     public void filter(AdminUsers obj) {
@@ -77,12 +79,28 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
 
     @Override
-    public void callDelete(AdminUsers obj) {
+    public boolean callDelete(AdminUsers obj,int id) throws SQLException {
+        super.deletebyID(obj,id);
 
+        return false;
     }
 
     @Override
     public void callFilter(AdminUsers obj) {
 
+    }
+
+    @Override
+    public ArrayList callSearch(AdminUsers obj, String name) throws SQLException {
+        return null;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        AdminUsers adminUsers=new AdminUsers();
+        try {
+            System.out.println(UserAdminDAO.getInstance().select(adminUsers));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -5,7 +5,7 @@
   Time: 9:24 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@include file="/common/taglib.jsp"%>
+<%@include file="/common/taglib.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,22 +16,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<%--<jsp:include page="admin_header.jsp"></jsp:include>--%>
-<%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
-<%--&lt;%&ndash;<section class="container">&ndash;%&gt;--%>
-<%--&lt;%&ndash;    <div class="row">&ndash;%&gt;--%>
+<jsp:include page="admin_header.jsp"></jsp:include>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">DashBoard</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fa-solid fa-chart-simple"></i> <span class="ms-1 d-none d-sm-inline">Doanh thu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_product.jsp" class="nav-link px-0 align-middle" id="menu_1">
+                            <i class="fa-brands fa-product-hunt"></i> <span class="ms-1 d-none d-sm-inline">Quản lí sản phẩm</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_order.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-gift"></i> <span class="ms-1 d-none d-sm-inline">Quản lí đơn hàng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_user.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
+                        </a>
+                    </li>
+                </ul>
 
-<%--&lt;%&ndash;    </div>&ndash;%&gt;--%>
-<%--</section>--%>
-<%--<jsp:include page="admin_header.jsp"></jsp:include>--%>
-<%--<jsp:include page="admin_menu.jsp"></jsp:include>--%>
-<%--<form method="post" action="<%=request.getContextPath()%>/login">--%>
-<%--    <input type="submit" value="test">--%>
-<%--</form>--%>
+                <hr>
+            </div>
+        </div>
+        <div class="col py-3">
+
+        </div>
+    </div>
+</div>
 </body>
-<form method="post" action="<%=request.getContextPath()%>/loginWeb">
-    <input type="submit" value="test">
-</form>
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -42,8 +67,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script>
-    $(document).ready(function (){
-        $("#table_id").DataTable();
-    })
+
 </script>
 </html>

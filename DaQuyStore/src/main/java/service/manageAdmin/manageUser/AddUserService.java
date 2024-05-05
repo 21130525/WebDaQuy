@@ -1,4 +1,4 @@
-package service.manegeAdmin.manageUser;
+package service.manageAdmin.manageUser;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

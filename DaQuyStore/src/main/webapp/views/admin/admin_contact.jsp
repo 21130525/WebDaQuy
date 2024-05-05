@@ -1,20 +1,21 @@
 <%--
   Created by IntelliJ IDEA.
   User: ngoke
-  Date: 3/9/2024
-  Time: 9:24 AM
+  Date: 4/25/2024
+  Time: 10:24 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin Product</title>
+    <title>Quan li lien he</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -57,6 +58,13 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="#"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-address-book"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí lien he</span>
+                        </a>
+                    </li>
                 </ul>
 
 
@@ -66,7 +74,6 @@
         <div class="col py-3">
             <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
             <button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-plus"></i>Tim kiem</button>
-            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuat Excel</button>
             <select class="form-select" aria-label="Default select example">
                 <option selected>Muc luc</option>
                 <option value="1">Loại</option>
@@ -74,16 +81,17 @@
                 <option value="3">Bán chạy</option>
                 <option value="4">Giảm gia</option>
             </select>
-            <table id="table_id" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Ten san pham</th>
-                    <th>Gia</th>
-                    <th>Tinh trang</th>
-                    <th>Giam gia</th>
-                    <th>Hot</th>
-                    <th>Thao tac</th>
+            <table id="table_id" class="table table-striped table-bordered">
+                <thead >
+                <tr >
+                    <th class="bg-primary text-white">STT</th>
+                    <th class="bg-primary text-white">Ten san pham</th>
+                    <th class="bg-primary text-white">Gia</th>
+                    <th class="bg-primary text-white">Tinh trang</th>
+                    <th class="bg-primary text-white">Giam gia</th>
+                    <th class="bg-primary text-white">Hot</th>
+                    <th class="bg-primary text-white">Color</th>
+                    <th class="bg-primary text-white">Thao tac</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -95,7 +103,6 @@
         </div>
     </div>
 </div>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -105,74 +112,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
 <script>
-
-    var $tbody = $('#body');
-
-    $(document).ready(function () {
+    $(document).ready(function (){
+        $('#table_id').DataTable()
+    })
+    var $tbody=$('#body')
+    $(document).ready(function(){
         $.ajax({
-            url: '<%=request.getContextPath()%>/getproduct_admin',
-            method: 'GET',
-            dataType: 'JSON',
-            success: function (response) {
-                $.each(response, function (index, value) {
-                    var $row = $('<tr>');
-                    $.each(value, function (key, value_item_key) {
-                        var $cell = $('<td>').text(value_item_key)
+            url:'#',
+            method:'Get',
+            dataType:'Json',
+            success:function (response){
+                $.each(response,function(index,value){
+                    var $raw=$('<tr>')
+                    $.each(value,function(index,key){
+                        var $cell=$('<td>').text(key)
                         $row.append($cell)
-                    });
-                    // Thêm biểu tượng vào cuối mỗi dòng
-                    var $icon1 = $('<i class="fa-solid fa-trash"></i>');
-                    var $icon2 = $('<i class="fa-solid fa-wrench"></i>');
-                    var $cell_with_icon = $('<td>').append($icon1).append($icon2);
-                    $row.append($cell_with_icon);
-                    $row.attr('id',value.id)
-                    $icon1.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/deleteproduct_admin',
-                            method: 'GET',
-                            dataType: 'JSON',
-                            data: {id:$row.prop('id') },
-                            success: function(success) {
-                                alert(success)
-                               $row.remove()
-                            },
-                            error: function (mistake) {
-                                alert(mistake)
-                            }
-                        })
                     })
-                    $icon2.click(function (){
-                        var productId = $row.prop('id');
-                        window.location.href='<%=request.getContextPath()%>/updateproduct_admin?id=' + productId;
-                    })
-                    $tbody.append($row);
-                    // $tbody.empty();
-                });
-
+                    var $delete=$('<i class="fa-solid fa-trash"></i>')
+                    var $edit=$('<i class="fa-solid fa-gear"></i>')
+                    var $action=$('<td>').append($delete,$edit)
+                    $raw.append($action)
+                    $tbody.append($row)
+                })
             },
-            error: function (error) {
-                alert('Lay du lieu khong thanh cong')
+            error:function(error){
+                alert('Load du lieu khong thanh cong')
             }
-        });
-    });
-
-    $(document).ready(function () {
-        $("#table_id").DataTable()
+        })
     })
-
-
-    $(document).ready(function () {
-        $('.dt-empty').hide();
+    $('th').mouseenter(function (){
+        $('th').fadeIn(3000)
     })
-   
-</script>
-<script>
-    function converttoExcel(){
-        var table2excel = new Table2Excel();
-        table2excel.export(document.querySelectorAll("table"));
-    }
-
 </script>
 </html>

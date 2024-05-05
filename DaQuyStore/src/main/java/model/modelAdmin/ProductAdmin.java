@@ -1,16 +1,18 @@
 package model.modelAdmin;
 
-public class AdminProduct {
+public class ProductAdmin {
+    int id;
     String product_name;
     int price;
     String status;
     int sale;
     int hot;
     String color;
-    public AdminProduct(){
+    public ProductAdmin(){
     }
 
-    public AdminProduct(String product_name, int price, String status, int sale, int hot, String color) {
+    public ProductAdmin(int id, String product_name, int price, String status, int sale, int hot) {
+        this.id=id;
         this.product_name = product_name;
         this.price = price;
         this.status = status;

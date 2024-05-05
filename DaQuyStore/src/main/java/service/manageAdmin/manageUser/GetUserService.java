@@ -1,4 +1,4 @@
-package service.manegeAdmin.manageUser;
+package service.manageAdmin.manageUser;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -21,6 +21,11 @@ public class GetUserService extends HttpServlet {
             String jsonElements=gson.toJson(usersAbsAdminDAO.callSelect(adminUsers));
             JsonArray jsonArray=gson.fromJson(jsonElements, JsonArray.class);
             response.getWriter().println(jsonArray);
+//            for(JsonElement element:jsonArray){
+////
+////            JsonObject jsonObject= element.getAsJsonObject();
+////            jsonObject.get("name").getAsString();
+//            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

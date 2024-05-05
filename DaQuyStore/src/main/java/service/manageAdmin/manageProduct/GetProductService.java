@@ -1,9 +1,9 @@
-package service.manegeAdmin.manageProduct;
+package service.manageAdmin.manageProduct;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
-import model.modelAdmin.AdminProduct;
+import model.modelAdmin.ProductAdmin;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +13,10 @@ import java.sql.SQLException;
 
 public class GetProductService extends HttpServlet {
     public void getProduct(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
-        ProductAdminDAO<AdminProduct> productAdminDAO=ProductAdminDAO.getInstance();
-        AdminProduct adminProduct=new AdminProduct();
+        ProductAdminDAO productAdminDAO=ProductAdminDAO.getInstance();
+        ProductAdmin productAdmin =new ProductAdmin();
         Gson gson=new Gson();
-        String jsonElements=gson.toJson(productAdminDAO.callSelect(adminProduct));
+        String jsonElements=gson.toJson(productAdminDAO.callSelect(productAdmin));
         JsonArray jsonArray=gson.fromJson(jsonElements, JsonArray.class);
         resp.getWriter().println(jsonArray);
     }
