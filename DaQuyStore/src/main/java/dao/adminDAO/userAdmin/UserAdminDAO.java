@@ -25,20 +25,20 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         AdminUsers adminUsers;
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
-            String username=rs.getString("username");
-            String password=rs.getString("password");
-            String full_name=rs.getString("full_name");
-            String gender=rs.getString("gender");
-            Date birthday=rs.getDate("birthday");
-            String email=rs.getString("email");
-            String phone=rs.getString("phone");
-            String address=rs.getString("address");
-            String avatar=rs.getString("avatar");
-            Date created_at=rs.getDate("created_at");
-            Date updated_at=rs.getDate("updated_at");
-            String role=rs.getString("role");
-            String status=rs.getNString("status");
-            adminUsers=new AdminUsers(username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status);
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            String full_name = rs.getString("full_name");
+            String gender = rs.getString("gender");
+            Date birthday = rs.getDate("birthday");
+            String email = rs.getString("email");
+            String phone = rs.getString("phone");
+            String address = rs.getString("address");
+            String avatar = rs.getString("avatar");
+            Date created_at = rs.getDate("created_at");
+            Date updated_at = rs.getDate("updated_at");
+            String role = rs.getString("role");
+            String status = rs.getNString("status");
+            adminUsers = new AdminUsers(username, password, full_name, gender, birthday, email, phone, address, avatar, created_at, updated_at, role, status);
             adminUserslist.add(adminUsers);
         }
         pr.close();
@@ -52,10 +52,15 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
 
     @Override
-    public boolean deletebyID(AdminUsers obj,int id) {
-return false;
+    public boolean deletebyID(AdminUsers obj, int id) throws SQLException {
+        String sql = "Update users set status='da xoa' where status='chua xoa' and id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        int rows = pr.executeUpdate();
+        if (rows >= 1) {
+            return true;
+        }
+        return false;
     }
-
 
 
     @Override
@@ -64,13 +69,13 @@ return false;
     }
 
     @Override
-    public void findbyName(AdminUsers obj,String name) {
+    public void findbyName(AdminUsers obj, String name) {
 
     }
 
     public ArrayList<AdminUsers> callSelect(AdminUsers obj) throws SQLException {
-       ArrayList<AdminUsers> list= super.select(obj);
-       return list;
+        ArrayList<AdminUsers> list = super.select(obj);
+        return list;
     }
 
     @Override
@@ -79,8 +84,8 @@ return false;
     }
 
     @Override
-    public boolean callDelete(AdminUsers obj,int id) throws SQLException {
-        super.deletebyID(obj,id);
+    public boolean callDelete(AdminUsers obj, int id) throws SQLException {
+        super.deletebyID(obj, id);
 
         return false;
     }
@@ -96,7 +101,7 @@ return false;
     }
 
     public static void main(String[] args) throws SQLException {
-        AdminUsers adminUsers=new AdminUsers();
+        AdminUsers adminUsers = new AdminUsers();
         try {
             System.out.println(UserAdminDAO.getInstance().select(adminUsers));
         } catch (SQLException e) {
