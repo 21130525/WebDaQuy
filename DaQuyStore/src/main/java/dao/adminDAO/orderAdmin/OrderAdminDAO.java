@@ -27,9 +27,9 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     @Override
     public boolean deletebyID(AdminOrderDetail obj, int id) throws SQLException {
-        String sql = "Delete from order_details where name=?";
+        String sql = "Update  order_details set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        pr.setString(1, "");
+        pr.setInt(1, id);
         int rows = pr.executeUpdate();
         if (rows >= 1) {
             return true;
