@@ -31,7 +31,7 @@ public class DeleteProductService extends HttpServlet {
             Gson gson = new Gson();
             AdminLog adminLog=new AdminLog(productAdminPrev.toString(), productAdminAfter.toString());
 
-            logAdminDAO.add(adminLog);
+            logAdminDAO.addLogAlert(adminLog);
             resp.getWriter().println(gson.toJson(chain_json));
         } else {
             String chain_json = "Xoa that bai";
