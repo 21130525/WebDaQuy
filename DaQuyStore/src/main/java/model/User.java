@@ -1,92 +1,79 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.sql.Date;
 
-public class User {
-
+public class User implements IModel {
     private String id;
-    private String userName;
+    private String username;
     private String password;
     private String fullName;
     private String gender;
     private Date birthday;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private String address;
     private String avatar;
-    private Date create_at;
-    private Date update_at;
-    private Date delete_at;
+    private Date createAt;
+    private Date updateAt;
+    private Date deleteAt;
     private String role;
     private String status;
-    private String type_login;
+    private String typeLogin;
 
-    public User(String id, String userName, String password,
-                String fullName, String gender, Date birthday,
-                String email, String phone, String address,
-                String avatar, Date create_at, Date update_at,
-                Date delete_at, String role, String status,
-                String type_login) {
+    private User data;
+    private Gson gson = new Gson();
+    private int count = 0;
+
+    public User(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.gender = gender;
         this.birthday = birthday;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.avatar = avatar;
-        this.create_at = create_at;
-        this.update_at = update_at;
-        this.delete_at = delete_at;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
         this.role = role;
         this.status = status;
-        this.type_login = type_login;
+        this.typeLogin = typeLogin;
+        setData();
     }
 
-    public User(String userName, String password,String email, String role,String type_login){
-        this.userName = userName;
+    private void setData() {
+        this.data = this;
+    }
+
+    public User(String username, String password, String email, String typeLogin, String avatar, String fullname) {
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
-        this.type_login = type_login;
+        this.role = "user";
+        this.typeLogin = typeLogin;
+        this.avatar = avatar;
+        this.fullName = fullname;
+        setData();
     }
-    // register user
-    public User( String userName, String password, String email, String customer) {
-        this.id = id;
-        this.userName = userName;
+
+    public User(String username, String password, String email, String typeLogin) {
+        this.username = username;
         this.password = password;
-        this.fullName = "";
-        this.gender = "";
         this.email = email;
-        this.phone = "";
-        this.avatar = "";
-        this.status="";
-        this.role = customer;
-        this.address = "";
-        this.type_login = "";
+        this.role = "user";
+        this.typeLogin = typeLogin;
+        this.avatar = "../img/avatar.png";
+        setData();
     }
 
-    public User(String userName, String password, String email,String gender, String fullname, String date, String phone, String address, String customer) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.fullName =fullname;
-        this.email = email;
-        this.gender = gender;
-        this.phone = phone;
-        this.avatar = "";
-        this.status="";
-        this.role = customer;
-        this.address = address;
-        this.type_login = "web";
+    public String getUsername() {
+        return username;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
 
     public String getId() {
         return id;
@@ -94,10 +81,16 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+        count++;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getusername() {
+        return username;
+    }
+
+    public void setusername(String username) {
+        this.username = username;
+        count++;
     }
 
     public String getPassword() {
@@ -106,86 +99,7 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public java.sql.Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Date getCreate_at() {
-        return create_at;
-    }
-
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
-    }
-
-    public java.sql.Date getUpdate_at() {
-        return  update_at;
-    }
-
-    public void setUpdate_at(Date update_at) {
-        this.update_at = update_at;
-    }
-
-    public Date getDelete_at() {
-        return delete_at;
-    }
-
-    public void setDelete_at(Date delete_at) {
-        this.delete_at = delete_at;
-    }
-
-    public String getType_login() {
-        return type_login;
-    }
-
-    public void setType_login(String type_login) {
-        this.type_login = type_login;
+        count++;
     }
 
     public String getFullName() {
@@ -194,14 +108,7 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        count++;
     }
 
     public String getGender() {
@@ -210,35 +117,147 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+        count++;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+        count++;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+        count++;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        count++;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+        count++;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+        count++;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+        count++;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+        count++;
+    }
+
+    public Date getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(Date deleteAt) {
+        this.deleteAt = deleteAt;
+        count++;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+        count++;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        count++;
+    }
+
+    public String getTypeLogin() {
+        return typeLogin;
+    }
+
+    public void setTypeLogin(String typeLogin) {
+        this.typeLogin = typeLogin;
+        count++;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", create_at=" + create_at +
-                ", update_at=" + update_at +
-                ", delete_at=" + delete_at +
-                ", status='" + status + '\'' +
-                ", role='" + role + '\'' +
-                ", address='" + address + '\'' +
+                ", gender='" + gender + '\'' +
                 ", birthday=" + birthday +
-                ", type_login='" + type_login + '\'' +
-                "} \n\n";
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                ", deleteAt=" + deleteAt +
+                ", role='" + role + '\'' +
+                ", status='" + status + '\'' +
+                ", typeLogin='" + typeLogin + '\'' +
+                '}';
     }
-}
- enum role {
-    admin, user
-}
- enum gender{
-    nu,nam
-}
-enum typeLogin{
-    google, web, facebook
+
+    @Override
+    public String getTable() {
+        return "User";
+    }
+    @Override
+    public String getDataBefore() {
+        if(count==0)
+            return null;
+        // chuyen du lieu cu sang json
+        String dataBefore = gson.toJson(data);
+        // gan du lieu moi thay doi
+        data = this;
+        return  dataBefore;
+    }
+
+    @Override
+    public String getDataAfter() {
+        return gson.toJson(data);
+    }
 }
