@@ -31,7 +31,7 @@ public  abstract class AbsAdminDAO<T> implements IDAOAdmin<T> {
     @Override
     public boolean deletebyID(T obj,int id) throws SQLException {
         if(obj instanceof AdminUsers){
-
+            UserAdminDAO.getInstance().deletebyID((AdminUsers) obj,id);
         }else if(obj instanceof ProductAdmin){
          ProductAdminDAO.getInstance().deletebyID((ProductAdmin) obj,id);
         }
