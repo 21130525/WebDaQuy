@@ -103,6 +103,7 @@
                     <%--                    <th>Vai tro</th>--%>
                     <th>STT</th>
                     <th>Trang thai</th>
+                    <th>Thao tac</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -159,9 +160,30 @@
                 success:function(response){
                     $.each(response,function(index,value){
                         var $row=$('<tr>')
+                        $row.attr('id',value.id)
                         $.each(value,function(key,value_item){
                             var $cell=$('<td>').text(value_item)
                             $row.append($cell)
+                        })
+                        var $delete=$('<i class="fa-solid fa-trash"></i>')
+                        var $edit=$('<i class="fa-solid fa-wrench"></i>')
+                        var $cell=$('<td>')
+                        $cell.append($delete,$edit)
+                        $row.append($cell)
+                        $delete.click(function (){
+                            $.ajax({
+                                url:'<%=request.getContextPath()%>/deleteorder',
+                                method:'GET',
+                                data:{id:$row.prop('id')},
+                                dataType: 'JSON',
+                                success:function (response){
+                                    alert('Xoa thanh cong')
+                                    $row.hide()
+                                },
+                                error:function (error){
+                                    alert('Xoa khong thanh cong')
+                                }
+                            })
                         })
                         $tbody.append($row)
                     })
