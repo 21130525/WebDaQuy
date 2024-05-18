@@ -8,7 +8,9 @@ public class AdminOrderDetail {
         this.id = id;
         this.status = status;
     }
+    public AdminOrderDetail(){
 
+    }
     public int getId() {
         return id;
     }

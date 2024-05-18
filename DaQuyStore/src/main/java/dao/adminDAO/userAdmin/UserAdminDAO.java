@@ -20,11 +20,12 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     @Override
     public ArrayList select(AdminUsers obj) throws SQLException {
         ArrayList<AdminUsers> adminUserslist = new ArrayList<>();
-        String sql = "Select username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users";
+        String sql = "Select id, username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users where status='chua xoa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         AdminUsers adminUsers;
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
+            int id = rs.getInt("id");
             String username = rs.getString("username");
             String password = rs.getString("password");
             String full_name = rs.getString("full_name");
@@ -38,7 +39,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
             Date updated_at = rs.getDate("updated_at");
             String role = rs.getString("role");
             String status = rs.getNString("status");
-            adminUsers = new AdminUsers(username, password, full_name, gender, birthday, email, phone, address, avatar, created_at, updated_at, role, status);
+            adminUsers = new AdminUsers(id, username, password, full_name, gender, birthday, email, phone, address, avatar, created_at, updated_at, role, status);
             adminUserslist.add(adminUsers);
         }
         pr.close();
@@ -55,6 +56,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     public boolean deletebyID(AdminUsers obj, int id) throws SQLException {
         String sql = "Update users set status='da xoa' where status='chua xoa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, id);
         int rows = pr.executeUpdate();
         if (rows >= 1) {
             return true;
@@ -86,7 +88,6 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     @Override
     public boolean callDelete(AdminUsers obj, int id) throws SQLException {
         super.deletebyID(obj, id);
-
         return false;
     }
 
@@ -98,6 +99,17 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     @Override
     public ArrayList callSearch(AdminUsers obj, String name) throws SQLException {
         return null;
+    }
+
+    public boolean updateRoleAdmin(int id) throws SQLException {
+        String sql = "Update users set role='Admin' where role='User' and id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, id);
+        int rows = pr.executeUpdate();
+        if (rows >= 1) {
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) throws SQLException {
