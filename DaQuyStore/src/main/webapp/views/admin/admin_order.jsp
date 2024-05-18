@@ -136,6 +136,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
      var $tbody=$('#body')
     $(document).ready(function () {
@@ -185,6 +186,38 @@
                                 }
                             })
                         })
+                        $edit.click(async function () {
+                            // thu vien sweet alert kem theo xu li bat dong bo
+                            const {value: status} = await Swal.fire({
+                                title: "Chon trang thai don hang",
+                                input: "select",
+                                inputOptions: {
+                                    Status:{
+                                        waiting:'Dang cho xac nhan',
+                                        forgiving:'Cho giao',
+                                        giving:'Dang giao',
+                                        success:'Giao thanh cong'
+                                    }
+
+                                },
+                                inputPlaceholder: "Chon trang thai",
+                                showCancelButton: true,
+                                inputValidator: (value) => {
+                                    // xu li promise
+                                    return new Promise((resolve) => {
+                                        if (value ==='forgiving' ) {
+                                            resolve();
+                                        } else {
+                                            resolve("Ban can chon trang thai");
+                                        }
+                                    });
+                                }
+                            });
+                            if (status) {
+                                Swal.fire('Cap nhat thanh cong');
+
+                            }
+                        })
                         $tbody.append($row)
                     })
 
@@ -207,4 +240,5 @@
         })
     })
 </script>
+
 </html>
