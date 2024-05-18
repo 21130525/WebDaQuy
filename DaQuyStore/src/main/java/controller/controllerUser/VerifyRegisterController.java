@@ -24,17 +24,18 @@ public class VerifyRegisterController extends HttpServlet {
             HttpSession session = req.getSession(true);
             String code = req.getParameter("code");
             ActivacationCodeDao dao = new ActivacationCodeDao();
-            ActivacationCode ac = dao.selectById(code);
+            String ipAddress = (String) session.getAttribute("ipAddress");
+            ActivacationCode ac = dao.selectById(code,"create activity code",ipAddress);
             if(ac==null){
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/error/404.jsp");
                 requestDispatcher.forward(req, resp);
             }
-           if(ac!=null){
+            if(ac!=null){
                User u = new User(ac.getUsername(),ac.getPassword(),ac.getEmail(),"web");
                UserDAO uDao = new UserDAO();
-               if(uDao.insert(u)) {
+               if(uDao.insert(u,"create user",ipAddress)) {
                    session.setAttribute("user", u);
-                   req.getRequestDispatcher("/home").forward(req,resp);
+                   req.getRequestDispatcher(req.getContextPath()+"/views.index.jsp").forward(req,resp);
                }
            }
         } catch (SQLException e) {

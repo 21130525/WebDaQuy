@@ -15,6 +15,7 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import service.manageUser.ServiceIPAddress;
 import service.manageUser.security.EncryptAndDencrypt;
 import service.manageUser.registerAndLogin.LoginService;
 import service.manageUser.registerAndLogin.RegisterService;
@@ -81,7 +82,8 @@ public class RegisterController extends HttpServlet {
     private void registerWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession(false);
         checkRegister(request, response, username, email);
-        String code = registerService.createActivationCode(username,password,email);
+        String ipAddress = ServiceIPAddress.convertToIPv4(request.getRemoteAddr());
+        String code = registerService.createActivationCode(username,password,email,"login web",ipAddress);
         sendEmail(request,response,code,email);
         request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
     }
@@ -159,16 +161,16 @@ public class RegisterController extends HttpServlet {
     * */
     private void registerGoogle(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
         HttpSession session = req.getSession(false);
+        String ipAddress  = ServiceIPAddress.convertToIPv4(req.getRemoteAddr());
         String code = req.getParameter("code");
         String token =  getToken(code);
         GoogleInfo user = getUserInfo(token);
         checkRegister(req,resp,user.getEmail(),user.getEmail());
         // email: username; id: password;
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
-        if(registerService.insertUser(u)){
-            System.out.println(u);
+        if(registerService.insertUser(u,"register account google",ipAddress)){
             session.setAttribute("user", u);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher(req.getContextPath()+"/views/index.jsp");
             requestDispatcher.forward(req, resp);
         }
     }

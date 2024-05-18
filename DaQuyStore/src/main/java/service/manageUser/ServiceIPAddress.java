@@ -1,16 +1,10 @@
 package service.manageUser;
 
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
-
-import java.io.File;
-import java.io.IOException;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class serviceIPAddress {
+public class ServiceIPAddress {
     public static String convertToIPv4(String ipv6Address) throws UnknownHostException {
         InetAddress inetAddress = InetAddress.getByName(ipv6Address);
         if (inetAddress instanceof Inet6Address) {

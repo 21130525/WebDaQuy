@@ -1,6 +1,7 @@
 package dao.userDAO;
 
 import connector.DAOConnection;
+import model.IModel;
 import model.Product;
 import service.manageUser.product.ProductService;
 
@@ -34,27 +35,27 @@ public class ProductDao implements IDAO<Product> {
     private String img_4;
 
     @Override
-    public boolean insert(Product product) throws SQLException {
+    public boolean insert(Product product,String action,String ipAddress) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean update(Product product) throws SQLException {
+    public boolean update(Product product,String action,String ipAddress) throws SQLException {
         return false;
     }
 
     @Override
-    public int delete(String id) throws SQLException {
+    public int delete(Product p, String action, String ipAddress) throws SQLException {
         return 0;
     }
 
     @Override
-    public Product selectById(String id) throws SQLException {
+    public Product selectById(String id,String action,String ipAddress) throws SQLException {
         return null;
     }
 
     @Override
-    public Product selectByName(String id) throws SQLException {
+    public Product selectByName(String id,String action,String ipAddress) throws SQLException {
         return null;
     }
 

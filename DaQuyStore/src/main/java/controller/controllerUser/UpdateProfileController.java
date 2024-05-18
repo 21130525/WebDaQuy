@@ -1,5 +1,6 @@
 package controller.controllerUser;
 
+import service.manageUser.ServiceIPAddress;
 import service.manageUser.registerAndLogin.UpdateProfileService;
 
 import javax.servlet.ServletException;
@@ -30,12 +31,13 @@ public class UpdateProfileController extends HttpServlet {
         String birthday = req.getParameter("birthday");
 
         HttpSession session = req.getSession();
+        String ipAddress = ServiceIPAddress.convertToIPv4(req.getRemoteAddr());
         if (session != null) {
             if (session.getAttribute("username") != null) {
                String userName = session.getAttribute("username").toString();
                 // check
                 try {
-                    if(UpdateProfileService.update(userName, name,phone,email,address,gender,birthday)){
+                    if(UpdateProfileService.update(userName, name,phone,email,address,gender,birthday,"update profile",ipAddress)){
                         req.setAttribute("notify", "Cập nhật thành công");
                         req.getRequestDispatcher("/views/login/profile.jsp").forward(req, resp);
                     }

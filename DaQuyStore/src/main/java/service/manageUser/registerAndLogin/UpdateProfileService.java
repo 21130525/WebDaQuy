@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UpdateProfileService {
-    public static boolean update(String userName,String name, String phone, String email, String address, String gender, String birthday) throws SQLException {
-        User user = UserDAO.getInstance().selectByName(userName);
+    public static boolean update(String userName,String name, String phone, String email, String address, String gender, String birthday,String action,String ipAddress) throws SQLException {
+        User user = UserDAO.getInstance().selectByName(userName,action,ipAddress);
         user.setFullName(name);
         user.setPhoneNumber(phone);
         user.setEmail(email);
@@ -19,6 +19,6 @@ public class UpdateProfileService {
         DateTimeFormatter dtm = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(birthday, dtm);
         user.setBirthday(Date.valueOf(date));
-        return UserDAO.getInstance().update(user);
+        return UserDAO.getInstance().update(user,action,ipAddress);
     }
 }

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import connector.DAOConnection;
 import model.IModel;
 import model.Log;
-import model.User;
 
 
 import java.sql.Connection;
@@ -12,33 +11,36 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class LogDao  {
 
-    public static void insert(IModel user,String action) throws SQLException {
+    public  void insert(IModel user,String action,String id) throws SQLException {
         Gson gson = new Gson();
         String jsonBefore = gson.toJson(user.getDataBefore());
         String jsonAfter = gson.toJson(user.getDataAfter());
-        Log log = new Log("",action,"info",user.getTable(),jsonBefore,jsonAfter,Date.valueOf( LocalDate.now()),Date.valueOf( LocalDate.now()));
-        insertLog(log);
-
-
-    }
-
-    public static <T extends IModel> void update(T t) {
-    }
-
-    public static void selectById(String id) {
-
-    }
-
-    public static void selectByName(String name,String action) throws SQLException {
-        Log log = new Log("",action,"info","user",null,null,Date.valueOf( LocalDate.now()),Date.valueOf( LocalDate.now()));
+        Log log = new Log(id,action,"info",user.getTable(),jsonBefore,jsonAfter,Date.valueOf( LocalDate.now()));
         insertLog(log);
     }
-    private static void insertLog(Log log) throws SQLException {
+
+    public  <T extends IModel> void update(T t,  String action,String id) throws SQLException {
+    }
+
+    public  void selectById(String id,String action) throws SQLException {
+
+    }
+
+    public  void selectByName(String name,String action,String ip) throws SQLException {
+        Log log = new Log(ip,action,"info","user",null,null,Date.valueOf( LocalDate.now()));
+        insertLog(log);
+    }
+    public  void selectByName(IModel b, String action, String ip) throws SQLException {
+        Log log = new Log(ip,action,"info","user",b.getDataBefore(),b.getDataAfter(),Date.valueOf( LocalDate.now()));
+        insertLog(log);
+    }
+    public void insertLog(Log log) throws SQLException {
         Connection dao = DAOConnection.getConnection();
-        String sql = "insert into log(ip,level,action,address,priviousValue,currentValue,createAt,updateAt) values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into log(ip,level,action,address,priviousValue,currentValue,createAt) values(?,?,?,?,?,?,?)";
         PreparedStatement pre = dao.prepareStatement(sql);
         pre.setString(1, log.getIp());
         pre.setString(2, log.getLevel());
@@ -47,7 +49,10 @@ public class LogDao  {
         pre.setString(5, log.getPreviousValue());
         pre.setString(6,log.getCurrentValue());
         pre.setDate(7,log.getCreated_at());
-        pre.setDate(8,log.getUpdated_at());
         pre.execute();
+    }
+
+    public static LogDao getInstance() {
+        return new LogDao();
     }
 }

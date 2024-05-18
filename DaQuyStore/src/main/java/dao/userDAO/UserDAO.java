@@ -34,7 +34,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
     }
 
     @Override
-    public boolean insert(User user) throws SQLException {
+    public boolean insert(User user,String action,String ipAddress) throws SQLException {
         Connection con = DAOConnection.getConnection();
         String sql = "insert into users(username,password,full_name,gender,birthday, email,phone,address,avatar,role,status,type_login) " +
                 "values (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -56,12 +56,12 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         int res = ps.executeUpdate();
         ps.close();
         con.close();
-        super.insert(user);
+        super.insert(user,action,ipAddress);
         return res >= 1;
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(User user,String action,String ipAddress) {
         try {
             Connection con = DAOConnection.getConnection();
             String sql = "update users u set " +
@@ -86,7 +86,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
             int res = ps.executeUpdate();
             ps.close();
             con.close();
-            super.update(user);
+            super.update(user,action,ipAddress);
             return res >= 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -94,12 +94,12 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
     }
 
     @Override
-    public int delete(String id) {
+    public int delete(User u,String action,String ipAddress) {
         return 0;
     }
 
     @Override
-    public User selectById(String id) throws SQLException {
+    public User selectById(String id,String action,String ipAddress) throws SQLException {
         String sql = " select * from users where id = ? ";
 
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
@@ -128,12 +128,12 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
-        super.selectById(id);
+        super.selectById(id,action,address);
         return user;
     }
 
     @Override
-    public User selectByName(String username) throws SQLException {
+    public User selectByName(String username,String action,String ipAddress) throws SQLException {
         String sql = " select * from users where username = ? ";
 
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
@@ -157,13 +157,16 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
             role = rs.getString("role");
             status = rs.getString("status");
             typeLogin = rs.getString("type_login");
+            user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
         }
-        user = new User(id,username,password,fullName,gender,birthday,email,phoneNumber,address,avatar,createAt,updateAt,deleteAt,role,status,typeLogin);
 
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
-        super.selectByName(username);
+        if(user==null){
+            action = action+" : false";
+        }
+        super.selectByName(user,action,ipAddress);
         return user;
     }
 
@@ -230,7 +233,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         return users;
     }
 
-    public ArrayList<User> selectAllByTypeLogin(String typeLogin) throws SQLException {
+    public ArrayList<User> selectAllByTypeLogin(String typeLogin,String ip) throws SQLException {
         String sql = " select * from users where type_login=?";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
         pst.setString(1, typeLogin);
@@ -259,7 +262,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
-        super.selectById("login");
+        super.selectById("login","loginGoogle",ip);
         return users;
     }
 }
