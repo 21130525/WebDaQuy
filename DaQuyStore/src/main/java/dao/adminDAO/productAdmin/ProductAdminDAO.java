@@ -101,9 +101,9 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
 
     }
 
-    @Override
-    public void findbyName(ProductAdmin obj, String name) {
+    public ArrayList findbyName(ProductAdmin obj, String name) {
 
+        return null;
     }
 
     public ProductAdmin getAfterValueByID(int id) throws SQLException {

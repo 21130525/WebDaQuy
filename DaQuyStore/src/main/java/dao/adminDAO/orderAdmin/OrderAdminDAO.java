@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     public static OrderAdminDAO getInstance(){
@@ -51,8 +50,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     }
 
-    @Override
-    public void findbyName(AdminOrderDetail obj, String input) throws SQLException {
+    public ArrayList findbyName(AdminOrderDetail obj, String input) throws SQLException {
         String sql = "Select quantity_total,total_price from order_details where name=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, input);
@@ -62,6 +60,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         pr.close();
         rs.close();
+        return null;
     }
 
     @Override
