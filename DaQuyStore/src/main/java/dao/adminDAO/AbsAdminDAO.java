@@ -47,10 +47,7 @@ public abstract class AbsAdminDAO<T> implements IDAOAdmin<T> {
 
     }
 
-    @Override
-    public void findbyName(T obj, String name) throws SQLException {
 
-    }
 
     @Override
     public ArrayList search(T obj, String name) throws SQLException {

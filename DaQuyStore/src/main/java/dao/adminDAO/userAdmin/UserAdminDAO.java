@@ -70,9 +70,35 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
 
     }
 
-    @Override
-    public void findbyName(AdminUsers obj, String name) {
 
+    public ArrayList findbyName(AdminUsers obj, String username) throws SQLException {
+        ArrayList<AdminUsers> adminUserslist = new ArrayList<>();
+        String sql = "Select id, username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users where username=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,username);
+        AdminUsers adminUsers;
+        ResultSet rs = pr.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String usernameaccount = rs.getString("username");
+            String password = rs.getString("password");
+            String full_name = rs.getString("full_name");
+            String gender = rs.getString("gender");
+            Date birthday = rs.getDate("birthday");
+            String email = rs.getString("email");
+            String phone = rs.getString("phone");
+            String address = rs.getString("address");
+            String avatar = rs.getString("avatar");
+            Date created_at = rs.getDate("created_at");
+            Date updated_at = rs.getDate("updated_at");
+            String role = rs.getString("role");
+            String status = rs.getNString("status");
+            adminUsers = new AdminUsers(id, usernameaccount, password, full_name, gender, birthday, email, phone, address, avatar, created_at, updated_at, role, status);
+            adminUserslist.add(adminUsers);
+        }
+        pr.close();
+        rs.close();
+        return adminUserslist;
     }
 
     public ArrayList<AdminUsers> callSelect(AdminUsers obj) throws SQLException {
