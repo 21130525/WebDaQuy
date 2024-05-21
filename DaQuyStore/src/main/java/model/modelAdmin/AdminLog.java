@@ -1,34 +1,46 @@
 package model.modelAdmin;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class AdminLog {
-    String id;
+    int id;
     String ipaddress;
     String prevValue;
     String currentValue;
     Timestamp created_at;
-    public AdminLog(){
+    String level;
+
+    public AdminLog() {
 
     }
-    public AdminLog(String prevValue,String currentValue){
-        this.prevValue=prevValue;
-        this.currentValue=currentValue;
+
+    public String getLevel() {
+        return level;
     }
-    public AdminLog(String id, String ipaddress, String prevValue, String currentValue,Timestamp created_at) {
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public AdminLog(String prevValue, String currentValue) {
+        this.prevValue = prevValue;
+        this.currentValue = currentValue;
+    }
+
+    public AdminLog(int id, String ipaddress, String prevValue, String currentValue, Timestamp created_at, String level) {
         this.id = id;
         this.ipaddress = ipaddress;
         this.prevValue = prevValue;
         this.currentValue = currentValue;
-        this.created_at=created_at;
+        this.created_at = created_at;
+        this.level = level;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

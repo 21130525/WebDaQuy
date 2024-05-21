@@ -25,7 +25,8 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp" class="nav-link align-middle px-0">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp"
+                           class="nav-link align-middle px-0">
                             <i class="fa-solid fa-chart-simple"></i> <span
                                 class="ms-1 d-none d-sm-inline">Doanh thu</span>
                         </a>
@@ -55,6 +56,13 @@
                            class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-user"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-note-sticky"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
                 </ul>
@@ -104,29 +112,39 @@
     var $tbody = $('#body')
     $(document).ready(function () {
         $.ajax({
-            url: '<%=request.getContextPath()%>/getuser',
+            url: '<%=request.getContextPath()%>/log',
             method: 'GET',
             dataType: 'JSON',
             success: function (response) {
-                $.each(response, function (index, value) {
-                        var value_item = Object.keys(value)
-                        var $row = $('<tr>')
-                        $row.attr('id', value.id)
-
-                        value_item.forEach(function (key) {
-                            var value_item_key = value[key]
-                            if(key==='level')
-                                $('<td>').style.backgroundColor='blue'
-                            var $cell = $('<td>').text(value_item_key)
+                $.each(response, function (key, value) {
+                    var $row = $('<tr>')
+                    $row.attr('id', value.id)
+                    $.each(value, function (entry, value_item) {
+                        if (entry === 'level' && value_item === 'WARNING') {
+                            var $cell = $('<td>').text(value_item)
+                            $cell.css('background-color', 'red')
                             $row.append($cell)
-                        })
-                        $tbody.append($row);
-                    }
-                )
-
+                        } else if (entry === 'level' && value_item === 'ALERT') {
+                            var $cell = $('<td>').text(value_item)
+                            $cell.css('background-color', 'yellow')
+                            $row.append($cell)
+                        } else if (entry === 'level' && value_item === 'DANGER') {
+                            var $cell = $('<td>').text(value_item)
+                            $cell.css('background-color', 'green')
+                            $row.append($cell)
+                        } else {
+                            var $cell = $('<td>').text(value_item)
+                            $row.append($cell)
+                        }
+                    })
+                    $tbody.append($row)
+                })
+            },
+            error:function (error){
+                alert('Khong the lay du lieu')
             }
         })
-    });
+    })
     $(document).ready(function () {
         $('.dt-empty').hide()
     })
