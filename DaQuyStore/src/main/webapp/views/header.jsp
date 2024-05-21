@@ -68,7 +68,7 @@
                            href="<%=request.getContextPath()%>/views/index.jsp">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Sản phẩm</a>
+                        <a class="nav-link" aria-current="page" href="<%= request.getContextPath()%>/views/web/product/productPage.jsp">Sản phẩm</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">Trang sức</a>
