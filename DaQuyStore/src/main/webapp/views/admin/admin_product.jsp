@@ -25,7 +25,7 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp" class="nav-link align-middle px-0">
                             <i class="fa-solid fa-chart-simple"></i> <span
                                 class="ms-1 d-none d-sm-inline">Doanh thu</span>
                         </a>
@@ -40,7 +40,7 @@
                         <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp"
                            class="nav-link px-0 align-middle" id="menu_1">
                             <i class="fa-solid fa-upload"></i> <span
-                                class="ms-1 d-none d-sm-inline">Them san pham</span>
+                                class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
                         </a>
                     </li>
                     <li>
@@ -55,6 +55,11 @@
                            class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-user"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
                         </a>
                     </li>
                 </ul>

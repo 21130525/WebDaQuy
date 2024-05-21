@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -35,13 +36,15 @@ public class ManageProductController extends HttpServlet {
                 Part image_2 = req.getPart("image-2");
                 Part image_3 = req.getPart("image-3");
                 Part image_4 = req.getPart("image-4");
-                String link_image_main = req.getParameter("link-image-main");
-                String link_image_1 = req.getParameter("link-image-1");
-                String link_image_2 = req.getParameter("link-image-2");
-                String link_image_3 = req.getParameter("link-image-3");
-                String link_image_4 = req.getParameter("link-image-4");
+                int number_import = Integer.parseInt(req.getParameter("number_import"));
                 String description = req.getParameter("description");
                 String product_type = req.getParameter("productType");
+                //ten cac buc anh
+                String name_image_main=image_main.getSubmittedFileName();
+                String name_image_1=image_1.getSubmittedFileName();
+                String name_image_2=image_2.getSubmittedFileName();
+                String name_image_3=image_3.getSubmittedFileName();
+                String name_image_4=image_4.getSubmittedFileName();
                 // Khởi tạo một mảng byte để lưu dữ liệu từ phần tải lên
                 byte[] data_image_main = new byte[(int) image_main.getSize()];
                 byte[] data_image_1 = new byte[(int) image_1.getSize()];
@@ -61,11 +64,22 @@ public class ManageProductController extends HttpServlet {
                         "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
 
                 // Upload ảnh lên Cloudinary
-                cloudinary.uploader().upload(data_image_main, ObjectUtils.emptyMap());
-                cloudinary.uploader().upload(data_image_1, ObjectUtils.emptyMap());
-                cloudinary.uploader().upload(data_image_2, ObjectUtils.emptyMap());
-                cloudinary.uploader().upload(data_image_3, ObjectUtils.emptyMap());
-                cloudinary.uploader().upload(data_image_4, ObjectUtils.emptyMap());
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_main, ObjectUtils.asMap("public_id", name_image_main));
+                Map uploadresult_1 = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id",name_image_1));
+                Map uploadresult_2 = cloudinary.uploader().upload(data_image_2, ObjectUtils.asMap("public_id", name_image_2));
+                Map uploadresult_3 = cloudinary.uploader().upload(data_image_3, ObjectUtils.asMap("public_id", name_image_3));
+                Map uploadresult_4 = cloudinary.uploader().upload(data_image_4, ObjectUtils.asMap("public_id", name_image_4));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                String imageUrl1=uploadresult_1.get("url").toString();
+                String imageUrl2=uploadresult_2.get("url").toString();
+                String imageUrl3=uploadresult_3.get("url").toString();
+                String imageUrl4=uploadresult_4.get("url").toString();
+                System.out.println("Đường dẫn ảnh: " + imageUrl);
+                System.out.println("Đường dẫn ảnh: " + imageUrl1);
+                System.out.println("Đường dẫn ảnh: " + imageUrl2);
+                System.out.println("Đường dẫn ảnh: " + imageUrl3);
+                System.out.println("Đường dẫn ảnh: " + imageUrl4);
                 // Gửi thông báo thành công về client
                 resp.getWriter().println("Đã gửi ảnh lên Cloudinary thành công: ");
             } catch (Exception e) {
@@ -117,16 +131,16 @@ public class ManageProductController extends HttpServlet {
         } else if (uri.endsWith("/updateproduct_admin")) {
             int id = Integer.parseInt(req.getParameter("id"));
             // Xử lý cập nhật sản phẩm
-            ProductAdminDAO productAdminDAO=ProductAdminDAO.getInstance();
+            ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
 
             try {
-            ProductAdmin productAdmin=    productAdminDAO.selectByID(id);
-                HttpSession session=req.getSession(true);
-                session.setAttribute("productname",productAdmin.getProduct_name());
-                session.setAttribute("price",productAdmin.getPrice());
-                session.setAttribute("status",productAdmin.getStatus());
-                RequestDispatcher rd=session.getServletContext().getRequestDispatcher("/views/admin/admin_form_update.jsp");
-                rd.forward(req,resp);
+                ProductAdmin productAdmin = productAdminDAO.selectByID(id);
+                HttpSession session = req.getSession(true);
+                session.setAttribute("productname", productAdmin.getProduct_name());
+                session.setAttribute("price", productAdmin.getPrice());
+                session.setAttribute("status", productAdmin.getStatus());
+                RequestDispatcher rd = session.getServletContext().getRequestDispatcher("/views/admin/admin_form_update.jsp");
+                rd.forward(req, resp);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
