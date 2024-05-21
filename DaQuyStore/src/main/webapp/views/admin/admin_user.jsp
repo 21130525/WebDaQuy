@@ -59,6 +59,7 @@
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Tai khoan</th>
                     <th>Mat khau</th>
                     <th>Ho ten</th>
@@ -89,13 +90,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function () {
-        $("#submenu_1").hide();
-        $("#menu_1").click(function () {
-            $("#submenu_1").slideToggle();
-        })
-    })
     $(document).ready(function () {
         $("#table_id").DataTable();
     })
@@ -106,23 +102,69 @@
             method: 'GET',
             dataType: 'JSON',
             success: function (response) {
-                $.each(response, function (index, value) {
-                        var value_item=Object.keys(value)
-                        var $row = $('<tr>')
-                        value_item.forEach(function(key){
-                            var value_item_key=value[key]
-                            var $cell=$('<td>').text(value_item_key)
-                            $row.append($cell)
-                        })
-                        $tbody.append($row);
-                    }
-                )
+                $.each(response, function (key, value) {
+                    var $row = $('<tr>');
+                    $row.attr('id', value.id);
 
+                    $.each(value, function (key, value_item_key) {
+                        var $cell = $('<td>').text(value_item_key);
+                        $row.append($cell);
+                    });
+
+                    var $trash = $('<i class="fa-solid fa-trash"></i>');
+                    $trash.click(function () {
+                        $.ajax({
+                            url: '<%=request.getContextPath()%>/deleteuser',
+                            method: 'GET',
+                            data: {id: $row.prop('id')},
+                            dataType: 'JSON',
+                            success: function (resp) {
+                                alert('Đã xóa thành công');
+                                $row.hide();
+                            },
+                            error: function (error) {
+                                alert('Xóa không thành công');
+                            }
+                        });
+                    });
+                    $row.append($('<td>').append($trash)); // Đảm bảo biểu tượng nằm trong một ô
+
+                    var $edit = $('<i class="fa-solid fa-user-tie"></i>');
+                    $edit.click(function () {
+                        $.ajax({
+                            url: '<%=request.getContextPath()%>/updateuser',
+                            method: 'GET',
+                            dataType: 'JSON',
+                            data: {id: $row.prop('id')},
+                            success: function (response) {
+                                alert('Cập nhật thành công');
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 2000);
+                            },
+                            error: function (error) {
+                                alert('Cập nhật không thành công');
+                            }
+                        });
+                    });
+                    $row.append($('<td>').append($edit)); // Đảm bảo biểu tượng nằm trong một ô
+
+                    $tbody.append($row);
+                });
+            },
+            error: function (error) {
+                alert('Không thể tải dữ liệu người dùng');
             }
-        })
-    });
+        });
+
+
+    })
+
+
     $(document).ready(function (){
         $('.dt-empty').hide()
     })
+
 </script>
+
 </html>

@@ -103,6 +103,7 @@
                     <%--                    <th>Vai tro</th>--%>
                     <th>STT</th>
                     <th>Trang thai</th>
+                    <th>Thao tac</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -135,6 +136,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
      var $tbody=$('#body')
     $(document).ready(function () {
@@ -159,9 +161,62 @@
                 success:function(response){
                     $.each(response,function(index,value){
                         var $row=$('<tr>')
+                        $row.attr('id',value.id)
                         $.each(value,function(key,value_item){
                             var $cell=$('<td>').text(value_item)
                             $row.append($cell)
+                        })
+                        var $delete=$('<i class="fa-solid fa-trash"></i>')
+                        var $edit=$('<i class="fa-solid fa-wrench"></i>')
+                        var $cell=$('<td>')
+                        $cell.append($delete,$edit)
+                        $row.append($cell)
+                        $delete.click(function (){
+                            $.ajax({
+                                url:'<%=request.getContextPath()%>/deleteorder',
+                                method:'GET',
+                                data:{id:$row.prop('id')},
+                                dataType: 'JSON',
+                                success:function (response){
+                                    alert('Xoa thanh cong')
+                                    $row.hide()
+                                },
+                                error:function (error){
+                                    alert('Xoa khong thanh cong')
+                                }
+                            })
+                        })
+                        $edit.click(async function () {
+                            // thu vien sweet alert kem theo xu li bat dong bo
+                            const {value: status} = await Swal.fire({
+                                title: "Chon trang thai don hang",
+                                input: "select",
+                                inputOptions: {
+                                    Status:{
+                                        waiting:'Dang cho xac nhan',
+                                        forgiving:'Cho giao',
+                                        giving:'Dang giao',
+                                        success:'Giao thanh cong'
+                                    }
+
+                                },
+                                inputPlaceholder: "Chon trang thai",
+                                showCancelButton: true,
+                                inputValidator: (value) => {
+                                    // xu li promise
+                                    return new Promise((resolve) => {
+                                        if (value ==='forgiving' ) {
+                                            resolve();
+                                        } else {
+                                            resolve("Ban can chon trang thai");
+                                        }
+                                    });
+                                }
+                            });
+                            if (status) {
+                                Swal.fire('Cap nhat thanh cong');
+
+                            }
                         })
                         $tbody.append($row)
                     })
@@ -185,4 +240,5 @@
         })
     })
 </script>
+
 </html>
