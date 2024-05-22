@@ -1,8 +1,11 @@
 package controller.controllerAdmin.manageOrder;
 
 import com.google.gson.Gson;
+import dao.adminDAO.orderAdmin.OrderAdminDAO;
+import model.modelAdmin.AdminOrderDetail;
 import service.manageAdmin.manageOrder.DeleteOrderService;
 import service.manageAdmin.manageOrder.GetOrderService;
+import service.manageAdmin.manageOrder.UpdateOrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +42,18 @@ public class ManageOrderController extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }else if(action.endsWith("/updateorder")){
+            int id=Integer.parseInt(req.getParameter("id"));
+            String status_order=req.getParameter("status_order");
+            UpdateOrderService updateOrderService=new UpdateOrderService();
+            AdminOrderDetail adminOrderDetail=new AdminOrderDetail();
+            try {
+                adminOrderDetail.setStatus(updateOrderService.getStatusCurrentOrder(id));
+                updateOrderService.updateStatusOrder(id,status_order);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 }
