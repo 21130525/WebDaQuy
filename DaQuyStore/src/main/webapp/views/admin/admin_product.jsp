@@ -157,7 +157,7 @@
                     })
                     $icon2.click(function (){
                         var productId = $row.prop('id');
-                        window.location.href='<%=request.getContextPath()%>/updateproduct_admin?id=' + productId;
+                        window.location.href='<%=request.getContextPath()%>/redirect_update?id=' + productId;
                     })
                     $tbody.append($row);
                     // $tbody.empty();

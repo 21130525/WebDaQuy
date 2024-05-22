@@ -40,11 +40,11 @@ public class ManageProductController extends HttpServlet {
                 String description = req.getParameter("description");
                 String product_type = req.getParameter("productType");
                 //ten cac buc anh
-                String name_image_main=image_main.getSubmittedFileName();
-                String name_image_1=image_1.getSubmittedFileName();
-                String name_image_2=image_2.getSubmittedFileName();
-                String name_image_3=image_3.getSubmittedFileName();
-                String name_image_4=image_4.getSubmittedFileName();
+                String name_image_main = image_main.getSubmittedFileName();
+                String name_image_1 = image_1.getSubmittedFileName();
+                String name_image_2 = image_2.getSubmittedFileName();
+                String name_image_3 = image_3.getSubmittedFileName();
+                String name_image_4 = image_4.getSubmittedFileName();
                 // Khởi tạo một mảng byte để lưu dữ liệu từ phần tải lên
                 byte[] data_image_main = new byte[(int) image_main.getSize()];
                 byte[] data_image_1 = new byte[(int) image_1.getSize()];
@@ -65,16 +65,16 @@ public class ManageProductController extends HttpServlet {
 
                 // Upload ảnh lên Cloudinary
                 Map uploadresult_main = cloudinary.uploader().upload(data_image_main, ObjectUtils.asMap("public_id", name_image_main));
-                Map uploadresult_1 = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id",name_image_1));
+                Map uploadresult_1 = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id", name_image_1));
                 Map uploadresult_2 = cloudinary.uploader().upload(data_image_2, ObjectUtils.asMap("public_id", name_image_2));
                 Map uploadresult_3 = cloudinary.uploader().upload(data_image_3, ObjectUtils.asMap("public_id", name_image_3));
                 Map uploadresult_4 = cloudinary.uploader().upload(data_image_4, ObjectUtils.asMap("public_id", name_image_4));
                 // Lấy đường dẫn URL của ảnh
                 String imageUrl = uploadresult_main.get("url").toString();
-                String imageUrl1=uploadresult_1.get("url").toString();
-                String imageUrl2=uploadresult_2.get("url").toString();
-                String imageUrl3=uploadresult_3.get("url").toString();
-                String imageUrl4=uploadresult_4.get("url").toString();
+                String imageUrl1 = uploadresult_1.get("url").toString();
+                String imageUrl2 = uploadresult_2.get("url").toString();
+                String imageUrl3 = uploadresult_3.get("url").toString();
+                String imageUrl4 = uploadresult_4.get("url").toString();
                 System.out.println("Đường dẫn ảnh: " + imageUrl);
                 System.out.println("Đường dẫn ảnh: " + imageUrl1);
                 System.out.println("Đường dẫn ảnh: " + imageUrl2);
@@ -102,6 +102,57 @@ public class ManageProductController extends HttpServlet {
         } else if (url.endsWith("/findproduct")) {
             // Xử lý tìm kiếm sản phẩm
 
+        } else if (url.endsWith("/updateproduct_admin")) {
+            //xử lí cập nhật thông tin sản phẩm
+            String productname=req.getParameter("productname");
+            String price=req.getParameter("price");
+            String status=req.getParameter("status");
+            String discount=req.getParameter("discount");
+            String hot=req.getParameter("hot");
+            String color=req.getParameter("color");
+            String description=req.getParameter("description");
+            Part image_main=req.getPart("image_main");
+            Part image_1=req.getPart("image_1");
+            Part image_2=req.getPart("image_2");
+            Part image_3=req.getPart("image_3");
+            Part image_4=req.getPart("image_4");
+            //xử lí từng trường hợp khi người dùng đưa các giá trị
+            if(productname!=null){
+
+            }
+            if(price!=null){
+
+            }
+            if(status!=null){
+
+            }
+            if(discount!=null){
+
+            }
+            if(hot!=null){
+
+            }
+            if(color!=null){
+
+            }
+            if(description!=null){
+
+            }
+            if(image_main!=null){
+
+            }
+            if(image_1!=null){
+
+            }
+            if(image_2!=null){
+
+            }
+            if(image_3!=null){
+
+            }
+            if(image_4!=null){
+
+            }
         } else {
             // URL không hợp lệ
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -128,7 +179,7 @@ public class ManageProductController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-        } else if (uri.endsWith("/updateproduct_admin")) {
+        } else if (uri.endsWith("/redirect_update")) {
             int id = Integer.parseInt(req.getParameter("id"));
             // Xử lý cập nhật sản phẩm
             ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
