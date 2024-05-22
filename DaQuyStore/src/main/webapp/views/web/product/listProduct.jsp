@@ -93,8 +93,7 @@ Created by IntelliJ IDEA.
                         <img class="card-img-top border-2 "
                              src="<%=p.getImg_main()%>"
                              alt="anh">
-                        <p
-                                class="d-inline position-absolute top-0 start-0 ms-2 mt-2  bg-danger text-white rounded fw-bold fs-6">
+                        <p class="d-inline position-absolute top-0 start-0 ms-2 mt-2  bg-danger text-white rounded fw-bold fs-6">
                             -12%</p>
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0 "
