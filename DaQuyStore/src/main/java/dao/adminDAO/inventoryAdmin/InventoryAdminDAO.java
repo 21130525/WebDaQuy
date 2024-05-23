@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryAdminDAO {
-    public static  InventoryAdminDAO getInstance() {
+    public static InventoryAdminDAO getInstance() {
         return new InventoryAdminDAO();
     }
 
@@ -32,10 +32,35 @@ public class InventoryAdminDAO {
         return list;
     }
 
-    public static void main(String[] args) throws SQLException {
-        List<AdminInventoryDetail> list=InventoryAdminDAO.getInstance().getListInventoryDetail();
-        for(AdminInventoryDetail adminInventoryDetail:list){
-            System.out.println(adminInventoryDetail);
+    public boolean deleteInventory(int id) throws SQLException {
+        String sql = "Update inventory_detail set status_deleted='đã xóa' where id=? and status_deleted='chưa xóa'";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        int rows = pr.executeUpdate();
+        if (rows == 1) {
+            return true;
+        } else {
+            return false;
         }
+    }
+
+
+    //xử lí số lượng còn lại sau khi mua hàng
+    public int getListInventoryRemain() throws SQLException {
+        String sql="Select remaining,product_name from products join inventory_detail on products.id=inventory_detail.product_id group by product_name";
+        PreparedStatement preparedStatement=DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs= preparedStatement.executeQuery();
+        int rows_affected=0;
+        while(rs.next()){
+            rows_affected++;
+        }
+        return rows_affected;
+    }
+    public static void main(String[] args) throws SQLException {
+//        List<AdminInventoryDetail> list = InventoryAdminDAO.getInstance().getListInventoryDetail();
+//        for (AdminInventoryDetail adminInventoryDetail : list) {
+//            System.out.println(adminInventoryDetail);
+//        }
+        InventoryAdminDAO inventoryAdminDAO=new InventoryAdminDAO();
+        System.out.println(inventoryAdminDAO.getListInventoryRemain());
     }
 }

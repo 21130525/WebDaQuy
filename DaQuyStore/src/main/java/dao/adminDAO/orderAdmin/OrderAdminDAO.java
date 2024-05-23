@@ -92,7 +92,19 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusWaiting() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select id,status from orders where status='waiting'";
+        String sql = "Select id,status from orders where status='chờ xác nhân'";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        AdminOrderDetail adminOrderDetail = null;
+        while (rs.next()) {
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            list.add(adminOrderDetail);
+        }
+        return list;
+    }
+    public ArrayList<AdminOrderDetail> selectByStatusGiving() throws SQLException {
+        ArrayList<AdminOrderDetail> list = new ArrayList<>();
+        String sql = "Select id,status from orders where status='đang giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
