@@ -45,6 +45,18 @@
                             <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-note-sticky"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí log</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>

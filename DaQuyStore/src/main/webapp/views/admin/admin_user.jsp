@@ -14,6 +14,15 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<style>
+    .spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -25,7 +34,7 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp" class="nav-link align-middle px-0">
                             <i class="fa-solid fa-chart-simple"></i> <span class="ms-1 d-none d-sm-inline">Doanh thu</span>
                         </a>
                     </li>
@@ -36,7 +45,7 @@
                     </li>
                     <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp" class="nav-link px-0 align-middle" id="menu_1">
-                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Them san pham</span>
+                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
                         </a>
                     </li>
                     <li>
@@ -47,6 +56,18 @@
                     <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_user.jsp" class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-note-sticky"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
                 </ul>
@@ -93,15 +114,28 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
-        $("#table_id").DataTable();
-    })
+        $("#table_id").DataTable()
+    });
     var $tbody = $('#body')
     $(document).ready(function () {
+        var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+        $('body').append($spinner);
+
+        function showSpinner() {
+            $spinner.show();
+        }
+
+        function hideSpinner() {
+            $spinner.hide();
+        }
+
+        showSpinner();
         $.ajax({
             url: '<%=request.getContextPath()%>/getuser',
             method: 'GET',
             dataType: 'JSON',
             success: function (response) {
+                hideSpinner();
                 $.each(response, function (key, value) {
                     var $row = $('<tr>');
                     $row.attr('id', value.id);
@@ -116,7 +150,7 @@
                         $.ajax({
                             url: '<%=request.getContextPath()%>/deleteuser',
                             method: 'GET',
-                            data: {id: $row.prop('id')},
+                            data: { id: $row.prop('id') },
                             dataType: 'JSON',
                             success: function (resp) {
                                 alert('Đã xóa thành công');
@@ -135,7 +169,7 @@
                             url: '<%=request.getContextPath()%>/updateuser',
                             method: 'GET',
                             dataType: 'JSON',
-                            data: {id: $row.prop('id')},
+                            data: { id: $row.prop('id') },
                             success: function (response) {
                                 alert('Cập nhật thành công');
                                 setTimeout(function () {
@@ -149,16 +183,15 @@
                     });
                     $row.append($('<td>').append($edit)); // Đảm bảo biểu tượng nằm trong một ô
 
-                    $tbody.append($row);
+                    $('#table_id tbody').append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },
             error: function (error) {
+                hideSpinner();
                 alert('Không thể tải dữ liệu người dùng');
             }
         });
-
-
-    })
+    });
 
 
     $(document).ready(function (){

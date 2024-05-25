@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SummaryAdminDAO {
     public ArrayList<AdminSummary> getListSummarybyMonth() throws SQLException {
         ArrayList<AdminSummary> list = new ArrayList<>();
-        String sql = "SELECT SUM(price * quanlity) AS total_value " +
+        String sql = "SELECT SUM(price * quantity) AS total_value " +
                 "FROM inventory_detail " +
                 "JOIN inventories ON inventory_detail.id = inventories.id " +
                 "WHERE MONTH(inventories.date) = 5 " +

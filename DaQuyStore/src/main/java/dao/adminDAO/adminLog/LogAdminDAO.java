@@ -83,8 +83,16 @@ public class LogAdminDAO implements IDAOLogAdmin<Log> {
         String sql = "Select id,level,ip_address,prev_value,current_value,created_at from log";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
+        AdminLog adminLog=null;
         while (rs.next()) {
-
+            adminLog=new AdminLog();
+            adminLog.setId(rs.getInt("id"));
+            adminLog.setIpaddress(rs.getString("ip_address"));
+            adminLog.setPrevValue(rs.getString("prev_value"));
+            adminLog.setCurrentValue(rs.getString("current_value"));
+            adminLog.setCreated_at(rs.getTimestamp("created_at"));
+            adminLog.setLevel(rs.getString("level"));
+            list.add(adminLog);
         }
         return list;
     }
