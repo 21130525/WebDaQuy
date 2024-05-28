@@ -171,6 +171,17 @@ public class ProductDao implements IDAO<Product> {
         DAOConnection.getConnection().close();
         return list;
     }
+    //hàm kiểm tra số lượng trước khi mua hàng
+    public boolean checkExistQuantityItem(String productname) throws SQLException {
+        String sql="select sum(remaining) from inventory_detail join products on inventory_detail.product_id=products.id where products.product_name=? group by product_name";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,productname);
+        ResultSet rs=pr.executeQuery();
+        while(rs.next()){
+            return true;
+        }
+        return false;
+    }
     public static void main(String[] args) throws SQLException {
 //        System.out.println( (new ProductDao()).selectAll());
         System.out.println(new ProductDao().getProductByCategory("Ruby"));

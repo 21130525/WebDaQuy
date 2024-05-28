@@ -1,5 +1,9 @@
 package service.manageUser.cart;
 
+import dao.userDAO.ProductDao;
+
+import java.sql.SQLException;
+
 public class CartService {
 //    public static void addProduct(Product product) {
 //        boolean productExists = false;
@@ -27,4 +31,9 @@ public class CartService {
 //            }
 //        }
 //    }
+    //kiểm tra số lượng trước khi mua
+    public boolean checkExistQuantittyItem(String nameproduct) throws SQLException {
+        ProductDao productDao=new ProductDao();
+       return  productDao.checkExistQuantityItem(nameproduct);
+    }
 }
