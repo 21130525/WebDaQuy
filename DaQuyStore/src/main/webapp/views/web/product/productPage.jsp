@@ -107,7 +107,7 @@ To change this template use File | Settings | File Templates.
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0 "
                          style="width: 100%;">
-                        <a class="btn  rounded-0  btn-d-none p-0 fw-bold " href="#">mua</a>
+                        <a class="btn  rounded-0  btn-d-none p-0 fw-bold " href="<%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1">mua</a>
                         <a class="btn  rounded-0  btn-d-none p-0 fw-bold " href="#">gio hang</a>
                     </div>
                 </div>

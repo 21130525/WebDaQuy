@@ -1,4 +1,4 @@
-<%--
+<%@ page import="model.Product" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 1/5/2024
@@ -73,29 +73,32 @@
     </style>
 </head>
 <body>
+<%
+    Product p = (Product) request.getAttribute("product");
+%>
 <jsp:include page="../../header.jsp"/>
 <section id="product-detail" class="container mt-5 mb-5">
     <div class="container row mx-auto ">
         <div class="col-5 mx-4">
             <div class="img-product ">
-                <img src="../src/main/webapp/img/gemstone/ruby/Vien-Ruby-facet-Luc-Yen-063ct-IRRF152-231006300000.jpg"
+                <img src="<%=p.getImg_main()%>"
                      alt="" onclick="displayIMage(this)">
             </div>
             <div class="d-flex">
                 <div class="sub-img ms-2">
-                    <img src="../src/main/webapp/img/gemstone/ruby/Vien-Ruby-facet-Luc-Yen-063ct-IRRF152-231006300000.jpg"
+                    <img src="<%=p.getImg_extra1()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="../src/main/webapp/img/gemstone/ruby/Vien-Ruby-facet-Luc-Yen-063ct-IRRF152-231006300000.jpg"
+                    <img src="<%=p.getImg_extra2()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="../src/main/webapp/img/gemstone/ruby/Vien-Ruby-facet-Luc-Yen-063ct-IRRF152-231006300000.jpg"
+                    <img src="<%=p.getImg_extra3()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2 ">
-                    <img src="../src/main/webapp/img/gemstone/ruby/Vien-Ruby-facet-Luc-Yen-063ct-IRRF152-231006300000.jpg"
+                    <img src="<%=p.getImg_extra4()%>"
                          alt="" onclick="displayIMage(this)">
 
                 </div>
@@ -104,12 +107,12 @@
         </div>
         <div class="col-5 ms-3">
             <div class="name fs-3">
-                Đá Ruby cabochon màu đỏ tự nhiên 100% 7,26ct – IRRC204 2401726
+               <%=p.getName()%>
             </div>
             <div class="line"></div>
 
             <div class="gia fs-4 fw-bold my-4">
-                22,000,000₫
+               <%=p.getPrice()%>
             </div>
             <div class="moTa">
                 <p class="lh-base fw-bold">
@@ -145,7 +148,7 @@
                     them vao gio
                 </button>
                 <button class="col  btn btn-outline-warning fw-bold">
-                    thanh toan
+                    Mua
                 </button>
             </div>
         </div>
@@ -192,20 +195,7 @@
         </div>
     </div>
     <!-- sản phẩm liên quan -->
-    <div class="container mx-auto">
-        <p class="text-center fs-3 mx-4">Sản phẩm liên quan</p>
-        <div class="d-flex mx-auto border border-0">
-            <div class="card mx-2  border border-0" style="width: 16rem;">
-                <a href="#">
-                    <img src="../src/main/webapp/img/gemstone/diamond/Anh-dai-dien-Kim-Cuong-tu-nhien.jpg" class="card-img-top  border border-0" alt="...">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">tên sản phẩm</h5>
-                    <p class="card-text">200.000 đ</p>
-                </div>
-            </div>
-
-        </div>
+    <jsp:include page="listRelatedProducts.jsp"/>
 
     </div>
 </section>

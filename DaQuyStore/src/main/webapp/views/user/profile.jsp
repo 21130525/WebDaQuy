@@ -14,7 +14,10 @@
 
 </head>
 <body>
-<% User u = (User) session.getAttribute("user");%>
+<% User u = (User) session.getAttribute("user");
+if(u==null)
+    u = new User();
+%>
 <jsp:include page="../header.jsp"/>
 <section id="profile" class="mt-2">
     <div class="container ">
@@ -22,14 +25,12 @@
             <!-- menu bar -->
             <div class="col-3 ">
                 <div class="row p-3">
-
                     <div class="avatar d-flex mb-2">
                         <div class="img-thrum">
                             <img src="<%=u.getAvatar()%>" alt="" class="rounded-5 border">
                         </div>
-
                         <div class=" d-flex  ms-3">
-                            <p class="m-auto "><strong><%=u.getusername()%>></strong></p>
+                            <p class="m-auto "><strong><%=u.getusername()%></strong></p>
                         </div>
                     </div>
                     <ul class="context-profile list-group list-group-flush">
@@ -55,7 +56,7 @@
                         <Span class="fs-3">Hồ sơ Của tôi</Span>
                     </div>
                     <div>
-                        <form action="/profile" method="post">
+                        <form action="../../profile" method="get">
                             <div class="row">
                                 <div class="col-8">
                                     <!-- fill information -->
@@ -65,6 +66,7 @@
                                             <p class="col-8"><%=u.getusername()%>
                                             </p>
                                         </div>
+<%--                                        Ho Ten--%>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Họ và tên:</p>
                                             <p class=" col-8"><% if (u.getFullName() == "" || u.getFullName() == null) { %>
@@ -75,16 +77,18 @@
                                                 <%}%>
                                             </p>
                                         </div>
+<%--                                        email--%>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Email:</p>
                                             <div class="col-8 d-flex">
                                                 <p id="showEmail" class="w-75"><%=u.getEmail()%></p>
-                                                <button type="button" id="btnChangeEmail"
-                                                        class="btn btn-link  p-0  ms-3" style="height: 24px;">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+<%--                                                <button type="button" id="btnChangeEmail"--%>
+<%--                                                        class="btn btn-link  p-0  ms-3" style="height: 24px;">--%>
+<%--                                                    <i class="fas fa-edit"></i>--%>
+<%--                                                </button>--%>
                                             </div>
                                         </div>
+<%--                                        so dien thoai--%>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Số điện thoại:</p>
                                             <div class="col-8 d-flex">
@@ -96,25 +100,26 @@
                                                     <i class="fas fa-edit" id="iconPhoneNumber"></i></button>
                                             </div>
                                         </div>
+<%--                                        dia chi--%>
                                         <div class="row my-2">
                                             <p class=" col-4 text-end">Địa chỉ:</p>
                                             <div class="col-8 d-flex">
                                                 <p id="showAddress" class="w-75"><%=u.getAddress()%></p>
-                                                <input type="text" class="w-75 " name="ipAddress" id="ipAddress"
+                                                <input type="text" class="w-75 " name="address" id="ipAddress"
                                                        value="" disabled>
                                                 <button id="btnAddress" type="button" class="btn btn-link  p-0 ms-3"
                                                         style="height: 24px;"><i id="icAddress"
                                                                                  class="fas fa-edit"></i></button>
                                             </div>
                                         </div>
+<%--                                        gioi tinh--%>
                                         <div class="row my-2">
                                             <p class=" col-4 text-end">Giới Tính:</p>
                                             <div class=" col-8 ">
 
-
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label" for="inlineCheckbox1">Nữ</label>
-                                                    <input class="form-check-input" type="radio" name="sex"
+                                                    <input class="form-check-input" type="radio" name="gender"
                                                            id="inlineCheckbox1" value="NU"
                                                     <% if(u.getGender() =="nu"){%>
                                                         checked
@@ -123,7 +128,7 @@
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
                                                            for="inlineCheckbox2">Nam</label>
-                                                    <input class="form-check-input" type="radio" name="sex"
+                                                    <input class="form-check-input" type="radio" name="gender"
                                                            id="inlineCheckbox2" value="Nam"
                                                         <% if(u.getGender() =="nam"){%>
                                                            checked
@@ -132,13 +137,14 @@
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
                                                            for="inlineCheckbox3">khác</label>
-                                                    <input class="form-check-input" type="radio" name="sex"
+                                                    <input class="form-check-input" type="radio" name="gender"
                                                            id="inlineCheckbox3" value="Khac" <% if(u.getGender() =="khac"){%>
                                                            checked
                                                         <%}%>>
                                                 </div>
                                             </div>
                                         </div>
+<%--                                        ngay sinh--%>
                                         <div class="row my-2">
                                             <p class="col-4 text-end">Ngày Sinh:</p>
                                             <div class=" col-8 d-flex"><input type="date" name="birthday"
@@ -155,7 +161,7 @@
                                         <img id="imgAvatar" src="<%=u.getAvatar()%>" alt="">
                                     </div>
                                     <div class="mb-3 text-center">
-                                        <input class="form-control d-inline" type="file" id="formFile">
+                                        <input class="form-control d-inline" type="file" id="formFile" name="avatar">
                                     </div>
                                 </div>
                             </div>

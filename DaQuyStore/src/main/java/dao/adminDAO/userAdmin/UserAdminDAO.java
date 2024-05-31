@@ -100,12 +100,4 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         return null;
     }
 
-    public static void main(String[] args) throws SQLException {
-        AdminUsers adminUsers = new AdminUsers();
-        try {
-            System.out.println(UserAdminDAO.getInstance().select(adminUsers));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
+  }

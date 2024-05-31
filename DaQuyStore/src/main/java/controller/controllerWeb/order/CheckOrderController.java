@@ -16,8 +16,8 @@ import java.util.Map;
 
 @WebServlet("/checkorder")
 public class CheckOrderController extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        HttpSession session = req.getSession();
 //        ArrayList<Product> products = (ArrayList<Product>) session.getAttribute("list");
 //        String[] quantity = req.getParameterValues("quantity");
@@ -47,6 +47,6 @@ public class CheckOrderController extends HttpServlet {
 //            }
 //
 //        }
-    }
+//    }
     }
 
