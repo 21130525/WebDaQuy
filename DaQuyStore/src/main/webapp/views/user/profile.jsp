@@ -118,29 +118,23 @@ if(u==null)
                                             <div class=" col-8 ">
 
                                                 <div class="form-check form-check-inline">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Nữ</label>
+                                                    <label class="form-check-label" for="gender_nu">Nữ</label>
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                           id="inlineCheckbox1" value="NU"
-                                                    <% if(u.getGender() =="nu"){%>
-                                                        checked
-                                                    <%}%>>
+                                                           id="gender_nu" value="NU"
+                                                   >
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
-                                                           for="inlineCheckbox2">Nam</label>
+                                                           for="gender_nam">Nam</label>
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                           id="inlineCheckbox2" value="Nam"
-                                                        <% if(u.getGender() =="nam"){%>
-                                                           checked
-                                                        <%}%>>
+                                                           id="gender_nam" value="Nam"
+                                                        >
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
-                                                           for="inlineCheckbox3">khác</label>
+                                                           for="gender_khac">khác</label>
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                           id="inlineCheckbox3" value="Khac" <% if(u.getGender() =="khac"){%>
-                                                           checked
-                                                        <%}%>>
+                                                           id="gender_khac" value="Khac" >
                                                 </div>
                                             </div>
                                         </div>
@@ -440,7 +434,22 @@ if(u==null)
             this.classList.add('active')
         })
     });
+    const gender = <%=u.getGender()%>;
+    var gender_nu =  document.getElementById('gender_nu');
+    var gender_nam =  document.getElementById('gender_nam');
+    var gender_khac =  document.getElementById('gender_khac');
 
+    document.addEventListener('DOMContentLoaded', function() {
+       if(gender === 'nu'){
+            gender_nu.checked = true;
+       }
+        if(gender === 'nam'){
+            gender_nam.checked = true;
+        }
+        if(gender === 'khac'){
+            gender_khac.checked= true;
+        }
+    });
 </script>
 </body>
 </html>
