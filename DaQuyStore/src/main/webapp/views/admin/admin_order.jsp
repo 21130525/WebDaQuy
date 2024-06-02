@@ -193,162 +193,147 @@
                                 data: {id: $row.prop('id')},
                                 dataType: 'JSON',
                                 success: function (response) {
-                                    alert('Xoa thanh cong')
+                                    alert('Xóa thành công')
                                     $row.hide()
                                 },
                                 error: function (error) {
-                                    alert('Xoa khong thanh cong')
+                                    alert('Xóa không thành công')
                                 }
                             })
                         })
-                        $edit.click(async function () {
-                            // thu vien sweet alert kem theo xu li bat dong bo
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
-                                inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-
-                                },
-                                inputPlaceholder: "Chọn trạng thái",
+                        $edit.click(function () {
+                            Swal.fire({
+                                title: "Are you sure?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
                                 showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // xu li promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    let id = $row.prop('id')
+                                    $.ajax({
+                                        url: "Delete",
+                                        data: {id: id},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
                                         }
+                                    })
+                                    $("#table_id").DataTable().clear().destroy();
+                                    renderTable();
+                                    Swal.fire({
+                                        title: "Đã cập nhật!",
+                                        text: "Cập nhật thành công.",
+                                        icon: "success"
                                     });
                                 }
-                            });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data:{id:$row.prop('id'),status_order_request:status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cap nhat khong thanh cong')
-                                    }
-                                })
-                            }
+                            })
                         })
                         $tbody.append($row)
                     })
 
 
-                },
-                error: function (error) {
-                    alert('Lay du lieu khong thanh cong')
-                }
-            })
-        })
-    })
-    $(document).ready(function () {
-        $('#giving').click(function () {
-            $tbody.empty()
-            $.ajax({
-                url: '<%=request.getContextPath()%>/getorder_giving',
-                method: 'GET',
-                dataType: 'JSON',
-                success: function (response) {
-                    $.each(response, function (index, value) {
-                        var $row = $('<tr>')
-                        $row.attr('id', value.id)
-                        $.each(value, function (key, value_item) {
-                            var $cell = $('<td>').text(value_item)
-                            $row.append($cell)
-                        })
-                        var $delete = $('<i class="fa-solid fa-trash"></i>')
-                        var $edit = $('<i class="fa-solid fa-wrench"></i>')
-                        var $cell = $('<td>')
-                        $cell.append($delete, $edit)
-                        $row.append($cell)
-                        $delete.click(function () {
+
+
+
+
+                    $(document).ready(function () {
+                        $('#giving').click(function () {
+                            $tbody.empty()
                             $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
+                                url: '<%=request.getContextPath()%>/getorder_giving',
                                 method: 'GET',
-                                data: {id: $row.prop('id')},
                                 dataType: 'JSON',
                                 success: function (response) {
-                                    alert('Xoa thanh cong')
-                                    $row.hide()
+                                    $.each(response, function (index, value) {
+                                        var $row = $('<tr>')
+                                        $row.attr('id', value.id)
+                                        $.each(value, function (key, value_item) {
+                                            var $cell = $('<td>').text(value_item)
+                                            $row.append($cell)
+                                        })
+                                        var $delete = $('<i class="fa-solid fa-trash"></i>')
+                                        var $edit = $('<i class="fa-solid fa-wrench"></i>')
+                                        var $cell = $('<td>')
+                                        $cell.append($delete, $edit)
+                                        $row.append($cell)
+                                        $delete.click(function () {
+                                            $.ajax({
+                                                url: '<%=request.getContextPath()%>/deleteorder',
+                                                method: 'GET',
+                                                data: {id: $row.prop('id')},
+                                                dataType: 'JSON',
+                                                success: function (response) {
+                                                    alert('Xoa thanh cong')
+                                                    $row.hide()
+                                                },
+                                                error: function (error) {
+                                                    alert('Xoa khong thanh cong')
+                                                }
+                                            })
+                                        })
+                                        $edit.click(async function () {
+                                            // thu vien sweet alert kem theo xu li bat dong bo
+                                            const {value: status} = await Swal.fire({
+                                                title: "Chọn trạng thái đơn hàng",
+                                                input: "select",
+                                                inputOptions: {
+                                                    Status: {
+                                                        waiting: 'Chờ xác nhận',
+                                                        forgiving: 'Cho giao',
+                                                        giving: 'Đang giao',
+                                                        success: 'Đã giao',
+                                                        dismiss: 'Hủy'
+                                                    }
+
+                                                },
+                                                inputPlaceholder: "Chọn trạng thái",
+                                                showCancelButton: true,
+                                                inputValidator: (value) => {
+                                                    // xu li promise
+                                                    return new Promise((resolve) => {
+                                                        if (value === 'forgiving') {
+                                                            resolve();
+
+                                                        } else {
+                                                            resolve("Bạn cần chọn trạng thái");
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            if (status) {
+                                                $.ajax({
+                                                    url: '<%=request.getContextPath()%>/updateorder',
+                                                    method: 'GET',
+                                                    dataType: 'JSON',
+                                                    data: {id: $row.prop('id'), status_order_request: status},
+                                                    success: function (response) {
+                                                        Swal.fire('Cập nhật thành công');
+                                                    },
+                                                    error: function (error) {
+                                                        Swal.fire('Cap nhat khong thanh cong')
+                                                    }
+                                                })
+                                            }
+                                        })
+                                        $tbody.append($row)
+                                    })
+
+
                                 },
                                 error: function (error) {
-                                    alert('Xoa khong thanh cong')
+                                    alert('Lay du lieu khong thanh cong')
                                 }
                             })
                         })
-                        $edit.click(async function () {
-                            // thu vien sweet alert kem theo xu li bat dong bo
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
-                                inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-
-                                },
-                                inputPlaceholder: "Chọn trạng thái",
-                                showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // xu li promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
-                                        }
-                                    });
-                                }
-                            });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data:{id:$row.prop('id'),status_order_request:status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cap nhat khong thanh cong')
-                                    }
-                                })
-                            }
-                        })
-                        $tbody.append($row)
+                    })
+                    $(document).ready(function () {
+                        $('.dt-empty').hide()
                     })
 
-
-                },
-                error: function (error) {
-                    alert('Lay du lieu khong thanh cong')
-                }
-            })
-        })
-    })
-    $(document).ready(function () {
-        $('.dt-empty').hide()
-    })
 </script>
 <script>
     $(document).ready(function () {
