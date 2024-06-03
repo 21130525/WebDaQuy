@@ -24,40 +24,40 @@
 <body>
 
 <jsp:include page="header.jsp"/>
+
 <div class="">
     <%--main--%>
     <div class="main">
-<%--        <div class="banner">--%>
-<%--            <img class="background-image" src="../img/banner/banner.png" alt="Background Image">--%>
-<%--            <div class="content">--%>
-<%--                <h1 class="title-name"> TTN STORE </h1>--%>
-<%--                <p class="intro">TTN Shop tự hào là điểm đến lý tưởng cho những người yêu thích đá quý. Với một bộ sưu--%>
-<%--                    tập--%>
-<%--                    đa dạng, chúng tôi cung cấp những sản phẩm chất lượng cao, từ đá quý tự nhiên đến các mảnh nghệ--%>
-<%--                    thuật--%>
-<%--                    thủ công tinh tế. Khám phá sự đẹp tinh khôi của tự nhiên tại TTN Shop ngay hôm nay!</p>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="categogies-grid-container">--%>
-<%--            &lt;%&ndash;            <jsp:include page="/category/category.jsp"></jsp:include>&ndash;%&gt;--%>
-<%--            <div class="jewelry-categogies">--%>
-<%--                <h2 class="title-h2"> TRANG SỨC </h2>--%>
-<%--                <div class="banner-jewelry">--%>
-<%--                    <div class="w3-content w3-section" style="max-width:100%">--%>
-<%--                        <img class="mySlides" src="../img/banner/jewelry.png" style="width:100%">--%>
-<%--                        <img class="mySlides" src="../img/banner/jewelry-2.png" style="width:100%">--%>
-<%--                        <img class="mySlides" src="../img/banner/jewelry-3.png" style="width:100%">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-                <%--list product--%>
-                <jsp:include page="web/product/listProduct.jsp"/>
+        <%--carouselExample--%>
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="<%=request.getContextPath()%>/img/banner/jewelry.png" class="d-block w-100" alt="..." style="width: 100%">
+                </div>
+                <div class="carousel-item">
+                    <img src="<%=request.getContextPath()%>/img/banner/jewelry-2.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="<%=request.getContextPath()%>/img/banner/jewelry-3.png" class="d-block w-100" alt="..." >
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <%--category  product--%>
 
-<%--            </div>--%>
-<%--            <div class="categogies-new">--%>
-<%--                <h2 class="title-h2"> SẢN PHẨM MỚI</h2>--%>
-<%--                &lt;%&ndash;                <jsp:include page="product/products-new.jsp"></jsp:include>&ndash;%&gt;--%>
-<%--            </div>--%>
-<%--        </div>--%>
+
+         <%--category ruby--%>
+
+        <%--list product--%>
+        <jsp:include page="web/product/listProduct.jsp"/>
+
     </div>
 </div>
 <%--footer--%>

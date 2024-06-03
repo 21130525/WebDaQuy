@@ -127,8 +127,10 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         return null;
     }
 
+//đổi tên hàm thành updaterole cho chức năng cập nhật quyền của tài khoản người 
     public boolean updateRole(int id,String selected_role) throws SQLException {
         String sql = "Update users set role=? where  id=?";
+
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, selected_role);
         pr.setInt(2,id);
