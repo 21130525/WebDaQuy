@@ -19,20 +19,10 @@ public class ManageUserController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (url.endsWith("/deleteuser")) {
-            int id=Integer.parseInt(req.getParameter("id"));
-            DeleteUserService deleteUserService=new DeleteUserService();
+            int id = Integer.parseInt(req.getParameter("id"));
+            DeleteUserService deleteUserService = new DeleteUserService();
             try {
                 resp.getWriter().println(deleteUserService.deleteUser(id));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if (url.endsWith("/updateuser")) {
-            int id=Integer.parseInt(req.getParameter("id"));
-            UpdateUserService updateUserService=new UpdateUserService();
-            try {
-                Gson gson=new Gson();
-                String json=gson.toJson(updateUserService.updateRoleAdmin(id));
-                resp.getWriter().println(json);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -47,6 +37,23 @@ public class ManageUserController extends HttpServlet {
 
         } else {
 
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String url = req.getRequestURI();
+        if (url.endsWith("/updateuser")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            String selected_role = req.getParameter("select");
+            UpdateUserService updateUserService = new UpdateUserService();
+            try {
+                Gson gson = new Gson();
+                String json = gson.toJson(updateUserService.updateRole(id, selected_role));
+                resp.getWriter().println(json);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
