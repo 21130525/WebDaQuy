@@ -26,6 +26,8 @@ public class User implements IModel {
     private Gson gson = new Gson();
     private int count = 0;
 
+    public User() {}
+
     public User(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.id = id;
         this.username = username;
