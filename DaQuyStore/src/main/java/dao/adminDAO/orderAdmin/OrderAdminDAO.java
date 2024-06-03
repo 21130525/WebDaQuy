@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
-    public static OrderAdminDAO getInstance(){
+    public static OrderAdminDAO getInstance() {
         return new OrderAdminDAO();
     }
+
     @Override
     public ArrayList select(AdminOrderDetail obj) throws SQLException {
 
@@ -27,7 +27,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     @Override
     public boolean deletebyID(AdminOrderDetail obj, int id) throws SQLException {
-        String sql = "Update  order_details set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
+        String sql = "Update  orders set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, id);
         int rows = pr.executeUpdate();
@@ -51,8 +51,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     }
 
-    @Override
-    public void findbyName(AdminOrderDetail obj, String input) throws SQLException {
+    public ArrayList findbyName(AdminOrderDetail obj, String input) throws SQLException {
         String sql = "Select quantity_total,total_price from order_details where name=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, input);
@@ -62,6 +61,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         pr.close();
         rs.close();
+        return null;
     }
 
     @Override
@@ -92,7 +92,19 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusWaiting() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select id,status from orders where status='waiting'";
+        String sql = "Select id,status from orders where status='chờ xác nhân'";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        AdminOrderDetail adminOrderDetail = null;
+        while (rs.next()) {
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            list.add(adminOrderDetail);
+        }
+        return list;
+    }
+    public ArrayList<AdminOrderDetail> selectByStatusGiving() throws SQLException {
+        ArrayList<AdminOrderDetail> list = new ArrayList<>();
+        String sql = "Select id,status from orders where status='đang giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
@@ -103,4 +115,34 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         return list;
     }
 
+    //status_order_request đại dien cho trang thai cua don hang duoc gui tu client xuong
+    //status_current dai dien cho trang thai hien tai cua don hang
+    public boolean updateStatusOrder(int id, String status_order_request, String status_current) throws SQLException {
+        String sql = "Update orders set status=? where status=? and id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1, status_order_request);
+        pr.setString(2, status_current);
+        pr.setInt(3, id);
+        int rows = pr.executeUpdate();
+        if (rows == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getCurrentStatusOrder(int id) throws SQLException {
+        String sql = "Select status from orders where id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, id);
+        ResultSet rs = pr.executeQuery();
+        String status = "";
+        while (rs.next()) {
+            status = rs.getString("status");
+        }
+        return status;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        System.out.println(OrderAdminDAO.getInstance().updateStatusOrder(2, "đang giao", "chờ giao"));
+    }
 }

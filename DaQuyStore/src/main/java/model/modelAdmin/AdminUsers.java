@@ -4,7 +4,7 @@ package model.modelAdmin;
 import java.util.Date;
 
 public class AdminUsers {
-    private String id;
+    private int id;
     private String username;
     private String password;
     private String fullName;
@@ -24,7 +24,8 @@ public class AdminUsers {
 
     }
 
-    public AdminUsers(String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, String role, String status) {
+    public AdminUsers(int id,String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, String role, String status) {
+        this.id=id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -40,8 +41,7 @@ public class AdminUsers {
         this.status = status;
     }
 
-    public AdminUsers(String id, String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
-        this.id = id;
+    public AdminUsers( String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -59,11 +59,11 @@ public class AdminUsers {
         this.typeLogin = typeLogin;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

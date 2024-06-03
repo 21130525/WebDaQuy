@@ -1,6 +1,9 @@
 package controller.controllerAdmin.manageUser;
 
+import com.google.gson.Gson;
+import service.manageAdmin.manageUser.DeleteUserService;
 import service.manageAdmin.manageUser.GetUserService;
+import service.manageAdmin.manageUser.UpdateUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +19,23 @@ public class ManageUserController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (url.endsWith("/deleteuser")) {
-
+            int id=Integer.parseInt(req.getParameter("id"));
+            DeleteUserService deleteUserService=new DeleteUserService();
+            try {
+                resp.getWriter().println(deleteUserService.deleteUser(id));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if (url.endsWith("/updateuser")) {
-
+            int id=Integer.parseInt(req.getParameter("id"));
+            UpdateUserService updateUserService=new UpdateUserService();
+            try {
+                Gson gson=new Gson();
+                String json=gson.toJson(updateUserService.updateRoleAdmin(id));
+                resp.getWriter().println(json);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if (url.endsWith("/getuser")) {
             GetUserService getUserService = new GetUserService();
             try {

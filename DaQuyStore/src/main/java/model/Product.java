@@ -21,6 +21,7 @@ public class Product implements IModel{
     private String img_extra2;
     private String img_extra3;
     private String img_extra4;
+    private String status_deleted;
 
     public Product(int id, String category,String name, double price, String status, int sale, int hot, String description,Map<String, String> infor, Date create_at, Date update_at, Date delete_at, String img_main, String img_extra1, String img_extra2, String img_extra3, String img_extra4) {
         this.id = id;
@@ -40,6 +41,24 @@ public class Product implements IModel{
         this.img_extra2 = img_extra2;
         this.img_extra3 = img_extra3;
         this.img_extra4 = img_extra4;
+
+    }
+
+    public Product(int id, String category, String name, double price, String status, int sale, int hot, String description,Map<String, String> infor, Date create_at, Date update_at, Date delete_at, String img_main, String status_deleted) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.status = status;
+        this.sale = sale;
+        this.hot = hot;
+        this.description = description;
+        this.create_at = create_at;
+        this.update_at = update_at;
+        this.delete_at = delete_at;
+        this.img_main = img_main;
+        this.infor = infor;
+        this.status_deleted = status_deleted;
     }
 
     public Product(int id, String categoryId, String productName, double price, String imgMain) {

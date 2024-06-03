@@ -63,7 +63,7 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
     public ProductAdmin selectByID(int id) throws SQLException {
         String sql = "Select id,product_name,price,status,sale,hot from products where id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        pr.setInt(1,id);
+        pr.setInt(1, id);
         ResultSet rs = pr.executeQuery();
         ProductAdmin adminProduct = null;
         while (rs.next()) {
@@ -101,9 +101,9 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
 
     }
 
-    @Override
-    public void findbyName(ProductAdmin obj, String name) {
+    public ArrayList findbyName(ProductAdmin obj, String name) {
 
+        return null;
     }
 
     public ProductAdmin getAfterValueByID(int id) throws SQLException {
@@ -132,6 +132,98 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
         rs.close();
         pr.close();
         return adminProduct;
+    }
+//xử lí cập nhật thông tin sản phẩm cho từng trường hợp
+public void updateProductName(String name,int id) throws SQLException {
+        String sql="Update products set product_name=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,name);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+public void updateProductPrice(int price,int id) throws SQLException{
+        String sql="Update products set price=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1,price);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+public void updateProductStatus(String status,int id) throws SQLException{
+        String sql="Update products set status=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,status);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+
+}
+public void updateProductSale(int sale,int id) throws SQLException{
+        String sql="Update products set sale=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1,sale);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+public void updateProductColor(String color,int id) throws SQLException{
+        String sql="Update products set color=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,color);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+public void updateProductDescription(String description,int id) throws SQLException{
+        String sql="Update products set description=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,description);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+//cập nhật thông tin về ảnh của sản phẩm
+//id của ảnh bằng id của sản phẩm
+public void updateProductImageMain(String imagemain,int id) throws SQLException{
+       String sql="Update product_image set image_main=? where id=?";
+       PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+       pr.setString(1,imagemain);
+       pr.setInt(2,id);
+       pr.executeUpdate();
+       pr.close();
+}
+public void updateProductImage1(String image_1,int id) throws SQLException{
+        String sql="Update product_image set image_1=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,image_1);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+}
+    public void updateProductImage2(String image_2,int id) throws SQLException{
+        String sql="Update product_image set image_2=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,image_2);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+    }
+    public void updateProductImage3(String image_3,int id) throws SQLException{
+        String sql="Update product_image set image_3=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,image_3);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
+    }
+    public void updateProductImage4(String image_4,int id) throws SQLException{
+        String sql="Update product_image set image_4=? where id=?";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1,image_4);
+        pr.setInt(2,id);
+        pr.executeUpdate();
+        pr.close();
     }
 
     public static void main(String[] args) throws SQLException {

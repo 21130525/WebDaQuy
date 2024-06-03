@@ -11,11 +11,20 @@ import java.util.ArrayList;
 
 public class GetOrderService {
     public JsonArray getAsJsonArrayStatusWaiting() throws SQLException {
-        OrderAdminDAO orderAdminDAO=OrderAdminDAO.getInstance();
-        ArrayList<AdminOrderDetail> list=orderAdminDAO.selectByStatusWaiting();
-        Gson gson=new Gson();
-        String resultjson=gson.toJson(list);
-        JsonArray jsonArray= JsonParser.parseString(resultjson).getAsJsonArray();
+        OrderAdminDAO orderAdminDAO = OrderAdminDAO.getInstance();
+        ArrayList<AdminOrderDetail> list = orderAdminDAO.selectByStatusWaiting();
+        Gson gson = new Gson();
+        String resultjson = gson.toJson(list);
+        JsonArray jsonArray = JsonParser.parseString(resultjson).getAsJsonArray();
+        return jsonArray;
+    }
+
+    public JsonArray getAsJsonArrayStatusGiving() throws SQLException {
+        OrderAdminDAO orderAdminDAO = OrderAdminDAO.getInstance();
+        ArrayList<AdminOrderDetail> list = orderAdminDAO.selectByStatusGiving();
+        Gson gson = new Gson();
+        String resultjson = gson.toJson(list);
+        JsonArray jsonArray = JsonParser.parseString(resultjson).getAsJsonArray();
         return jsonArray;
     }
 }
