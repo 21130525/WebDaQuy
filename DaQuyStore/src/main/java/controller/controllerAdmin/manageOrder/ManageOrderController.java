@@ -28,13 +28,13 @@ public class ManageOrderController extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else if (action.endsWith("/getorder_giving")) {
-            GetOrderService getOrderService=new GetOrderService();
-            try {
-                resp.getWriter().println(getOrderService.getAsJsonArrayStatusGiving());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+//        } else if (action.endsWith("/getorder_giving")) {
+//            GetOrderService getOrderService = new GetOrderService();
+//            try {
+//                resp.getWriter().println(getOrderService.getAsJsonArrayStatusGiving());
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
         } else if (action.endsWith("/deleteorder")) {
             int id = Integer.parseInt(req.getParameter("id"));
             DeleteOrderService deleteOrderService = new DeleteOrderService();
@@ -48,17 +48,37 @@ public class ManageOrderController extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else if (action.endsWith("/updateorder")) {
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getRequestURI();
+        if (action.endsWith("/updateorder")) {
             int id = Integer.parseInt(req.getParameter("id"));
-            String status_order = req.getParameter("status_order");
+            //giá trị lấy ra từ ajax
+            String selected_status = req.getParameter("select");
             UpdateOrderService updateOrderService = new UpdateOrderService();
-            AdminOrderDetail adminOrderDetail = new AdminOrderDetail();
+//            AdminOrderDetail adminOrderDetail = new AdminOrderDetail();
+
+//                adminOrderDetail.setStatus(updateOrderService.getStatusCurrentOrder(id));
             try {
-                adminOrderDetail.setStatus(updateOrderService.getStatusCurrentOrder(id));
-                updateOrderService.updateStatusOrder(id, status_order);
+                if (selected_status.equals("waiting")) {
+                    String translated_status = "chờ xác nhận";
+                    updateOrderService.updateStatusOrder(id, translated_status);
+                    Gson gson = new Gson();
+                    String result = "Cập nhật thành công";
+                    String json = gson.toJson(result);
+                    resp.getWriter().println(json);
+                }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
 
         }
     }

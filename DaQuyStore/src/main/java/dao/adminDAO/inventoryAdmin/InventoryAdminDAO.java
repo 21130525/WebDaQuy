@@ -32,9 +32,10 @@ public class InventoryAdminDAO {
         return list;
     }
 
-    public boolean deleteInventory(int id) throws SQLException {
-        String sql = "Update inventory_detail set status_deleted='đã xóa' where id=? and status_deleted='chưa xóa'";
+    public boolean deleteInventory(String productname) throws SQLException {
+        String sql = "Update inventory_detail set status_deleted='đã xóa' where productname=? and status_deleted='chưa xóa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1, productname);
         int rows = pr.executeUpdate();
         if (rows == 1) {
             return true;

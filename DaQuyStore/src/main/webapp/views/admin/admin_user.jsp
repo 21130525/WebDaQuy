@@ -161,29 +161,64 @@
                             }
                         });
                     });
-                    $row.append($('<td>').append($trash)); // Đảm bảo biểu tượng nằm trong một ô
+                    // $row.append($('<td>').append($trash)); // Đảm bảo biểu tượng nằm trong một ô
 
-                    var $edit = $('<i class="fa-solid fa-user-tie"></i>');
-                    $edit.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/updateuser',
-                            method: 'GET',
-                            dataType: 'JSON',
-                            data: { id: $row.prop('id') },
-                            success: function (response) {
-                                alert('Cập nhật thành công');
-                                setTimeout(function () {
-                                    location.reload(true);
-                                }, 2000);
+                    // var $edit = $('<i class="fa-solid fa-user-tie"></i>');
+                    <%--$edit.click(function () {--%>
+                    <%--    $.ajax({--%>
+                    <%--        url: '<%=request.getContextPath()%>/updateuser',--%>
+                    <%--        method: 'GET',--%>
+                    <%--        dataType: 'JSON',--%>
+                    <%--        data: { id: $row.prop('id') },--%>
+                    <%--        success: function (response) {--%>
+                    <%--            alert('Cập nhật thành công');--%>
+                    <%--            setTimeout(function () {--%>
+                    <%--                location.reload(true);--%>
+                    <%--            }, 2000);--%>
+                    <%--        },--%>
+                    <%--        error: function (error) {--%>
+                    <%--            alert('Cập nhật không thành công');--%>
+                    <%--        }--%>
+                    <%--    });--%>
+                    <%--});--%>
+                    var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
+                        Swal.fire({
+                            title: "Bạn có chắc chắn không?",
+                            text: "Bạn sẽ không thể khôi phục được!",
+                            icon: "warning",
+                            input: 'select',
+                            inputOptions: {
+                                admin:'Admin',
+                                user:'User'
                             },
-                            error: function (error) {
-                                alert('Cập nhật không thành công');
-                            }
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateuser",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
+                                        }
+                                    });
+                                }
                         });
                     });
-                    $row.append($('<td>').append($edit)); // Đảm bảo biểu tượng nằm trong một ô
-
-                    $('#table_id tbody').append($row); // Thêm hàng vào tbody của bảng có id là table_id
+                    $row.append($('<td>').append($edit));
+                    $row.append($('<td>').append($trash));
+                    $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },
             error: function (error) {
@@ -199,5 +234,7 @@
     })
 
 </script>
+<script>
 
+</script>
 </html>
