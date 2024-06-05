@@ -94,6 +94,10 @@
             <h2>Thông tin sản phẩm</h2>
             <form action="<%=request.getContextPath()%>/updateproduct_admin" method="post" enctype="multipart/form-data">
                 <div class="form-group">
+                    <label for="idproduct">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="idproduct" placeholder="Nhập ID sản phẩm" value="<%=session.getAttribute("id")%>" name="id">
+                </div>
+                <div class="form-group">
                     <label for="productname">Tên sản phẩm:</label>
                     <input type="text" class="form-control" id="productname" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>" name="productname">
                 </div>

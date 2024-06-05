@@ -186,7 +186,7 @@ public void updateProductDescription(String description,int id) throws SQLExcept
 //cập nhật thông tin về ảnh của sản phẩm
 //id của ảnh bằng id của sản phẩm
 public void updateProductImageMain(String imagemain,int id) throws SQLException{
-       String sql="Update product_image set image_main=? where id=?";
+       String sql="Update product_image set img_main=? where id=?";
        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
        pr.setString(1,imagemain);
        pr.setInt(2,id);
@@ -194,7 +194,7 @@ public void updateProductImageMain(String imagemain,int id) throws SQLException{
        pr.close();
 }
 public void updateProductImage1(String image_1,int id) throws SQLException{
-        String sql="Update product_image set image_1=? where id=?";
+        String sql="Update product_image set img_1=? where id=?";
         PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1,image_1);
         pr.setInt(2,id);
@@ -202,7 +202,7 @@ public void updateProductImage1(String image_1,int id) throws SQLException{
         pr.close();
 }
     public void updateProductImage2(String image_2,int id) throws SQLException{
-        String sql="Update product_image set image_2=? where id=?";
+        String sql="Update product_image set img_2=? where id=?";
         PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1,image_2);
         pr.setInt(2,id);
@@ -210,7 +210,7 @@ public void updateProductImage1(String image_1,int id) throws SQLException{
         pr.close();
     }
     public void updateProductImage3(String image_3,int id) throws SQLException{
-        String sql="Update product_image set image_3=? where id=?";
+        String sql="Update product_image set img_3=? where id=?";
         PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1,image_3);
         pr.setInt(2,id);
@@ -218,7 +218,7 @@ public void updateProductImage1(String image_1,int id) throws SQLException{
         pr.close();
     }
     public void updateProductImage4(String image_4,int id) throws SQLException{
-        String sql="Update product_image set image_4=? where id=?";
+        String sql="Update product_image set img_4=? where id=?";
         PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1,image_4);
         pr.setInt(2,id);
