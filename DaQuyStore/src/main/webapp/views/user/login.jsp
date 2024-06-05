@@ -66,7 +66,7 @@
             </div>
             <!-- form nhap du lieu  -->
             <div class="col-8 bg">
-                <form class="form-login" action="<%=request.getContextPath()%>/loginWeb" method="POST">
+                <form class="form-login" action="<%=request.getContextPath()%>/loginWeb" method="post">
                     <div class="row text-center">
                         <div class="logo mt-3">
                             <img src="<%=request.getContextPath()%>/img/logo.png" alt="logo">
@@ -75,7 +75,7 @@
                             <h1>Đăng nhập</h1>
                         </div>
                     </div>
-
+<%--                    input email and password--%>
                     <div class="username_password" >
                         <label for="username">Tài khoản:</label>
                         <input type="text" name="username" placeholder="username" value="" id="username">
@@ -83,30 +83,34 @@
                         <label for="password">Mật khẩu:</label>
                         <input type="password" name="password" placeholder="password" value="" id="password">
                     </div>
-
+<%--                    dang nhap--%>
                     <div class="row text-center mt-3 fw-bold">
                         <div id="login">
                             <button id="submit" class="border-2 rounded bg-bt">
                                 <h3>Đăng nhập</h3>
                             </button>
                         </div>
+<%--                        quen mat khau--%>
                         <a href="<%=request.getContextPath()%>/views/user/forgotPassword.jsp" class="fs-6 text-decoration-none fw-bold">Quên mật khẩu</a>
                         <span>Hoặc</span> <div class="d-flex">
                         <div class="line"></div>
                         <div class="line"></div>
                     </div>
                     </div>
+<%--                    dang nhap google facebook--%>
                     <div class="d-flex justify-content-center fs-5 ">
                         <p>Đăng nhập với:</p>
                         <a href="" class="ms-3 me-2 pt-2">
                             <i class="fab fa-facebook"></i>
                         </a>
+<%--                        login google--%>
                         <a
                             href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/DaQuyStore_war/loginGoogle&response_type=code&client_id=154679706679-29nmsp8c4r1phddtk3d4gcr1u5b5hic7.apps.googleusercontent.com&approval_prompt=force"
                             class="ms-3 pt-2">
                             <i class="fab fa-google"></i>
                         </a>
                     </div>
+<%--                    dang ky--%>
                     <div class=" fs-5 d-flex justify-content-end">
 
                         <div id="register" class=" btn border border-dark" >

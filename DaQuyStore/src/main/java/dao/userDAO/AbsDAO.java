@@ -38,7 +38,6 @@ public abstract   class AbsDAO<T extends IModel> implements IDAO<T>{
     }
 
     public T  selectByName(IModel b, String action, String ip) throws SQLException {
-        System.out.println("ulll"+b);
         LogDao.getInstance().selectByName(b,action,ip);
         return null;
     }

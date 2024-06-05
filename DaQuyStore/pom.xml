@@ -173,8 +173,14 @@
             <artifactId>geoip2</artifactId>
             <version>4.2.0</version>
         </dependency>
-
     </dependencies>
+    <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+    <dependency>
+        <groupId>org.webjars.bower</groupId>
+        <artifactId>jquery</artifactId>
+        <version>3.6.0</version>
+    </dependency>
+
 </project>
 
 

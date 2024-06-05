@@ -52,6 +52,7 @@ public class LoginController  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            System.out.println("email"+ req.getParameter("username"));
             loginWeb(req,resp);
         } catch (SQLException | AddressException e) {
             throw new RuntimeException(e);
@@ -76,7 +77,7 @@ public class LoginController  extends HttpServlet {
                     if (user.getRole().equals("admin")) {
                         req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
                     } else if (user.getRole().equals("user")) {
-                        req.getRequestDispatcher("/home").forward(req,resp);
+                        req.getRequestDispatcher("/views/index.jsp").forward(req, resp);
                     }
                 }
             } else {

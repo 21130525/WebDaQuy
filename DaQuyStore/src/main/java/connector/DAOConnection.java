@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DAOConnection {
     public static  Connection getConnection() throws SQLException {
         DriverManager.registerDriver(new Driver());
-        String url = "jdbc:mysql://localhost:3306/gemstore";
+        String url = "jdbc:mysql://localhost:3306/genstore_isused";
         String user = "root";
         String password = "";
         return DriverManager.getConnection(url, user, password);
