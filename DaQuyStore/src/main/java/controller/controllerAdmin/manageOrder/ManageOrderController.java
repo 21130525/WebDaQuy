@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ManageOrderController", urlPatterns = {"/deleteorder", "/getorder_waiting", "/updateorder", "/findorder", "/getorder_giving"})
+@WebServlet(name = "ManageOrderController", urlPatterns = {"/deleteorder", "/getorder_waiting", "/updateorder",  "/getorder_giving","/getorder_waitinggiving","/getorder_gived","/getorder_canceled"})
 public class ManageOrderController extends HttpServlet {
 
     @Override
@@ -28,13 +28,34 @@ public class ManageOrderController extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-//        } else if (action.endsWith("/getorder_giving")) {
-//            GetOrderService getOrderService = new GetOrderService();
-//            try {
-//                resp.getWriter().println(getOrderService.getAsJsonArrayStatusGiving());
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
+        } else if (action.endsWith("/getorder_waitinggiving")) {
+            GetOrderService getOrderService = new GetOrderService();
+            try {
+                resp.getWriter().println(getOrderService.getAsJsonArrayStatusForWaitingGiving());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (action.endsWith("/getorder_giving")) {
+            GetOrderService getOrderService = new GetOrderService();
+            try {
+                resp.getWriter().println(getOrderService.getAsJsonArrayStatusGiving());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (action.endsWith("/getorder_gived")) {
+            GetOrderService getOrderService = new GetOrderService();
+            try {
+                resp.getWriter().println(getOrderService.getAsJsonArrayStatusGived());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (action.endsWith("/getorder_canceled")) {
+            GetOrderService getOrderService = new GetOrderService();
+            try {
+                resp.getWriter().println(getOrderService.getAsJsonArrayStatusCanceled());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } else if (action.endsWith("/deleteorder")) {
             int id = Integer.parseInt(req.getParameter("id"));
             DeleteOrderService deleteOrderService = new DeleteOrderService();
