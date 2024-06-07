@@ -1,10 +1,10 @@
 package model.modelAdmin;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class AdminSummary {
    private int summary;
-   private Date month;
+   private int month;
 
     public AdminSummary() {
     }
@@ -17,11 +17,19 @@ public class AdminSummary {
         this.summary = summary;
     }
 
-    public Date getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(Date month) {
+    public void setMonth(int month) {
         this.month = month;
+    }
+
+    @Override
+    public String toString() {
+        return "AdminSummary{" +
+                "summary=" + summary +
+                ", month=" + month +
+                '}';
     }
 }

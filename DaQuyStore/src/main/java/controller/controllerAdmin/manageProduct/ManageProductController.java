@@ -3,6 +3,7 @@ package controller.controllerAdmin.manageProduct;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
+import model.Product;
 import model.modelAdmin.ProductAdmin;
 import service.manageAdmin.manageProduct.DeleteProductService;
 import service.manageAdmin.manageProduct.GetProductService;
@@ -20,7 +21,7 @@ import java.util.Map;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10,      // 10MB
         maxRequestSize = 1024 * 1024 * 50)    // 50MB
-@WebServlet(name = "ManageProductController", urlPatterns = {"/addproduct_admin", "/deleteproduct_admin", "/filterproduct_admin", "/updateproduct_admin", "/findproduct_admin", "/getproduct_admin","/redirect_update"})
+@WebServlet(name = "ManageProductController", urlPatterns = {"/addproduct_admin", "/deleteproduct_admin", "/filterproduct_admin", "/updateproduct_admin", "/findproduct_admin", "/getproduct_admin", "/redirect_update"})
 public class ManageProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -86,73 +87,187 @@ public class ManageProductController extends HttpServlet {
                 e.printStackTrace();
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi khi gửi ảnh lên Cloudinary");
             }
-
-
-        } else if (url.endsWith("/searchproduct")) {
-            // Xử lý tim kiem sản phẩm
-            String search = req.getParameter("search");
-            SearchProductService service = new SearchProductService();
-            try {
-                resp.getWriter().println(service.getJSONResult(search));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            ;
-
-        } else if (url.endsWith("/findproduct")) {
-            // Xử lý tìm kiếm sản phẩm
-
         } else if (url.endsWith("/updateproduct_admin")) {
             //xử lí cập nhật thông tin sản phẩm
-            String productname=req.getParameter("productname");
-            String price=req.getParameter("price");
-            String status=req.getParameter("status");
-            String discount=req.getParameter("discount");
-            String hot=req.getParameter("hot");
-            String color=req.getParameter("color");
-            String description=req.getParameter("description");
-            Part image_main=req.getPart("image_main");
-            Part image_1=req.getPart("image_1");
-            Part image_2=req.getPart("image_2");
-            Part image_3=req.getPart("image_3");
-            Part image_4=req.getPart("image_4");
+            int id = Integer.parseInt(req.getParameter("id"));
+            String productname = req.getParameter("productname");
+            String price = req.getParameter("price");
+            String status = req.getParameter("status");
+            String discount = req.getParameter("discount");
+            String hot = req.getParameter("hot");
+            String color = req.getParameter("color");
+            String description = req.getParameter("description");
+            Part image_main = req.getPart("image_main");
+            Part image_1 = req.getPart("image_1");
+            Part image_2 = req.getPart("image_2");
+            Part image_3 = req.getPart("image_3");
+            Part image_4 = req.getPart("image_4");
+            //biến đếm số lượng thông tin được cập nhật trong db
+            int count = 0;
             //xử lí từng trường hợp khi người dùng đưa các giá trị
-            if(productname!=null){
+            if (productname != null) {
+                ProductAdminDAO productAdminDAO=ProductAdminDAO.getInstance();
+                try {
+                    productAdminDAO.updateProductName(productname,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (price != null) {
+                try {
+                    int int_price=Integer.parseInt(price);
+                    ProductAdminDAO.getInstance().updateProductPrice(int_price,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
-            if(price!=null){
+            if (status != null) {
+                try {
+                    ProductAdminDAO.getInstance().updateProductStatus(status,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
-            if(status!=null){
+            if (discount != null) {
+                int discount_price=Integer.parseInt(discount);
+                try {
+                    ProductAdminDAO.getInstance().updateProductSale(discount_price,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (hot != null) {
 
             }
-            if(discount!=null){
-
+            if (color != null) {
+                try {
+                    ProductAdminDAO.getInstance().updateProductColor(color,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(hot!=null){
-
+            if (description != null) {
+                try {
+                    ProductAdminDAO.getInstance().updateProductDescription(description,id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(color!=null){
-
+            if (image_main != null) {
+                String name_image_main = image_main.getSubmittedFileName();
+                byte[] data_image_main = new byte[(int) image_main.getSize()];
+                image_main.getInputStream().read(data_image_main);
+                // Khởi tạo Cloudinary object
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dvarqsigv",
+                        "api_key", "312676887848818",
+                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_main, ObjectUtils.asMap("public_id", name_image_main));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                //cập nhật đường dẫn trong db
+                ProductAdminDAO productAdminDAO = new ProductAdminDAO();
+                try {
+                    productAdminDAO.updateProductImageMain(imageUrl, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(description!=null){
-
+            if (image_1 != null) {
+                String name_image_1 = image_1.getSubmittedFileName();
+                byte[] data_image_1 = new byte[(int) image_1.getSize()];
+                image_1.getInputStream().read(data_image_1);
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dvarqsigv",
+                        "api_key", "312676887848818",
+                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id", name_image_1));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                //cập nhật đường dẫn trong db
+                ProductAdminDAO productAdminDAO = new ProductAdminDAO();
+                try {
+                    productAdminDAO.updateProductImage1(imageUrl, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(image_main!=null){
-
+            if (image_2 != null) {
+                String name_image_2 = image_2.getSubmittedFileName();
+                byte[] data_image_2 = new byte[(int) image_2.getSize()];
+                image_2.getInputStream().read(data_image_2);
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dvarqsigv",
+                        "api_key", "312676887848818",
+                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_2, ObjectUtils.asMap("public_id", name_image_2));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                //cập nhật đường dẫn trong db
+                ProductAdminDAO productAdminDAO = new ProductAdminDAO();
+                try {
+                    productAdminDAO.updateProductImage2(imageUrl, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(image_1!=null){
-
+            if (image_3 != null) {
+                String name_image_3 = image_3.getSubmittedFileName();
+                byte[] data_image_3 = new byte[(int) image_3.getSize()];
+                image_3.getInputStream().read(data_image_3);
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dvarqsigv",
+                        "api_key", "312676887848818",
+                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_3, ObjectUtils.asMap("public_id", name_image_3));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                //cập nhật đường dẫn trong db
+                ProductAdminDAO productAdminDAO = new ProductAdminDAO();
+                try {
+                    productAdminDAO.updateProductImage3(imageUrl, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(image_2!=null){
-
+            if (image_4 != null) {
+                String name_image_4 = image_4.getSubmittedFileName();
+                byte[] data_image_4 = new byte[(int) image_4.getSize()];
+                image_4.getInputStream().read(data_image_4);
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dvarqsigv",
+                        "api_key", "312676887848818",
+                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                Map uploadresult_main = cloudinary.uploader().upload(data_image_4, ObjectUtils.asMap("public_id", name_image_4));
+                // Lấy đường dẫn URL của ảnh
+                String imageUrl = uploadresult_main.get("url").toString();
+                //cập nhật đường dẫn trong db
+                ProductAdminDAO productAdminDAO = new ProductAdminDAO();
+                try {
+                    productAdminDAO.updateProductImage4(imageUrl, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(image_3!=null){
-
+            if (count >= 1) {
+                resp.sendError(HttpServletResponse.SC_OK);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
-            if(image_4!=null){
 
-            }
         } else {
             // URL không hợp lệ
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -187,6 +302,7 @@ public class ManageProductController extends HttpServlet {
             try {
                 ProductAdmin productAdmin = productAdminDAO.selectByID(id);
                 HttpSession session = req.getSession(true);
+                session.setAttribute("id", id);
                 session.setAttribute("productname", productAdmin.getProduct_name());
                 session.setAttribute("price", productAdmin.getPrice());
                 session.setAttribute("status", productAdmin.getStatus());
