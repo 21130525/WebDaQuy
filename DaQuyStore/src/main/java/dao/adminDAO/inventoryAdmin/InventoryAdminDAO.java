@@ -13,25 +13,6 @@ public class InventoryAdminDAO {
     public static InventoryAdminDAO getInstance() {
         return new InventoryAdminDAO();
     }
-
-    public List<AdminInventoryDetail> getListInventoryDetail() throws SQLException {
-        List<AdminInventoryDetail> list = new ArrayList<>();
-        String sql = "select inventory_detail.id,inventory_detail.quantity,inventory_detail.price,products.product_name,inventories.date FROM products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventory_detail.id=inventories.id";
-        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
-        AdminInventoryDetail adminInventoryDetail = null;
-        while (rs.next()) {
-            adminInventoryDetail = new AdminInventoryDetail();
-            adminInventoryDetail.setId(rs.getInt("inventory_detail.id"));
-            adminInventoryDetail.setQuantity(rs.getInt("inventory_detail.quantity"));
-            adminInventoryDetail.setPrice(rs.getFloat("inventory_detail.price"));
-            adminInventoryDetail.setName(rs.getString("products.product_name"));
-            adminInventoryDetail.setDate(rs.getDate("inventories.date"));
-            list.add(adminInventoryDetail);
-        }
-        return list;
-    }
-
     public boolean deleteInventory(String productname) throws SQLException {
         String sql = "Update inventory_detail set status_deleted='đã xóa' where productname=? and status_deleted='chưa xóa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
@@ -46,7 +27,7 @@ public class InventoryAdminDAO {
 
 
     //xử lí số lượng còn lại sau khi mua hàng
-    public int getListInventoryRemain() throws SQLException {
+    public int getInventoryRemain() throws SQLException {
         String sql="Select remaining,product_name from products join inventory_detail on products.id=inventory_detail.product_id group by product_name";
         PreparedStatement preparedStatement=DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs= preparedStatement.executeQuery();
@@ -56,12 +37,27 @@ public class InventoryAdminDAO {
         }
         return rows_affected;
     }
+    /*
+    hàm này dùng để lấy lên số lượng của sản phẩm
+     */
+    public ArrayList<AdminInventoryDetail> getListInventoryDetail() throws SQLException {
+        ArrayList<AdminInventoryDetail> detailArrayList=new ArrayList<>();
+        String sql="select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status from products join inventory_detail on products.id=inventory_detail.product_id group by inventory_detail.product_id";
+        PreparedStatement preparedStatement=DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs= preparedStatement.executeQuery();
+        while(rs.next()){
+            AdminInventoryDetail admindetail=new AdminInventoryDetail();
+            admindetail.setProduct_id(rs.getInt("products.id"));
+            admindetail.setProduct_name(rs.getString("products.product_name"));
+            admindetail.setTotal_quantity(rs.getInt("total_quantity"));
+            admindetail.setStatus(rs.getString("products.status"));
+            detailArrayList.add(admindetail);
+        }
+        return detailArrayList;
+    }
     public static void main(String[] args) throws SQLException {
-//        List<AdminInventoryDetail> list = InventoryAdminDAO.getInstance().getListInventoryDetail();
-//        for (AdminInventoryDetail adminInventoryDetail : list) {
-//            System.out.println(adminInventoryDetail);
-//        }
-        InventoryAdminDAO inventoryAdminDAO=new InventoryAdminDAO();
-        System.out.println(inventoryAdminDAO.getListInventoryRemain());
+            InventoryAdminDAO inventoryAdminDAO=new InventoryAdminDAO();
+            System.out.println(inventoryAdminDAO.getListInventoryDetail());
+            System.out.println("Thêm dữ liệu thành công");
     }
 }
