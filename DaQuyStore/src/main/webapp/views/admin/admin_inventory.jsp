@@ -90,12 +90,9 @@
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Ten san pham</th>
-                    <th>Gia</th>
-                    <th>Tinh trang</th>
-                    <th>Giam gia</th>
-                    <th>Hot</th>
-                    <th>Thao tac</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tình trạng</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -119,57 +116,6 @@
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
 <script>
-
-    var $tbody = $('#body');
-
-    $(document).ready(function () {
-        $.ajax({
-            url: '<%=request.getContextPath()%>/getproduct_admin',
-            method: 'GET',
-            dataType: 'JSON',
-            success: function (response) {
-                $.each(response, function (index, value) {
-                    var $row = $('<tr>');
-                    $.each(value, function (key, value_item_key) {
-                        var $cell = $('<td>').text(value_item_key)
-                        $row.append($cell)
-                    });
-                    // Thêm biểu tượng vào cuối mỗi dòng
-                    var $icon1 = $('<i class="fa-solid fa-trash"></i>');
-                    var $icon2 = $('<i class="fa-solid fa-wrench"></i>');
-                    var $cell_with_icon = $('<td>').append($icon1).append($icon2);
-                    $row.append($cell_with_icon);
-                    $row.attr('id',value.id)
-                    $icon1.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/deleteproduct_admin',
-                            method: 'GET',
-                            dataType: 'JSON',
-                            data: {id:$row.prop('id') },
-                            success: function(success) {
-                                alert(success)
-                                $row.remove()
-                            },
-                            error: function (mistake) {
-                                alert(mistake)
-                            }
-                        })
-                    })
-                    $icon2.click(function (){
-                        var productId = $row.prop('id');
-                        window.location.href='<%=request.getContextPath()%>/updateproduct_admin?id=' + productId;
-                    })
-                    $tbody.append($row);
-                    // $tbody.empty();
-                });
-
-            },
-            error: function (error) {
-                alert('Lay du lieu khong thanh cong')
-            }
-        });
-    });
-
     $(document).ready(function () {
         $("#table_id").DataTable()
     })
@@ -178,13 +124,44 @@
     $(document).ready(function () {
         $('.dt-empty').hide();
     })
+    var $tbody=$('#body')
+    //hiển thị dữ liệu lên table
+    $(document).ready(function(){
+        $.ajax({
+            url:'<%=request.getContextPath()%>/getinventory',
+            method:'GET',
+            dataType:'JSON',
+            success:function(response){
+                console.log(response)
+                $.each(response,function(index,item){
+                    var $row=$('<tr>')
+                    $.each(item,function(key,value_item){
+                        if(key === 'status'&& value_item==='hết hàng'){
+                            var $cell=$('<td>').text(value_item)
+                            $cell.css('background-color','#DD0000')
+                            $row.append($cell)
+                        }else{
+                            var $cell=$('<td>').text(value_item)
+                            $row.append($cell)
+                        }
 
+                    })
+                    $tbody.append($row)
+                })
+            },
+            error:function (error){
+                alert('Lấy dữ liệu không thành công')
+            }
+        })
+    })
 </script>
 <script>
+    //xuất file excel
     function converttoExcel(){
         var table2excel = new Table2Excel();
         table2excel.export(document.querySelectorAll("table"));
     }
 
 </script>
+
 </html>

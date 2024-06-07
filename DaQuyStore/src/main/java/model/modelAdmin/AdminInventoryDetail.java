@@ -10,6 +10,10 @@ public class AdminInventoryDetail {
     private AdminInventory adminInventory;
     private String name;
     private Date date;
+   private String product_name;
+   private  int total_quantity;
+   //thuộc tính biểu thị trạng thái còn hàng trong bảng
+   private String status;
 
     public String getName() {
         return name;
@@ -70,14 +74,29 @@ public class AdminInventoryDetail {
         this.adminInventory = adminInventory;
     }
 
-    @Override
-    public String toString() {
-        return "AdminInventoryDetail{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                '}';
+    public String getProduct_name() {
+        return product_name;
     }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public int getTotal_quantity() {
+        return total_quantity;
+    }
+
+    public void setTotal_quantity(int total_quantity) {
+        this.total_quantity = total_quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
 }
