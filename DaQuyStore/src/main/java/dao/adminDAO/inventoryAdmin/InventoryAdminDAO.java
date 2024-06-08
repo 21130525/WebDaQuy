@@ -2,6 +2,7 @@ package dao.adminDAO.inventoryAdmin;
 
 import connector.DAOConnection;
 import model.modelAdmin.AdminInventoryDetail;
+import model.modelAdmin.AdminInventoryDetail_v2_fixed;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,13 +41,13 @@ public class InventoryAdminDAO {
     /*
     hàm này dùng để lấy lên số lượng của sản phẩm
      */
-    public ArrayList<AdminInventoryDetail> getListInventoryDetail() throws SQLException {
-        ArrayList<AdminInventoryDetail> detailArrayList=new ArrayList<>();
+    public ArrayList<AdminInventoryDetail_v2_fixed> getListInventoryDetail() throws SQLException {
+        ArrayList<AdminInventoryDetail_v2_fixed> detailArrayList=new ArrayList<>();
         String sql="select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status from products join inventory_detail on products.id=inventory_detail.product_id group by inventory_detail.product_id";
         PreparedStatement preparedStatement=DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs= preparedStatement.executeQuery();
         while(rs.next()){
-            AdminInventoryDetail admindetail=new AdminInventoryDetail();
+            AdminInventoryDetail_v2_fixed admindetail=new AdminInventoryDetail_v2_fixed();
             admindetail.setProduct_id(rs.getInt("products.id"));
             admindetail.setProduct_name(rs.getString("products.product_name"));
             admindetail.setTotal_quantity(rs.getInt("total_quantity"));
