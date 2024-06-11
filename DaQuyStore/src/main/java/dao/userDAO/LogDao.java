@@ -35,9 +35,25 @@ public class LogDao  {
         insertLog(log);
     }
     public  void selectByName(IModel b, String action, String ip) throws SQLException {
-        Log log = new Log(ip,action,"info","user",b.getDataBefore(),b.getDataAfter(),Date.valueOf( LocalDate.now()));
+        Log log= null;
+        String level = getLevelByAction(action);
+        if(b == null){
+            log = new Log(ip,action,"info","user",null,null,Date.valueOf( LocalDate.now()));
+        }else{
+            log = new Log(ip,action,"info","user",b.getDataBefore(),b.getDataAfter(),Date.valueOf( LocalDate.now()));
+        }
+
         insertLog(log);
     }
+
+    private String getLevelByAction(String action) {
+        switch (action) {
+            case "a":
+                return "info";
+        }
+        return "info";
+    }
+
     public void insertLog(Log log) throws SQLException {
         Connection dao = DAOConnection.getConnection();
         String sql = "insert into log(ip,level,action,address,priviousValue,currentValue,createAt) values(?,?,?,?,?,?,?)";

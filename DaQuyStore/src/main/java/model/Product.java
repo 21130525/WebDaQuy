@@ -77,6 +77,14 @@ public class Product implements IModel{
         this.img_main = img_main;
     }
 
+    public Product(int id, String categoryId, String productName, double price, String imgMain) {
+        this.id = id;
+        this.category = categoryId;
+        this.name = productName;
+        this.price = price;
+        this.img_main = imgMain;
+    }
+
     public int getId() {
         return id;
     }
@@ -87,6 +95,10 @@ public class Product implements IModel{
 
     public Category getCategory() {
         return null;
+    }
+
+    public String getCategory_id() {
+        return this.category;
     }
 
     public double getPrice() {

@@ -27,6 +27,8 @@
       rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <!-- style -->
 <style>
     header {
@@ -51,6 +53,7 @@
     }
 </style>
 <header class="container-fluid border-bottom border-dark navbar navbar-expand-lg bg-light">
+
     <div class="container-fluid ms-3 me-3">
         <!-- logo -->
         <a class="navbar-brand" href="#">
@@ -126,6 +129,58 @@
                                 <%--                                                    <span class="cart-count">0</span>--%>
                             </a>
                         </button>
+
+        <div class="container-fluid ms-3 me-3">
+            <!-- logo -->
+            <a class="navbar-brand" href="#">
+                <img src="<%=request.getContextPath()%>/img/logo.png" alt="Logo" class="logo-img"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- list menu -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                           href="<%=request.getContextPath()%>/views/index.jsp">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="<%= request.getContextPath()%>/views/web/product/productPage.jsp">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Trang sức</a>
+                    </li>
+                    <!-- dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Đá quý
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Spinel</a></li>
+                            <li><a class="dropdown-item" href="#">Kim cương</a></li>
+                            <li><a class="dropdown-item" href="#">Ruby</a></li>
+                            <li><a class="dropdown-item" href="#">Hổ phách</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Liên hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính
+                            sách</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/about.jsp">Giới
+                            thiệu</a>
+
                     </li>
                 <%} else {%>
                     <li class="nav-item  pt-2" style="list-style-type: none;">

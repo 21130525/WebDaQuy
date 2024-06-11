@@ -55,7 +55,7 @@
                     </li>
                     <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp" class="nav-link px-0 align-middle" id="menu_1">
-                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Them san pham</span>
+                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
                         </a>
                     </li>
                     <li>
@@ -69,6 +69,18 @@
                         </a>
 
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-note-sticky"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí log</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
@@ -77,7 +89,7 @@
         </div>
         <div class="col py-3">
             <h2>Thông tin sản phẩm</h2>
-            <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data">
+            <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data" id="form">
                 <div class="form-group">
                     <label for="productName">Tên sản phẩm:</label>
                     <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm" name="productName">
@@ -106,27 +118,30 @@
                     <label for="productImages-4">Ảnh sản phẩm-4:</label>
                     <input type="file" class="form-control-file" id="productImages-4"  name="image-4">
                 </div>
-                <div class="form-group mb-3">
-                    <label for="link-productImages-main">Link ảnh sản phẩm-chính:</label>
-                    <input type="text" class="form-control" id="link-productImages-main" placeholder="Nhập đường link ảnh" name="link-image-main">
+<%--                <div class="form-group mb-3">--%>
+<%--                    <label for="link-productImages-main">Link ảnh sản phẩm-chính:</label>--%>
+<%--                    <input type="text" class="form-control" id="link-productImages-main" placeholder="Nhập đường link ảnh" name="link-image-main">--%>
+<%--                </div>--%>
+<%--                <div class="form-group mb-3">--%>
+<%--                    <label for="link-productImages-1">Link ảnh sản phẩm-ảnh 1:</label>--%>
+<%--                    <input type="text" class="form-control" id="link-productImages-1" placeholder="Nhập đường link ảnh" name="link-image-1">--%>
+<%--                </div>--%>
+<%--                <div class="form-group mb-3">--%>
+<%--                    <label for="link-productImages-2">Link ảnh sản phẩm-ảnh 2:</label>--%>
+<%--                    <input type="text" class="form-control" id="link-productImages-2" placeholder="Nhập đường link ảnh" name="link-image-2">--%>
+<%--                </div>--%>
+<%--                <div class="form-group mb-3">--%>
+<%--                    <label for="link-productImages-3">Link ảnh sản phẩm-ảnh 3:</label>--%>
+<%--                    <input type="text" class="form-control" id="link-productImages-3" placeholder="Nhập đường link ảnh" name="link-image-3">--%>
+<%--                </div>--%>
+<%--                <div class="form-group mb-3">--%>
+<%--                    <label for="link-productImages-4">Link ảnh sản phẩm-ảnh 4:</label>--%>
+<%--                    <input type="text" class="form-control" id="link-productImages-4" placeholder="Nhập đường link ảnh" name="link-image-4">--%>
+<%--                </div>--%>
+                <div class="form-group">
+                    <label for="number_import">Số lượng</label>
+                    <input type="number" name="number_import" id="number_import">
                 </div>
-                <div class="form-group mb-3">
-                    <label for="link-productImages-1">Link ảnh sản phẩm-ảnh 1:</label>
-                    <input type="text" class="form-control" id="link-productImages-1" placeholder="Nhập đường link ảnh" name="link-image-1">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="link-productImages-2">Link ảnh sản phẩm-ảnh 2:</label>
-                    <input type="text" class="form-control" id="link-productImages-2" placeholder="Nhập đường link ảnh" name="link-image-2">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="link-productImages-3">Link ảnh sản phẩm-ảnh 3:</label>
-                    <input type="text" class="form-control" id="link-productImages-3" placeholder="Nhập đường link ảnh" name="link-image-3">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="link-productImages-4">Link ảnh sản phẩm-ảnh 4:</label>
-                    <input type="text" class="form-control" id="link-productImages-4" placeholder="Nhập đường link ảnh" name="link-image-4">
-                </div>
-
                 <div class="form-group">
                     <label for="productDescription">Nội dung:</label>
                     <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập nội dung" name="description"></textarea>
@@ -218,6 +233,14 @@
 
     $(document).ready(function (){
         $('.dt-empty').hide()
+    })
+    $(document).ready(function (event){
+        $('#form').submit(function (){
+            if(isNaN($('#number_import').val())||$('#number_import').val()===''){
+                event.preventDefault();
+                alert('Thong tin ban nhap vao o so luong phai la so khong phai chu !!!')
+            }
+        })
     })
 </script>
 </html>

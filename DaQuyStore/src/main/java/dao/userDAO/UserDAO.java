@@ -29,7 +29,11 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
     private String status;
     private String typeLogin;
 
+    public static UserDAO instence;
     public static UserDAO getInstance() {
+        if (instence == null) {
+            instence = new UserDAO();
+        }
         return new UserDAO();
     }
 

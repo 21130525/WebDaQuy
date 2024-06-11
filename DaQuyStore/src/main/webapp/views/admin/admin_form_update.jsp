@@ -58,7 +58,7 @@
                     </li>
                     <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp" class="nav-link px-0 align-middle" id="menu_1">
-                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Them san pham</span>
+                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
                         </a>
                     </li>
                     <li>
@@ -72,23 +72,34 @@
                         </a>
 
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-note-sticky"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí log</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
-            <%for (int i=0;i<10;i++){%>
-                <%for(int j=0;j<10;j++){%>
-
-                <%}%>
-            <%}%>
-
             </div>
         </div>
         <div class="col py-3">
+            <!--form chỉnh sửa thông tin sản phẩm-->
             <h2>Thông tin sản phẩm</h2>
-            <form>
+            <form action="<%=request.getContextPath()%>/updateproduct_admin" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="productName">Tên sản phẩm:</label>
-                    <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>">
+                    <label for="idproduct">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="idproduct" placeholder="Nhập ID sản phẩm" value="<%=session.getAttribute("id")%>" name="id">
+                </div>
+                <div class="form-group">
+                    <label for="productname">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="productname" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>" name="productname">
                 </div>
                 <div class="form-group">
                     <label for="price">Giá tiền:</label>
@@ -96,33 +107,57 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">VNĐ</span>
                         </div>
-                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>">
+                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>" name="price">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="status">Tình trạng:</label>
-                    <select class="form-control" id="status">
+                    <select class="form-control" id="status" name="status">
                         <option>Đang còn hàng</option>
                         <option>Hết hàng</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="discount">Giảm giá (%):</label>
-                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)">
+                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">
                 </div>
                 <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="hot">
+                    <input type="checkbox" class="form-check-input" id="hot" name="hot">
                     <label class="form-check-label" for="hot">Sản phẩm hot</label>
                 </div>
                 <div class="form-group">
                     <label for="color">Màu sắc:</label>
-                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc">
+                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">
+                </div>
+                <div class="form-group">
+                    <label for="description">Mô tả:</label>
+                    <input type="text" class="form-control" id="description" placeholder="Nhập mô tả" name="description">
+                </div>
+                <!-- phần gửi ảnh-->
+                <div class="form-group">
+                    <label for="image_main">Ảnh chính:</label>
+                    <input type="file" class="form-control" id="image_main" placeholder="Tải ảnh chính" name="image_main">
+                </div>
+                <div class="form-group">
+                    <label for="image_1">Ảnh 1:</label>
+                    <input type="file" class="form-control" id="image_1" placeholder="Tải ảnh 1" name="image_1">
+                </div>
+                <div class="form-group">
+                    <label for="image_2">Ảnh 2:</label>
+                    <input type="file" class="form-control" id="image_2" placeholder="Tải ảnh 2" name="image_2">
+                </div>
+                <div class="form-group">
+                    <label for="image_3">Ảnh 3:</label>
+                    <input type="file" class="form-control" id="image_3" placeholder="Tải ảnh 3" name="image_3">
+                </div>
+                <div class="form-group">
+                    <label for="image_4">Ảnh 4:</label>
+                    <input type="file" class="form-control" id="image_4" placeholder="Tải ảnh 4" name="image_4">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Lưu thông tin</button>
             </form>
 
 
-            </form>
         </div>
     </div>
 </div>
