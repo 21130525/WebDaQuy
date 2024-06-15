@@ -222,7 +222,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     }
 
     public int getMaxID() throws SQLException {
-        String sql = "Select max(id) from orders";
+        String sql = "Select max(id) from log";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         int rows_affected = 0;

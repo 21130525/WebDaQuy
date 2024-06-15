@@ -78,7 +78,7 @@ public class InventoryAdminDAO {
     }
 
     public int getMaxID() throws SQLException {
-        String sql = "select max(id)  from inventory_detail";
+        String sql = "select max(id)  from log";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         int rows_affected = 0;
