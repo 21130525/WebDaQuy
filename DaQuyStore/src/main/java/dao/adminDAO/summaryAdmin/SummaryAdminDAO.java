@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SummaryAdminDAO {
+    public SummaryAdminDAO getInstance() {
+        return new SummaryAdminDAO();
+    }
+
     /*
     hàm thêm log cho chức năng truy vấn doanh thu
      */
