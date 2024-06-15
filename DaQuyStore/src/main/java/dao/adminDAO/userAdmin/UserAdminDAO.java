@@ -54,7 +54,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         ps.setString(3, log.getPrevValue());
         ps.setString(4, log.getCurrentValue());
         ps.setTimestamp(5, new Timestamp(new Date().getTime()));
-        ps.setString(6, LogLevel.DANGER.toString());
+        ps.setString(6, LogLevel.INFORM.toString());
         ps.executeUpdate();
     }
     @Override
