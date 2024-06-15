@@ -2,11 +2,14 @@ package dao.adminDAO.userAdmin;
 
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
+import model.LogLevel;
+import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminUsers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,6 +20,43 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
 
     }
 
+    //ghi log cho chức năng xóa người dùng
+    public void addLogDangerForDelete(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.DANGER.toString());
+        ps.executeUpdate();
+    }
+
+    //ghi log cho chức năng cập nhật quyền
+    public void addLogDangerForUpdateRole(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.DANGER.toString());
+        ps.executeUpdate();
+    }
+    //ghi log cho chức năng truy vấn dữ liệu
+    public void addLogInformForSelect(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.DANGER.toString());
+        ps.executeUpdate();
+    }
     @Override
     public ArrayList select(AdminUsers obj) throws SQLException {
         ArrayList<AdminUsers> adminUserslist = new ArrayList<>();
@@ -75,7 +115,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         ArrayList<AdminUsers> adminUserslist = new ArrayList<>();
         String sql = "Select id, username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users where username=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        pr.setString(1,username);
+        pr.setString(1, username);
         AdminUsers adminUsers;
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
@@ -127,18 +167,29 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         return null;
     }
 
-//đổi tên hàm thành updaterole cho chức năng cập nhật quyền của tài khoản người 
-    public boolean updateRole(int id,String selected_role) throws SQLException {
+    //đổi tên hàm thành updaterole cho chức năng cập nhật quyền của tài khoản người
+    public boolean updateRole(int id, String selected_role) throws SQLException {
         String sql = "Update users set role=? where  id=?";
 
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, selected_role);
-        pr.setInt(2,id);
+        pr.setInt(2, id);
         int rows = pr.executeUpdate();
         if (rows >= 1) {
             return true;
         }
         return false;
+    }
+
+    public int getMaxID() throws SQLException {
+        String sql = "select max(id) from log";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        int index = 0;
+        while (rs.next()) {
+            index = rs.getInt("id");
+        }
+        return index;
     }
 
     public static void main(String[] args) throws SQLException {

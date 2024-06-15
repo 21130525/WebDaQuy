@@ -1,5 +1,5 @@
 package model;
 
 public enum LogLevel {
-    ALERT, WARNING, DANGER
+    INFORM,ALERT, WARNING, DANGER
 }
