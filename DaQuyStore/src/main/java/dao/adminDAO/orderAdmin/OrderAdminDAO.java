@@ -2,12 +2,16 @@ package dao.adminDAO.orderAdmin;
 
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
+import model.LogLevel;
+import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminOrderDetail;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     public static OrderAdminDAO getInstance() {
@@ -104,6 +108,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         return list;
     }
+
     public ArrayList<AdminOrderDetail> selectByStatusGiving() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
         String sql = "Select id,status from orders where status='đang giao'";
@@ -116,6 +121,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         return list;
     }
+
     public ArrayList<AdminOrderDetail> selectByStatusForWaitingGiving() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
         String sql = "Select id,status from orders where status='chờ giao '";
@@ -128,6 +134,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         return list;
     }
+
     public ArrayList<AdminOrderDetail> selectByStatusGived() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
         String sql = "Select id,status from orders where status='đã giao'";
@@ -140,6 +147,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         return list;
     }
+
     public ArrayList<AdminOrderDetail> selectByStatusCanceled() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
         String sql = "Select id,status from orders where status='hủy'";
@@ -152,12 +160,13 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         }
         return list;
     }
+
     public void updateStatusOrder(int id, String selected_status) throws SQLException {
         String sql = "Update orders set status=? where id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, selected_status);
         pr.setInt(2, id);
-         pr.executeUpdate();
+        pr.executeUpdate();
 
     }
 
@@ -173,7 +182,56 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
         return status;
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        System.out.println(OrderAdminDAO.getInstance().updateStatusOrder(2, "đang giao", "chờ giao"));
-//    }
+    /*
+    thêm hàm ghi log cho chức năng xóa,truy vấn,cập nhật trạng thái
+     */
+    public void addLogInformForSelect(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.INFORM.toString());
+        ps.executeUpdate();
+    }
+
+    public void addLogDangerForDelete(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.DANGER.toString());
+        ps.executeUpdate();
+    }
+
+    public void addLogWarningForUpdate(AdminLog log) throws SQLException {
+        String sql = "insert into log values(?,?,?,?,?,?)";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, getMaxID() + 1);
+        ps.setString(2, log.getIpaddress());
+        ps.setString(3, log.getPrevValue());
+        ps.setString(4, log.getCurrentValue());
+        ps.setTimestamp(5, new Timestamp(new Date().getTime()));
+        ps.setString(6, LogLevel.WARNING.toString());
+        ps.executeUpdate();
+    }
+
+    public int getMaxID() throws SQLException {
+        String sql = "Select max(id) from log";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        int rows_affected = 0;
+        while (rs.next()) {
+            rows_affected = rs.getInt("max(id)");
+        }
+        return rows_affected;
+    }
+
+    public static void main(String[] args) throws SQLException {
+    }
 }
