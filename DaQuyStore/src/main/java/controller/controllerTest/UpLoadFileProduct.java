@@ -1,4 +1,4 @@
-package controller.controllerAdmin;
+package controller.controllerTest;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
