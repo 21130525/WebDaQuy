@@ -246,7 +246,7 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
     các hàm thêm log cho chức năng cập nhật,thêm,xóa sản phẩm,truy vấn
 
      */
-    public void addLogDangerForUpdate(AdminLog log) throws SQLException {
+    public void addLogWarningForUpdate(AdminLog log) throws SQLException {
         String sql = "insert into log values(?,?,?,?,?,?)";
         PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
         ps.setInt(1, getMaxID() + 1);

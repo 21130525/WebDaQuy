@@ -3,8 +3,11 @@ package controller.controllerAdmin.manageProduct;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
+import model.LogLevel;
 import model.Product;
+import model.modelAdmin.AdminLog;
 import model.modelAdmin.ProductAdmin;
+import service.manageAdmin.manageLog.GetLogService;
 import service.manageAdmin.manageProduct.DeleteProductService;
 import service.manageAdmin.manageProduct.GetProductService;
 import service.manageAdmin.manageProduct.SearchProductService;
@@ -16,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Map;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -81,7 +86,15 @@ public class ManageProductController extends HttpServlet {
                 System.out.println("Đường dẫn ảnh: " + imageUrl2);
                 System.out.println("Đường dẫn ảnh: " + imageUrl3);
                 System.out.println("Đường dẫn ảnh: " + imageUrl4);
+                AdminLog adminLog=new AdminLog();
+                adminLog.setLevel(LogLevel.INFORM.toString());
+                adminLog.setIpaddress(req.getRemoteAddr());
+                adminLog.setPrevValue("Chưa thêm dữ liệu");
+                adminLog.setPrevValue("Đã thêm sản phẩm thảnh công"+new Timestamp(new Date().getTime()));
+                adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 // Gửi thông báo thành công về client
+                GetLogService<ProductAdmin> adminGetLogService=new GetLogService<>();
+                adminGetLogService.addLogInform(adminLog,new ProductAdmin());
                 resp.getWriter().println("Đã gửi ảnh lên Cloudinary thành công: ");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -263,7 +276,18 @@ public class ManageProductController extends HttpServlet {
                 }
             }
             if (count >= 1) {
-                resp.sendError(HttpServletResponse.SC_OK);
+                AdminLog adminLog=new AdminLog();
+                adminLog.setIpaddress(req.getRemoteAddr());
+                adminLog.setLevel(LogLevel.DANGER.toString());
+                adminLog.setPrevValue("Chưa  cập nhật thành công sản phẩm có id:"+id+new Timestamp(new Date().getTime()));
+                adminLog.setCurrentValue("Đã cập nhật thành công sản phẩm có id:"+id+new Timestamp(new Date().getTime()));
+                adminLog.setCreated_at(new Timestamp(new Date().getTime()));
+                GetLogService<ProductAdmin> productAdminGetLogService=new GetLogService<>();
+                try {
+                    productAdminGetLogService.addLogWarning(adminLog,new ProductAdmin());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
@@ -280,6 +304,14 @@ public class ManageProductController extends HttpServlet {
         if (uri.endsWith("/getproduct_admin")) {
             try {
                 GetProductService getProductService = new GetProductService();
+                GetLogService<ProductAdmin> productAdminGetLogService=new GetLogService<>();
+                AdminLog adminLog=new AdminLog();
+                adminLog.setIpaddress(req.getRemoteAddr());
+                adminLog.setLevel(LogLevel.INFORM.toString());
+                adminLog.setCreated_at(new Timestamp(new Date().getTime()));
+                adminLog.setPrevValue("Chưa truy cập ngày"+new Timestamp(new Date().getTime()));
+                adminLog.setCurrentValue("Đã truy cập ngày:"+new Timestamp(new Date().getTime()));
+                productAdminGetLogService.addLogInform(adminLog,new ProductAdmin());
                 getProductService.getProduct(req, resp);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -288,6 +320,19 @@ public class ManageProductController extends HttpServlet {
             // Xử lý xóa sản phẩm
             int id = Integer.parseInt(req.getParameter("id"));
             DeleteProductService deleteProductService = new DeleteProductService();
+            GetProductService getProductService = new GetProductService();
+            GetLogService<ProductAdmin> productAdminGetLogService=new GetLogService<>();
+            AdminLog adminLog=new AdminLog();
+            adminLog.setIpaddress(req.getRemoteAddr());
+            adminLog.setLevel(LogLevel.DANGER.toString());
+            adminLog.setCreated_at(new Timestamp(new Date().getTime()));
+            adminLog.setPrevValue("Chưa xóa ngày"+new Timestamp(new Date().getTime())+"sản phẩm có id"+id);
+            adminLog.setCurrentValue("Đã xóa  ngày:"+new Timestamp(new Date().getTime())+"sản phẩm có id"+id);
+            try {
+                productAdminGetLogService.addLogDanger(adminLog,new ProductAdmin());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 deleteProductService.delete(req, resp, id);
             } catch (SQLException e) {
