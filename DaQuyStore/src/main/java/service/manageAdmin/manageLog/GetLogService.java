@@ -17,22 +17,29 @@ public class GetLogService<T> {
         ArrayList<AdminLog> list = LogAdminDAO.getInstance().getListLog();
         return list;
     }
-    public void addLogInform(AdminLog adminLog,T obj) throws SQLException {
-        if(obj instanceof AdminUsers){
+
+    public void addLogInform(AdminLog adminLog, T obj) throws SQLException {
+        if (obj instanceof AdminUsers) {
             UserAdminDAO.getInstance().addLogInformForSelect(adminLog);
         }
     }
-    public void addLogAlert(AdminLog adminLog,T obj) throws SQLException {
+
+    public void addLogAlert(AdminLog adminLog, T obj) throws SQLException {
 
     }
-    public void addLogDanger(AdminLog adminLog,T obj) throws SQLException {
-        if(obj instanceof AdminUsers){
+
+    public void addLogDanger(AdminLog adminLog, T obj) throws SQLException {
+        if (obj instanceof AdminUsers) {
             UserAdminDAO.getInstance().addLogDangerForDelete(adminLog);
         }
     }
-    public void addLogWarning(AdminLog adminLog,T obj) throws SQLException {
-        if(obj instanceof AdminOrderDetail){
-            OrderAdminDAO.getInstance().addLogWarningForUpdate(adminLog);
+
+    public void addLogWarning(AdminLog adminLog, T obj) throws SQLException {
+        if (obj instanceof AdminUsers) {
+            UserAdminDAO.getInstance().addLogWarningForUpdateRole(adminLog);
+        }else if(obj instanceof ProductAdmin){
+            ProductAdminDAO.getInstance().addLogWarningForUpdate(adminLog);
         }
     }
 }
+

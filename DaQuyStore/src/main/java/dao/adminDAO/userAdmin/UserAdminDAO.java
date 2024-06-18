@@ -3,6 +3,7 @@ package dao.adminDAO.userAdmin;
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
 import model.LogLevel;
+import model.User;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminUsers;
 
@@ -34,7 +35,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
 
     //ghi log cho chức năng cập nhật quyền
-    public void addLogDangerForUpdateRole(AdminLog log) throws SQLException {
+    public void addLogWarningForUpdateRole(AdminLog log) throws SQLException {
         String sql = "insert into log values(?,?,?,?,?,?)";
         PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
         ps.setInt(1, getMaxID() + 1);
@@ -47,7 +48,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     }
     //ghi log cho chức năng truy vấn dữ liệu
     public void addLogInformForSelect(AdminLog log) throws SQLException {
-        String sql = "insert into log values(?,?,?,?,?,?)";
+        String sql = "insert into log(id,ip_address,prev_value,current_value,created_at,level) values(?,?,?,?,?,?)";
         PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
         ps.setInt(1, getMaxID() + 1);
         ps.setString(2, log.getIpaddress());
@@ -60,7 +61,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
     @Override
     public ArrayList select(AdminUsers obj) throws SQLException {
         ArrayList<AdminUsers> adminUserslist = new ArrayList<>();
-        String sql = "Select id, username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users where status='chua xoa'";
+        String sql = "Select users.id,username,password,full_name,gender,birthday,email,phone,address,avatar,created_at,updated_at,role,status from users where status='chua xoa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         AdminUsers adminUsers;
         ResultSet rs = pr.executeQuery();
@@ -187,7 +188,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         ResultSet rs = pr.executeQuery();
         int index = 0;
         while (rs.next()) {
-            index = rs.getInt("id");
+            index = rs.getInt("max(id)");
         }
         return index;
     }
@@ -196,6 +197,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUsers> {
         AdminUsers adminUsers = new AdminUsers();
         try {
             System.out.println(UserAdminDAO.getInstance().select(adminUsers));
+            System.out.println(UserAdminDAO.getInstance().getMaxID());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
