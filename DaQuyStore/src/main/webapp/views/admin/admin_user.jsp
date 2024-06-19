@@ -70,6 +70,13 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_image.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-image"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
