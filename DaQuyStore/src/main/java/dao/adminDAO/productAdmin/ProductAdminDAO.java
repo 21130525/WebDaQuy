@@ -6,10 +6,7 @@ import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.ProductAdmin;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -303,6 +300,27 @@ public class ProductAdminDAO extends AbsAdminDAO<ProductAdmin> {
             index = rs.getInt("id");
         }
         return index;
+    }
+
+    /*
+    hàm xử lí việc truy vấn ảnh hiển thị lên
+     */
+    public ArrayList<ProductAdmin> getAllImages() throws SQLException {
+        ArrayList<ProductAdmin> list = new ArrayList<>();
+        String sql = "Select id,img_main,img_1,img_2,img_3,img_4 from product_image";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        while (rs.next()) {
+            ProductAdmin p = new ProductAdmin();
+            p.setId(rs.getInt("id"));
+            p.setImg_main(rs.getString("img_main"));
+            p.setImg_1(rs.getString("img_1"));
+            p.setImg_2(rs.getString("img_2"));
+            p.setImg_3(rs.getString("img_3"));
+            p.setImg_4(rs.getString("img_4"));
+            list.add(p);
+        }
+        return list;
     }
 
     public static void main(String[] args) throws SQLException {
