@@ -189,7 +189,8 @@
                             input: 'select',
                             inputOptions: {
                                 admin:'Admin',
-                                user:'User'
+                                user:'User',
+                                prohibit:'Prohibit'
                             },
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
