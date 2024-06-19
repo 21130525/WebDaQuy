@@ -1,19 +1,28 @@
 <%--
   Created by IntelliJ IDEA.
   User: ngoke
-  Date: 5/15/2024
-  Time: 10:15 PM
+  Date: 6/19/2024
+  Time: 9:27 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Quản lí ảnh sản phẩm</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<style>
+    .spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -25,7 +34,8 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp" class="nav-link align-middle px-0">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_summary.jsp"
+                           class="nav-link align-middle px-0">
                             <i class="fa-solid fa-chart-simple"></i> <span
                                 class="ms-1 d-none d-sm-inline">Doanh thu</span>
                         </a>
@@ -58,7 +68,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp"
+                           class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
                         </a>
                     </li>
@@ -78,40 +89,28 @@
                     </li>
                 </ul>
 
-
                 <hr>
+
             </div>
         </div>
         <div class="col py-3">
-            <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
-            <button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-plus"></i>Tim kiem</button>
-            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuat Excel</button>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Muc luc</option>
-                <option value="1">Loại</option>
-                <option value="2">Giá</option>
-                <option value="3">Bán chạy</option>
-                <option value="4">Giảm gia</option>
-            </select>
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Tình trạng</th>
+                    <th>Ảnh 1</th>
+                    <th>Ảnh 2</th>
+                    <th>Ảnh 3</th>
+                    <th>Ảnh 4</th>
+                    <th>Ảnh 5</th>
                 </tr>
                 </thead>
                 <tbody id="body">
-
                 </tbody>
-
-
             </table>
         </div>
     </div>
 </div>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -121,53 +120,100 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $("#table_id").DataTable()
-    })
+    });
+    var $tbody = $('#body')
+    $(document).ready(function () {
+        var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+        $('body').append($spinner);
+
+        function showSpinner() {
+            $spinner.show();
+        }
+
+        function hideSpinner() {
+            $spinner.hide();
+        }
+
+        showSpinner();
+        $.ajax({
+            url: '<%=request.getContextPath()%>/getimage',
+            method: 'GET',
+            dataType: 'JSON',
+            success: function (response) {
+                hideSpinner();
+                $.each(response, function (key, value) {
+                    var $row = $('<tr>');
+                    $row.attr('id', value.id);
+
+                    $.each(value, function (key, value_item_key) {
+                        if (key == 'img_main') {
+                            var imgmain = $('<img>', {
+                                src: value_item_key, // Đường dẫn tới ảnh của bạn
+                                alt: 'Ảnh chính', // Miêu tả ảnh
+                                width: '20%', // Điều chỉnh kích thước ảnh
+                                height: '20%'
+                            });
+                            var $cell = $('<td>').append(imgmain);
+                            $row.append($cell);
+                        } else if (key === 'img_1') {
+                            var img1 = $('<img>', {
+                                src: value_item_key, // Đường dẫn tới ảnh của bạn
+                                alt: 'Ảnh 1', // Miêu tả ảnh
+                                width: '20%', // Điều chỉnh kích thước ảnh
+                                height: '20%'
+                            });
+                            var $cell = $('<td>').append(img1);
+                            $row.append($cell);
+                        } else if (key === 'img_2') {
+                            var img2 = $('<img>', {
+                                src: value_item_key, // Đường dẫn tới ảnh của bạn
+                                alt: 'Ảnh 2', // Miêu tả ảnh
+                                width: '20%', // Điều chỉnh kích thước ảnh
+                                height: '20%'
+                            });
+                            var $cell = $('<td>').append(img2);
+                            $row.append($cell);
+                        } else if (key === 'img_3') {
+                            var img3 = $('<img>', {
+                                src: value_item_key, // Đường dẫn tới ảnh của bạn
+                                alt: 'Ảnh 3', // Miêu tả ảnh
+                                width: '20%', // Điều chỉnh kích thước ảnh
+                                height: '20%'
+                            });
+                            var $cell = $('<td>').append(img3);
+                            $row.append($cell);
+                        } else if (key === 'img_4') {
+                            var img4 = $('<img>', {
+                                src: value_item_key, // Đường dẫn tới ảnh của bạn
+                                alt: 'Ảnh 4', // Miêu tả ảnh
+                                width: '20%', // Điều chỉnh kích thước ảnh
+                                height: '20%'
+                            });
+                            var $cell = $('<td>').append(img3);
+                            $row.append($cell);
+                        }else{
+                            var $cell = $('<td>').text(value_item_key)
+                            $row.append($cell);
+                        }
+                    });
+                    $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
+                });
+            },
+            error: function (error) {
+                hideSpinner();
+                alert('Không thể tải dữ liệu người dùng');
+            }
+        });
+    });
 
 
     $(document).ready(function () {
-        $('.dt-empty').hide();
+        $('.dt-empty').hide()
     })
-    var $tbody=$('#body')
-    //hiển thị dữ liệu lên table
-    $(document).ready(function(){
-        $.ajax({
-            url:'<%=request.getContextPath()%>/getinventory',
-            method:'GET',
-            dataType:'JSON',
-            success:function(response){
-                console.log(response)
-                $.each(response,function(index,item){
-                    var $row=$('<tr>')
-                    $.each(item,function(key,value_item){
-                        if(key === 'status'&& value_item==='hết hàng'){
-                            var $cell=$('<td>').text(value_item)
-                            $cell.css('background-color','#DD0000')
-                            $row.append($cell)
-                        }else{
-                            var $cell=$('<td>').text(value_item)
-                            $row.append($cell)
-                        }
-
-                    })
-                    $tbody.append($row)
-                })
-            },
-            error:function (error){
-                alert('Lấy dữ liệu không thành công')
-            }
-        })
-    })
-</script>
-<script>
-    //xuất file excel
-    function converttoExcel(){
-        var table2excel = new Table2Excel();
-        table2excel.export(document.querySelectorAll("table"));
-    }
 
 </script>
 

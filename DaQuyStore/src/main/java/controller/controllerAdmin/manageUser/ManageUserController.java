@@ -81,7 +81,7 @@ public class ManageUserController extends HttpServlet {
                 adminLog.setLevel(LogLevel.WARNING.toString());
                 adminLog.setIpaddress(req.getRemoteAddr());
                 adminLog.setPrevValue("User có id là:"+id+"chưa thay đổi role");
-                adminLog.setCurrentValue("User có id là:"+id+"đã thay đổi role"+selected_role);
+                adminLog.setCurrentValue("User có id là:"+id+"đã thay đổi role"+selected_role );
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 GetLogService<AdminUsers> getLogService=new GetLogService<>();
                 getLogService.addLogWarning(adminLog,adminUsers);
