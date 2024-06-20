@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quan li nguoi dung</title>
+    <title>Quản lí người dùng</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -87,20 +87,20 @@
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tai khoan</th>
-                    <th>Mat khau</th>
-                    <th>Ho ten</th>
-                    <th>Gioi tinh</th>
-                    <th>Ngay sinh</th>
+                    <th>STT</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
                     <th>Email</th>
-                    <th>SDT</th>
-                    <th>Dia chi</th>
-                    <th>Avatar</th>
-                    <th>Ngay tao</th>
-                    <th>Ngay cap nhat</th>
-                    <th>Vai tro</th>
-                    <th>Trang thai</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày cập nhật</th>
+                    <th>Quyền hạn</th>
+                   <th>Loại đăng nhập</th>
+                    <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -168,26 +168,7 @@
                             }
                         });
                     });
-                    // $row.append($('<td>').append($trash)); // Đảm bảo biểu tượng nằm trong một ô
 
-                    // var $edit = $('<i class="fa-solid fa-user-tie"></i>');
-                    <%--$edit.click(function () {--%>
-                    <%--    $.ajax({--%>
-                    <%--        url: '<%=request.getContextPath()%>/updateuser',--%>
-                    <%--        method: 'GET',--%>
-                    <%--        dataType: 'JSON',--%>
-                    <%--        data: { id: $row.prop('id') },--%>
-                    <%--        success: function (response) {--%>
-                    <%--            alert('Cập nhật thành công');--%>
-                    <%--            setTimeout(function () {--%>
-                    <%--                location.reload(true);--%>
-                    <%--            }, 2000);--%>
-                    <%--        },--%>
-                    <%--        error: function (error) {--%>
-                    <%--            alert('Cập nhật không thành công');--%>
-                    <%--        }--%>
-                    <%--    });--%>
-                    <%--});--%>
                     var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
                         Swal.fire({
                             title: "Bạn có chắc chắn không?",
@@ -224,8 +205,7 @@
                                 }
                         });
                     });
-                    $row.append($('<td>').append($edit));
-                    $row.append($('<td>').append($trash));
+                    $row.append($('<td>').append($edit,$trash));
                     $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },

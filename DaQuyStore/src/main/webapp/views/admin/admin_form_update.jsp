@@ -119,10 +119,8 @@
                 </div>
                 <div class="form-group">
                     <label for="status">Tình trạng:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option>Đang còn hàng</option>
-                        <option>Hết hàng</option>
-                    </select>
+                    <input type="text" class="form-control" id="status" name="status">
+
                 </div>
                 <div class="form-group">
                     <label for="discount">Giảm giá (%):</label>

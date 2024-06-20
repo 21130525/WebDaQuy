@@ -34,7 +34,7 @@ public class SummaryAdminDAO {
 
     public ArrayList<AdminSummary> getListSummarybyMonth() throws SQLException {
         ArrayList<AdminSummary> list = new ArrayList<>();
-        String sql = "select sum(total_price) as total,month(created_at) as month from orders group by month(created_at)";
+        String sql = "select month(created_at) as month,sum(total_price) as total  from orders group by month(created_at)";
 
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();

@@ -3,8 +3,8 @@ package model.modelAdmin;
 import java.sql.Date;
 
 public class AdminSummary {
-   private int summary;
    private int month;
+   private int summary;
 
     public AdminSummary() {
     }
@@ -28,8 +28,8 @@ public class AdminSummary {
     @Override
     public String toString() {
         return "AdminSummary{" +
-                "summary=" + summary +
-                ", month=" + month +
+                "month=" + month +
+                ", summary=" + summary +
                 '}';
     }
 }

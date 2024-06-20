@@ -98,6 +98,7 @@
                 <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Tên sản phẩm</th>
                     <th>Ảnh 1</th>
                     <th>Ảnh 2</th>
                     <th>Ảnh 3</th>
@@ -193,7 +194,7 @@
                                 width: '20%', // Điều chỉnh kích thước ảnh
                                 height: '20%'
                             });
-                            var $cell = $('<td>').append(img3);
+                            var $cell = $('<td>').append(img4);
                             $row.append($cell);
                         }else{
                             var $cell = $('<td>').text(value_item_key)

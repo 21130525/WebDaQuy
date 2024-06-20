@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import dao.adminDAO.inventoryAdmin.InventoryAdminDAO;
-import model.modelAdmin.AdminInventoryDetail;
-import model.modelAdmin.AdminInventoryDetail_v2_fixed;
+import model.modelAdmin.AdminInventoryDetail_fixed;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class GetInventoryService {
     public JsonArray getInventory() throws SQLException {
         Gson gson = new Gson();
-        ArrayList<AdminInventoryDetail_v2_fixed> list = InventoryAdminDAO.getInstance().getListInventoryDetail();
+        ArrayList<AdminInventoryDetail_fixed> list = InventoryAdminDAO.getInstance().getListInventoryDetail();
         String json = gson.toJson(list);
         JsonArray jsonElements = JsonParser.parseString(json).getAsJsonArray();
         return jsonElements;

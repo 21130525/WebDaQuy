@@ -3,7 +3,7 @@ package model.modelAdmin;
 
 import java.util.Date;
 
-public class AdminUsers {
+public class AdminUser {
     private int id;
     private String username;
     private String password;
@@ -20,43 +20,27 @@ public class AdminUsers {
     private String role;
     private String status;
     private String typeLogin;
-    public AdminUsers(){
+    public AdminUser(){
 
     }
 
-    public AdminUsers(int id,String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, String role, String status) {
-        this.id=id;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.avatar = avatar;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-        this.role = role;
-        this.status = status;
-    }
-
-    public AdminUsers( String username, String password, String fullName, String gender, Date birthday, String email, String phoneNumber, String address, String avatar, Date createAt, Date updateAt, Date deleteAt, String role, String status, String typeLogin) {
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.avatar = avatar;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-        this.deleteAt = deleteAt;
-        this.role = role;
-        this.status = status;
-        this.typeLogin = typeLogin;
+    @Override
+    public String toString() {
+        return "AdminUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                ", role='" + role + '\'' +
+                ", typeLogin='" + typeLogin + '\'' +
+                '}';
     }
 
     public int getId() {

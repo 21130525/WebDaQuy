@@ -1,6 +1,6 @@
 package model.modelAdmin;
 
-public class ProductAdmin {
+public class AdminProduct {
     int id;
     String product_name;
     int price;
@@ -9,7 +9,10 @@ public class ProductAdmin {
     int hot;
     String color;
     String img_main;
-
+    String img_1;
+    String img_2;
+    String img_3;
+    String img_4;
     public int getId() {
         return id;
     }
@@ -58,21 +61,18 @@ public class ProductAdmin {
         this.img_4 = img_4;
     }
 
-    String img_1;
-    String img_2;
-    String img_3;
-    String img_4;
-    public ProductAdmin(){
+
+    public AdminProduct(){
     }
 
-    public ProductAdmin(int id, String product_name, int price, String status, int sale, int hot) {
+    public AdminProduct(int id, String product_name, int price, String status, int sale, int hot) {
         this.id=id;
         this.product_name = product_name;
         this.price = price;
         this.status = status;
         this.sale = sale;
         this.hot = hot;
-        this.color = color;
+
     }
 
     public String getProduct_name() {

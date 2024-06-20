@@ -2,14 +2,14 @@ package model.modelAdmin;
 /*
 class này dùng để đại diện cho việc lấy số lượng sản phẩm do class AdminInventoryDetail bị lỗi khi lấy dữ liệu
  */
-public class AdminInventoryDetail_v2_fixed {
+public class AdminInventoryDetail_fixed {
 
     private int product_id;
     private String product_name;
     private int total_quantity;
     private String status;
 
-    public AdminInventoryDetail_v2_fixed() {
+    public AdminInventoryDetail_fixed() {
     }
 
     public int getProduct_id() {

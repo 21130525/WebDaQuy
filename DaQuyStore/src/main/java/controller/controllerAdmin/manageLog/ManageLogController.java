@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import model.modelAdmin.AdminLog;
-import service.manageAdmin.manageLog.GetLogService;
+import service.manageAdmin.manageLog.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class ManageLogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        GetLogService getLogService=new GetLogService();
+        LogService logService =new LogService();
         try {
-            ArrayList<AdminLog> list=getLogService.getLogList();
+            ArrayList<AdminLog> list= logService.getLogList();
             Gson gson=new Gson();
             String json=gson.toJson(list);
             JsonArray jsonArray= JsonParser.parseString(json).getAsJsonArray();

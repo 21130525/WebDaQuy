@@ -8,14 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin Product</title>
+    <title>Quản lí sản phẩm</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<style>
+    .spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -83,11 +93,9 @@
             </div>
         </div>
         <div class="col py-3">
-            <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Them moi</button>
-            <button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-plus"></i>Tim kiem</button>
-            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuat Excel</button>
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
             <select class="form-select" aria-label="Default select example">
-                <option selected>Muc luc</option>
+                <option selected>Mục lục</option>
                 <option value="1">Loại</option>
                 <option value="2">Giá</option>
                 <option value="3">Bán chạy</option>
@@ -97,12 +105,12 @@
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Ten san pham</th>
-                    <th>Gia</th>
-                    <th>Tinh trang</th>
-                    <th>Giam gia</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Tình trạng</th>
+                    <th>Giảm giá</th>
                     <th>Hot</th>
-                    <th>Thao tac</th>
+                    <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -130,11 +138,24 @@
     var $tbody = $('#body');
 
     $(document).ready(function () {
+        var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+        $('body').append($spinner);
+
+        function showSpinner() {
+            $spinner.show();
+        }
+
+        function hideSpinner() {
+            $spinner.hide();
+        }
+
+        showSpinner();
         $.ajax({
             url: '<%=request.getContextPath()%>/getproduct_admin',
             method: 'GET',
             dataType: 'JSON',
             success: function (response) {
+                hideSpinner()
                 $.each(response, function (index, value) {
                     var $row = $('<tr>');
                     $.each(value, function (key, value_item_key) {
