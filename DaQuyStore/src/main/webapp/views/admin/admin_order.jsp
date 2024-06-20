@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quan li don hang</title>
+    <title>Quản lí đơn hàng</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -30,7 +30,6 @@
     .button-status:hover {
         box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
     }
-
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -152,9 +151,12 @@
 </script>
 <script>
     //nút bấm cho trạng thái chờ xác nhận
-        $(document).ready(function () {
+    $(document).ready(function () {
+
         $('#waiting').click(function () {
-            $tbody.empty();
+
+
+
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_waiting',
                 method: 'GET',
@@ -190,7 +192,11 @@
                                 icon: "warning",
                                 input: 'select',
                                 inputOptions: {
-                                    waiting: 'chờ xác nhận'
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
                                 },
                                 showCancelButton: true,
                                 confirmButtonColor: "#3085d6",
@@ -199,7 +205,6 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     const selected_value = result.value;
-                                    if (selected_value === 'waiting') {
                                         let id = $row.prop('id');
                                         $.ajax({
                                             url: "<%=request.getContextPath()%>/updateorder",
@@ -216,7 +221,7 @@
                                             }
                                         });
                                     }
-                                }
+
                             });
                         });
 
@@ -236,12 +241,25 @@
     //nút bấm cho trạng thái đang giao
     $(document).ready(function () {
         $('#giving').click(function () {
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
             $tbody.empty();
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_giving',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
+                    hideSpinner()
                     $.each(response, function (index, value) {
                         var $row = $('<tr>');
                         $row.attr('id', value.id);
@@ -269,47 +287,44 @@
                                 }
                             });
                         });
-                        $edit.click(async function () {
-                            // Thư viện sweet alert kèm theo xử lý bất đồng bộ
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
+                        $edit.click(function () {
+                            Swal.fire({
+                                title: "Bạn có chắc chắn không?",
+                                text: "Bạn sẽ không thể khôi phục được!",
+                                icon: "warning",
+                                input: 'select',
                                 inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
                                 },
-                                inputPlaceholder: "Chọn trạng thái",
                                 showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // Xử lý promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateorder",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
                                         }
                                     });
                                 }
+
                             });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data: {id: $row.prop('id'), status_order_request: status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cập nhật không thành công');
-                                    }
-                                });
-                            }
                         });
                         $tbody.append($row);
                     });
@@ -331,80 +346,32 @@
     //nút bấm cho trạng thái đã giao
     $(document).ready(function () {
         $('#gived').click(function () {
+
             $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_gived',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
+                    hideSpinner()
                     $.each(response, function (index, value) {
                         var $row = $('<tr>');
                         $row.attr('id', value.id);
                         $.each(value, function (key, value_item) {
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
-                        });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
-                        var $edit = $('<i class="fa-solid fa-wrench"></i>');
-                        var $cell = $('<td>');
-                        $cell.append($delete, $edit);
-                        $row.append($cell);
-                        $delete.click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
-                        $edit.click(async function () {
-                            // Thư viện sweet alert kèm theo xử lý bất đồng bộ
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
-                                inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-                                },
-                                inputPlaceholder: "Chọn trạng thái",
-                                showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // Xử lý promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
-                                        }
-                                    });
-                                }
-                            });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data: {id: $row.prop('id'), status_order_request: status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cập nhật không thành công');
-                                    }
-                                });
-                            }
                         });
                         $tbody.append($row);
                     });
@@ -421,79 +388,30 @@
     $(document).ready(function () {
         $('#canceled').click(function () {
             $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_canceled',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
+                    hideSpinner()
                     $.each(response, function (index, value) {
                         var $row = $('<tr>');
                         $row.attr('id', value.id);
                         $.each(value, function (key, value_item) {
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
-                        });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
-                        var $edit = $('<i class="fa-solid fa-wrench"></i>');
-                        var $cell = $('<td>');
-                        $cell.append($delete, $edit);
-                        $row.append($cell);
-                        $delete.click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
-                        $edit.click(async function () {
-                            // Thư viện sweet alert kèm theo xử lý bất đồng bộ
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
-                                inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-                                },
-                                inputPlaceholder: "Chọn trạng thái",
-                                showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // Xử lý promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
-                                        }
-                                    });
-                                }
-                            });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data: {id: $row.prop('id'), status_order_request: status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cập nhật không thành công');
-                                    }
-                                });
-                            }
                         });
                         $tbody.append($row);
                     });
@@ -510,11 +428,24 @@
     $(document).ready(function () {
         $('#waiting-giving').click(function () {
             $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_waitinggiving',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
+                    hideSpinner()
                     $.each(response, function (index, value) {
                         var $row = $('<tr>');
                         $row.attr('id', value.id);
@@ -542,47 +473,45 @@
                                 }
                             });
                         });
-                        $edit.click(async function () {
-                            // Thư viện sweet alert kèm theo xử lý bất đồng bộ
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
+                        $edit.click(function () {
+                            Swal.fire({
+                                title: "Bạn có chắc chắn không?",
+                                text: "Bạn sẽ không thể khôi phục được!",
+                                icon: "warning",
+                                input: 'select',
                                 inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
+
                                 },
-                                inputPlaceholder: "Chọn trạng thái",
                                 showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // Xử lý promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateorder",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
                                         }
                                     });
                                 }
+
                             });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data: {id: $row.prop('id'), status_order_request: status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cập nhật không thành công');
-                                    }
-                                });
-                            }
                         });
                         $tbody.append($row);
                     });

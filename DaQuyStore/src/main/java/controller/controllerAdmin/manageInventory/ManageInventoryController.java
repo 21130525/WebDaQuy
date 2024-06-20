@@ -1,10 +1,10 @@
 package controller.controllerAdmin.manageInventory;
 
 import model.LogLevel;
-import model.modelAdmin.AdminInventoryDetail_v2_fixed;
+import model.modelAdmin.AdminInventoryDetail_fixed;
 import model.modelAdmin.AdminLog;
 import service.manageAdmin.manageInventory.GetInventoryService;
-import service.manageAdmin.manageLog.GetLogService;
+import service.manageAdmin.manageLog.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +29,8 @@ public class ManageInventoryController extends HttpServlet {
             adminLog.setCreated_at(new Timestamp(new Date().getTime()));
             adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
             adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-            GetLogService<AdminInventoryDetail_v2_fixed> adminLogService = new GetLogService<>();
-            adminLogService.addLogInform(adminLog, new AdminInventoryDetail_v2_fixed());
+            LogService<AdminInventoryDetail_fixed> adminLogService = new LogService<>();
+            adminLogService.addLogInform(adminLog, new AdminInventoryDetail_fixed());
             resp.getWriter().println(getInventoryService.getInventory());
         } catch (SQLException e) {
             throw new RuntimeException(e);

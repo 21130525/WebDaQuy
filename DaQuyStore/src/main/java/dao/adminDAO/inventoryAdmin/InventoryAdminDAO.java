@@ -2,8 +2,7 @@ package dao.adminDAO.inventoryAdmin;
 
 import connector.DAOConnection;
 import model.LogLevel;
-import model.modelAdmin.AdminInventoryDetail;
-import model.modelAdmin.AdminInventoryDetail_v2_fixed;
+import model.modelAdmin.AdminInventoryDetail_fixed;
 import model.modelAdmin.AdminLog;
 
 import java.sql.PreparedStatement;
@@ -12,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class InventoryAdminDAO {
     public static InventoryAdminDAO getInstance() {
@@ -61,13 +59,13 @@ public class InventoryAdminDAO {
     /*
     hàm này dùng để lấy lên số lượng của sản phẩm
      */
-    public ArrayList<AdminInventoryDetail_v2_fixed> getListInventoryDetail() throws SQLException {
-        ArrayList<AdminInventoryDetail_v2_fixed> detailArrayList = new ArrayList<>();
+    public ArrayList<AdminInventoryDetail_fixed> getListInventoryDetail() throws SQLException {
+        ArrayList<AdminInventoryDetail_fixed> detailArrayList = new ArrayList<>();
         String sql = "select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status from products join inventory_detail on products.id=inventory_detail.product_id group by inventory_detail.product_id";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            AdminInventoryDetail_v2_fixed admindetail = new AdminInventoryDetail_v2_fixed();
+            AdminInventoryDetail_fixed admindetail = new AdminInventoryDetail_fixed();
             admindetail.setProduct_id(rs.getInt("products.id"));
             admindetail.setProduct_name(rs.getString("products.product_name"));
             admindetail.setTotal_quantity(rs.getInt("total_quantity"));

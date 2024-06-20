@@ -3,8 +3,8 @@ package controller.controllerAdmin.manageUser;
 import com.google.gson.Gson;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
-import model.modelAdmin.AdminUsers;
-import service.manageAdmin.manageLog.GetLogService;
+import model.modelAdmin.AdminUser;
+import service.manageAdmin.manageLog.LogService;
 import service.manageAdmin.manageUser.DeleteUserService;
 import service.manageAdmin.manageUser.GetUserService;
 import service.manageAdmin.manageUser.UpdateUserService;
@@ -29,30 +29,30 @@ public class ManageUserController extends HttpServlet {
             DeleteUserService deleteUserService = new DeleteUserService();
             try {
                 resp.getWriter().println(deleteUserService.deleteUser(id));
-                AdminUsers adminUsers=new AdminUsers();
+                AdminUser adminUser =new AdminUser();
                 AdminLog adminLog=new AdminLog();
                 adminLog.setLevel(LogLevel.DANGER.toString());
                 adminLog.setIpaddress(req.getRemoteAddr());
                 adminLog.setPrevValue("User có id là:"+id+"chưa xóa");
                 adminLog.setCurrentValue("Đã xóa"+id );
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
-                GetLogService<AdminUsers> getLogService=new GetLogService<>();
-                getLogService.addLogDanger(adminLog,adminUsers);
+                LogService<AdminUser> logService =new LogService<>();
+                logService.addLogDanger(adminLog, adminUser);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (url.endsWith("/getuser")) {
             GetUserService getUserService = new GetUserService();
             try {
-                AdminUsers adminUsers=new AdminUsers();
+                AdminUser adminUser =new AdminUser();
                 AdminLog adminLog=new AdminLog();
                 adminLog.setLevel(LogLevel.INFORM.toString());
                 adminLog.setIpaddress(req.getRemoteAddr());
                 adminLog.setPrevValue("Chưa có dữ liệu"+new Timestamp(new Date().getTime()));
                 adminLog.setCurrentValue("Lấy dữ liệu"+new Timestamp(new Date().getTime()));
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
-                GetLogService<AdminUsers> getLogService=new GetLogService<>();
-                getLogService.addLogInform(adminLog,adminUsers);
+                LogService<AdminUser> logService =new LogService<>();
+                logService.addLogInform(adminLog, adminUser);
                 getUserService.getUser(req, resp);
 
             } catch (SQLException e) {
@@ -76,15 +76,15 @@ public class ManageUserController extends HttpServlet {
                 Gson gson = new Gson();
                 String json = gson.toJson(updateUserService.updateRole(id, selected_role));
                 resp.getWriter().println(json);
-                AdminUsers adminUsers=new AdminUsers();
+                AdminUser adminUser =new AdminUser();
                 AdminLog adminLog=new AdminLog();
                 adminLog.setLevel(LogLevel.WARNING.toString());
                 adminLog.setIpaddress(req.getRemoteAddr());
                 adminLog.setPrevValue("User có id là:"+id+"chưa thay đổi role");
                 adminLog.setCurrentValue("User có id là:"+id+"đã thay đổi role"+selected_role );
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
-                GetLogService<AdminUsers> getLogService=new GetLogService<>();
-                getLogService.addLogWarning(adminLog,adminUsers);
+                LogService<AdminUser> logService =new LogService<>();
+                logService.addLogWarning(adminLog, adminUser);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

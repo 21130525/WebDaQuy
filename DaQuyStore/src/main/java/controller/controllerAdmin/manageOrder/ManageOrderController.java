@@ -1,12 +1,10 @@
 package controller.controllerAdmin.manageOrder;
 
 import com.google.gson.Gson;
-import dao.adminDAO.orderAdmin.OrderAdminDAO;
 import model.LogLevel;
-import model.modelAdmin.AdminInventoryDetail_v2_fixed;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminOrderDetail;
-import service.manageAdmin.manageLog.GetLogService;
+import service.manageAdmin.manageLog.LogService;
 import service.manageAdmin.manageOrder.DeleteOrderService;
 import service.manageAdmin.manageOrder.GetOrderService;
 import service.manageAdmin.manageOrder.UpdateOrderService;
@@ -37,7 +35,7 @@ public class ManageOrderController extends HttpServlet {
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
                 adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-                GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                LogService<AdminOrderDetail> adminLogService = new LogService<>();
                 adminLogService.addLogInform(adminLog, new AdminOrderDetail());
                 resp.getWriter().println(getOrderService.getAsJsonArrayStatusWaiting());
             } catch (SQLException e) {
@@ -52,7 +50,7 @@ public class ManageOrderController extends HttpServlet {
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
                 adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-                GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                LogService<AdminOrderDetail> adminLogService = new LogService<>();
                 adminLogService.addLogInform(adminLog, new AdminOrderDetail());
                 resp.getWriter().println(getOrderService.getAsJsonArrayStatusForWaitingGiving());
             } catch (SQLException e) {
@@ -67,7 +65,7 @@ public class ManageOrderController extends HttpServlet {
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
                 adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-                GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                LogService<AdminOrderDetail> adminLogService = new LogService<>();
                 adminLogService.addLogInform(adminLog, new AdminOrderDetail());
                 resp.getWriter().println(getOrderService.getAsJsonArrayStatusGiving());
             } catch (SQLException e) {
@@ -82,7 +80,7 @@ public class ManageOrderController extends HttpServlet {
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
                 adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-                GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                LogService<AdminOrderDetail> adminLogService = new LogService<>();
                 adminLogService.addLogInform(adminLog, new AdminOrderDetail());
                 resp.getWriter().println(getOrderService.getAsJsonArrayStatusGived());
             } catch (SQLException e) {
@@ -97,7 +95,7 @@ public class ManageOrderController extends HttpServlet {
                 adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                 adminLog.setPrevValue("Chưa lấy dữ liệu" + new Time(new Date().getTime()));
                 adminLog.setCurrentValue("Đã lấy dữ liệu" + new Time(new Date().getTime()));
-                GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                LogService<AdminOrderDetail> adminLogService = new LogService<>();
                 adminLogService.addLogInform(adminLog, new AdminOrderDetail());
                 resp.getWriter().println(getOrderService.getAsJsonArrayStatusCanceled());
             } catch (SQLException e) {
@@ -117,7 +115,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa xóa" + new Time(new Date().getTime()));
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()));
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 }
@@ -135,9 +133,7 @@ public class ManageOrderController extends HttpServlet {
             //giá trị lấy ra từ ajax
             String selected_status = req.getParameter("select");
             UpdateOrderService updateOrderService = new UpdateOrderService();
-//            AdminOrderDetail adminOrderDetail = new AdminOrderDetail();
 
-//                adminOrderDetail.setStatus(updateOrderService.getStatusCurrentOrder(id));
             try {
                 if (selected_status.equals("waiting")) {
                     String translated_status = "chờ xác nhận";
@@ -151,10 +147,10 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa cập nhật" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
-                } else if (selected_status.equals("canceled")) {
+                } else if (selected_status.equals("cancelled")) {
                     String translated_status = "hủy";
                     updateOrderService.updateStatusOrder(id, translated_status);
                     Gson gson = new Gson();
@@ -166,7 +162,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa cập nhật" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 } else if (selected_status.equals("waiting_giving")) {
@@ -181,7 +177,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa cập nhật" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 } else if (selected_status.equals("giving")) {
@@ -196,7 +192,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa cập nhật" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
 
@@ -212,7 +208,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLog.setCreated_at(new Timestamp(new Date().getTime()));
                     adminLog.setPrevValue("Chưa cập nhật" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
                     adminLog.setCurrentValue("Đã xóa" + new Time(new Date().getTime()) + "đơn hàng có id" + id);
-                    GetLogService<AdminOrderDetail> adminLogService = new GetLogService<>();
+                    LogService<AdminOrderDetail> adminLogService = new LogService<>();
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 }
