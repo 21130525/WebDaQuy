@@ -154,19 +154,35 @@
 
                     var $trash = $('<i class="fa-solid fa-trash"></i>');
                     $trash.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/deleteuser',
-                            method: 'GET',
-                            data: { id: $row.prop('id') },
-                            dataType: 'JSON',
-                            success: function (resp) {
-                                alert('Đã xóa thành công');
-                                $row.hide();
-                            },
-                            error: function (error) {
-                                alert('Xóa không thành công');
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '<%=request.getContextPath()%>/deleteuser',
+                                    method: 'GET',
+                                    data: { id: $row.prop('id') },
+                                    dataType: 'JSON',
+                                    success: function (resp) {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your file has been deleted.",
+                                            icon: "success"
+                                        });
+                                        $row.hide();
+                                    }
+
+                                });
+
                             }
                         });
+
                     });
 
                     var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
