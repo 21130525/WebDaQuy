@@ -132,6 +132,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
 <script>
 
@@ -169,19 +170,47 @@
                     $row.append($cell_with_icon);
                     $row.attr('id',value.id)
                     $icon1.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/deleteproduct_admin',
-                            method: 'GET',
-                            dataType: 'JSON',
-                            data: {id:$row.prop('id') },
-                            success: function(success) {
-                                alert(success)
-                               $row.remove()
-                            },
-                            error: function (mistake) {
-                                alert(mistake)
+                        <%--$.ajax({--%>
+                        <%--    url: '<%=request.getContextPath()%>/deleteproduct_admin',--%>
+                        <%--    method: 'GET',--%>
+                        <%--    dataType: 'JSON',--%>
+                        <%--    data: {id:$row.prop('id') },--%>
+                        <%--    success: function(success) {--%>
+                        <%--        alert(success)--%>
+                        <%--       $row.remove()--%>
+                        <%--    },--%>
+                        <%--    error: function (mistake) {--%>
+                        <%--        alert(mistake)--%>
+                        <%--    }--%>
+                        <%--})--%>
+                        Swal.fire({
+                            title: "Bạn có chắc không?",
+                            text: "Bạn sẽ không thể khôi phục được!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Xóa đi!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '<%=request.getContextPath()%>/deleteproduct_admin',
+                                    method: 'GET',
+                                    dataType: 'JSON',
+                                    data: {id:$row.prop('id') },
+                                    success: function(success) {
+                                        Swal.fire({
+                                            title: "Xóa thành công!",
+                                            text: "Sản phẩm đã được xóa.",
+                                            icon: "success"
+                                        });
+
+                                       $row.hide()
+                                    }
+
+                                })
                             }
-                        })
+                        });
                     })
                     $icon2.click(function (){
                         var productId = $row.prop('id');
