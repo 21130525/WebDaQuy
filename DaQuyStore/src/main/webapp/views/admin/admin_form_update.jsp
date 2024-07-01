@@ -101,7 +101,7 @@
             <h2>Thông tin sản phẩm</h2>
             <form action="<%=request.getContextPath()%>/updateproduct_admin" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="idproduct">Tên sản phẩm:</label>
+                    <label for="idproduct">Mã sản phẩm</label>
                     <input type="text" class="form-control" id="idproduct" placeholder="Nhập ID sản phẩm" value="<%=session.getAttribute("id")%>" name="id">
                 </div>
                 <div class="form-group">
@@ -111,9 +111,9 @@
                 <div class="form-group">
                     <label for="price">Giá tiền:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">VNĐ</span>
-                        </div>
+<%--                        <div class="input-group-prepend">--%>
+<%--                            <span class="input-group-text">VNĐ</span>--%>
+<%--                        </div>--%>
                         <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>" name="price">
                     </div>
                 </div>
@@ -122,18 +122,18 @@
                     <input type="text" class="form-control" id="status" name="status">
 
                 </div>
-                <div class="form-group">
-                    <label for="discount">Giảm giá (%):</label>
-                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">
-                </div>
-                <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="hot" name="hot">
-                    <label class="form-check-label" for="hot">Sản phẩm hot</label>
-                </div>
-                <div class="form-group">
-                    <label for="color">Màu sắc:</label>
-                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">
-                </div>
+<%--                <div class="form-group">--%>
+<%--                    <label for="discount">Giảm giá (%):</label>--%>
+<%--                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">--%>
+<%--                </div>--%>
+<%--                <div class="form-check mb-3">--%>
+<%--                    <input type="checkbox" class="form-check-input" id="hot" name="hot">--%>
+<%--                    <label class="form-check-label" for="hot">Sản phẩm hot</label>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="color">Màu sắc:</label>--%>
+<%--                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">--%>
+<%--                </div>--%>
                 <div class="form-group">
                     <label for="description">Mô tả:</label>
                     <input type="text" class="form-control" id="description" placeholder="Nhập mô tả" name="description">

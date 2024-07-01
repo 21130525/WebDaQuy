@@ -4,6 +4,7 @@ import connector.DAOConnection;
 import model.LogLevel;
 import model.modelAdmin.AdminInventoryDetail_fixed;
 import model.modelAdmin.AdminLog;
+import model.modelAdmin.AdminProduct;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,7 +86,20 @@ public class InventoryAdminDAO {
         }
         return rows_affected;
     }
+    public int getProduct_ID(String productname) throws SQLException {
+        String sql = "select id from products where product_name=?";
+        PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, productname);
+        ResultSet rs = preparedStatement.executeQuery();
+        int rows_affected = 0;
+        while (rs.next()) {
+            rows_affected = rs.getInt("id");
+        }
+        return rows_affected;
+    }
+    public void insertInventory(AdminProduct adminProduct) throws SQLException{
 
+    }
     public static void main(String[] args) throws SQLException {
         InventoryAdminDAO inventoryAdminDAO = new InventoryAdminDAO();
         System.out.println(inventoryAdminDAO.getListInventoryDetail());

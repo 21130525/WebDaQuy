@@ -150,6 +150,30 @@
                     <input type="number" name="number_import" id="number_import">
                 </div>
                 <div class="form-group">
+                    <label for="color">Màu sắc</label>
+                    <input type="text" name="color" id="color">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Trọng lượng</label>
+                    <input type="text" name="weight" id="weight">
+                </div>
+                <div class="form-group">
+                    <label for="size">Kích cỡ </label>
+                    <input type="text" name="size" id="size">
+                </div>
+                <div class="form-group">
+                    <label for="opacity">Kích cỡ </label>
+                    <input type="text" name="opacity" id="opacity">
+                </div>
+                <div class="form-group">
+                    <label for="cutting_form">Giác cắt </label>
+                    <input type="text" name="cutting_form" id="cutting_form">
+                </div>
+                <div class="form-group">
+                    <label for="status">Tình trạng </label>
+                    <input type="text" name="cutting_form" id="status">
+                </div>
+                <div class="form-group">
                     <label for="productDescription">Nội dung:</label>
                     <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập nội dung" name="description"></textarea>
                 </div>

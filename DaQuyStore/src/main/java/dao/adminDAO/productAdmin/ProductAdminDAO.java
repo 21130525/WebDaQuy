@@ -298,7 +298,10 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         }
         return index;
     }
-
+    //hàm thêm dữ liệu sản phẩm
+    public void insertProduct(AdminProduct product) throws SQLException {
+        String information_insert="/color:"+ product.getColor() +","+"weight:"+product.getWeight()+","+"size:"+product.getSize()+","+"opacity:"+product.getOpactity()+","+"cutting_form:"+product.getCutting_form();
+    }
 
 
     public static void main(String[] args) throws SQLException {
