@@ -97,8 +97,22 @@ public class InventoryAdminDAO {
         }
         return rows_affected;
     }
-    public void insertInventory(AdminProduct adminProduct) throws SQLException{
-
+    public void insertInventoryDetail(AdminProduct adminProduct) throws SQLException{
+        String sql="Insert into inventory_detail(id,product_id,quantity,remaining) values(?,?,?,?)";
+        PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
+        preparedStatement.setInt(1, getMaxID()+1);
+        preparedStatement.setInt(2, adminProduct.getId());
+        preparedStatement.setInt(3,adminProduct.getQuantity());
+        preparedStatement.setInt(4,adminProduct.getQuantity());
+        preparedStatement.executeUpdate();
+    }
+    public void insertInventory() throws SQLException{
+        String sql="Insert into inventory values(?,?,?)";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, getMaxID()+1);
+        pr.setTimestamp(2,new Timestamp(new Date().getTime()));
+        pr.setString(3,"ADMIN");
+        pr.executeUpdate();
     }
     public static void main(String[] args) throws SQLException {
         InventoryAdminDAO inventoryAdminDAO = new InventoryAdminDAO();
