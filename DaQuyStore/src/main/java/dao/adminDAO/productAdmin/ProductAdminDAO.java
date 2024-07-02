@@ -2,6 +2,8 @@ package dao.adminDAO.productAdmin;
 
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
+import dao.adminDAO.categoryAdmin.CategoryAdminDAO;
+import dao.adminDAO.orderAdmin.OrderAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminProduct;
@@ -91,12 +93,6 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.close();
         return products;
     }
-
-
-
-
-
-
 
 
     public AdminProduct getAfterValueByID(int id) throws SQLException {
@@ -229,6 +225,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.executeUpdate();
         pr.close();
     }
+
     public void updateProductHot(int hot, int id) throws SQLException {
         String sql = "Update products set hot=? where id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
@@ -236,6 +233,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.setInt(2, id);
         pr.executeUpdate();
     }
+
     /*
     các hàm thêm log cho chức năng cập nhật,thêm,xóa sản phẩm,truy vấn
 
@@ -299,6 +297,34 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         return index;
     }
 
+    public int getMaxIDProduct() throws SQLException {
+        String sql = "Select max(id) from products";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+        int index = 0;
+        while (rs.next()) {
+            index = rs.getInt("max(id)");
+
+        }
+        return index;
+    }
+
+    //hàm thêm dữ liệu sản phẩm
+    public void insertProduct(AdminProduct product) throws SQLException {
+        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form();
+        String sql = "Insert into products(id,category_id,product_name,price,status,description,information,created_at,updated_at) values(?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1,getMaxIDProduct()+1);
+        pr.setInt(2, product.getId_product_type());
+        pr.setString(3, product.getProduct_name());
+        pr.setInt(4, product.getPrice());
+        pr.setString(5, product.getStatus());
+        pr.setString(6, product.getDescription());
+        pr.setString(7, information_insert);
+        pr.setTimestamp(8, new Timestamp(new Date().getTime()));
+        pr.setTimestamp(9,new Timestamp(new Date().getTime()));
+        pr.executeUpdate();
+    }
 
 
     public static void main(String[] args) throws SQLException {

@@ -3,6 +3,8 @@ package controller.controllerAdmin.manageProduct;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import dao.adminDAO.adminImage.ImageAdminDAO;
+import dao.adminDAO.categoryAdmin.CategoryAdminDAO;
+import dao.adminDAO.inventoryAdmin.InventoryAdminDAO;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
@@ -45,6 +47,11 @@ public class ManageProductController extends HttpServlet {
                 String number_import = req.getParameter("number_import");
                 String description = req.getParameter("description");
                 String product_type = req.getParameter("productType");
+                String status = req.getParameter("status");
+                String cutting_form=req.getParameter("cutting_form");
+                String weight=req.getParameter("weight");
+                String size=req.getParameter("size");
+                String opactity=req.getParameter("opactity");
                 /*
                 điêù kiện kiểm tra nếu thiếu 1 thông tin không cho up
                  */
@@ -110,7 +117,24 @@ public class ManageProductController extends HttpServlet {
                                                         LogService<AdminProduct> adminLogService = new LogService<>();
                                                         AdminProduct adminProduct=new AdminProduct();
                                                         adminLogService.addLogAlert(adminLog, adminProduct);
-                                                        resp.getWriter().println("Đã gửi ảnh lên Cloudinary thành công: ");
+                                                        //bien nay dung de cap nhat thong tin o bang product
+                                                        AdminProduct adminProduct_result=new AdminProduct();
+                                                        //set up cac thong so cho 1 product
+                                                        adminProduct_result.setProduct_name(productName);
+                                                        adminProduct_result.setPrice(Integer.parseInt(price));
+                                                        adminProduct_result.setQuantity(Integer.parseInt(number_import));
+                                                        adminProduct_result.setDescription(description);
+                                                        adminProduct_result.setCreated_at(new Timestamp(new Date().getTime()));
+                                                        adminProduct_result.setUpdated_at(new Timestamp(new Date().getTime()));
+                                                        adminProduct_result.setStatus(status);
+                                                        adminProduct_result.setId_product_type(CategoryAdminDAO.getInstance().getProductType(product_type));
+                                                        adminProduct_result.setWeight(weight);
+                                                        adminProduct_result.setSize(size);
+                                                        adminProduct_result.setOpactity(opactity);
+                                                        adminProduct_result.setCutting_form(cutting_form);
+                                                        adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
+                                                        ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
+                                                        resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
                                                     }
                                                 }
                                             }

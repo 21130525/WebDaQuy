@@ -4,6 +4,7 @@ import connector.DAOConnection;
 import model.LogLevel;
 import model.modelAdmin.AdminInventoryDetail_fixed;
 import model.modelAdmin.AdminLog;
+import model.modelAdmin.AdminProduct;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,7 +86,34 @@ public class InventoryAdminDAO {
         }
         return rows_affected;
     }
-
+    public int getProduct_ID(String productname) throws SQLException {
+        String sql = "select id from products where product_name=?";
+        PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, productname);
+        ResultSet rs = preparedStatement.executeQuery();
+        int rows_affected = 0;
+        while (rs.next()) {
+            rows_affected = rs.getInt("id");
+        }
+        return rows_affected;
+    }
+    public void insertInventoryDetail(AdminProduct adminProduct) throws SQLException{
+        String sql="Insert into inventory_detail(id,product_id,quantity,remaining) values(?,?,?,?)";
+        PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
+        preparedStatement.setInt(1, getMaxID()+1);
+        preparedStatement.setInt(2, adminProduct.getId());
+        preparedStatement.setInt(3,adminProduct.getQuantity());
+        preparedStatement.setInt(4,adminProduct.getQuantity());
+        preparedStatement.executeUpdate();
+    }
+    public void insertInventory() throws SQLException{
+        String sql="Insert into inventory values(?,?,?)";
+        PreparedStatement pr=DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, getMaxID()+1);
+        pr.setTimestamp(2,new Timestamp(new Date().getTime()));
+        pr.setString(3,"ADMIN");
+        pr.executeUpdate();
+    }
     public static void main(String[] args) throws SQLException {
         InventoryAdminDAO inventoryAdminDAO = new InventoryAdminDAO();
         System.out.println(inventoryAdminDAO.getListInventoryDetail());
