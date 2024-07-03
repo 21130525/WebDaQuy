@@ -19,19 +19,22 @@
     body {
         background-color: #f8f9fa;
     }
+
     .container {
         max-width: 600px;
         margin: 0 auto;
         background-color: #fff;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
     .btn-primary {
         background-color: #007bff;
         border-color: #007bff;
         margin-top: 10px;
     }
+
     .btn-primary:hover {
         background-color: #0069d9;
         border-color: #0062cc;
@@ -48,32 +51,41 @@
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
-                            <i class="fa-solid fa-chart-simple"></i> <span class="ms-1 d-none d-sm-inline">Doanh thu</span>
+                            <i class="fa-solid fa-chart-simple"></i> <span
+                                class="ms-1 d-none d-sm-inline">Doanh thu</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_product.jsp" class="nav-link px-0 align-middle" id="menu_0">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_product.jsp"
+                           class="nav-link px-0 align-middle" id="menu_0">
                             <i class="fa-brands fa-product-hunt"></i> <span class="ms-1 d-none d-sm-inline">Quản lí sản phẩm</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp" class="nav-link px-0 align-middle" id="menu_1">
-                            <i class="fa-solid fa-upload"></i> <span class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_form_upload_product.jsp"
+                           class="nav-link px-0 align-middle" id="menu_1">
+                            <i class="fa-solid fa-upload"></i> <span
+                                class="ms-1 d-none d-sm-inline">Thêm sản phẩm</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_order.jsp" class="nav-link px-0 align-middle">
-                            <i class="fa-solid fa-gift"></i> <span class="ms-1 d-none d-sm-inline">Quản lí đơn hàng</span>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_order.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-gift"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí đơn hàng</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_user.jsp" class="nav-link px-0 align-middle">
-                            <i class="fa-solid fa-user"></i> <span class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_user.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-user"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí người dùng</span>
                         </a>
 
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp"
+                           class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
                         </a>
                     </li>
@@ -99,69 +111,127 @@
         <div class="col py-3">
             <!--form chỉnh sửa thông tin sản phẩm-->
             <h2>Thông tin sản phẩm</h2>
-            <form action="<%=request.getContextPath()%>/updateproduct_admin" method="post" enctype="multipart/form-data">
+            <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"
+                  enctype="multipart/form-data" id="form">
                 <div class="form-group">
-                    <label for="idproduct">Mã sản phẩm</label>
-                    <input type="text" class="form-control" id="idproduct" placeholder="Nhập ID sản phẩm" value="<%=session.getAttribute("id")%>" name="id">
+                    <label for="id">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="productname">Tên sản phẩm:</label>
-                    <input type="text" class="form-control" id="productname" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>" name="productname">
+                    <label for="productName">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm"
+                           name="productName">
                 </div>
                 <div class="form-group">
-                    <label for="price">Giá tiền:</label>
-                    <div class="input-group">
-<%--                        <div class="input-group-prepend">--%>
-<%--                            <span class="input-group-text">VNĐ</span>--%>
-<%--                        </div>--%>
-                        <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>" name="price">
+                    <label for="productPrice">Giá tiền:</label>
+                    <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá tiền" name="price">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImages-main">Ảnh sản phẩm-chính:</label>
+                    <input type="file" class="form-control-file" id="productImages-main" name="image-main">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImages-1">Ảnh sản phẩm-1:</label>
+                    <input type="file" class="form-control-file" id="productImages-1" name="image-1">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImages-2">Ảnh sản phẩm-2:</label>
+                    <input type="file" class="form-control-file" id="productImages-2" name="image-2">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImages-3">Ảnh sản phẩm-3:</label>
+                    <input type="file" class="form-control-file" id="productImages-3" name="image-3">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImages-4">Ảnh sản phẩm-4:</label>
+                    <input type="file" class="form-control-file" id="productImages-4" name="image-4">
+                </div>
+                <div class="form-group">
+                    <label>Tình trạng </label>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="having" name="status">
+                        <label class="form-check-label" for="having">Còn hàng</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="not_having" name="status">
+                        <label class="form-check-label" for="not_having">Hết hàng</label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="status">Tình trạng:</label>
-                    <input type="text" class="form-control" id="status" name="status">
+                    <div class="form-check-inline">
+                        <input type="number" class="form-check-input" id="sale" name="sale" placeholder="Nhập giảm giá"
+                               style="width: 200px;height:20px">
+                        <label class="form-check-label" for="sale">Giảm giá</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            Tình trạng hot:0 là không có,1 là có
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="hot" name="hot">
+                        <label class="form-check-label" for="hot">1</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="no_hot" name="hot">
+                        <label class="form-check-label" for="hot">0</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Nội dung:</label>
+                    <textarea class="form-control" id="productDescription" rows="3" placeholder="Nhập nội dung"
+                              name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Loại sản phẩm:</label><br>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="ruby" name="productType">
+                        <label class="form-check-label" for="ruby">Ruby</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="aquamarine" name="productType">
+                        <label class="form-check-label" for="aquamarine">Aquamarine</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="tourmaline" name="productType">
+                        <label class="form-check-label" for="tourmaline">Tourmaline</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="spinel" name="productType">
+                        <label class="form-check-label" for="spinel">Spinel</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="sapphire" name="productType">
+                        <label class="form-check-label" for="sapphire">Sapphire</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="zircon" name="productType">
+                        <label class="form-check-label" for="zircon">Zircon</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="peridot" name="productType">
+                        <label class="form-check-label" for="peridot">Peridot</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="garnet" name="productType">
+                        <label class="form-check-label" for="garnet">Garnet</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="emerald" name="productType">
+                        <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="topaz" name="productType">
+                        <label class="form-check-label" for="topaz">Topaz</label>
+                    </div>
+                </div>
 
-                </div>
-<%--                <div class="form-group">--%>
-<%--                    <label for="discount">Giảm giá (%):</label>--%>
-<%--                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">--%>
-<%--                </div>--%>
-<%--                <div class="form-check mb-3">--%>
-<%--                    <input type="checkbox" class="form-check-input" id="hot" name="hot">--%>
-<%--                    <label class="form-check-label" for="hot">Sản phẩm hot</label>--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="color">Màu sắc:</label>--%>
-<%--                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">--%>
-<%--                </div>--%>
-                <div class="form-group">
-                    <label for="description">Mô tả:</label>
-                    <input type="text" class="form-control" id="description" placeholder="Nhập mô tả" name="description">
-                </div>
-                <!-- phần gửi ảnh-->
-                <div class="form-group">
-                    <label for="image_main">Ảnh chính:</label>
-                    <input type="file" class="form-control" id="image_main" placeholder="Tải ảnh chính" name="image_main">
-                </div>
-                <div class="form-group">
-                    <label for="image_1">Ảnh 1:</label>
-                    <input type="file" class="form-control" id="image_1" placeholder="Tải ảnh 1" name="image_1">
-                </div>
-                <div class="form-group">
-                    <label for="image_2">Ảnh 2:</label>
-                    <input type="file" class="form-control" id="image_2" placeholder="Tải ảnh 2" name="image_2">
-                </div>
-                <div class="form-group">
-                    <label for="image_3">Ảnh 3:</label>
-                    <input type="file" class="form-control" id="image_3" placeholder="Tải ảnh 3" name="image_3">
-                </div>
-                <div class="form-group">
-                    <label for="image_4">Ảnh 4:</label>
-                    <input type="file" class="form-control" id="image_4" placeholder="Tải ảnh 4" name="image_4">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Lưu thông tin</button>
+                <!-- Thêm thêm radio button tương tự cho các loại sản phẩm khác -->
+
+                <button type="submit" class="btn btn-primary mb-3">Submit</button>
             </form>
-
 
         </div>
     </div>
@@ -180,7 +250,7 @@
         $("#table_id").DataTable();
     })
 
-    $(document).ready(function (){
+    $(document).ready(function () {
         $('.dt-empty').hide()
     })
 </script>

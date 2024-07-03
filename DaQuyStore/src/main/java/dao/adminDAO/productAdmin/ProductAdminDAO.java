@@ -7,6 +7,7 @@ import dao.adminDAO.orderAdmin.OrderAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminProduct;
+import model.modelAdmin.AdminProduct_fixed;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -80,14 +81,20 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     @Override
     public ArrayList select(AdminProduct obj) throws SQLException {
-        ArrayList<AdminProduct> products = new ArrayList<>();
-        String sql = "Select products.id,product_name,price,status,sale,hot from products where status_deleted='chua xoa'";
+        ArrayList<AdminProduct_fixed> products = new ArrayList<>();
+        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where status_deleted='chua xoa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminProduct adminProduct;
         while (rs.next()) {
-            adminProduct = new AdminProduct(rs.getInt("products.id"), rs.getString("product_name"), rs.getInt("price"), rs.getString("status"), rs.getInt("sale"), rs.getInt("hot"));
-            products.add(adminProduct);
+            AdminProduct_fixed adminProductFixed=new AdminProduct_fixed();
+            adminProductFixed.setId(rs.getInt("products.id"));
+            adminProductFixed.setCategory(rs.getString("categories.category_name"));
+            adminProductFixed.setProduct_name(rs.getString("products.product_name"));
+            adminProductFixed.setPrice(rs.getInt("products.price"));
+            adminProductFixed.setStatus(rs.getString("products.status"));
+            adminProductFixed.setSale(rs.getInt("products.sale"));
+            adminProductFixed.setHot(rs.getInt("products.hot"));
+            products.add(adminProductFixed);
         }
         rs.close();
         pr.close();

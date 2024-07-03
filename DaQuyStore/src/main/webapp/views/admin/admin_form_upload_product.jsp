@@ -125,53 +125,37 @@
                     <label for="productImages-4">Ảnh sản phẩm-4:</label>
                     <input type="file" class="form-control-file" id="productImages-4"  name="image-4">
                 </div>
-<%--                <div class="form-group mb-3">--%>
-<%--                    <label for="link-productImages-main">Link ảnh sản phẩm-chính:</label>--%>
-<%--                    <input type="text" class="form-control" id="link-productImages-main" placeholder="Nhập đường link ảnh" name="link-image-main">--%>
-<%--                </div>--%>
-<%--                <div class="form-group mb-3">--%>
-<%--                    <label for="link-productImages-1">Link ảnh sản phẩm-ảnh 1:</label>--%>
-<%--                    <input type="text" class="form-control" id="link-productImages-1" placeholder="Nhập đường link ảnh" name="link-image-1">--%>
-<%--                </div>--%>
-<%--                <div class="form-group mb-3">--%>
-<%--                    <label for="link-productImages-2">Link ảnh sản phẩm-ảnh 2:</label>--%>
-<%--                    <input type="text" class="form-control" id="link-productImages-2" placeholder="Nhập đường link ảnh" name="link-image-2">--%>
-<%--                </div>--%>
-<%--                <div class="form-group mb-3">--%>
-<%--                    <label for="link-productImages-3">Link ảnh sản phẩm-ảnh 3:</label>--%>
-<%--                    <input type="text" class="form-control" id="link-productImages-3" placeholder="Nhập đường link ảnh" name="link-image-3">--%>
-<%--                </div>--%>
-<%--                <div class="form-group mb-3">--%>
-<%--                    <label for="link-productImages-4">Link ảnh sản phẩm-ảnh 4:</label>--%>
-<%--                    <input type="text" class="form-control" id="link-productImages-4" placeholder="Nhập đường link ảnh" name="link-image-4">--%>
-<%--                </div>--%>
+
                 <div class="form-group">
                     <label for="number_import">Số lượng</label>
-                    <input type="number" name="number_import" id="number_import">
+                    <input type="number" name="number_import" id="number_import" placeholder="Nhập số lượng thêm vào">
                 </div>
                 <div class="form-group">
                     <label for="color">Màu sắc</label>
-                    <input type="text" name="color" id="color">
+                    <input type="text" name="color" id="color" placeholder="Nhập thông tin về màu sắc:ví dụ:xanh,đỏ,tím,vàng,..." size="100">
                 </div>
                 <div class="form-group">
                     <label for="weight">Trọng lượng</label>
-                    <input type="text" name="weight" id="weight">
+                    <input type="text" name="weight" id="weight" placeholder="Nhập thông tin về trọng lượng">
                 </div>
                 <div class="form-group">
                     <label for="size">Kích cỡ </label>
-                    <input type="text" name="size" id="size">
+                    <input type="text" name="size" id="size" placeholder="Nhập thông tin về kích cỡ theo cú pháp sau:vd:0.38ct*4.72ct*4.85ct" size="100">
                 </div>
                 <div class="form-group">
-                    <label for="opacity">Kích cỡ </label>
-                    <input type="text" name="opacity" id="opacity">
+                    <label for="opacity">Độ trong  </label>
+                    <input type="text" name="opacity" id="opacity" placeholder="Nhập thông tin về độ trong suốt">
                 </div>
                 <div class="form-group">
                     <label for="cutting_form">Giác cắt </label>
-                    <input type="text" name="cutting_form" id="cutting_form">
+                    <input type="text" name="cutting_form" id="cutting_form" placeholder="Nhập thông tin giác cắt ">
                 </div>
                 <div class="form-group">
                     <label for="status">Tình trạng </label>
-                    <input type="text" name="cutting_form" id="status">
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="status" name="status">
+                        <label class="form-check-label" for="status">Còn hàng</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="productDescription">Nội dung:</label>
@@ -212,28 +196,8 @@
                         <label class="form-check-label" for="garnet">Garnet</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="peace" name="productType">
-                        <label class="form-check-label" for="peace">Ngọc trai</label>
-                    </div>
-                    <div class="form-check-inline">
                         <input type="radio" class="form-check-input" id="emerald" name="productType">
-                        <label class="form-check-label" for="emerald">Lục bảo</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="diamond" name="productType">
-                        <label class="form-check-label" for="diamond">Kim cương</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="citrine" name="productType">
-                        <label class="form-check-label" for="citrine">Citrine</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="beryl" name="productType">
-                        <label class="form-check-label" for="beryl">Beryl</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="amethyst" name="productType">
-                        <label class="form-check-label" for="amethyst">Amethyst</label>
+                        <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
                     </div>
                     <div class="form-check-inline">
                         <input type="radio" class="form-check-input" id="topaz" name="productType">
