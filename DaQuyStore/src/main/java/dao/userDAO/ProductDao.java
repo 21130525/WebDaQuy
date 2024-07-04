@@ -226,7 +226,31 @@ public class ProductDao implements IDAO<Product> {
         }
         return false;
     }
+    public ArrayList<Product> getRelatedProduct(String categoryId,String product_id) throws SQLException {
+        String sql = "SELECT p.id, p.product_name,p.price, i.img_main,  p.category_id  FROM products p\n" +
+                "JOIN product_image i ON p.image_product = i.id \n" +
+                "JOIN categories c ON p.category_id=c.id\n" +
+                "WHERE p.category_id = ? AND p.id != ? " +
+                "limit 4;";
+        ArrayList<Product > products = new ArrayList<>();
+        Product p =null;
+        PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
+        pst.setString(1, categoryId);
+        pst.setString(2, product_id);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            id = rs.getInt("id");
+            product_name = rs.getString("product_name");
+            price = rs.getDouble("price");
+            img_main = rs.getString("img_main");
+            category_id = rs.getString("category_id");
+            p = new Product(id, categoryId, product_name, price, img_main);
+            products.add(p);
+        }
 
+        return products;
+
+    }
     public static void main(String[] args) throws SQLException {
 //        System.out.println( (new ProductDao()).selectAll());
         System.out.println(new ProductDao().getProductByCategory("Ruby"));
