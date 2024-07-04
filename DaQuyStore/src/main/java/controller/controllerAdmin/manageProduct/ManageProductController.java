@@ -51,7 +51,7 @@ public class ManageProductController extends HttpServlet {
                 String cutting_form = req.getParameter("cutting_form");
                 String weight = req.getParameter("weight");
                 String size = req.getParameter("size");
-                String opactity = req.getParameter("opactity");
+                String opactity = req.getParameter("opacity");
                 /*
                 điêù kiện kiểm tra nếu thiếu 1 thông tin không cho up
                  */
@@ -139,6 +139,7 @@ public class ManageProductController extends HttpServlet {
                                                                             adminProduct_result.setCutting_form(cutting_form);
                                                                             adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
                                                                             ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
+                                                                            InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
                                                                             resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
                                                                         }
                                                                     }
@@ -417,7 +418,7 @@ public class ManageProductController extends HttpServlet {
                 session.setAttribute("id", id);
                 session.setAttribute("productname", adminProduct.getProduct_name());
                 session.setAttribute("price", adminProduct.getPrice());
-                session.setAttribute("status", adminProduct.getStatus());
+//                session.setAttribute("status", adminProduct.getStatus());
                 RequestDispatcher rd = session.getServletContext().getRequestDispatcher("/views/admin/admin_form_update.jsp");
                 rd.forward(req, resp);
             } catch (SQLException e) {

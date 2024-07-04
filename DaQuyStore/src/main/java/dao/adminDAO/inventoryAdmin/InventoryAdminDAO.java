@@ -101,7 +101,7 @@ public class InventoryAdminDAO {
         String sql="Insert into inventory_detail(id,product_id,quantity,remaining) values(?,?,?,?)";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         preparedStatement.setInt(1, getMaxID()+1);
-        preparedStatement.setInt(2, adminProduct.getId());
+        preparedStatement.setInt(2, adminProduct.getProduct_id());
         preparedStatement.setInt(3,adminProduct.getQuantity());
         preparedStatement.setInt(4,adminProduct.getQuantity());
         preparedStatement.executeUpdate();

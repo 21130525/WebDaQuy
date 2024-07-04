@@ -143,7 +143,7 @@
                     <input type="text" name="size" id="size" placeholder="Nhập thông tin về kích cỡ theo cú pháp sau:vd:0.38ct*4.72ct*4.85ct" size="100">
                 </div>
                 <div class="form-group">
-                    <label for="opacity">Độ trong  </label>
+                    <label for="opacity">Độ trong</label>
                     <input type="text" name="opacity" id="opacity" placeholder="Nhập thông tin về độ trong suốt">
                 </div>
                 <div class="form-group">

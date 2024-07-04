@@ -2,6 +2,7 @@ package controller.controllerWeb.product;
 
 import dao.userDAO.ProductDao;
 import model.Product;
+import model.Product_Detail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,15 +17,27 @@ import java.sql.SQLException;
 public class productDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+//        String id = req.getParameter("id");
+        //lấy thông tin thông qua tên sản phẩm
+        String product_name=req.getParameter("product_name");
         ProductDao dao = ProductDao.getInstance();
-        Product p;
-        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
+//        Product p;
+//
+//        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        if (p != null) {
+//            req.setAttribute("product", p);
+//        }
+        Product_Detail p;
+        try {
+            p=dao.getInformationForPerProduct(product_name);
+            if (p!=null){
+                req.setAttribute("product", p);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        if (p != null) {
-            req.setAttribute("product", p);
         }
         req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
     }
