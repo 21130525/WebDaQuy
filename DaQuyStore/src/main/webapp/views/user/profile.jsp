@@ -17,6 +17,8 @@
 <% User u = (User) session.getAttribute("user");
 if(u==null)
     u = new User();
+String gender = u.getGender();
+System.out.println("profile user:"+u);
 %>
 <jsp:include page="../header.jsp"/>
 <section id="profile" class="mt-2">
@@ -82,10 +84,10 @@ if(u==null)
                                             <p class="col-4 text-end">Email:</p>
                                             <div class="col-8 d-flex">
                                                 <p id="showEmail" class="w-75"><%=u.getEmail()%></p>
-<%--                                                <button type="button" id="btnChangeEmail"--%>
-<%--                                                        class="btn btn-link  p-0  ms-3" style="height: 24px;">--%>
-<%--                                                    <i class="fas fa-edit"></i>--%>
-<%--                                                </button>--%>
+                                                <button type="button" id="btnChangeEmail"
+                                                        class="btn btn-link  p-0  ms-3" style="height: 24px;">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
                                             </div>
                                         </div>
 <%--                                        so dien thoai--%>
@@ -116,11 +118,11 @@ if(u==null)
                                         <div class="row my-2">
                                             <p class=" col-4 text-end">Giới Tính:</p>
                                             <div class=" col-8 ">
-
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label" for="gender_nu">Nữ</label>
                                                     <input class="form-check-input" type="radio" name="gender"
                                                            id="gender_nu" value="NU"
+                                                           <%= "nu".equalsIgnoreCase(gender) ? "checked" : ""%>
                                                    >
                                                 </div>
                                                 <div class="form-check form-check-inline">
@@ -128,13 +130,15 @@ if(u==null)
                                                            for="gender_nam">Nam</label>
                                                     <input class="form-check-input" type="radio" name="gender"
                                                            id="gender_nam" value="Nam"
+                                                        <%= "nam".equalsIgnoreCase(gender) ? "checked" : ""%>
                                                         >
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label"
                                                            for="gender_khac">khác</label>
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                           id="gender_khac" value="Khac" >
+                                                           id="gender_khac" value="Khac"
+                                                        <%= "khac".equalsIgnoreCase(gender) ? "checked" : ""%>>
                                                 </div>
                                             </div>
                                         </div>
