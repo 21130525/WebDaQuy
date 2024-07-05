@@ -34,7 +34,7 @@ public class productDetail extends HttpServlet {
         try {
             p=dao.getInformationForPerProduct(product_name);
             if (p!=null){
-                req.setAttribute("product", p);
+                req.setAttribute("product_detail", p);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -66,32 +66,56 @@ public class ProductDao implements IDAO<Product> {
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, product_name);
         ResultSet rs = pr.executeQuery();
-        Product_Detail product;
+        Product_Detail product = null;
         while (rs.next()) {
 
             //tao object
             product = new Product_Detail();
             String info = rs.getString("information");
-            String sub_string_infor=info.substring(1,info.indexOf(info.length()-2));
-            String[] split=sub_string_infor.split(",");
+            String sub_string_infor = info.substring(1, info.indexOf(info.length() - 2));
+            String[] split = sub_string_infor.split(",");
             for (int i = 0; i < split.length; i++) {
-                if(split[i].contains("color")) {
-                    int startIndex=split[i].indexOf(":",split[i].indexOf("color"));
-                    int endIndex=split[i].length();
-                    String sub_string=split[i].substring(startIndex,endIndex);
+                if (split[i].contains("color")) {
+                    int startIndex = split[i].indexOf(":", split[i].indexOf("color"));
+                    int endIndex = split[i].length();
+                    String sub_string = split[i].substring(startIndex, endIndex);
                     product.setColor(sub_string);
-                }else if(split[i].contains("weight")) {
+                } else if (split[i].contains("weight")) {
+                    int startIndex = split[i].indexOf(":", split[i].indexOf("weight"));
+                    int endIndex = split[i].length();
+                    String sub_string = split[i].substring(startIndex, endIndex);
+                    product.setWeight(sub_string);
 
-                }else if(split[i].contains("size")) {
-
-                }else if(split[i].contains("opacity")) {
-
-                }else if(split[i].contains("cutting_form")) {
-
+                } else if (split[i].contains("size")) {
+                    int startIndex = split[i].indexOf(":", split[i].indexOf("size"));
+                    int endIndex = split[i].length();
+                    String sub_string = split[i].substring(startIndex, endIndex);
+                    product.setSize(sub_string);
+                } else if (split[i].contains("opacity")) {
+                    int startIndex = split[i].indexOf(":", split[i].indexOf("opacity"));
+                    int endIndex = split[i].length();
+                    String sub_string = split[i].substring(startIndex, endIndex);
+                    product.setOpacity(sub_string);
+                } else if (split[i].contains("cutting_form")) {
+                    int startIndex = split[i].indexOf(":", split[i].indexOf("cutting_form"));
+                    int endIndex = split[i].length();
+                    String sub_string = split[i].substring(startIndex, endIndex);
+                    product.setCutting_form(sub_string);
                 }
+                product.setCategory_name(rs.getString("categories.category_name"));
+                product.setProduct_name(rs.getString("products.product_name"));
+                product.setPrice(rs.getInt("products.price"));
+                product.setStatus(rs.getString("products.status"));
+                product.setDescription(rs.getString("products.description"));
+                product.setImage_main(rs.getString("product_image.img_main"));
+                product.setImage_1(rs.getString("product_image.img_1"));
+                product.setImage_2(rs.getString("product_image.img_2"));
+                product.setImage_3(rs.getString("product_image.img_3"));
+                product.setImage_4(rs.getString("product_image.img_4"));
+
             }
         }
-        return null;
+        return product;
     }
 
 //    @Override

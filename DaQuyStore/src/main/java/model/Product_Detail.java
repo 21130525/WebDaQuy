@@ -11,7 +11,7 @@ public class Product_Detail {
     private String size;
     private String opacity;
     private String cutting_form;
-    private String imag_main;
+    private String image_main;
     private String image_1;
     private String image_2;
     private String image_3;
@@ -108,12 +108,12 @@ public class Product_Detail {
         this.cutting_form = cutting_form;
     }
 
-    public String getImag_main() {
-        return imag_main;
+    public String getImage_main() {
+        return image_main;
     }
 
-    public void setImag_main(String imag_main) {
-        this.imag_main = imag_main;
+    public void setImage_main(String imag_main) {
+        this.image_main = imag_main;
     }
 
     public String getImage_2() {
