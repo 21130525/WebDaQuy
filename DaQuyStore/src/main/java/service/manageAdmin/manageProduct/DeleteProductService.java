@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import dao.adminDAO.adminLog.LogAdminDAO;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
 import model.modelAdmin.AdminLog;
-import model.modelAdmin.ProductAdmin;
+import model.modelAdmin.AdminProduct;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,19 +17,19 @@ public class DeleteProductService extends HttpServlet {
 
     public void delete(HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException, SQLException {
         ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
-        ProductAdmin productAdmin = new ProductAdmin();
+        AdminProduct adminProduct = new AdminProduct();
         //gọi ham de lay gia tri truoc khi cap nhat trong bang product
-        ProductAdmin productAdminPrev =productAdminDAO.getPrevValueByID(id);
+        AdminProduct adminProductPrev =productAdminDAO.getPrevValueByID(id);
 
-        if (productAdminDAO.deletebyID(productAdmin,id)) {
+        if (productAdminDAO.deletebyID(adminProduct,id)) {
             //goi ham de lay gia tri sau khi cap nhat trong bang product
-            ProductAdmin productAdminAfter =productAdminDAO.getAfterValueByID(id);
+            AdminProduct adminProductAfter =productAdminDAO.getAfterValueByID(id);
 
           LogAdminDAO logAdminDAO=  LogAdminDAO.getInstance();
           //goi ham add cua logAdminDAO de them du lieu
             String chain_json = "Da xoa thanh cong";
             Gson gson = new Gson();
-            AdminLog adminLog=new AdminLog(productAdminPrev.toString(), productAdminAfter.toString());
+            AdminLog adminLog=new AdminLog(adminProductPrev.toString(), adminProductAfter.toString());
 
             logAdminDAO.addLogAlert(adminLog);
             resp.getWriter().println(gson.toJson(chain_json));

@@ -84,6 +84,13 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_image.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-image"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
@@ -94,37 +101,39 @@
             <h2>Thông tin sản phẩm</h2>
             <form action="<%=request.getContextPath()%>/updateproduct_admin" method="post" enctype="multipart/form-data">
                 <div class="form-group">
+                    <label for="idproduct">Mã sản phẩm</label>
+                    <input type="text" class="form-control" id="idproduct" placeholder="Nhập ID sản phẩm" value="<%=session.getAttribute("id")%>" name="id">
+                </div>
+                <div class="form-group">
                     <label for="productname">Tên sản phẩm:</label>
                     <input type="text" class="form-control" id="productname" placeholder="Nhập tên sản phẩm" value="<%=session.getAttribute("productname")%>" name="productname">
                 </div>
                 <div class="form-group">
                     <label for="price">Giá tiền:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">VNĐ</span>
-                        </div>
+<%--                        <div class="input-group-prepend">--%>
+<%--                            <span class="input-group-text">VNĐ</span>--%>
+<%--                        </div>--%>
                         <input type="text" class="form-control" id="price" placeholder="Nhập giá tiền" value="<%=session.getAttribute("price")%>" name="price">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="status">Tình trạng:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option>Đang còn hàng</option>
-                        <option>Hết hàng</option>
-                    </select>
+                    <input type="text" class="form-control" id="status" name="status">
+
                 </div>
-                <div class="form-group">
-                    <label for="discount">Giảm giá (%):</label>
-                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">
-                </div>
-                <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="hot" name="hot">
-                    <label class="form-check-label" for="hot">Sản phẩm hot</label>
-                </div>
-                <div class="form-group">
-                    <label for="color">Màu sắc:</label>
-                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">
-                </div>
+<%--                <div class="form-group">--%>
+<%--                    <label for="discount">Giảm giá (%):</label>--%>
+<%--                    <input type="text" class="form-control" id="discount" placeholder="Nhập giảm giá (nếu có)" name="discount">--%>
+<%--                </div>--%>
+<%--                <div class="form-check mb-3">--%>
+<%--                    <input type="checkbox" class="form-check-input" id="hot" name="hot">--%>
+<%--                    <label class="form-check-label" for="hot">Sản phẩm hot</label>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="color">Màu sắc:</label>--%>
+<%--                    <input type="text" class="form-control" id="color" placeholder="Nhập màu sắc" name="color">--%>
+<%--                </div>--%>
                 <div class="form-group">
                     <label for="description">Mô tả:</label>
                     <input type="text" class="form-control" id="description" placeholder="Nhập mô tả" name="description">

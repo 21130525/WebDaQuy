@@ -5,15 +5,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dao.adminDAO.productAdmin.ProductAdminDAO;
-import model.modelAdmin.ProductAdmin;
+import model.modelAdmin.AdminProduct;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SearchProductService {
     public JsonArray getJSONResult( String name) throws SQLException {
-        ProductAdmin productAdmin =new ProductAdmin();
-     ArrayList<ProductAdmin> list= ProductAdminDAO.getInstance().callSearch(productAdmin,name);
+        AdminProduct adminProduct =new AdminProduct();
+     ArrayList<AdminProduct> list= ProductAdminDAO.getInstance().callSearch(adminProduct,name);
         Gson gson=new Gson();
         String listjson=gson.toJson(list);
         JsonObject jsonObject= JsonParser.parseString(listjson).getAsJsonObject();

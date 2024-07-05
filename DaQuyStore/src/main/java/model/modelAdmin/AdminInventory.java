@@ -4,7 +4,7 @@ import java.util.Date;
 public class AdminInventory {
     private int id;
     private Date date;
-    private AdminUsers user;
+    private AdminUser user;
 
     public AdminInventory() {
     }
@@ -25,11 +25,11 @@ public class AdminInventory {
         this.date = date;
     }
 
-    public AdminUsers getUser() {
+    public AdminUser getUser() {
         return user;
     }
 
-    public void setUser(AdminUsers user) {
+    public void setUser(AdminUser user) {
         this.user = user;
     }
 }

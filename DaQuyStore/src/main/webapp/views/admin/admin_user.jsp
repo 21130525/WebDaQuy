@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quan li nguoi dung</title>
+    <title>Quản lí người dùng</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -70,6 +70,13 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_image.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-image"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
@@ -80,20 +87,20 @@
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tai khoan</th>
-                    <th>Mat khau</th>
-                    <th>Ho ten</th>
-                    <th>Gioi tinh</th>
-                    <th>Ngay sinh</th>
+                    <th>STT</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
                     <th>Email</th>
-                    <th>SDT</th>
-                    <th>Dia chi</th>
-                    <th>Avatar</th>
-                    <th>Ngay tao</th>
-                    <th>Ngay cap nhat</th>
-                    <th>Vai tro</th>
-                    <th>Trang thai</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày cập nhật</th>
+                    <th>Quyền hạn</th>
+                   <th>Loại đăng nhập</th>
+                    <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody id="body">
@@ -147,43 +154,75 @@
 
                     var $trash = $('<i class="fa-solid fa-trash"></i>');
                     $trash.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/deleteuser',
-                            method: 'GET',
-                            data: { id: $row.prop('id') },
-                            dataType: 'JSON',
-                            success: function (resp) {
-                                alert('Đã xóa thành công');
-                                $row.hide();
-                            },
-                            error: function (error) {
-                                alert('Xóa không thành công');
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '<%=request.getContextPath()%>/deleteuser',
+                                    method: 'GET',
+                                    data: { id: $row.prop('id') },
+                                    dataType: 'JSON',
+                                    success: function (resp) {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your file has been deleted.",
+                                            icon: "success"
+                                        });
+                                        $row.hide();
+                                    }
+
+                                });
+
                             }
                         });
-                    });
-                    $row.append($('<td>').append($trash)); // Đảm bảo biểu tượng nằm trong một ô
 
-                    var $edit = $('<i class="fa-solid fa-user-tie"></i>');
-                    $edit.click(function () {
-                        $.ajax({
-                            url: '<%=request.getContextPath()%>/updateuser',
-                            method: 'GET',
-                            dataType: 'JSON',
-                            data: { id: $row.prop('id') },
-                            success: function (response) {
-                                alert('Cập nhật thành công');
-                                setTimeout(function () {
-                                    location.reload(true);
-                                }, 2000);
+                    });
+
+                    var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
+                        Swal.fire({
+                            title: "Bạn có chắc chắn không?",
+                            text: "Bạn sẽ không thể khôi phục được!",
+                            icon: "warning",
+                            input: 'select',
+                            inputOptions: {
+                                admin:'Admin',
+                                user:'User',
+                                prohibit:'Prohibit'
                             },
-                            error: function (error) {
-                                alert('Cập nhật không thành công');
-                            }
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateuser",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
+                                        }
+                                    });
+                                }
                         });
                     });
-                    $row.append($('<td>').append($edit)); // Đảm bảo biểu tượng nằm trong một ô
-
-                    $('#table_id tbody').append($row); // Thêm hàng vào tbody của bảng có id là table_id
+                    $row.append($('<td>').append($edit,$trash));
+                    $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },
             error: function (error) {
@@ -199,5 +238,7 @@
     })
 
 </script>
+<script>
 
+</script>
 </html>

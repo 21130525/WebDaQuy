@@ -14,6 +14,15 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<style>
+    .spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -59,10 +68,23 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
                            class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-note-sticky"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí log</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_image.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-image"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
                 </ul>
@@ -76,11 +98,11 @@
                 <thead>
                 <tr>
                     <th>STT</th>
+                    <th>IP truy cập</th>
+                    <th>Gia tri trước</th>
+                    <th>Giá trị hiện tại</th>
+                    <th>Ngày tạo</th>
                     <th>Level</th>
-                    <th>IPAddress</th>
-                    <th>Gia tri truoc</th>
-                    <th>Gia tri hien tai</th>
-                    <th>Ngay tao</th>
 
                 </tr>
                 </thead>
@@ -111,11 +133,24 @@
     })
     var $tbody = $('#body')
     $(document).ready(function () {
+        var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+        $('body').append($spinner);
+
+        function showSpinner() {
+            $spinner.show();
+        }
+
+        function hideSpinner() {
+            $spinner.hide();
+        }
+
+        showSpinner();
         $.ajax({
             url: '<%=request.getContextPath()%>/log',
             method: 'GET',
             dataType: 'JSON',
             success: function (response) {
+                hideSpinner()
                 $.each(response, function (key, value) {
                     var $row = $('<tr>')
                     $row.attr('id', value.id)

@@ -79,9 +79,14 @@ public class AdminLog {
     @Override
     public String toString() {
         return "AdminLog{" +
-                "prevValue='" + prevValue + '\'' +
+                "id=" + id +
+                ", ipaddress='" + ipaddress + '\'' +
+                ", prevValue='" + prevValue + '\'' +
                 ", currentValue='" + currentValue + '\'' +
+                ", created_at=" + created_at +
+                ", level='" + level + '\'' +
                 '}';
     }
+
 }
 

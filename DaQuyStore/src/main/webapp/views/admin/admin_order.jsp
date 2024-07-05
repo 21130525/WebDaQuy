@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quan li don hang</title>
+    <title>Quản lí đơn hàng</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -30,7 +30,6 @@
     .button-status:hover {
         box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
     }
-
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -88,6 +87,13 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí log</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_image.jsp"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-image"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <hr>
@@ -95,46 +101,22 @@
         </div>
         <div class="col py-3">
             <button class="button-status text-black" name="btn" value="Chờ xác nhận" id="waiting">Chờ xác nhận</button>
-            <button class="button-status text-black" name="btn" value="Cho giao" id=" for-giving">Cho giao</button>
+            <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Cho giao</button>
             <button class="button-status text-black" name="btn" value="Đang giao" id="giving">Đang giao</button>
             <button class="button-status text-black" name="btn" id="gived" value="Đã giao">Đã giao</button>
-            <button class="button-status text-black" name="btn" id="dismiss" value="Hủy">Hủy</button>
+            <button class="button-status text-black" name="btn" id="canceled" value="Hủy">Hủy</button>
 
 
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
-                    <%--                    <th>Tai khoan</th>--%>
-                    <%--                    <th>Mat khau</th>--%>
-                    <%--                    <th>Ho ten</th>--%>
-                    <%--                    <th>Gioi tinh</th>--%>
-                    <%--                    <th>Ngay sinh</th>--%>
-                    <%--                    <th>Email</th>--%>
-                    <%--                    <th>SDT</th>--%>
-                    <%--                    <th>Dia chi</th>--%>
-                    <%--                    <th>Avatar</th>--%>
-                    <%--                    <th>Ngay tao</th>--%>
-                    <%--                    <th>Ngay cap nhat</th>--%>
-                    <%--                    <th>Vai tro</th>--%>
                     <th>STT</th>
                     <th>Trang thai</th>
                     <th>Thao tac</th>
                 </tr>
                 </thead>
                 <tbody id="body">
-                <%--                <c:set var="list" value="${sessionScope.list}">--%>
 
-                <%--                </c:set>--%>
-                <%--                <c:forEach items="${list}" var="name">--%>
-
-                <%--                </c:forEach>--%>
-                <%--                <c:set var="list_map">--%>
-                <%--                 <c:choose>--%>
-                <%--                     <c:when test="${10>9}"></c:when>--%>
-                <%--                     <c:when test="${7>10}"></c:when>--%>
-                <%--                     <c:otherwise></c:otherwise>--%>
-                <%--                 </c:choose>--%>
-                <%--                </c:set>--%>
                 </tbody>
             </table>
         </div>
@@ -166,116 +148,130 @@
     $(document).ready(function () {
         $("#dt-search-0").attr('name', 'search')
     })
+</script>
+<script>
+    //nút bấm cho trạng thái chờ xác nhận
     $(document).ready(function () {
+
         $('#waiting').click(function () {
-            $tbody.empty()
+
+
+
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_waiting',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
                     $.each(response, function (index, value) {
-                        var $row = $('<tr>')
-                        $row.attr('id', value.id)
+                        var $row = $('<tr>').attr('id', value.id);
                         $.each(value, function (key, value_item) {
-                            var $cell = $('<td>').text(value_item)
-                            $row.append($cell)
-                        })
-                        var $delete = $('<i class="fa-solid fa-trash"></i>')
-                        var $edit = $('<i class="fa-solid fa-wrench"></i>')
-                        var $cell = $('<td>')
-                        $cell.append($delete, $edit)
-                        $row.append($cell)
-                        $delete.click(function () {
+                            var $cell = $('<td>').text(value_item);
+                            $row.append($cell);
+                        });
+
+                        var $delete = $('<i class="fa-solid fa-trash"></i>').click(function () {
                             $.ajax({
                                 url: '<%=request.getContextPath()%>/deleteorder',
                                 method: 'GET',
                                 data: {id: $row.prop('id')},
                                 dataType: 'JSON',
                                 success: function (response) {
-                                    alert('Xoa thanh cong')
-                                    $row.hide()
+                                    alert('Xóa thành công');
+                                    $row.hide();
                                 },
                                 error: function (error) {
-                                    alert('Xoa khong thanh cong')
-                                }
-                            })
-                        })
-                        $edit.click(async function () {
-                            // thu vien sweet alert kem theo xu li bat dong bo
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
-                                inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-
-                                },
-                                inputPlaceholder: "Chọn trạng thái",
-                                showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // xu li promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
-                                        }
-                                    });
+                                    alert('Xóa không thành công');
                                 }
                             });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data:{id:$row.prop('id'),status_order_request:status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cap nhat khong thanh cong')
+                        });
+
+                        var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
+                            Swal.fire({
+                                title: "Bạn có chắc chắn không?",
+                                text: "Bạn sẽ không thể khôi phục được!",
+                                icon: "warning",
+                                input: 'select',
+                                inputOptions: {
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
+                                },
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const selected_value = result.value;
+                                        let id = $row.prop('id');
+                                        $.ajax({
+                                            url: "<%=request.getContextPath()%>/updateorder",
+                                            data: {id: id, select: selected_value},
+                                            dataType: 'json',
+                                            type: "POST",
+                                            success: res => {
+                                                console.log(res);
+                                                Swal.fire({
+                                                    title: "Đã cập nhật!",
+                                                    text: "Cập nhật thành công.",
+                                                    icon: "success"
+                                                });
+                                            }
+                                        });
                                     }
-                                })
-                            }
-                        })
-                        $tbody.append($row)
-                    })
 
+                            });
+                        });
 
+                        var $actionCell = $('<td>').append($delete, $edit);
+                        $row.append($actionCell);
+                        $tbody.append($row);
+                    });
                 },
                 error: function (error) {
-                    alert('Lay du lieu khong thanh cong')
+                    alert('Lỗi khi lấy dữ liệu');
                 }
-            })
-        })
-    })
+            });
+        });
+    });
+</script>
+<script>
+    //nút bấm cho trạng thái đang giao
     $(document).ready(function () {
         $('#giving').click(function () {
-            $tbody.empty()
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
+            $tbody.empty();
             $.ajax({
                 url: '<%=request.getContextPath()%>/getorder_giving',
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (response) {
+                    hideSpinner()
                     $.each(response, function (index, value) {
-                        var $row = $('<tr>')
-                        $row.attr('id', value.id)
+                        var $row = $('<tr>');
+                        $row.attr('id', value.id);
                         $.each(value, function (key, value_item) {
-                            var $cell = $('<td>').text(value_item)
-                            $row.append($cell)
-                        })
-                        var $delete = $('<i class="fa-solid fa-trash"></i>')
-                        var $edit = $('<i class="fa-solid fa-wrench"></i>')
-                        var $cell = $('<td>')
-                        $cell.append($delete, $edit)
-                        $row.append($cell)
+                            var $cell = $('<td>').text(value_item);
+                            $row.append($cell);
+                        });
+                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        var $edit = $('<i class="fa-solid fa-wrench"></i>');
+                        var $cell = $('<td>');
+                        $cell.append($delete, $edit);
+                        $row.append($cell);
                         $delete.click(function () {
                             $.ajax({
                                 url: '<%=request.getContextPath()%>/deleteorder',
@@ -283,79 +279,248 @@
                                 data: {id: $row.prop('id')},
                                 dataType: 'JSON',
                                 success: function (response) {
-                                    alert('Xoa thanh cong')
-                                    $row.hide()
+                                    alert('Xóa thành công');
+                                    $row.hide();
                                 },
                                 error: function (error) {
-                                    alert('Xoa khong thanh cong')
+                                    alert('Xóa không thành công');
                                 }
-                            })
-                        })
-                        $edit.click(async function () {
-                            // thu vien sweet alert kem theo xu li bat dong bo
-                            const {value: status} = await Swal.fire({
-                                title: "Chọn trạng thái đơn hàng",
-                                input: "select",
+                            });
+                        });
+                        $edit.click(function () {
+                            Swal.fire({
+                                title: "Bạn có chắc chắn không?",
+                                text: "Bạn sẽ không thể khôi phục được!",
+                                icon: "warning",
+                                input: 'select',
                                 inputOptions: {
-                                    Status: {
-                                        waiting: 'Chờ xác nhận',
-                                        forgiving: 'Cho giao',
-                                        giving: 'Đang giao',
-                                        success: 'Đã giao',
-                                        dismiss: 'Hủy'
-                                    }
-
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
                                 },
-                                inputPlaceholder: "Chọn trạng thái",
                                 showCancelButton: true,
-                                inputValidator: (value) => {
-                                    // xu li promise
-                                    return new Promise((resolve) => {
-                                        if (value === 'forgiving') {
-                                            resolve();
-
-                                        } else {
-                                            resolve("Bạn cần chọn trạng thái");
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateorder",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
                                         }
                                     });
                                 }
+
                             });
-                            if (status) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/updateorder',
-                                    method: 'GET',
-                                    dataType: 'JSON',
-                                    data:{id:$row.prop('id'),status_order_request:status},
-                                    success: function (response) {
-                                        Swal.fire('Cập nhật thành công');
-                                    },
-                                    error: function (error) {
-                                        Swal.fire('Cap nhat khong thanh cong')
-                                    }
-                                })
-                            }
-                        })
-                        $tbody.append($row)
-                    })
-
-
+                        });
+                        $tbody.append($row);
+                    });
                 },
                 error: function (error) {
-                    alert('Lay du lieu khong thanh cong')
+                    alert('Lấy dữ liệu không thành công');
                 }
-            })
-        })
+            });
+        });
     })
+
+</script>
+<script>
     $(document).ready(function () {
         $('.dt-empty').hide()
     })
 </script>
 <script>
+    //nút bấm cho trạng thái đã giao
     $(document).ready(function () {
         $('#gived').click(function () {
-            $tbody.empty()
-        })
+
+            $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
+            $.ajax({
+                url: '<%=request.getContextPath()%>/getorder_gived',
+                method: 'GET',
+                dataType: 'JSON',
+                success: function (response) {
+                    hideSpinner()
+                    $.each(response, function (index, value) {
+                        var $row = $('<tr>');
+                        $row.attr('id', value.id);
+                        $.each(value, function (key, value_item) {
+                            var $cell = $('<td>').text(value_item);
+                            $row.append($cell);
+                        });
+                        $tbody.append($row);
+                    });
+                },
+                error: function (error) {
+                    alert('Lấy dữ liệu không thành công');
+                }
+            });
+        });
     })
 </script>
+<script>
+    //nút bấm cho trạng thái đã hủy
+    $(document).ready(function () {
+        $('#canceled').click(function () {
+            $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
 
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
+            $.ajax({
+                url: '<%=request.getContextPath()%>/getorder_canceled',
+                method: 'GET',
+                dataType: 'JSON',
+                success: function (response) {
+                    hideSpinner()
+                    $.each(response, function (index, value) {
+                        var $row = $('<tr>');
+                        $row.attr('id', value.id);
+                        $.each(value, function (key, value_item) {
+                            var $cell = $('<td>').text(value_item);
+                            $row.append($cell);
+                        });
+                        $tbody.append($row);
+                    });
+                },
+                error: function (error) {
+                    alert('Lấy dữ liệu không thành công');
+                }
+            });
+        });
+    })
+</script>
+<script>
+    //nút bấm cho trạng thái chờ giao
+    $(document).ready(function () {
+        $('#waiting-giving').click(function () {
+            $tbody.empty();
+            var $spinner = $('<div class="spinner"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div>');
+            $('body').append($spinner);
+
+            function showSpinner() {
+                $spinner.show();
+            }
+
+            function hideSpinner() {
+                $spinner.hide();
+            }
+
+            showSpinner();
+            $.ajax({
+                url: '<%=request.getContextPath()%>/getorder_waitinggiving',
+                method: 'GET',
+                dataType: 'JSON',
+                success: function (response) {
+                    hideSpinner()
+                    $.each(response, function (index, value) {
+                        var $row = $('<tr>');
+                        $row.attr('id', value.id);
+                        $.each(value, function (key, value_item) {
+                            var $cell = $('<td>').text(value_item);
+                            $row.append($cell);
+                        });
+                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        var $edit = $('<i class="fa-solid fa-wrench"></i>');
+                        var $cell = $('<td>');
+                        $cell.append($delete, $edit);
+                        $row.append($cell);
+                        $delete.click(function () {
+                            $.ajax({
+                                url: '<%=request.getContextPath()%>/deleteorder',
+                                method: 'GET',
+                                data: {id: $row.prop('id')},
+                                dataType: 'JSON',
+                                success: function (response) {
+                                    alert('Xóa thành công');
+                                    $row.hide();
+                                },
+                                error: function (error) {
+                                    alert('Xóa không thành công');
+                                }
+                            });
+                        });
+                        $edit.click(function () {
+                            Swal.fire({
+                                title: "Bạn có chắc chắn không?",
+                                text: "Bạn sẽ không thể khôi phục được!",
+                                icon: "warning",
+                                input: 'select',
+                                inputOptions: {
+                                    waiting: 'chờ xác nhận',
+                                    cancelled:'hủy',
+                                    waiting_giving:'đang chờ giao',
+                                    giving:'đang giao',
+                                    gived:'đã giao'
+
+                                },
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const selected_value = result.value;
+                                    let id = $row.prop('id');
+                                    $.ajax({
+                                        url: "<%=request.getContextPath()%>/updateorder",
+                                        data: {id: id, select: selected_value},
+                                        dataType: 'json',
+                                        type: "POST",
+                                        success: res => {
+                                            console.log(res);
+                                            Swal.fire({
+                                                title: "Đã cập nhật!",
+                                                text: "Cập nhật thành công.",
+                                                icon: "success"
+                                            });
+                                        }
+                                    });
+                                }
+
+                            });
+                        });
+                        $tbody.append($row);
+                    });
+                },
+                error: function (error) {
+                    alert('Lấy dữ liệu không thành công');
+                }
+            });
+        });
+    })
+</script>
 </html>
