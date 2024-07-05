@@ -61,60 +61,60 @@ public class ProductDao implements IDAO<Product> {
     }
 
     //hàm này dùng để truy vấn dữ liệu chi tiết của 1 sản phẩm dựa trên tên
-    public Product_Detail getInformationForPerProduct(String product_name) throws SQLException {
-        String sql = "Select categories.category_name,products.product_name,products.price,products.status,products.description,products.information,product_image.img_main,product_image.img_1,product_image.img_2,product_image.img_3,product_image.img_4 from products join categories on categories.id=products.categories_id join product_image on product_image.id=products.id where product_name=?";
+    public Product_Detail getInformationForPerProduct(int id) throws SQLException {
+        String sql = "SELECT categories.category_name, products.product_name, products.price, products.status, products.description, products.information, product_image.img_main, product_image.img_1, product_image.img_2, product_image.img_3, product_image.img_4 " +
+                "FROM products " +
+                "JOIN categories ON categories.id = products.category_id " +
+                "JOIN product_image ON product_image.id = products.id " +
+                "WHERE products.id = ?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        pr.setString(1, product_name);
+        pr.setInt(1, id);
         ResultSet rs = pr.executeQuery();
         Product_Detail product = null;
-        while (rs.next()) {
 
-            //tao object
+        if (rs.next()) {
             product = new Product_Detail();
+
             String info = rs.getString("information");
-            String sub_string_infor = info.substring(1, info.indexOf(info.length() - 2));
-            String[] split = sub_string_infor.split(",");
-            for (int i = 0; i < split.length; i++) {
-                if (split[i].contains("color")) {
-                    int startIndex = split[i].indexOf(":", split[i].indexOf("color"));
-                    int endIndex = split[i].length();
-                    String sub_string = split[i].substring(startIndex, endIndex);
-                    product.setColor(sub_string);
-                } else if (split[i].contains("weight")) {
-                    int startIndex = split[i].indexOf(":", split[i].indexOf("weight"));
-                    int endIndex = split[i].length();
-                    String sub_string = split[i].substring(startIndex, endIndex);
-                    product.setWeight(sub_string);
+            // Removing leading '/' and trailing '/' and splitting by ','
+            String[] split = info.substring(1, info.length() - 1).split(",");
 
-                } else if (split[i].contains("size")) {
-                    int startIndex = split[i].indexOf(":", split[i].indexOf("size"));
-                    int endIndex = split[i].length();
-                    String sub_string = split[i].substring(startIndex, endIndex);
-                    product.setSize(sub_string);
-                } else if (split[i].contains("opacity")) {
-                    int startIndex = split[i].indexOf(":", split[i].indexOf("opacity"));
-                    int endIndex = split[i].length();
-                    String sub_string = split[i].substring(startIndex, endIndex);
-                    product.setOpacity(sub_string);
-                } else if (split[i].contains("cutting_form")) {
-                    int startIndex = split[i].indexOf(":", split[i].indexOf("cutting_form"));
-                    int endIndex = split[i].length();
-                    String sub_string = split[i].substring(startIndex, endIndex);
-                    product.setCutting_form(sub_string);
+            for (String attribute : split) {
+                String[] keyValue = attribute.split(":");
+                String key = keyValue[0].trim();
+                String value = keyValue.length > 1 ? keyValue[1].trim() : "";
+
+                switch (key) {
+                    case "color":
+                        product.setColor(value);
+                        break;
+                    case "weight":
+                        product.setWeight(value);
+                        break;
+                    case "size":
+                        product.setSize(value);
+                        break;
+                    case "opacity":
+                        product.setOpacity(value);
+                        break;
+                    case "cutting_form":
+                        product.setCutting_form(value);
+                        break;
                 }
-                product.setCategory_name(rs.getString("categories.category_name"));
-                product.setProduct_name(rs.getString("products.product_name"));
-                product.setPrice(rs.getInt("products.price"));
-                product.setStatus(rs.getString("products.status"));
-                product.setDescription(rs.getString("products.description"));
-                product.setImage_main(rs.getString("product_image.img_main"));
-                product.setImage_1(rs.getString("product_image.img_1"));
-                product.setImage_2(rs.getString("product_image.img_2"));
-                product.setImage_3(rs.getString("product_image.img_3"));
-                product.setImage_4(rs.getString("product_image.img_4"));
-
             }
+
+            product.setCategory_name(rs.getString("category_name"));
+            product.setProduct_name(rs.getString("product_name"));
+            product.setPrice(rs.getInt("price"));
+            product.setStatus(rs.getString("status"));
+            product.setDescription(rs.getString("description"));
+            product.setImage_main(rs.getString("img_main"));
+            product.setImage_1(rs.getString("img_1"));
+            product.setImage_2(rs.getString("img_2"));
+            product.setImage_3(rs.getString("img_3"));
+            product.setImage_4(rs.getString("img_4"));
         }
+
         return product;
     }
 

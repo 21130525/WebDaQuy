@@ -19,7 +19,8 @@ public class productDetail extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String id = req.getParameter("id");
         //lấy thông tin thông qua tên sản phẩm
-        String product_name=req.getParameter("product_name");
+        String id=req.getParameter("id");
+        int product_id=Integer.parseInt(id);
         ProductDao dao = ProductDao.getInstance();
 //        Product p;
 //
@@ -32,14 +33,15 @@ public class productDetail extends HttpServlet {
 //        }
         Product_Detail p;
         try {
-            p=dao.getInformationForPerProduct(product_name);
+            p=dao.getInformationForPerProduct(product_id);
             if (p!=null){
                 req.setAttribute("product_detail", p);
+                req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
     }
 
     @Override
