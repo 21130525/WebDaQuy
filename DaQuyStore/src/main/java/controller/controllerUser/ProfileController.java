@@ -38,8 +38,8 @@ public class ProfileController extends HttpServlet {
             Date birthdayThenPartDate = Date.valueOf(birthday);
             user.setBirthday(birthdayThenPartDate);
         }
-
-        System.out.println( service.updateProfile(user,req.getRemoteAddr()));
+//        session.setAttribute("user", user);
+        service.updateProfile(user,req.getRemoteAddr());
         req.getRequestDispatcher("/views/user/profile.jsp").forward(req, resp);
     }
 

@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 @WebServlet("/updateProfile")
 public class UpdateProfileController extends HttpServlet {
-    private UpdateProfileService updateProfileService = new UpdateProfileService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,7 +45,7 @@ public class UpdateProfileController extends HttpServlet {
                 }
             }
             req.setAttribute("notify", "Cập nhật khong thành công");
-                req.getRequestDispatcher("/views/login/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/login/login.jsp").forward(req, resp);
         }
     }
 }
