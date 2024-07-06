@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class AdminProduct {
     int id;
     String product_name;
-    int price;
+    float price;
     String status;
     int sale;
     int hot;
@@ -158,7 +158,7 @@ public class AdminProduct {
     public AdminProduct(){
     }
 
-    public AdminProduct(int id, String product_name, int price, String status, int sale, int hot) {
+    public AdminProduct(int id, String product_name, float price, String status, int sale, int hot) {
         this.id=id;
         this.product_name = product_name;
         this.price = price;
@@ -176,11 +176,11 @@ public class AdminProduct {
         this.product_name = product_name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

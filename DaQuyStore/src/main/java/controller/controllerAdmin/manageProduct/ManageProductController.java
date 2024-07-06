@@ -44,32 +44,33 @@ public class ManageProductController extends HttpServlet {
                 Part image_2 = req.getPart("image-2");
                 Part image_3 = req.getPart("image-3");
                 Part image_4 = req.getPart("image-4");
-                String number_import = req.getParameter("number_import");
+//                String number_import = req.getParameter("number_import");
                 String description = req.getParameter("description");
                 String product_type = req.getParameter("productType");
                 String status = req.getParameter("status");
                 String cutting_form = req.getParameter("cutting_form");
                 String weight = req.getParameter("weight");
                 String size = req.getParameter("size");
+                String color = req.getParameter("color");
                 String opactity = req.getParameter("opacity");
                 /*
                 điêù kiện kiểm tra nếu thiếu 1 thông tin không cho up
                  */
                 if (!productName.isEmpty()) {
                     if (!price.isEmpty()) {
-                        if (!number_import.isEmpty()) {
-                            if (!description.isEmpty()) {
-                                if (!product_type.isEmpty()) {
-                                    if (image_main != null && image_main.getSize() > 0) {
-                                        if (image_1 != null && image_1.getSize() > 0) {
-                                            if (image_2 != null && image_2.getSize() > 0) {
-                                                if (image_3 != null && image_3.getSize() > 0) {
-                                                    if (image_4 != null && image_4.getSize() > 0) {
-                                                        if (!status.isEmpty()) {
-                                                            if (!cutting_form.isEmpty()) {
-                                                                if (!weight.isEmpty()) {
-                                                                    if (!size.isEmpty()) {
-                                                                        if (!opactity.isEmpty()) {
+                        if (!description.isEmpty()) {
+                            if (!product_type.isEmpty()) {
+                                if (image_main != null && image_main.getSize() > 0) {
+                                    if (image_1 != null && image_1.getSize() > 0) {
+                                        if (image_2 != null && image_2.getSize() > 0) {
+                                            if (image_3 != null && image_3.getSize() > 0) {
+                                                if (image_4 != null && image_4.getSize() > 0) {
+                                                    if (!status.isEmpty()) {
+                                                        if (!cutting_form.isEmpty()) {
+                                                            if (!weight.isEmpty()) {
+                                                                if (!size.isEmpty()) {
+                                                                    if (!opactity.isEmpty()) {
+                                                                        if (!color.isEmpty()) {
                                                                             //ten cac buc anh
                                                                             String name_image_main = image_main.getSubmittedFileName();
                                                                             String name_image_1 = image_1.getSubmittedFileName();
@@ -126,28 +127,28 @@ public class ManageProductController extends HttpServlet {
                                                                             AdminProduct adminProduct_result = new AdminProduct();
                                                                             //set up cac thong so cho 1 product
                                                                             adminProduct_result.setProduct_name(productName);
-                                                                            adminProduct_result.setPrice(Integer.parseInt(price));
-                                                                            adminProduct_result.setQuantity(Integer.parseInt(number_import));
+                                                                            adminProduct_result.setPrice(Float.parseFloat(price));
                                                                             adminProduct_result.setDescription(description);
                                                                             adminProduct_result.setCreated_at(new Timestamp(new Date().getTime()));
                                                                             adminProduct_result.setUpdated_at(new Timestamp(new Date().getTime()));
                                                                             adminProduct_result.setStatus(status);
                                                                             adminProduct_result.setId_product_type(CategoryAdminDAO.getInstance().getProductType(product_type));
+                                                                            adminProduct_result.setColor(color);
                                                                             adminProduct_result.setWeight(weight);
                                                                             adminProduct_result.setSize(size);
                                                                             adminProduct_result.setOpactity(opactity);
                                                                             adminProduct_result.setCutting_form(cutting_form);
                                                                             adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
                                                                             ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
-                                                                            InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
+//                                                                                InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
                                                                             resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
                                                                         }
                                                                     }
                                                                 }
                                                             }
                                                         }
-
                                                     }
+
                                                 }
                                             }
                                         }
@@ -155,10 +156,8 @@ public class ManageProductController extends HttpServlet {
                                 }
                             }
                         }
-
                     }
                 }
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -178,12 +177,12 @@ public class ManageProductController extends HttpServlet {
             Part image_2 = req.getPart("image-2");
             Part image_3 = req.getPart("image-3");
             Part image_4 = req.getPart("image-4");
-            String product_type=req.getParameter("productType");
+            String product_type = req.getParameter("productType");
 
             //biến đếm số lượng thông tin được cập nhật trong db
             int count = 0;
             //xử lí từng trường hợp khi người dùng đưa các giá trị
-            if (productname != null) {
+            if (!productname.isEmpty()) {
                 ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
                 try {
                     productAdminDAO.updateProductName(productname, id);
@@ -192,7 +191,7 @@ public class ManageProductController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-            if (price != null) {
+            if (!price.isEmpty()) {
                 try {
                     int int_price = Integer.parseInt(price);
                     ProductAdminDAO.getInstance().updateProductPrice(int_price, id);
@@ -220,7 +219,7 @@ public class ManageProductController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-            if (hot != null) {
+            if (!hot.isEmpty()) {
                 int hot_price = Integer.parseInt(hot);
                 try {
                     ProductAdminDAO.getInstance().updateProductHot(hot_price, id);
@@ -230,7 +229,7 @@ public class ManageProductController extends HttpServlet {
                 }
 
             }
-            if (description != null) {
+            if (!description.isEmpty()) {
                 try {
                     ProductAdminDAO.getInstance().updateProductDescription(description, id);
                     count++;
@@ -339,7 +338,7 @@ public class ManageProductController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-            if(!product_type.isEmpty()){
+            if (product_type != null) {
 
             }
 

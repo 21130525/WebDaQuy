@@ -3,6 +3,7 @@ package dao.adminDAO.productAdmin;
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
 import dao.adminDAO.categoryAdmin.CategoryAdminDAO;
+import dao.adminDAO.inventoryAdmin.InventoryAdminDAO;
 import dao.adminDAO.orderAdmin.OrderAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
@@ -17,7 +18,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     @Override
     public boolean deletebyID(AdminProduct obj, int id) throws SQLException {
-        String sql = "Update products set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
+        String sql = "Update products set status_deleted='đã xóa' where status_deleted='chưa xóa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, id);
         int rows = pr.executeUpdate();
@@ -324,13 +325,14 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.setInt(1,getMaxIDProduct()+1);
         pr.setInt(2, product.getId_product_type());
         pr.setString(3, product.getProduct_name());
-        pr.setInt(4, product.getPrice());
+        pr.setFloat(4,  product.getPrice());
         pr.setString(5, product.getStatus());
         pr.setString(6, product.getDescription());
         pr.setString(7, information_insert);
         pr.setTimestamp(8, new Timestamp(new Date().getTime()));
         pr.setTimestamp(9,new Timestamp(new Date().getTime()));
         pr.executeUpdate();
+        pr.close();
     }
 
 

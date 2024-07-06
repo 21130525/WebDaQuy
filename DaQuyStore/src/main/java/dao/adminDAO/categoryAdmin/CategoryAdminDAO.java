@@ -12,7 +12,7 @@ public class CategoryAdminDAO {
     }
 
     public int getProductType(String product_type) throws SQLException {
-        String sql = "Select id from categories where product_type=?";
+        String sql = "Select id from categories where category_name=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, product_type);
         ResultSet rs = pr.executeQuery();
@@ -21,5 +21,9 @@ public class CategoryAdminDAO {
             product_type_id = rs.getInt("id");
         }
         return product_type_id;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        System.out.println(CategoryAdminDAO.getInstance().getProductType("Ruby"));
     }
 }

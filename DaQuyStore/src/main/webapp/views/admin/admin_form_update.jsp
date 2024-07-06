@@ -114,8 +114,8 @@
             <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"
                   enctype="multipart/form-data" id="form">
                 <div class="form-group">
-                    <label for="id">Tên sản phẩm:</label>
-                    <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id" disabled>
+                    <label for="id">Mã sản phẩm:</label>
+                    <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id"  value="<%= session.getAttribute("id")%>" >
                 </div>
                 <div class="form-group">
                     <label for="productName">Tên sản phẩm:</label>
@@ -125,6 +125,10 @@
                 <div class="form-group">
                     <label for="productPrice">Giá tiền:</label>
                     <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá tiền" name="price">
+                </div>
+                <div class="form-group">
+                    <label for="number_import">Số lượng nhập:</label>
+                    <input type="text" class="form-control" id="number_import" placeholder="Nhập giá tiền" name="number_import">
                 </div>
                 <div class="form-group mb-3">
                     <label for="productImages-main">Ảnh sản phẩm-chính:</label>
@@ -149,11 +153,11 @@
                 <div class="form-group">
                     <label>Tình trạng </label>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="having" name="status">
+                        <input type="radio" class="form-check-input" id="having" name="status" value="Còn hàng">
                         <label class="form-check-label" for="having">Còn hàng</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="not_having" name="status">
+                        <input type="radio" class="form-check-input" id="not_having" name="status" value="Hết hàng">
                         <label class="form-check-label" for="not_having">Hết hàng</label>
                     </div>
                 </div>
@@ -171,11 +175,11 @@
                         </label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="hot" name="hot">
+                        <input type="radio" class="form-check-input" id="hot" name="hot" value="1">
                         <label class="form-check-label" for="hot">1</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="no_hot" name="hot">
+                        <input type="radio" class="form-check-input" id="no_hot" name="hot" value="0">
                         <label class="form-check-label" for="hot">0</label>
                     </div>
                 </div>
@@ -187,43 +191,43 @@
                 <div class="form-group">
                     <label>Loại sản phẩm:</label><br>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="ruby" name="productType">
+                        <input type="radio" class="form-check-input" id="ruby" name="productType" value="Ruby">
                         <label class="form-check-label" for="ruby">Ruby</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="aquamarine" name="productType">
+                        <input type="radio" class="form-check-input" id="aquamarine" name="productType" value="Aquamarine">
                         <label class="form-check-label" for="aquamarine">Aquamarine</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="tourmaline" name="productType">
+                        <input type="radio" class="form-check-input" id="tourmaline" name="productType" value="Tourmaline">
                         <label class="form-check-label" for="tourmaline">Tourmaline</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="spinel" name="productType">
+                        <input type="radio" class="form-check-input" id="spinel" name="productType" value="Spinel">
                         <label class="form-check-label" for="spinel">Spinel</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="sapphire" name="productType">
+                        <input type="radio" class="form-check-input" id="sapphire" name="productType" value="Sapphire">
                         <label class="form-check-label" for="sapphire">Sapphire</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="zircon" name="productType">
+                        <input type="radio" class="form-check-input" id="zircon" name="productType" value="Zircon">
                         <label class="form-check-label" for="zircon">Zircon</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="peridot" name="productType">
+                        <input type="radio" class="form-check-input" id="peridot" name="productType" value="Peridot">
                         <label class="form-check-label" for="peridot">Peridot</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="garnet" name="productType">
+                        <input type="radio" class="form-check-input" id="garnet" name="productType" value="Garnet">
                         <label class="form-check-label" for="garnet">Garnet</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="emerald" name="productType">
+                        <input type="radio" class="form-check-input" id="emerald" name="productType" value="Ngọc lục bảo">
                         <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="topaz" name="productType">
+                        <input type="radio" class="form-check-input" id="topaz" name="productType" value="Topaz">
                         <label class="form-check-label" for="topaz">Topaz</label>
                     </div>
                 </div>
