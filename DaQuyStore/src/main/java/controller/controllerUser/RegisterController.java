@@ -146,12 +146,12 @@ public class RegisterController extends HttpServlet {
         }
         if (registerService.checkDuplicatedEmail(email)) {
             announced += " email đã tồn tại";
-//            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
-//            requestDispatcher.forward(servletRequest, servletResponse);
+
         }
         if(announced!=null){
             servletRequest.setAttribute("announced", " email đã tồn tại");
-            servletResponse.sendRedirect("/views/login/register.jsp");
+            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
+            requestDispatcher.forward(servletRequest, servletResponse);
         }
 
     }

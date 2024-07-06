@@ -60,7 +60,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         int res = ps.executeUpdate();
         ps.close();
         con.close();
-        super.insert(user,action,ipAddress);
+//        super.insert(user,action,ipAddress);
         return res >= 1;
     }
 
@@ -90,7 +90,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
             int res = ps.executeUpdate();
             ps.close();
             con.close();
-            super.update(user,action,ipAddress);
+//            super.update(user,action,ipAddress);
             return res >= 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -132,7 +132,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
-        super.selectById(id,action,address);
+//        super.selectById(id,action,address);
         return user;
     }
 
@@ -170,7 +170,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         if(user==null){
             action = action+" : false";
         }
-        super.selectByName(user,action,ipAddress);
+//        super.selectByName(user,action,ipAddress);
         return user;
     }
 
@@ -266,7 +266,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         rs.close();
         pst.close();
         DAOConnection.getConnection().close();
-        super.selectById("login","loginGoogle",ip);
+//        super.selectById("login","loginGoogle",ip);
         return users;
     }
 }

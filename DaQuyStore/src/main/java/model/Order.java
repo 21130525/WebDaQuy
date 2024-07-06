@@ -1,73 +1,48 @@
 package model;
 
 import java.util.Date;
+import java.util.Map;
 
-public class Order {
+public class Order implements IModel {
     private int id;
-    private int idUser;
-    private Date created_at;
-    private Date updated_at;
+    private User User;
+    private Day created_at;
+    private Day updated_at;
+    private Map<Product, Integer> products;
     private double total_price;
     private String status;
+    private String address;
 
-    public Order(int id, int idUser, Date created_at, Date updated_at, double total_price, String status) {
+    public Order( model.User user,String address, Day created_at,Map<Product,Integer> products, String status) {
         this.id = id;
-        this.idUser = idUser;
+        this.User = user;
+        this.address = address;
+        this.products = products;
         this.created_at = created_at;
-        this.updated_at = updated_at;
-        this.total_price = total_price;
+        this.total_price = getTotalPrice(products);
         this.status = status;
     }
 
-    public Order() {
+    private double getTotalPrice(Map<Product, Integer> products) {
+        double result = 0;
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            result += entry.getValue() * entry.getKey().getPrice();
+        }
+        return result;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String getTable() {
+        return "";
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String getDataBefore() {
+        return "";
     }
 
-    public int getIdUser() {
-        return idUser;
+    @Override
+    public String getDataAfter() {
+        return "";
     }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public double getTotal_price() {
-        return total_price;
-    }
-
-    public void setTotal_price(double total_price) {
-        this.total_price = total_price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

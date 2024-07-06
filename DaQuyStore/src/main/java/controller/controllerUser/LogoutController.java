@@ -30,11 +30,12 @@ public class LogoutController extends HttpServlet {
             session.invalidate();
 
             Log log = new Log(ServiceIPAddress.convertToIPv4(req.getLocalAddr()), "logout", "info", "", json, null, Date.valueOf(LocalDate.now()));
-            try {
-                LogDao.getInstance().insertLog(log);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+//            TODO remember open comment
+//            try {
+//                LogDao.getInstance().insertLog(log);
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
         }
         resp.sendRedirect(req.getContextPath()+"/loginWeb");
     }

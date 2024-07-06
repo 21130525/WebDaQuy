@@ -71,25 +71,25 @@ public class ProductDao implements IDAO<Product> {
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            product_id = rs.getInt(1);
-            category_id = rs.getString(2);
-            name = rs.getString(3);
-            price = rs.getDouble(4);
-            status = rs.getString(5);
-            sale = rs.getInt(6);
-            hot = rs.getInt(7);
-            description = rs.getString(8);
-            infor = rs.getString(9);
-            created_at = rs.getDate(10);
-            updated_at = rs.getDate(11);
-            deleted_at = rs.getDate(12);
-            img_id = rs.getInt(13);
+            product_id = rs.getInt("id");
+            category_id = rs.getString("category_id");
+            name = rs.getString("product_name");
+            price = rs.getDouble("price");
+            status = rs.getString("status");
+            sale = rs.getInt("sale");
+            hot = rs.getInt("hot");
+            description = rs.getString("description");
+            infor = rs.getString("information");
+            created_at = rs.getDate("created_at");
+            updated_at = rs.getDate("updated_at");
+            deleted_at = rs.getDate("deleted_at");
+            img_id = rs.getInt("image_product");
             if(img_id!=0){
-                img_main = rs.getString(15) ;
-                img_1 = rs.getString(16) ;
-                img_2 = rs.getString(17) ;
-                img_3 = rs.getString(18) ;
-                img_4 = rs.getString(19) ;
+                img_main = rs.getString("img_main") ;
+                img_1 = rs.getString("img_1") ;
+                img_2 = rs.getString("img_2") ;
+                img_3 = rs.getString("img_3") ;
+                img_4 = rs.getString("img_4") ;
             }
 
             Map<String, String> inf = ProductService.StringToMap(infor);

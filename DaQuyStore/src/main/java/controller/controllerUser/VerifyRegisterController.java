@@ -35,7 +35,7 @@ public class VerifyRegisterController extends HttpServlet {
                UserDAO uDao = new UserDAO();
                if(uDao.insert(u,"create user",ipAddress)) {
                    session.setAttribute("user", u);
-                   req.getRequestDispatcher(req.getContextPath()+"/views.index.jsp").forward(req,resp);
+                   resp.sendRedirect(req.getContextPath() + "/views/index.jsp");
                }
            }
         } catch (SQLException e) {

@@ -17,7 +17,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -46,8 +48,22 @@ public class OrderController extends HttpServlet {
             listOrder = new HashMap<>();
         }
         session.setAttribute("listOrder", listOrder);
+        int cont = 0;
+        Product pros =null;
         if (p != null) {
-            listOrder.put(p, num);
+            for(Map.Entry<Product, Integer> entry : listOrder.entrySet()) {
+                if(entry.getKey().getId() == p.getId()) {
+                    cont=entry.getValue()+num;
+                    pros = entry.getKey();
+                }
+            }
+            if(cont != 0) {
+                listOrder.remove(p);
+                listOrder.put(pros, cont);
+            }else{
+                listOrder.put(p,num);
+            }
+
         }
         req.setAttribute("totalPrice", TotalPrice(listOrder));
         req.getRequestDispatcher( "views/web/order/order.jsp").forward(req, resp);
@@ -61,6 +77,7 @@ public class OrderController extends HttpServlet {
         }
         return total;
     }
+
 
 
 }
