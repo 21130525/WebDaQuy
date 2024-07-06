@@ -46,7 +46,7 @@
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">DashBoard</span>
+                    <span class="fs-5 d-none d-sm-inline">Danh mục </span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
@@ -112,7 +112,7 @@
             <!--form chỉnh sửa thông tin sản phẩm-->
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"
-                  enctype="multipart/form-data" id="form">
+                  enctype="multipart/form-data" id="form" accept-charset="UTF-8">
                 <div class="form-group">
                     <label for="id">Mã sản phẩm:</label>
                     <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id"  value="<%= session.getAttribute("id")%>" >
@@ -125,10 +125,6 @@
                 <div class="form-group">
                     <label for="productPrice">Giá tiền:</label>
                     <input type="text" class="form-control" id="productPrice" placeholder="Nhập giá tiền" name="price">
-                </div>
-                <div class="form-group">
-                    <label for="number_import">Số lượng nhập:</label>
-                    <input type="text" class="form-control" id="number_import" placeholder="Nhập giá tiền" name="number_import">
                 </div>
                 <div class="form-group mb-3">
                     <label for="productImages-main">Ảnh sản phẩm-chính:</label>

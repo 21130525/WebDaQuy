@@ -20,6 +20,8 @@ public class ManageLogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogService logService =new LogService();
+        resp.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         try {
             ArrayList<AdminLog> list= logService.getLogList();
             Gson gson=new Gson();

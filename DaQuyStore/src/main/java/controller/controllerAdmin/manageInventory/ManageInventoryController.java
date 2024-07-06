@@ -22,6 +22,8 @@ public class ManageInventoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GetInventoryService getInventoryService = new GetInventoryService();
+        resp.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         try {
             AdminLog adminLog = new AdminLog();
             adminLog.setLevel(LogLevel.INFORM.toString());

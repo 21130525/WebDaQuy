@@ -18,6 +18,8 @@ public class ManageimageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GetImageService getImageService = new GetImageService();
+        resp.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         Gson gson = new Gson();
         try {
             String json = gson.toJson(getImageService.getImageList());

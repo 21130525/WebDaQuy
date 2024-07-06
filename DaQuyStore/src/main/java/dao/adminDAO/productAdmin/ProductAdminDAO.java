@@ -83,7 +83,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
     @Override
     public ArrayList select(AdminProduct obj) throws SQLException {
         ArrayList<AdminProduct_fixed> products = new ArrayList<>();
-        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where status_deleted='chua xoa'";
+        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where products.status_deleted='chưa xóa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
@@ -319,7 +319,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     //hàm thêm dữ liệu sản phẩm
     public void insertProduct(AdminProduct product) throws SQLException {
-        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form();
+        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form()+"/";
         String sql = "Insert into products(id,category_id,product_name,price,status,description,information,created_at,updated_at) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1,getMaxIDProduct()+1);
@@ -335,7 +335,9 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.close();
     }
 
-
+    public void updateCategory_ID(String productType,int id) throws SQLException {
+        String sql="Update products set category_id=? where id=?";
+    }
     public static void main(String[] args) throws SQLException {
         ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
 

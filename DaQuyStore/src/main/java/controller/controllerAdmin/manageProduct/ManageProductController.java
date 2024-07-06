@@ -33,6 +33,8 @@ public class ManageProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
+        resp.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         if (url.endsWith("/addproduct_admin")) {
             // Xử lý thêm sản phẩm
             try {
@@ -219,7 +221,7 @@ public class ManageProductController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-            if (!hot.isEmpty()) {
+            if (hot != null) {
                 int hot_price = Integer.parseInt(hot);
                 try {
                     ProductAdminDAO.getInstance().updateProductHot(hot_price, id);
@@ -352,6 +354,7 @@ public class ManageProductController extends HttpServlet {
                 LogService<AdminProduct> productAdminLogService = new LogService<>();
                 try {
                     productAdminLogService.addLogWarning(adminLog, new AdminProduct());
+                    req.getRequestDispatcher("views/admin/admin_backward_product.jsp").forward(req, resp);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -367,7 +370,9 @@ public class ManageProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String uri = req.getRequestURI();
+        resp.setContentType("text/html;charset=UTF-8");
         if (uri.endsWith("/getproduct_admin")) {
             try {
                 GetProductService getProductService = new GetProductService();

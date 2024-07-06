@@ -116,10 +116,13 @@
                <%=p.getPrice()%>
             </div>
             <div class="moTa">
-                <p class="lh-base fw-bold">
-                    Ruby là một trong những lựa chọn hàng đầu để chế tác thành trang sức. Ruby tự nhiên có màu sắc từ đỏ
-                    hồng đến đỏ sẫm – màu sắc mang vẻ đẹp quyến rũ hoàn mỹ được phái đẹp yêu thích.
-                </p>
+<%--                <p class="lh-base fw-bold">--%>
+<%--                    Ruby là một trong những lựa chọn hàng đầu để chế tác thành trang sức. Ruby tự nhiên có màu sắc từ đỏ--%>
+<%--                    hồng đến đỏ sẫm – màu sắc mang vẻ đẹp quyến rũ hoàn mỹ được phái đẹp yêu thích.--%>
+<%--                </p>--%>
+                    <p class="lh-base fw-bold">
+                       <%=p.getDescription()%>
+                    </p>
                 <ul>
                     <li>
                         <p class="fs-6">

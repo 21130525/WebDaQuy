@@ -40,7 +40,7 @@
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">DashBoard</span>
+                    <span class="fs-5 d-none d-sm-inline">Danh mục </span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
                     <li class="nav-item">
@@ -96,7 +96,7 @@
         </div>
         <div class="col py-3">
             <h2>Thông tin sản phẩm</h2>
-            <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data" id="form">
+            <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data" id="form" accept-charset="UTF-8">
                 <div class="form-group">
                     <label for="productName">Tên sản phẩm:</label>
                     <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm" name="productName">
@@ -164,43 +164,43 @@
                 <div class="form-group">
                     <label>Loại sản phẩm:</label><br>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="ruby" name="productType">
+                        <input type="radio" class="form-check-input" id="ruby" name="productType" value="Ruby">
                         <label class="form-check-label" for="ruby">Ruby</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="aquamarine" name="productType">
+                        <input type="radio" class="form-check-input" id="aquamarine" name="productType" value="Aquamarine">
                         <label class="form-check-label" for="aquamarine">Aquamarine</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="tourmaline" name="productType">
+                        <input type="radio" class="form-check-input" id="tourmaline" name="productType" value="Tourmaline">
                         <label class="form-check-label" for="tourmaline">Tourmaline</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="spinel" name="productType">
+                        <input type="radio" class="form-check-input" id="spinel" name="productType" value="Spinel">
                         <label class="form-check-label" for="spinel">Spinel</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="sapphire" name="productType">
+                        <input type="radio" class="form-check-input" id="sapphire" name="productType" value="Sapphire">
                         <label class="form-check-label" for="sapphire">Sapphire</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="zircon" name="productType">
+                        <input type="radio" class="form-check-input" id="zircon" name="productType" value="Zircon">
                         <label class="form-check-label" for="zircon">Zircon</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="peridot" name="productType">
+                        <input type="radio" class="form-check-input" id="peridot" name="productType" value="Peridot">
                         <label class="form-check-label" for="peridot">Peridot</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="garnet" name="productType">
+                        <input type="radio" class="form-check-input" id="garnet" name="productType" value="Garnet">
                         <label class="form-check-label" for="garnet">Garnet</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="emerald" name="productType">
+                        <input type="radio" class="form-check-input" id="emerald" name="productType" value="Ngọc lục bảo">
                         <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="topaz" name="productType">
+                        <input type="radio" class="form-check-input" id="topaz" name="productType" value="Topaz">
                         <label class="form-check-label" for="topaz">Topaz</label>
                     </div>
                 </div>
