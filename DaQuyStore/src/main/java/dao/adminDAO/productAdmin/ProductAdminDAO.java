@@ -241,7 +241,13 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.setInt(2, id);
         pr.executeUpdate();
     }
-
+    public void updateProductType(int category_id, int id) throws SQLException {
+        String sql = "Update products set category_id=? where id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, category_id);
+        pr.setInt(2, id);
+        pr.executeUpdate();
+    }
     /*
     các hàm thêm log cho chức năng cập nhật,thêm,xóa sản phẩm,truy vấn
 

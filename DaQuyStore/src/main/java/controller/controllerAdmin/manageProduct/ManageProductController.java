@@ -341,7 +341,13 @@ public class ManageProductController extends HttpServlet {
                 }
             }
             if (product_type != null) {
-
+                try {
+                    int category_id = CategoryAdminDAO.getInstance().getProductType(product_type);
+                    ProductAdminDAO.getInstance().updateProductType(category_id, id);
+                    count++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             if (count >= 1) {

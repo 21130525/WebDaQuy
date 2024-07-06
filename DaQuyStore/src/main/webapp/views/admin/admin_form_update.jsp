@@ -112,7 +112,7 @@
             <!--form chỉnh sửa thông tin sản phẩm-->
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"
-                  enctype="multipart/form-data" id="form" accept-charset="UTF-8">
+                  enctype="multipart/form-data" id="form">
                 <div class="form-group">
                     <label for="id">Mã sản phẩm:</label>
                     <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id"  value="<%= session.getAttribute("id")%>" >

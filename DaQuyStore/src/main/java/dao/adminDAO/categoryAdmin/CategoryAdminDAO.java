@@ -12,13 +12,13 @@ public class CategoryAdminDAO {
     }
 
     public int getProductType(String product_type) throws SQLException {
-        String sql = "Select id from categories where category_name=?";
+        String sql = "Select categories.id from categories where category_name=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setString(1, product_type);
         ResultSet rs = pr.executeQuery();
         int product_type_id = 0;
         while (rs.next()) {
-            product_type_id = rs.getInt("id");
+            product_type_id = rs.getInt("categories.id");
         }
         return product_type_id;
     }
