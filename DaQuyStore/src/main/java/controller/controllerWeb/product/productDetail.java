@@ -21,6 +21,8 @@ public class productDetail extends HttpServlet {
         //lấy thông tin thông qua tên sản phẩm
         String id=req.getParameter("id");
         int product_id=Integer.parseInt(id);
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
         ProductDao dao = ProductDao.getInstance();
 //        Product p;
 //
