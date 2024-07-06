@@ -22,15 +22,27 @@ public class SearchController extends HttpServlet {
         String txtSearch = req.getParameter("txtSearch");
         try {
             ArrayList<Product> list = ProductDao.getInstance().getListProductForSearch(txtSearch);
-            int total_product = list.size();
-            int total_page = total_product / ITEM_PER_PAGE;
-            //hiển thị mặc định cho trang đầu tiên
-            int start = (1 - 1) * ITEM_PER_PAGE;
-            int end = 1 * ITEM_PER_PAGE;
-            ArrayList<Product> products = ProductDao.getInstance().getListProductPerPage(start, end);
-            req.setAttribute("products", products);
-            req.setAttribute("total_page", total_page);
-            req.getRequestDispatcher("/views/search.jsp").forward(req, resp);
+            String page = req.getParameter("page");
+            if(page == null) {
+                int total_product = list.size();
+                int total_page = total_product / ITEM_PER_PAGE;
+                //đang test trường hợp trang đầu
+                ArrayList<Product> products=ProductDao.getInstance().getListProductForEachPage(txtSearch,1);
+                req.setAttribute("products", products);
+                req.setAttribute("total_page", total_page);
+                req.setAttribute("txtSearch", txtSearch);
+                req.getRequestDispatcher("/views/search.jsp").forward(req, resp);
+            }else{
+                int total_product = list.size();
+                int total_page = total_product / ITEM_PER_PAGE;
+                //đang test trường hợp trang đầu
+                ArrayList<Product> products=ProductDao.getInstance().getListProductForEachPage(txtSearch,Integer.parseInt(page));
+                req.setAttribute("products", products);
+                req.setAttribute("total_page", total_page);
+                req.setAttribute("txtSearch", txtSearch);
+                req.getRequestDispatcher("/views/search.jsp").forward(req, resp);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

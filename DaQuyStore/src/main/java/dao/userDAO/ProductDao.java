@@ -208,7 +208,7 @@ public class ProductDao implements IDAO<Product> {
 //    }
 
     public ArrayList<Product> getListProductPerPage(int start, int end) throws SQLException {
-        String sql = " select * from products join product_image on products.image_product = product_image.id  ORDER BY products.id LIMIT " + start + "," + end;
+        String sql = " select * from products join product_image on products.id = product_image.id  ORDER BY products.id LIMIT " + start + "," + end;
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<Product> products = new ArrayList<>();
@@ -247,7 +247,7 @@ public class ProductDao implements IDAO<Product> {
      * pageSize:số phần tử hiển thị ở mỗi trang:ở đây số phần tử hiển thị ở mỗi trang mặc định là 5
      */
     public ArrayList<Product> getListProductForSearch(String search) throws SQLException {
-        String sql = " select * from products join product_image on products.image_product = product_image.id WHERE products.product_name LIKE ? ORDER BY products.id ";
+        String sql = " select * from products join product_image on products.id = product_image.id WHERE products.product_name LIKE ? ORDER BY products.id";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
         pst.setString(1, "%" + search + "%");
         ResultSet rs = pst.executeQuery();
@@ -280,7 +280,41 @@ public class ProductDao implements IDAO<Product> {
         return products;
 
     }
+    public ArrayList<Product> getListProductForEachPage(String search,int pageNumber) throws SQLException {
+        String sql = " select * from products join product_image on products.id = product_image.id WHERE products.product_name LIKE ? ORDER BY products.id LIMIT 4 OFFSET ?";
+        PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
+        pst.setString(1, "%" + search + "%");
+        pst.setInt(2, (pageNumber - 1) * 4);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (rs.next()) {
+            id = rs.getInt("id");
+            category_id = rs.getString("category_id");
+            product_name = rs.getString("product_name");
+            price = rs.getDouble("price");
+            status = (rs.getString("status") == null ? "" : rs.getString("status"));
+            sale = rs.getInt("sale");
+            hot = rs.getInt("hot");
+            description = (rs.getString("description") == null ? "" : rs.getString("description"));
+            information = (rs.getString("information") == null ? "" : rs.getString("information"));
+            created_at = rs.getDate("created_at");
+            updated_at = (rs.getDate("updated_at") == null ? null : rs.getDate("created_at"));
+            deleted_at = (rs.getDate("deleted_at") == null ? null : rs.getDate("updated_at"));
+            img_main = rs.getString("img_main");
+            img_1 = rs.getString("img_1");
+            img_2 = rs.getString("img_2");
+            img_3 = rs.getString("img_3");
+            img_4 = rs.getString("img_4");
+            Map<String, String> info = (new ProductService()).StringToMap(information);
+            Product p = new Product(id, category_id, product_name, price, status, sale, hot, description, info, created_at, updated_at, deleted_at, img_main, img_1, img_2, img_3, img_4);
+            products.add(p);
+        }
+        rs.close();
+        pst.close();
+        DAOConnection.getConnection().close();
+        return products;
 
+    }
     // Truy van cua Categories
     public List<Product> getProductByCategory(String namecategory) throws SQLException {
         String sql = "SELECT products.id,products.category_id,products.product_name,\n" +
@@ -334,7 +368,9 @@ public class ProductDao implements IDAO<Product> {
 
     public static void main(String[] args) throws SQLException {
 //        System.out.println( (new ProductDao()).selectAll());
-        System.out.println(new ProductDao().getProductByCategory("Ruby"));
+//        System.out.println(new ProductDao().getProductByCategory("Ruby"));
+//        System.out.println(new ProductDao().getListProductForSearch("Đôi"));
+        System.out.println(new ProductDao().getListProductForEachPage("Đôi",1));
     }
 
 

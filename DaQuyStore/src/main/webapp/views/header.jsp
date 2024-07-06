@@ -117,6 +117,7 @@
                            name="txtSearch"
                            placeholder="Tìm sản phẩm"
                            autocomplete="off"
+                           value="<%=request.getAttribute("txtSearch")!=null?request.getAttribute("txtSearch"):""%>"
                     >
                     <button class="btn btn-outline-success" type="submit">Tìm</button>
                 </form>
