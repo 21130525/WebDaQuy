@@ -72,9 +72,9 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="<%= request.getContextPath()%>/views/web/product/productPage.jsp">Sản phẩm</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Trang sức</a>
-                    </li>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" aria-current="page" href="#">Trang sức</a>--%>
+<%--                    </li>--%>
                     <!-- dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -82,10 +82,16 @@
                             Đá quý
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Spinel</a></li>
-                            <li><a class="dropdown-item" href="#">Kim cương</a></li>
                             <li><a class="dropdown-item" href="#">Ruby</a></li>
-                            <li><a class="dropdown-item" href="#">Hổ phách</a></li>
+                            <li><a class="dropdown-item" href="#">Sapphire</a></li>
+                            <li><a class="dropdown-item" href="#">Ngọc lục bảo</a></li>
+                            <li><a class="dropdown-item" href="#">Spinel</a></li>
+                            <li><a class="dropdown-item" href="#">Tourmaline</a></li>
+                            <li><a class="dropdown-item" href="#">Aquamarine</a></li>
+                            <li><a class="dropdown-item" href="#">Peridot</a></li>
+                            <li><a class="dropdown-item" href="#">Garnet</a></li>
+                            <li><a class="dropdown-item" href="#">Zircon</a></li>
+                            <li><a class="dropdown-item" href="#">Topaz</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -105,7 +111,7 @@
                     </li>
                 </ul>
                 <!-- search -->
-                <form class="d-flex" role="search" action="../SearchController" method="get">
+                <form class="d-flex" role="search" action="<%=request.getContextPath()%>/search" method="get">
                     <input class="form-control me-2 bg-search" aria-label="Search"
                            type="search"
                            name="txtSearch"
