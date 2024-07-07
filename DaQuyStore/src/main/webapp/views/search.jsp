@@ -120,7 +120,7 @@ To change this template use File | Settings | File Templates.
                             for (int i = 1; i <= totalPage; i++) {
                     %>
                     <li class="page-item">
-                        <a class="page-link" href="<%=request.getContextPath()%>/search?page=<%= i %>"><%= i %></a>
+                        <a class="page-link" href="<%=request.getContextPath()%>/search?page=<%= i %>&&txtSearch=<%=request.getAttribute("txtSearch")%>"><%= i %></a>
                     </li>
                     <%
                             }
