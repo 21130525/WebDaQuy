@@ -25,9 +25,8 @@
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
-    List<Product> listProduct = dao.getProduct();
-    System.out.println(listProduct);
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+    List<Cart> listProduct = dao.getCartProduct(cart_list);
     if (cart_list != null) {
         request.setAttribute("cart_list", cart_list);
     }
@@ -104,7 +103,10 @@
 
 <body>
 <div class="page-header">
-    <jsp:include page="/views/header.jsp"/>
+    <%
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/header.jsp");
+        dispatcher.include(request, response);
+    %>
 </div>
 <div class="cate">
     <section class="categories">
