@@ -179,19 +179,18 @@
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="form-outline form-white mb-4 row">
-                                                                        <select id="cityName" name="city"
+                                                                        <select id="citySeleted" name="city"
                                                                                 class="form-control form-control-lg" required>
                                                                             <option value="">Chọn Tỉnh/Thành phố
                                                                             </option>
                                                                             <option value="1">Tỉnh/Thành phố 1</option>
                                                                             <option value="2">Tỉnh/Thành phố 2</option>
-                                                                            <!-- Thêm các option khác tùy theo nhu cầu -->
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-outline form-white mb-4  row ">
-                                                                        <select id="typeText_ward" name="wards"
+                                                                        <select id="wardSeleted" name="wards"
                                                                                 class="form-control form-control-lg"
-                                                                                onclick="checkInputNameWard()" required>
+                                                                                onclick="checkInputWard()" required>
                                                                             <option value="">Chọn Phường/Xã</option>
                                                                             <option value="1">Phường/Xã 1</option>
                                                                             <option value="2">Phường/Xã 2</option>
@@ -201,9 +200,9 @@
                                                                 </div>
                                                                 <div class="col">
                                                                     <div class="form-outline form-white row mb-4 ">
-                                                                        <select id="typeText_district" name="district"
+                                                                        <select id="districtSeleted" name="district"
                                                                                 class="form-control form-control-lg "
-                                                                                onclick="checkInputNameDistrict()" required>
+                                                                                 onclick="checkInputDistrict()" required>
                                                                             <option value="">Chọn Quận/Huyện</option>
                                                                             <option value="1">Quận/Huyện 1</option>
                                                                             <option value="2">Quận/Huyện 2</option>
@@ -348,62 +347,63 @@
 </body>
 <script>
     $(document).ready(function (){
-        // collapse yeu cau phai co ten va sdt
-        $('#btnConfirmInfCustommer').click(function (e) {
-            var fullName = $('#nameCustommer').val();
-            var phoneNumber = $('#phoneNumber').val();
-            if(fullName === "" || phoneNumber === ""){
-                alert("Vui lòng nhập đầy đủ Họ và Tên và Số Điện Thoại.2");
-                $('#collapse_Thong_tin_khach_hang').collapse('show')
-            }else{
-                if ($($(this)).val() === "true") {
-                    // dong colapse
-                    $('#collapse_Thong_tin_khach_hang').collapse('hide')
-
-                    $('#containerbtnConfirmInfCostommer').removeClass('text-center').addClass('text-end');
-                    $(this).addClass('btn-secondary').removeClass('btn-primary').text('Chỉnh sửa').val("false");
-                } else {
-                    // hien thi colapse
-                    $('#collapse_Thong_tin_khach_hang').collapse('show')
-
-                    $('#containerbtnConfirmInfCostommer').removeClass('text-end').addClass('text-center');
-                    $(this).addClass('btn-primary').removeClass('btn-secondary').text('Tiếp tục').val("true");
-                }
-            }
-        });
-        // Hàm kiểm tra và đóng collapse nếu đã có giá trị
         checkAndCollapse();
-        function checkAndCollapse() {
-            var name = $('#nameCustommer').val().trim();
-            var phoneNumber = $('#phoneNumber').val().trim();
+        fetchCitiesServlet();
 
-            if (name !== '' && phoneNumber !== '' && phoneNumber !== "null" ) {
-                $('#collapse_Thong_tin_khach_hang').collapse('hide');
+    });
+    // collapse yeu cau phai co ten va sdt
+    $('#btnConfirmInfCustommer').click(function (e) {
+        var fullName = $('#nameCustommer').val();
+        var phoneNumber = $('#phoneNumber').val();
+        if(fullName === "" || phoneNumber === ""){
+            alert("Vui lòng nhập đầy đủ Họ và Tên và Số Điện Thoại.2");
+            $('#collapse_Thong_tin_khach_hang').collapse('show')
+        }else{
+            if ($($(this)).val() === "true") {
+                // dong colapse
+                $('#collapse_Thong_tin_khach_hang').collapse('hide')
+
                 $('#containerbtnConfirmInfCostommer').removeClass('text-center').addClass('text-end');
-                $('#btnConfirmInfCustommer').addClass('btn-secondary').removeClass('btn-primary').text('Chỉnh sửa').val("false");
+                $(this).addClass('btn-secondary').removeClass('btn-primary').text('Chỉnh sửa').val("false");
+            } else {
+                // hien thi colapse
+                $('#collapse_Thong_tin_khach_hang').collapse('show')
+
+                $('#containerbtnConfirmInfCostommer').removeClass('text-end').addClass('text-center');
+                $(this).addClass('btn-primary').removeClass('btn-secondary').text('Tiếp tục').val("true");
             }
         }
-        //  xoa san pham
-        $('.btn_delete_product').click(function (){
-            $(this).addClass('border-2').removeClass('border-0')
-            var id_product = $(this).attr('id').split('_')[2]
-
-          $.ajax({
-              type:'POST',
-              url:'deleteProductInOrder',
-              data:id_product,
-              contentType: 'application/json',
-              success: function (response){
-                  $('#product_'+id_product).remove()
-              },
-              error: function (xhr,status,error){
-
-              }
-          })
-
-        })
     });
+    // Hàm kiểm tra và đóng collapse nếu đã có giá trị
+    function checkAndCollapse() {
+        var name = $('#nameCustommer').val().trim();
+        var phoneNumber = $('#phoneNumber').val().trim();
 
+        if (name !== '' && phoneNumber !== '' && phoneNumber !== "null" ) {
+            $('#collapse_Thong_tin_khach_hang').collapse('hide');
+            $('#containerbtnConfirmInfCostommer').removeClass('text-center').addClass('text-end');
+            $('#btnConfirmInfCustommer').addClass('btn-secondary').removeClass('btn-primary').text('Chỉnh sửa').val("false");
+        }
+    }
+    //  xoa san pham
+    $('.btn_delete_product').click(function (){
+        $(this).addClass('border-2').removeClass('border-0')
+        var id_product = $(this).attr('id').split('_')[2]
+
+      $.ajax({
+          type:'POST',
+          url:'deleteProductInOrder',
+          data:id_product,
+          contentType: 'application/json',
+          success: function (response){
+              $('#product_'+id_product).remove()
+          },
+          error: function (xhr,status,error){
+
+          }
+      })
+
+    })
     // chuyen giao dien lua chon giao hang tan noi
     $('#btnGiaoHangTanNoi').click(function () {
         $(this).addClass('')
@@ -412,9 +412,9 @@
         $('#accept_giaohangtannoi').prop('required',true)
         $('#accept_nhantaicuahang').removeAttr('required')
 
-        $('#cityName').prop('required',true)
-        $('#typeText_ward').prop('required',true)
-        $('#typeText_district').prop('required',true)
+        $('#citySeleted').prop('required',true)
+        $('#wardSeleted').prop('required',true)
+        $('#districtSeleted').prop('required',true)
         $('#typeExp').prop('required',true)
 
         $('#btnNhanTaiCuaHang').removeClass('btn-dark').removeClass('text-light')
@@ -429,37 +429,114 @@
         $('#accept_nhantaicuahang').prop('required',true)
         $('#accept_giaohangtannoi').removeAttr('required')
 
-        $('#cityName').removeAttr('required')
-        $('#typeText_ward').removeAttr('required')
-        $('#typeText_district').removeAttr('required')
+        $('#citySeleted').removeAttr('required')
+        $('#wardSeleted').removeAttr('required')
+        $('#districtSeleted').removeAttr('required')
         $('#typeExp').removeAttr('required')
 
         $('#btnGiaoHangTanNoi').removeClass('btn-dark').removeClass('text-light')
         $(this).addClass('btn-dark').addClass('text-light')
     });
+    // tai danh sach thanh pho
+    function fetchCitiesServlet(){
+        var citySeleted = $('#citySeleted')
+        $.ajax({
+            url:'getListCity',
+            type: 'GET',
+            success: function (response){
+                citySeleted.empty() // xoa cac tyu chon cu
+                citySeleted.append('<option value="">Chọn Tỉnh/Thành phố</option>')
+                var listCity
+                try {
+                    listCity = response
+                }catch (e){
+                    alert('Lỗi phân tích JSON: ' + e.message);
+                }
+                $.each(listCity,function (index,cityName){
+                    citySeleted.append('<option value="' + cityName.id+ '">' + cityName.name + '</option>');
+                })
+            },
+            error: function (error){
+                alert('lay du lieu that bai')
+            }
 
+        })
+    };
+    // nhan thong tin khi da chon city
+    $('#citySeleted').change(function (){
+        var city = $(this).val();
+        if(city){
+            fetchDistrictServlet(city)
+        }else{
 
-
-
-
-    const input_name_city = document.getElementById("cityName");
-    const input_name_district = document.getElementById("typeText_district");
-    const input_name_ward = document.getElementById("typeText_ward");
-
-    function checkInputName() {
-        if (input_name_city.value === "") {
-            alert("Bạn phải chọn thành phố");
         }
+    })
+    // tai danh sach quan huyen
+    function fetchDistrictServlet(city){
+        $.ajax({
+            type: 'GET',
+            url: 'getListDistrict',
+            data: {city:city},
+            success: function (resp){
+                var listDistrict;
+                var districtSeleted = $('#districtSeleted')
+                try{
+                    listDistrict = resp;
+                }catch (e){
+                    alert('du lieu ko on')
+                }
+                districtSeleted.empty()
+                districtSeleted.append('<option value="">Chọn Quận/Huyện</option>');
+                $.each(listDistrict, function(index, district) {
+                    districtSeleted.append('<option value="' + district.districtID+ '">' + district.districtName+ '</option>');
+                });
+            },
+            error: function (error){
+                alert('lay du lieu ko thanh cong')
+            }
+        })
     }
-
-    function checkInputNameDistrict() {
-        if (input_name_city.value === "") {
+    // nhan su kien thay doi huyen
+    $('#districtSeleted').change(function (){
+        var district = $(this).val()
+        if(district){
+            fetchWardServlet(district)
+        }
+    });
+    // tai danh sach xa
+    function fetchWardServlet(district) {
+        $.ajax({
+            type:'Get',
+            url: 'getListWard',
+            data:{district:district},
+            success: function (resp){
+                var listWard;
+                var wardSeleted = $('#wardSeleted');
+                try{
+                    listWard = resp
+                }catch (e){
+                    alert('du lieu ko on')
+                }
+                wardSeleted.empty()
+                wardSeleted.append('<option value="">Chọn Xã,thị trấn</option>')
+                $.each(listWard,function (index,ward){
+                    wardSeleted.append('<option value="' + ward.id+ '">' + ward.wardName+ '</option>')
+                })
+            },
+            error: function (error){
+                alert('lay du lieu ko thanh cong')
+            }
+        })
+    }
+    // sau khi chon thanh pho roi moi con quan huyen
+    function checkInputDistrict() {
+        if ($('#citySeleted').val() === "") {
             alert("Bạn phải chọn thành pho trước");
         }
     }
     //ham nay kiem tra gia tri trong o input phuong va lay du lieu tu servlet ve
-    function checkInputNameWard() {
-        if (input_name_city.value === "" || input_name_district.value === "") {
+    function checkInputWard() {
+        if ($('#districtSeleted').val() === "" || $('#citySeleted').val() === "") {
             alert("Bạn phải chọn theo thứ tự là thành phố trước, sau đó là quận/huyện");
         } else {
             $(document).ready(
@@ -486,8 +563,6 @@
             )
         }
     }
-
-
 
 </script>
 </html>

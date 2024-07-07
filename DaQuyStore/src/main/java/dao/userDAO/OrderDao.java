@@ -6,8 +6,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
+    public OrderDao() {}
+    public static OrderDao instance;
+    public static OrderDao getInstance() {
+        if (instance == null) {
+            instance = new OrderDao();
+        }
+        return instance;
+    }
     @Override
     public boolean insert(Order order, String action, String ipAddress) throws SQLException {
+
         return false;
     }
 
