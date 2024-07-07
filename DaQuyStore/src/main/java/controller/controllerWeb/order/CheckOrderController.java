@@ -1,6 +1,7 @@
 package controller.controllerWeb.order;
 
 import com.google.api.client.util.DateTime;
+import dao.userDAO.LocalDao;
 import dao.userDAO.OrderDao;
 import dao.userDAO.UserDAO;
 import model.Day;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,16 +53,7 @@ public class CheckOrderController extends HttpServlet {
 
         // update user
         if(user==null){
-//            chua dang nhap
-            user = new User();
-            user.setFullName(full_name);
-            user.setEmail(email);
-            user.setPhoneNumber(phone);
-            if(gender_nam.equalsIgnoreCase("name")){
-            user.setGender(gender_nam);
-            }else{
-                user.setGender(gender_nu);
-            }
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
         }else{
 //            da dang nhap va thay doi thong tin
             int count =0;
@@ -87,18 +80,36 @@ public class CheckOrderController extends HttpServlet {
 
         }
 //      tao order
-        String addressMain = address+", "+wards+", "+district+", "+city;
-        Day dayNow = Day.getInstance().getNow();
-        Order order = new Order(user,addressMain,dayNow ,listOrder,"chuan bi");
+        String addressMain = "";
+        try {
+            addressMain = LocalDao.getInstance().getAddress(address,wards,district,city);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Order order = new Order(user ,listOrder,"Cho xac nhan");
         /**
          *  phan biet loai nhan hang
          *  - nhan hang tai cua hang
          *  - nhan hang qua ship do
          */
-
-
-
-
+        if(accept_nhantaicuahang != null){
+//        nhan tai cua hang
+            order.setTypeShip("Pick up at the shop");
+            order.setTypePayment("tien mat");
+            order.setStatusPayment("chua thanh toan");
+            if(note2!=null)order.setNote(note2);
+        }else{
+//            nhan qua shiper
+            if(addressMain!=null){
+                order.setAddress(addressMain);
+            }else{
+//                TODO trang error
+            }
+            order.setTypeShip("ship");
+            order.setTypePayment("chuyen khoan");
+            order.setStatusPayment("chua thanh toan");
+            if(note!=null)order.setNote(note);
+        }
         // thanh toan
         try {
             OrderDao.getInstance().insert(order,"tao don hang",req.getRemoteAddr());

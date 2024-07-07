@@ -84,4 +84,23 @@ public class LocalDao {
         System.out.println(LocalDao.getInstance().getListWard("002").toString());
     }
 
+    public String getAddress(String address, String wards, String district, String city) throws SQLException {
+        String res = address;
+        String sql = "SELECT c.name as cityname,d.name as districtname,w.name as wordname FROM  devvn_quanhuyen d\n" +
+                "JOIN devvn_tinhthanhpho c ON c.matp=d.matp\n" +
+                "JOIN devvn_xaphuongthitran w ON d.maqh=w.maqh\n" +
+                "WHERE c.matp =? AND d.maqh= ? AND w.xaid=?";
+        PreparedStatement ps =connection.prepareStatement(sql);
+        ps.setString(1, city);
+        ps.setString(2, district);
+        ps.setString(3, wards);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String cityName = rs.getString("cityname");
+            String districtName = rs.getString("districtname");
+            String wordName = rs.getString("wordname");
+            res+=", "+ wordName+", "+districtName+", "+cityName;
+        }
+        return res;
+    }
 }

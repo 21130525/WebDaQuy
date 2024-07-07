@@ -29,6 +29,7 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
 //        lay san pham
         String id = req.getParameter("id");
         ProductDao dao = ProductDao.getInstance();
