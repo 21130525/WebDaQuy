@@ -26,6 +26,7 @@ public class ManageOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getRequestURI();
+        resp.setContentType("text/html;charset=UTF-8");
         if (action.endsWith("/getorder_waiting")) {
             GetOrderService getOrderService = new GetOrderService();
             try {
@@ -128,6 +129,8 @@ public class ManageOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getRequestURI();
+        resp.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         if (action.endsWith("/updateorder")) {
             int id = Integer.parseInt(req.getParameter("id"));
             //giá trị lấy ra từ ajax

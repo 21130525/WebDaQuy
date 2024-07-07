@@ -1,4 +1,5 @@
-<%@ page import="model.Product" %><%--
+<%@ page import="model.Product" %>
+<%@ page import="model.Product_Detail" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 1/5/2024
@@ -74,31 +75,31 @@
 </head>
 <body>
 <%
-    Product p = (Product) request.getAttribute("product");
+    Product_Detail p = (Product_Detail) request.getAttribute("product_detail");
 %>
 <jsp:include page="../../header.jsp"/>
 <section id="product-detail" class="container mt-5 mb-5">
     <div class="container row mx-auto ">
         <div class="col-5 mx-4">
             <div class="img-product ">
-                <img src="<%=p.getImg_main()%>"
+                <img src="<%=p.getImage_main()%>"
                      alt="" onclick="displayIMage(this)">
             </div>
             <div class="d-flex">
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImg_extra1()%>"
+                    <img src="<%=p.getImage_1()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImg_extra2()%>"
+                    <img src="<%=p.getImage_2()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImg_extra3()%>"
+                    <img src="<%=p.getImage_3()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2 ">
-                    <img src="<%=p.getImg_extra4()%>"
+                    <img src="<%=p.getImage_4()%>"
                          alt="" onclick="displayIMage(this)">
 
                 </div>
@@ -107,7 +108,7 @@
         </div>
         <div class="col-5 ms-3">
             <div class="name fs-3">
-               <%=p.getName()%>
+               <%=p.getProduct_name()%>
             </div>
             <div class="line"></div>
 
@@ -115,10 +116,13 @@
                <%=p.getPrice()%>
             </div>
             <div class="moTa">
-                <p class="lh-base fw-bold">
-                    Ruby là một trong những lựa chọn hàng đầu để chế tác thành trang sức. Ruby tự nhiên có màu sắc từ đỏ
-                    hồng đến đỏ sẫm – màu sắc mang vẻ đẹp quyến rũ hoàn mỹ được phái đẹp yêu thích.
-                </p>
+<%--                <p class="lh-base fw-bold">--%>
+<%--                    Ruby là một trong những lựa chọn hàng đầu để chế tác thành trang sức. Ruby tự nhiên có màu sắc từ đỏ--%>
+<%--                    hồng đến đỏ sẫm – màu sắc mang vẻ đẹp quyến rũ hoàn mỹ được phái đẹp yêu thích.--%>
+<%--                </p>--%>
+                    <p class="lh-base fw-bold">
+                       <%=p.getDescription()%>
+                    </p>
                 <ul>
                     <li>
                         <p class="fs-6">
@@ -158,41 +162,81 @@
         <p class="text-center fs-3">
             THÔNG SỐ KỸ THUẬT
         </p>
-        <div class="row d-flex">
-            <div class="col ">
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">value</p>
-                </div>
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">Được kiểm định đầy đủ và viết phiếu bảo hành trọn đời về màu sắc và chất lượng</p>
-                </div>
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">value</p>
-                </div>
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">value</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="dataFlow m-3">
-                    <p class="key"> key</p>
-                    <p class="value">value</p>
-                </div>
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">value</p>
-                </div>
-                <div class="dataFlow m-3">
-                    <p class="key"> key aaaaaaa</p>
-                    <p class="value">value</p>
-                </div>
+<%--        <div class="row d-flex">--%>
+<%--            <div class="col ">--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">Được kiểm định đầy đủ và viết phiếu bảo hành trọn đời về màu sắc và chất lượng</p>--%>
+<%--                </div>--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="col">--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
+<%--                <div class="dataFlow m-3">--%>
+<%--                    <p class="key"> key aaaaaaa</p>--%>
+<%--                    <p class="value">value</p>--%>
+<%--                </div>--%>
 
-            </div>
-        </div>
+<%--            </div>--%>
+<%--        </div>--%>
+        <!--phan chinh sua cua tan-->
+                <div class="row d-flex">
+                    <div class="col ">
+                        <div class="dataFlow m-3">
+                            <p class="key">Màu sắc</p>
+                            <p class="value"><%=p.getColor()%></p>
+                        </div>
+                        <div class="dataFlow m-3">
+                            <p class="key"> Trọng lượng</p>
+                            <p class="value"><%=p.getWeight()%></p>
+                        </div>
+                        <div class="dataFlow m-3">
+                            <p class="key"> Kích cỡ</p>
+                            <p class="value"><%=p.getSize()%></p>
+                        </div>
+                        <div class="dataFlow m-3">
+                            <p class="key">Độ trong</p>
+                            <p class="value"><%=p.getOpacity()%></p>
+                        </div>
+                        <div class="dataFlow m-3">
+                            <p class="key">Giác cắt</p>
+                            <p class="value"><%=p.getCutting_form()%></p>
+                        </div>
+                    </div>
+<%--                    <div class="col">--%>
+<%--                        <div class="dataFlow m-3">--%>
+<%--                            <p class="key"> key</p>--%>
+<%--                            <p class="value">value</p>--%>
+<%--                        </div>--%>
+<%--                        <div class="dataFlow m-3">--%>
+<%--                            <p class="key"> key aaaaaaa</p>--%>
+<%--                            <p class="value">value</p>--%>
+<%--                        </div>--%>
+<%--                        <div class="dataFlow m-3">--%>
+<%--                            <p class="key"> key aaaaaaa</p>--%>
+<%--                            <p class="value">value</p>--%>
+<%--                        </div>--%>
+
+<%--                    </div>--%>
+                </div>
     </div>
     <!-- sản phẩm liên quan -->
     <jsp:include page="listRelatedProducts.jsp"/>

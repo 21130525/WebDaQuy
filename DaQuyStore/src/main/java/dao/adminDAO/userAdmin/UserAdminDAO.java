@@ -106,7 +106,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUser> {
 
     @Override
     public boolean deletebyID(AdminUser obj, int id) throws SQLException {
-        String sql = "Update users set status='da xoa' where status='chua xoa' and id=?";
+        String sql = "Update users set status='đã xóa' where status='chưa xóa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, id);
         int rows = pr.executeUpdate();
