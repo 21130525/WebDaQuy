@@ -169,8 +169,13 @@
                         <li><a class="dropdown-item "
                                href="${pageContext.request.contextPath}/views/user/changepassword.jsp">Đổi mật
                             khẩu</a></li>
-                        <li><a class="dropdown-item"
+                        <li>
+                            <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/views/user/profile.jsp">Hồ sơ</a></li>
+                        <li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/views/user/profile.jsp">don hang</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

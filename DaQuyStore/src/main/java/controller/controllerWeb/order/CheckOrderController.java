@@ -1,15 +1,12 @@
 package controller.controllerWeb.order;
 
-import com.google.api.client.util.DateTime;
 import dao.userDAO.LocalDao;
 import dao.userDAO.OrderDao;
 import dao.userDAO.UserDAO;
-import model.Day;
 import model.Order;
 import model.Product;
 import model.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +30,7 @@ public class CheckOrderController extends HttpServlet {
             // TODO tro loi
         }
         User user = (User) session.getAttribute("user");
+        System.out.println(user);
         // lay thong tin
         String gender_nam = req.getParameter("gender_nam");
         String gender_nu = req.getParameter("gender_nu");
@@ -53,7 +49,9 @@ public class CheckOrderController extends HttpServlet {
 
         // update user
         if(user==null){
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+            System.out.println("user is null");
+            req.getRequestDispatcher("views/user/login.jsp").forward(req, resp);
+            return;
         }else{
 //            da dang nhap va thay doi thong tin
             int count =0;
@@ -117,6 +115,7 @@ public class CheckOrderController extends HttpServlet {
 
             throw new RuntimeException(e);
         }
+        req.setAttribute("totalPrice",order.getTotal_price());
         session.setAttribute("order", order);
         req.getRequestDispatcher("views/web/payment/payment.jsp").forward(req, resp);
     }

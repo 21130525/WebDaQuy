@@ -33,7 +33,6 @@ public class GetListWard extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         out.println(json);
-        System.out.println(district+json);
         out.flush();
 
     }

@@ -275,7 +275,13 @@
                                 <!--  danh sach cac san pham -->
                                 <div class="card mb-3 scrollable-div overflow-auto"   style="max-height: 270px">
                                     <div class="card-body">
-                                        <% for(Map.Entry<Product,Integer> entry : listOrder.entrySet()){%>
+                                        <%
+                                            if(listOrder == null){
+                                        %>
+                                        <p>Bạn ko co </p>
+                                        <%
+                                            }else{
+                                         for(Map.Entry<Product,Integer> entry : listOrder.entrySet()){%>
                                         <%--product--%>
                                         <% Product p = entry.getKey(); %>
                                         <% System.out.println(p);%>
@@ -307,6 +313,7 @@
                                         <%--end product--%>
 
                                         <%
+                                                }
                                         }
                                         %>
 
