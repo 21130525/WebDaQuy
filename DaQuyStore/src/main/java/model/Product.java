@@ -24,9 +24,6 @@ public class Product implements IModel{
     private String img_extra4;
     private String status_deleted;
 
-    public Product(){
-
-    }
     public Product(int id, String category, String name, double price, String status, int sale, int hot, String description, Map<String, String> infor, Date create_at, Date update_at, Date delete_at, String img_main, String img_extra1, String img_extra2, String img_extra3, String img_extra4) {
         this.id = id;
         this.category = category;
