@@ -31,7 +31,7 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     @Override
     public boolean deletebyID(AdminOrderDetail obj, int id) throws SQLException {
-        String sql = "Update  orders set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
+        String sql = "Update  orders set status_deleted='đã xóa' where status_deleted='chưa xóa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, id);
         int rows = pr.executeUpdate();
@@ -98,12 +98,12 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     public ArrayList<AdminOrderDetail> selectByStatusWaiting() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
         //lấy tạm dữ liệu là đang giao
-        String sql = "Select orders.id,products.product_name,orders.created_at,status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where status='chờ xác nhận'  ";
+        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ xác nhận'  ";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
             list.add(adminOrderDetail);
         }
         return list;
@@ -111,12 +111,12 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusGiving() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where status='đang giao'";
+        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đang giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
             list.add(adminOrderDetail);
         }
         return list;
@@ -124,12 +124,12 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusForWaitingGiving() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where status='chờ giao'";
+        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
             list.add(adminOrderDetail);
         }
         return list;
@@ -137,12 +137,12 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusGived() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where status='đã giao'";
+        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đã giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
             list.add(adminOrderDetail);
         }
         return list;
@@ -150,12 +150,12 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
 
     public ArrayList<AdminOrderDetail> selectByStatusCanceled() throws SQLException {
         ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where status='hủy'";
+        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='hủy'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         AdminOrderDetail adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("status"));
+            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
             list.add(adminOrderDetail);
         }
         return list;

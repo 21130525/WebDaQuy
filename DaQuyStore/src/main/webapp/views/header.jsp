@@ -105,12 +105,13 @@
                 </li>
             </ul>
             <!-- search -->
-            <form class="d-flex" role="search" action="../SearchController" method="get">
+            <form class="d-flex" role="search" action="<%=request.getContextPath()%>/search" method="get">
                 <input class="form-control me-2 bg-search" aria-label="Search"
                        type="search"
                        name="txtSearch"
                        placeholder="Tìm sản phẩm"
                        autocomplete="off"
+                       value="<%=request.getAttribute("txtSearch")!=null?request.getAttribute("txtSearch"):""%>"
                 >
                 <button class="btn btn-outline-success" type="submit">Tìm</button>
             </form>
@@ -185,8 +186,8 @@
                 </li>
                 <%}%>
             </ul>
+
         </div>
     </div>
-
 
 </header>
