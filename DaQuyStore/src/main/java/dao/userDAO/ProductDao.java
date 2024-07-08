@@ -96,9 +96,13 @@ public class ProductDao implements IDAO<Product> {
                 img_3 = rs.getString("img_3");
                 img_4 = rs.getString("img_4");
             }
-                return null;
+
+            Map<String, String> inf = ProductService.StringToMap(infor);
+            product = new Product(product_id, category_id, name, price, status, sale, hot, description, inf, created_at, updated_at, deleted_at, img_main, img_1, img_2, img_3, img_4);
+
+            return product;
         }
-        return product;
+        return null;
     }
 
     //hàm này dùng để truy vấn dữ liệu chi tiết của 1 sản phẩm dựa trên tên
@@ -492,10 +496,7 @@ public class ProductDao implements IDAO<Product> {
 
 
     public static void main(String[] args) throws SQLException {
-//        System.out.println( (new ProductDao()).selectAll());
-//        System.out.println(new ProductDao().getProductByCategory("Ruby"));
-//        System.out.println(new ProductDao().getListProductForSearch("Đôi"));
-//        System.out.println(new ProductDao().getListProductForEachPage("Đôi",1));
+        System.out.println( (new ProductDao()).selectById("1","",""));
 
     }
 

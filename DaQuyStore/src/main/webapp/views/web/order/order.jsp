@@ -276,9 +276,9 @@
                                 <div class="card mb-3 scrollable-div overflow-auto"   style="max-height: 270px">
                                     <div class="card-body">
                                         <%
-                                            if(listOrder == null){
+                                            if(listOrder.size() == 0){
                                         %>
-                                        <p>Bạn ko co </p>
+                                        <p>Bạn không có sản phẩm nào vui lồng thêm sản phẩm</p>
                                         <%
                                             }else{
                                          for(Map.Entry<Product,Integer> entry : listOrder.entrySet()){%>
