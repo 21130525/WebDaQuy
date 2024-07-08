@@ -126,9 +126,9 @@
                     <li class="nav-item  pt-2" style="list-style-type: none;">
                         <button class="btn btn-outline-primary border-0">
                             <a class="nav-link" aria-current="page"
-                               href="${pageContext.request.contextPath}/views/web/cart/shoppingcart.jsp">
+                               href="${pageContext.request.contextPath}/shoppingcart.jsp">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="cart-count">0</span>
+                                <span class="badge bg-danger px-1">${ cart_list.size() }</span>
                             </a>
                         </button>
                     </li>

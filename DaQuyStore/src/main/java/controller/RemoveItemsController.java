@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/RemoveItemCartServlet")
+@WebServlet("/RemoveItemCart")
 public class RemoveItemsController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

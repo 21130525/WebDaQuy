@@ -19,14 +19,11 @@
 <%
     DecimalFormat df = new DecimalFormat("#.##");
     request.setAttribute("df", df);
-    ProductDao dao;
-    try {
-        dao = new ProductDao(DAOConnection.getConnection());
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
+    ProductDao dao = new ProductDao(DAOConnection.getConnection());
+    List<Product> listProduct = dao.getAllProduct();
+
     ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
-    List<Cart> listProduct = dao.getCartProduct(cart_list);
+    List<Cart> cartProduct = dao.getCartProduct(cart_list);
     if (cart_list != null) {
         request.setAttribute("cart_list", cart_list);
     }
@@ -77,7 +74,7 @@
 
         .category-image {
             width: 100%;
-            height: auto;
+            height: 100px;
             border-radius: 8px; /* Hình ảnh bo tròn */
             transition: transform 0.3s ease;
         }
@@ -98,12 +95,18 @@
             color: #007bff; /* Màu chữ khi hover */
             font-weight: bolder; /* Làm cho chữ đậm hơn khi hover */
         }
+         .btn-custom {
+             padding: 5px 10px; /* Điều chỉnh padding */
+             font-size: 12px; /* Điều chỉnh kích thước chữ */
+             white-space: nowrap; /* Ngăn không cho xuống hàng */
+         }
+
     </style>
 </head>
 
 <body>
 <div class="page-header">
-    <jsp:include page="../../header.jsp"/>
+    <jsp:include page="views/header.jsp"/>
 </div>
 <div class="cate">
     <section class="categories">
@@ -127,7 +130,6 @@
     </section>
 </div>
 <div class="container">
-    <div class="card-header my-3">All Products</div>
     <div class="row">
         <%
             if (!listProduct.isEmpty()) {
@@ -136,23 +138,26 @@
         <div class="col-md-3 my-3">
             <div class="card w-100" style="width: 18rem;">
                 <a href="<%=request.getContextPath()%>/productDetail?id=<%=p.getId()%>">
-                    <img class="card-img-top" src="<%=p.getImg_main()%>" alt="Card image cap">
+                    <img class="card-img-top" src="<%=p.getImg_main()%>" alt="Product Image">
                 </a>
                 <div class="card-body">
-                    <h5 class="card-title"><%=p.getName()%>
+                    <h5 class="card-title">
+                        <p><%= p.getName()%>
+                        </p>
                     </h5>
-                    <h6 class="price">Price:<%=df.format(p.getPrice())%>
+                    <h6 class="price">
+                        <p><%=p.getPrice()%>
+                        </p>
                     </h6>
                     <div class="mt-3 d-flex justify-content-between">
-                        <a href="AddToCartController?id= <%=p.getId()%>" class="btn btn-dark">Add to Cart</a>
-                        <a href="#" class="btn btn-primary">Buy now</a>
+                        <a class="btn btn-primary btn-custom" href="#">Mua ngay</a>
+                        <a class="btn btn-dark btn-custom" href="AddToCartController?id=<%=p.getId()%>">Giỏ hàng</a>
                     </div>
                 </div>
             </div>
         </div>
-        <%
-                }
-            }
+        <% }
+        }
         %>
     </div>
 </div>

@@ -1,16 +1,13 @@
 package dao.userDAO;
 
 import connector.DAOConnection;
-import model.Cart;
-import model.Product;
-import model.Product_Detail;
+import model.*;
 import service.manageUser.product.ProductService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ProductDao implements IDAO<Product> {
 
@@ -33,10 +30,11 @@ public class ProductDao implements IDAO<Product> {
     private String img_3;
     private String img_4;
 
-    public ProductDao(Connection conn) {
+    public ProductDao(Connection connection) {
     }
 
     public ProductDao() {
+
     }
 
     public static ProductDao getInstance() {
@@ -60,41 +58,6 @@ public class ProductDao implements IDAO<Product> {
 
     @Override
     public Product selectById(String id, String action, String ipAddress) throws SQLException {
-
-        //TODO
-        Product product = null;
-        int product_id = 0, img_id = 0;
-        String category_id, name, status, description, infor;
-        String img_main = "", img_1 = "", img_2 = "", img_3 = "", img_4 = "";
-        double price;
-        Date created_at, updated_at, deleted_at;
-        int sale, hot;
-        String sql = "SELECT * FROM products p\n" +
-                "JOIN product_image i ON p.image_product = i.id  " +
-                " where p.id = ? ";
-        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
-        ps.setString(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            product_id = rs.getInt(1);
-            category_id = rs.getString(2);
-            name = rs.getString(3);
-            price = rs.getDouble(4);
-            status = rs.getString(5);
-            sale = rs.getInt(6);
-            hot = rs.getInt(7);
-            description = rs.getString(8);
-            infor = rs.getString(9);
-            created_at = rs.getDate(10);
-            updated_at = rs.getDate(11);
-            deleted_at = rs.getDate(12);
-            img_id = rs.getInt(13);
-            if (img_id != 0) {
-                img_main = rs.getString(15);
-                img_1 = rs.getString(16);
-                img_2 = rs.getString(17);
-                img_3 = rs.getString(18);
-                img_4 = rs.getString(19);
         return null;
     }
 
@@ -207,41 +170,7 @@ public class ProductDao implements IDAO<Product> {
 
     @Override
     public ArrayList<Product> selectAll() throws SQLException {
-
-        String sql = "SELECT p.id,p.category_id,p.product_name,p.price,\n" +
-                "p.`status`,p.sale,p.hot,p.description,p.information,\n" +
-                "p.created_at,p.updated_at,p.deleted_at,i.img_main \n" +
-                "from products p inner join product_image i ON p.id = i.id ";
-        PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        ArrayList<Product> products = new ArrayList<>();
-        while (rs.next()) {
-            id = rs.getInt("id");
-            category_id = rs.getString("category_id");
-            product_name = rs.getString("product_name");
-            price = rs.getDouble("price");
-            status = (rs.getString("status") == null ? "" : rs.getString("status"));
-            sale = rs.getInt("sale");
-            hot = rs.getInt("hot");
-            description = (rs.getString("description") == null ? "" : rs.getString("description"));
-            information = (rs.getString("information") == null ? "" : rs.getString("information"));
-            created_at = rs.getDate("created_at");
-            updated_at = (rs.getDate("updated_at") == null ? null : rs.getDate("created_at"));
-            deleted_at = (rs.getDate("deleted_at") == null ? null : rs.getDate("updated_at"));
-            img_main = rs.getString("img_main");
-
-
-            Map<String, String> info = (new ProductService()).StringToMap(information);
-            Product p = new Product(id, category_id, product_name, price, status, sale, hot, description, info, created_at, updated_at, deleted_at, img_main);
-            products.add(p);
-        }
-        rs.close();
-        pst.close();
-        DAOConnection.getConnection().close();
-        return products;
-
         return null;
-
     }
 
 //    @Override
@@ -313,7 +242,6 @@ public class ProductDao implements IDAO<Product> {
 
     }
 
-
     //truy van tu ket qua search
     /*
      *pageNumber:thứ tự trang được chọn
@@ -353,7 +281,8 @@ public class ProductDao implements IDAO<Product> {
         return products;
 
     }
-    public ArrayList<Product> getListProductForEachPage(String search,int pageNumber) throws SQLException {
+
+    public ArrayList<Product> getListProductForEachPage(String search, int pageNumber) throws SQLException {
         String sql = " select * from products join product_image on products.id = product_image.id WHERE products.product_name LIKE ? ORDER BY products.id LIMIT 4 OFFSET ?";
         PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
         pst.setString(1, "%" + search + "%");
@@ -391,11 +320,9 @@ public class ProductDao implements IDAO<Product> {
 
     // Truy van cua Categories
     public List<Product> getProductByCategory(String namecategory) throws SQLException {
-        String sql = "SELECT products.id,products.category_id,products.product_name,\n" +
-                "products.price,products.`status`,products.sale,products.hot,\n" +
-                "products.description,products.information,products.created_at,\n" +
-                "products.updated_at,products.deleted_at,product_image.img_main,\n" +
-                "products.status_deleted FROM products \n" +
+        String sql = "SELECT products.id,products.product_name,\n" +
+                "products.price,product_image.img_main" +
+                " FROM products \n" +
                 "INNER JOIN product_image ON products.id = product_image.id \n" +
                 "INNER JOIN  categories ON products.category_id = categories.id \n" +
                 " WHERE categories.category_name=?;";
@@ -405,21 +332,10 @@ public class ProductDao implements IDAO<Product> {
         List<Product> list = new ArrayList<>();
         while (rs.next()) {
             id = rs.getInt("id");
-            category_id = rs.getString("category_id");
             product_name = rs.getString("product_name");
             price = rs.getDouble("price");
-            status = (rs.getString("status") == null ? "" : rs.getString("status"));
-            sale = rs.getInt("sale");
-            hot = rs.getInt("hot");
-            description = (rs.getString("description") == null ? "" : rs.getString("description"));
-            information = (rs.getString("information") == null ? "" : rs.getString("information"));
-            created_at = rs.getDate("created_at");
-            updated_at = (rs.getDate("updated_at") == null ? null : rs.getDate("created_at"));
-            deleted_at = (rs.getDate("deleted_at") == null ? null : rs.getDate("updated_at"));
             img_main = rs.getString("img_main");
-            String status = rs.getString("status_deleted");
-            Map<String, String> info = (new ProductService()).StringToMap(information);
-            Product p = new Product(id, category_id, product_name, price, status, sale, hot, description, info, created_at, updated_at, deleted_at, img_main, status);
+            Product p = new Product(id, product_name, price,  img_main);
             list.add(p);
         }
         rs.close();
@@ -428,12 +344,46 @@ public class ProductDao implements IDAO<Product> {
         return list;
     }
 
+    //hàm kiểm tra số lượng trước khi mua hàng
+    public boolean checkExistQuantityItem(String productname) throws SQLException {
+        String sql = "select sum(remaining) from inventory_detail join products on inventory_detail.product_id=products.id where products.product_name=? group by product_name";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setString(1, productname);
+        ResultSet rs = pr.executeQuery();
+        while (rs.next()) {
+            return true;
+        }
+        return false;
+    }
 
-    public double getTotalCartPrice(ArrayList<Cart> carts) {
+    public List<Product> getAllProduct() {
+        List<Product> listProducts = new ArrayList<>();
+        try {
+            String sql = "SELECT p.id, p.product_name, p.price, pi.img_main " +
+                    "FROM products p " +
+                    "JOIN product_image pi ON p.id = pi.id ";
+            PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("product_name"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImg_main(rs.getString("img_main"));
+                listProducts.add(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listProducts;
+
+    }
+
+    public double getTotalCartPrice(ArrayList<Cart> cartList) {
         double sum = 0;
         try {
-            if (carts.size() > 0) {
-                for (Cart item : carts) {
+            if (cartList.size() > 0) {
+                for (Cart item : cartList) {
                     String sql = "Select price from products where id=?";
                     PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
                     ps.setInt(1, item.getId());
@@ -449,37 +399,26 @@ public class ProductDao implements IDAO<Product> {
         return sum;
     }
 
-
-    //hàm kiểm tra số lượng trước khi mua hàng
-    public boolean checkExistQuantityItem(String productname) throws SQLException {
-        String sql = "select sum(remaining) from inventory_detail join products on inventory_detail.product_id=products.id where products.product_name=? group by product_name";
-        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
-        pr.setString(1, productname);
-        ResultSet rs = pr.executeQuery();
-        while (rs.next()) {
-            return true;
-        }
-        return false;
-    }
-
     public List<Cart> getCartProduct(ArrayList<Cart> cartList) {
         List<Cart> listProduct = new ArrayList<Cart>();
         try {
             if (cartList.size() > 0) {
                 for (Cart item : cartList) {
-                    String sql = "SELECT p.id, p.product_name, p.price, pi.image_product " +
+                    String sql = "SELECT p.id, p.product_name, p.price, pi.img_main " +
                             "FROM products p " +
                             "JOIN product_image pi ON p.id = pi.id " +
                             "WHERE p.id = ?";
                     PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
-                    ps.setInt(1,item.getId());
+                    ps.setInt(1, item.getId());
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        Product p = new Product();
-                        p.setId(rs.getInt("id"));
-                        p.setName(rs.getString("product_name"));
-                        p.setPrice(rs.getDouble("price"));
-                        p.setImg_main(rs.getString("image_product"));
+                        Cart c = new Cart();
+                        c.setId(rs.getInt("id"));
+                        c.setImg_main(rs.getString("img_main"));
+                        c.setName(rs.getString("product_name"));
+                        c.setPrice(rs.getDouble("price")*item.getPrice());
+                        c.setQuantity(item.getQuantity());
+                        listProduct.add(c);
                     }
                 }
             }
@@ -489,13 +428,12 @@ public class ProductDao implements IDAO<Product> {
         return listProduct;
     }
 
-
     public static void main(String[] args) throws SQLException {
 //        System.out.println( (new ProductDao()).selectAll());
 //        System.out.println(new ProductDao().getProductByCategory("Ruby"));
 //        System.out.println(new ProductDao().getListProductForSearch("Đôi"));
-//        System.out.println(new ProductDao().getListProductForEachPage("Đôi",1));
-
+        System.out.println(new ProductDao().getListProductForEachPage("Đôi", 1));
+        System.out.println(new ProductDao().getAllProduct());
     }
 
 
