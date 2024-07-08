@@ -16,7 +16,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% User user = (User) request.getSession().getAttribute("user");
+<%
     DecimalFormat df = new DecimalFormat("#.##");
     request.setAttribute("df", df);
     ProductDao dao;
@@ -103,10 +103,7 @@
 
 <body>
 <div class="page-header">
-    <%
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/header.jsp");
-        dispatcher.include(request, response);
-    %>
+    <jsp:include page="../../header.jsp"/>
 </div>
 <div class="cate">
     <section class="categories">
