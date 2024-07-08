@@ -39,6 +39,9 @@
         background-color: #0069d9;
         border-color: #0062cc;
     }
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -108,7 +111,7 @@
                 <hr>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
             <!--form chỉnh sửa thông tin sản phẩm-->
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"

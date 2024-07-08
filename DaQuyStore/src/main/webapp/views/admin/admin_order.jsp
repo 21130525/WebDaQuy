@@ -30,6 +30,9 @@
     .button-status:hover {
         box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
     }
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -99,7 +102,7 @@
                 <hr>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%;">
             <button class="button-status text-black" name="btn" value="Chờ xác nhận" id="waiting">Chờ xác nhận</button>
             <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Cho giao</button>
             <button class="button-status text-black" name="btn" value="Đang giao" id="giving">Đang giao</button>

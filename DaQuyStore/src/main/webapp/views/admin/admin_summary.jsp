@@ -22,6 +22,9 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
@@ -86,7 +89,7 @@
                 <hr>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
 
 
             <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>

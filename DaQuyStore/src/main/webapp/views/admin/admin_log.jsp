@@ -22,6 +22,9 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
@@ -93,7 +96,7 @@
 
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="70%">
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>

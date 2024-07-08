@@ -32,7 +32,9 @@
         display: block;
         width: 100%;
     }
-
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -94,7 +96,7 @@
 
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data" id="form" accept-charset="UTF-8">
                 <div class="form-group">

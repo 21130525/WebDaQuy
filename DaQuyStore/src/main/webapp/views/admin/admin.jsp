@@ -69,7 +69,7 @@
                 <hr>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
 
         </div>
     </div>
