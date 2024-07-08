@@ -3,10 +3,7 @@ package dao.userDAO;
 import connector.DAOConnection;
 import model.ActivacationCode;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ActivacationCodeDao implements IDAO<ActivacationCode> {
@@ -38,7 +35,7 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
 
     @Override
     public int delete(ActivacationCode ac,String action,String ipAddress) throws SQLException {
-        return 0;
+       return 0;
     }
 
     @Override
@@ -71,5 +68,26 @@ public class ActivacationCodeDao implements IDAO<ActivacationCode> {
     @Override
     public ArrayList<ActivacationCode> selectAll() throws SQLException {
         return null;
+    }
+
+    public int deleteAll() throws SQLException {
+        String sql = "TRUNCATE table activacation_code";
+        Statement st = null;
+        try {
+            st = DAOConnection.getConnection().createStatement();
+            st.execute(sql);
+            return 1; // Trả về 1 nếu thành công
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0; // Trả về 0 nếu thất bại
+        } finally {
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

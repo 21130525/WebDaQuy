@@ -152,6 +152,7 @@
                     them vao gio
                 </button>
                 <button class="col  btn btn-outline-warning fw-bold">
+<%--                    <%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1" --%>
                     Mua
                 </button>
             </div>
