@@ -2,6 +2,7 @@ package controller.controllerWeb.product;
 
 import dao.userDAO.ProductDao;
 import model.Product;
+import model.Product_Detail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +17,33 @@ import java.sql.SQLException;
 public class productDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+//        String id = req.getParameter("id");
+        //lấy thông tin thông qua tên sản phẩm
+        String id=req.getParameter("id");
+        int product_id=Integer.parseInt(id);
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
         ProductDao dao = ProductDao.getInstance();
-        Product p;
-        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
+//        Product p;
+//
+//        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        if (p != null) {
+//            req.setAttribute("product", p);
+//        }
+        Product_Detail p;
+        try {
+            p=dao.getInformationForPerProduct(product_id);
+            if (p!=null){
+                req.setAttribute("product_detail", p);
+                req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
+
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if (p != null) {
-            req.setAttribute("product", p);
-        }
-        req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
     }
 
     @Override

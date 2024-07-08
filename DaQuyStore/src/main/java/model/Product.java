@@ -88,6 +88,9 @@ public class Product implements IModel{
         this.img_main = imgMain;
     }
 
+    public Product() {
+    }
+
     public int getId() {
         return id;
     }

@@ -3,10 +3,12 @@ package dao.adminDAO.productAdmin;
 import connector.DAOConnection;
 import dao.adminDAO.AbsAdminDAO;
 import dao.adminDAO.categoryAdmin.CategoryAdminDAO;
+import dao.adminDAO.inventoryAdmin.InventoryAdminDAO;
 import dao.adminDAO.orderAdmin.OrderAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminProduct;
+import model.modelAdmin.AdminProduct_fixed;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     @Override
     public boolean deletebyID(AdminProduct obj, int id) throws SQLException {
-        String sql = "Update products set status_deleted='da xoa' where status_deleted='chua xoa' and id=?";
+        String sql = "Update products set status_deleted='đã xóa' where status_deleted='chưa xóa' and id=?";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, id);
         int rows = pr.executeUpdate();
@@ -80,14 +82,20 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     @Override
     public ArrayList select(AdminProduct obj) throws SQLException {
-        ArrayList<AdminProduct> products = new ArrayList<>();
-        String sql = "Select products.id,product_name,price,status,sale,hot from products where status_deleted='chua xoa'";
+        ArrayList<AdminProduct_fixed> products = new ArrayList<>();
+        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where products.status_deleted='chưa xóa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminProduct adminProduct;
         while (rs.next()) {
-            adminProduct = new AdminProduct(rs.getInt("products.id"), rs.getString("product_name"), rs.getInt("price"), rs.getString("status"), rs.getInt("sale"), rs.getInt("hot"));
-            products.add(adminProduct);
+            AdminProduct_fixed adminProductFixed=new AdminProduct_fixed();
+            adminProductFixed.setId(rs.getInt("products.id"));
+            adminProductFixed.setCategory(rs.getString("categories.category_name"));
+            adminProductFixed.setProduct_name(rs.getString("products.product_name"));
+            adminProductFixed.setPrice(rs.getInt("products.price"));
+            adminProductFixed.setStatus(rs.getString("products.status"));
+            adminProductFixed.setSale(rs.getInt("products.sale"));
+            adminProductFixed.setHot(rs.getInt("products.hot"));
+            products.add(adminProductFixed);
         }
         rs.close();
         pr.close();
@@ -233,7 +241,13 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
         pr.setInt(2, id);
         pr.executeUpdate();
     }
-
+    public void updateProductType(int category_id, int id) throws SQLException {
+        String sql = "Update products set category_id=? where id=?";
+        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+        pr.setInt(1, category_id);
+        pr.setInt(2, id);
+        pr.executeUpdate();
+    }
     /*
     các hàm thêm log cho chức năng cập nhật,thêm,xóa sản phẩm,truy vấn
 
@@ -311,22 +325,25 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     //hàm thêm dữ liệu sản phẩm
     public void insertProduct(AdminProduct product) throws SQLException {
-        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form();
+        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form()+"/";
         String sql = "Insert into products(id,category_id,product_name,price,status,description,information,created_at,updated_at) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1,getMaxIDProduct()+1);
         pr.setInt(2, product.getId_product_type());
         pr.setString(3, product.getProduct_name());
-        pr.setInt(4, product.getPrice());
+        pr.setFloat(4,  product.getPrice());
         pr.setString(5, product.getStatus());
         pr.setString(6, product.getDescription());
         pr.setString(7, information_insert);
         pr.setTimestamp(8, new Timestamp(new Date().getTime()));
         pr.setTimestamp(9,new Timestamp(new Date().getTime()));
         pr.executeUpdate();
+        pr.close();
     }
 
-
+    public void updateCategory_ID(String productType,int id) throws SQLException {
+        String sql="Update products set category_id=? where id=?";
+    }
     public static void main(String[] args) throws SQLException {
         ProductAdminDAO productAdminDAO = ProductAdminDAO.getInstance();
 

@@ -2,6 +2,8 @@ package model;
 
 public class Cart extends Product {
     private int quantity;
+
+
     public Cart(){
 
     }
