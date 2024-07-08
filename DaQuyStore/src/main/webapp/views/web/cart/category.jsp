@@ -16,7 +16,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% User user = (User) request.getSession().getAttribute("user");
+<%
     DecimalFormat df = new DecimalFormat("#.##");
     request.setAttribute("df", df);
     ProductDao dao;
@@ -25,9 +25,8 @@
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
-    List<Product> listProduct = dao.getProduct();
-    System.out.println(listProduct);
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+    List<Cart> listProduct = dao.getCartProduct(cart_list);
     if (cart_list != null) {
         request.setAttribute("cart_list", cart_list);
     }
@@ -104,7 +103,7 @@
 
 <body>
 <div class="page-header">
-    <jsp:include page="/views/header.jsp"/>
+    <jsp:include page="../../header.jsp"/>
 </div>
 <div class="cate">
     <section class="categories">
