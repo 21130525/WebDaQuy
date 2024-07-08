@@ -1,5 +1,11 @@
 <%@ page import="model.Product" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="dao.userDAO.ProductDao" %>
+<%@ page import="connector.DAOConnection" %>
+<%@ page import="model.Cart" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: admin
   Date: 5/19/2024
@@ -7,6 +13,22 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    DecimalFormat df = new DecimalFormat("#.##");
+    request.setAttribute("df", df);
+    ProductDao dao;
+    try {
+        dao = new ProductDao(DAOConnection.getConnection());
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    List<Product> listProduct = dao.selectAll();
+
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+    if (cart_list != null) {
+        request.setAttribute("cart_list", cart_list);
+    }
+%>
 <html>
 <head>
     <title>Title</title>
@@ -15,38 +37,43 @@
     <style>
         .btn-custom {
             padding: 5px 10px; /* Điều chỉnh padding */
-            font-size: 12px;   /* Điều chỉnh kích thước chữ */
+            font-size: 12px; /* Điều chỉnh kích thước chữ */
             white-space: nowrap; /* Ngăn không cho xuống hàng */
         }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="row">
         <%
-            List<Product> list = (List<Product>) request.getAttribute("list");
-            for (Product product : list) {
+            if (!listProduct.isEmpty()) {
+                for (Product p : listProduct) {
         %>
         <div class="col-md-3 my-3">
             <div class="card w-100" style="width: 18rem;">
-                <a href="<%=request.getContextPath()%>/productDetail?id=<%=product.getId()%>">
-                    <img class="card-img-top" src="<%=product.getImg_main()%>" alt="Product Image">
+                <a href="<%=request.getContextPath()%>/productDetail?id=<%=p.getId()%>">
+                    <img class="card-img-top" src="<%=p.getImg_main()%>" alt="Product Image">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">
-                        <p><%= product.getName()%> </p>
+                        <p><%= p.getName()%>
+                        </p>
                     </h5>
                     <h6 class="price">
-                        <p><%=product.getPrice()%></p>
+                        <p><%=p.getPrice()%>
+                        </p>
                     </h6>
                     <div class="mt-3 d-flex justify-content-between">
                         <a class="btn btn-primary btn-custom" href="#">Mua ngay</a>
-                        <a class="btn btn-dark btn-custom" href="AddToCartController?id=<%=product.getId()%>">Giỏ hàng</a>
+                        <a class="btn btn-dark btn-custom" href="AddToCartController?id=<%=p.getId()%>">Giỏ hàng</a>
                     </div>
                 </div>
             </div>
         </div>
-        <% } %>
+        <% }
+        }
+        %>
     </div>
 </div>
 <!-- JS-->
