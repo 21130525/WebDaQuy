@@ -5,6 +5,7 @@ import dao.adminDAO.AbsAdminDAO;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminOrderDetail;
+import model.modelAdmin.AdminOrderDetail_fixed;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,67 +96,122 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     }
 
 
-    public ArrayList<AdminOrderDetail> selectByStatusWaiting() throws SQLException {
-        ArrayList<AdminOrderDetail> list = new ArrayList<>();
+    public ArrayList<AdminOrderDetail_fixed> selectByStatusWaiting() throws SQLException {
+        ArrayList<AdminOrderDetail_fixed> list = new ArrayList<>();
         //lấy tạm dữ liệu là đang giao
-        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ xác nhận'  ";
+        String sql = "select orders.id,orders.created_at,orders.total_price,orders.status,orders.user_id,orders.statusPayment,orders.typeShip,orders.address,orders.TypePayment,orders.note,products.product_name from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ xác nhận'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminOrderDetail adminOrderDetail = null;
+        AdminOrderDetail_fixed adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
+            adminOrderDetail=new AdminOrderDetail_fixed();
+            adminOrderDetail.setId(rs.getInt("orders.id"));
+            adminOrderDetail.setCreated_at(rs.getTimestamp("orders.created_at"));
+            adminOrderDetail.setPrice(rs.getFloat("orders.total_price"));
+            adminOrderDetail.setStatus(rs.getString("orders.status"));
+            adminOrderDetail.setUser_id(rs.getInt("orders.user_id"));
+            adminOrderDetail.setStatus_payment(rs.getString("orders.statusPayment"));
+            adminOrderDetail.setTypeShip(rs.getString("orders.typeShip"));
+            adminOrderDetail.setAddress(rs.getString("orders.address"));
+            adminOrderDetail.setTypePayment(rs.getString("orders.TypePayment"));
+            adminOrderDetail.setNote(rs.getString("orders.note"));
+            adminOrderDetail.setProduct_name(rs.getString("products.product_name"));
             list.add(adminOrderDetail);
         }
         return list;
     }
 
-    public ArrayList<AdminOrderDetail> selectByStatusGiving() throws SQLException {
-        ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đang giao'";
+    public ArrayList<AdminOrderDetail_fixed> selectByStatusGiving() throws SQLException {
+        ArrayList<AdminOrderDetail_fixed> list = new ArrayList<>();
+        String sql = "select orders.id,orders.created_at,orders.total_price,orders.status,orders.user_id,orders.statusPayment,orders.typeShip,orders.address,orders.TypePayment,orders.note,products.product_name from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đang giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminOrderDetail adminOrderDetail = null;
+        AdminOrderDetail_fixed adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
+            adminOrderDetail=new AdminOrderDetail_fixed();
+            adminOrderDetail.setId(rs.getInt("orders.id"));
+            adminOrderDetail.setCreated_at(rs.getTimestamp("orders.created_at"));
+            adminOrderDetail.setPrice(rs.getFloat("orders.total_price"));
+            adminOrderDetail.setStatus(rs.getString("orders.status"));
+            adminOrderDetail.setUser_id(rs.getInt("orders.user_id"));
+            adminOrderDetail.setStatus_payment(rs.getString("orders.statusPayment"));
+            adminOrderDetail.setTypeShip(rs.getString("orders.typeShip"));
+            adminOrderDetail.setAddress(rs.getString("orders.address"));
+            adminOrderDetail.setTypePayment(rs.getString("orders.TypePayment"));
+            adminOrderDetail.setNote(rs.getString("orders.note"));
+            adminOrderDetail.setProduct_name(rs.getString("products.product_name"));
             list.add(adminOrderDetail);
         }
         return list;
     }
 
-    public ArrayList<AdminOrderDetail> selectByStatusForWaitingGiving() throws SQLException {
-        ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ giao'";
+    public ArrayList<AdminOrderDetail_fixed> selectByStatusForWaitingGiving() throws SQLException {
+        ArrayList<AdminOrderDetail_fixed> list = new ArrayList<>();
+        String sql = "select orders.id,orders.created_at,orders.total_price,orders.status,orders.user_id,orders.statusPayment,orders.typeShip,orders.address,orders.TypePayment,orders.note,products.product_name from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='chờ giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminOrderDetail adminOrderDetail = null;
+        AdminOrderDetail_fixed adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
+            adminOrderDetail=new AdminOrderDetail_fixed();
+            adminOrderDetail.setId(rs.getInt("orders.id"));
+            adminOrderDetail.setCreated_at(rs.getTimestamp("orders.created_at"));
+            adminOrderDetail.setPrice(rs.getFloat("orders.total_price"));
+            adminOrderDetail.setStatus(rs.getString("orders.status"));
+            adminOrderDetail.setUser_id(rs.getInt("orders.user_id"));
+            adminOrderDetail.setStatus_payment(rs.getString("orders.statusPayment"));
+            adminOrderDetail.setTypeShip(rs.getString("orders.typeShip"));
+            adminOrderDetail.setAddress(rs.getString("orders.address"));
+            adminOrderDetail.setTypePayment(rs.getString("orders.TypePayment"));
+            adminOrderDetail.setNote(rs.getString("orders.note"));
+            adminOrderDetail.setProduct_name(rs.getString("products.product_name"));
             list.add(adminOrderDetail);
         }
         return list;
     }
 
-    public ArrayList<AdminOrderDetail> selectByStatusGived() throws SQLException {
-        ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đã giao'";
+    public ArrayList<AdminOrderDetail_fixed> selectByStatusGived() throws SQLException {
+        ArrayList<AdminOrderDetail_fixed> list = new ArrayList<>();
+        String sql = " select orders.id,orders.created_at,orders.total_price,orders.status,orders.user_id,orders.statusPayment,orders.typeShip,orders.address,orders.TypePayment,orders.note,products.product_name from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='đã giao'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminOrderDetail adminOrderDetail = null;
+        AdminOrderDetail_fixed adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
+            adminOrderDetail=new AdminOrderDetail_fixed();
+            adminOrderDetail.setId(rs.getInt("orders.id"));
+            adminOrderDetail.setCreated_at(rs.getTimestamp("orders.created_at"));
+            adminOrderDetail.setPrice(rs.getFloat("orders.total_price"));
+            adminOrderDetail.setStatus(rs.getString("orders.status"));
+            adminOrderDetail.setUser_id(rs.getInt("orders.user_id"));
+            adminOrderDetail.setStatus_payment(rs.getString("orders.statusPayment"));
+            adminOrderDetail.setTypeShip(rs.getString("orders.typeShip"));
+            adminOrderDetail.setAddress(rs.getString("orders.address"));
+            adminOrderDetail.setTypePayment(rs.getString("orders.TypePayment"));
+            adminOrderDetail.setNote(rs.getString("orders.note"));
+            adminOrderDetail.setProduct_name(rs.getString("products.product_name"));
             list.add(adminOrderDetail);
         }
         return list;
     }
 
-    public ArrayList<AdminOrderDetail> selectByStatusCanceled() throws SQLException {
-        ArrayList<AdminOrderDetail> list = new ArrayList<>();
-        String sql = "Select orders.id,products.product_name,orders.created_at,orders.status from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='hủy'";
+    public ArrayList<AdminOrderDetail_fixed> selectByStatusCanceled() throws SQLException {
+        ArrayList<AdminOrderDetail_fixed> list = new ArrayList<>();
+        String sql = "select orders.id,orders.created_at,orders.total_price,orders.status,orders.user_id,orders.statusPayment,orders.typeShip,orders.address,orders.TypePayment,orders.note,products.product_name from orders join order_details on orders.id=order_details.order_id join products on products.id=order_details.product_id where orders.status='hủy'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminOrderDetail adminOrderDetail = null;
+        AdminOrderDetail_fixed adminOrderDetail = null;
         while (rs.next()) {
-            adminOrderDetail = new AdminOrderDetail(rs.getInt("id"), rs.getString("orders.status"));
+            adminOrderDetail=new AdminOrderDetail_fixed();
+            adminOrderDetail.setId(rs.getInt("orders.id"));
+            adminOrderDetail.setCreated_at(rs.getTimestamp("orders.created_at"));
+            adminOrderDetail.setPrice(rs.getFloat("orders.total_price"));
+            adminOrderDetail.setStatus(rs.getString("orders.status"));
+            adminOrderDetail.setUser_id(rs.getInt("orders.user_id"));
+            adminOrderDetail.setStatus_payment(rs.getString("orders.statusPayment"));
+            adminOrderDetail.setTypeShip(rs.getString("orders.typeShip"));
+            adminOrderDetail.setAddress(rs.getString("orders.address"));
+            adminOrderDetail.setTypePayment(rs.getString("orders.TypePayment"));
+            adminOrderDetail.setNote(rs.getString("orders.note"));
+            adminOrderDetail.setProduct_name(rs.getString("products.product_name"));
             list.add(adminOrderDetail);
         }
         return list;
@@ -233,5 +289,6 @@ public class OrderAdminDAO extends AbsAdminDAO<AdminOrderDetail> {
     }
 
     public static void main(String[] args) throws SQLException {
+        System.out.println(OrderAdminDAO.getInstance().selectByStatusWaiting().size());
     }
 }

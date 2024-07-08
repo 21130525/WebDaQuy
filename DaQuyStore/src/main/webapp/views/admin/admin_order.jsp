@@ -104,7 +104,7 @@
         </div>
         <div class="col py-3" style="width: 70%;">
             <button class="button-status text-black" name="btn" value="Chờ xác nhận" id="waiting">Chờ xác nhận</button>
-            <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Cho giao</button>
+            <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Đang chờ giao</button>
             <button class="button-status text-black" name="btn" value="Đang giao" id="giving">Đang giao</button>
             <button class="button-status text-black" name="btn" id="gived" value="Đã giao">Đã giao</button>
             <button class="button-status text-black" name="btn" id="canceled" value="Hủy">Hủy</button>
