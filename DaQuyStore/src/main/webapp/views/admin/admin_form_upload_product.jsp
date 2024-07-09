@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Them san pham</title>
+    <title>Thêm sản phẩm</title>
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -32,7 +32,9 @@
         display: block;
         width: 100%;
     }
-
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <jsp:include page="admin_header.jsp"></jsp:include>
 <div class="container-fluid">
@@ -94,7 +96,7 @@
 
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/addproduct_admin" enctype="multipart/form-data" id="form" accept-charset="UTF-8">
                 <div class="form-group">
