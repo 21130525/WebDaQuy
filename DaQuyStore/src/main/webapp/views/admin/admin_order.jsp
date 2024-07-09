@@ -113,9 +113,7 @@
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Trang thai</th>
-                    <th>Thao tac</th>
+                    <th>Thông tin đơn hàng</th>
                 </tr>
                 </thead>
                 <tbody id="body">

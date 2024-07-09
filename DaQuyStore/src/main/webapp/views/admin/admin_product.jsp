@@ -108,6 +108,7 @@
                 <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Lọai sản phẩm </th>
                     <th>Tên sản phẩm</th>
                     <th>Giá</th>
                     <th>Tình trạng</th>
