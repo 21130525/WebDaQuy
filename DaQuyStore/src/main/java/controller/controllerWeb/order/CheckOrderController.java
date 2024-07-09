@@ -93,7 +93,6 @@ public class CheckOrderController extends HttpServlet {
         if(accept_nhantaicuahang != null){
 //        nhan tai cua hang
             order.setTypeShip("Pick up at the shop");
-            order.setTypePayment("tien mat");
             order.setStatusPayment("chua thanh toan");
             if(note2!=null)order.setNote(note2);
         }else{
@@ -104,20 +103,30 @@ public class CheckOrderController extends HttpServlet {
 //                TODO trang error
             }
             order.setTypeShip("ship");
-            order.setTypePayment("chuyen khoan");
             order.setStatusPayment("chua thanh toan");
             if(note!=null)order.setNote(note);
         }
+        int orderID = -1;
         // thanh toan
         try {
-            OrderDao.getInstance().insert(order,"tao don hang",req.getRemoteAddr());
+             orderID  = OrderDao.getInstance().insertAndGetOrderID(order,"tao don hang",req.getRemoteAddr());
         } catch (SQLException e) {
 
             throw new RuntimeException(e);
         }
+        if (orderID== -1){
+            resp.sendRedirect("home");
+            return;
+        }
+        order.setId(orderID);
         req.setAttribute("totalPrice",order.getTotal_price());
         session.setAttribute("order", order);
+//        xoa danh sach san pham cua order
+        if(session.getAttribute("listOrder") != null) {
+            session.removeAttribute("listOrder");
+        }
         req.getRequestDispatcher("views/web/payment/payment.jsp").forward(req, resp);
     }
+
 }
 

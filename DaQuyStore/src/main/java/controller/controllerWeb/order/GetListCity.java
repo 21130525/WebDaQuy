@@ -21,9 +21,10 @@ import java.util.List;
 public class GetListCity extends HttpServlet {
     private static final long serialVersionUID = 1L;
     List<City> listCity;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        danh sach du lieu thanh pho
+        //        danh sach du lieu thanh pho
         try {
             listCity =LocalDao.getInstance().getListCity();
         } catch (SQLException e) {
@@ -40,7 +41,4 @@ public class GetListCity extends HttpServlet {
         out.print(json);
         out.flush();
     }
-
-
-
 }

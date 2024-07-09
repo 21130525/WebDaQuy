@@ -1,7 +1,3 @@
-<%@ page import="model.Product" %>
-<%@ page import="service.manageUser.product.ProductService" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.sql.SQLException" %>
 <%--
 Created by IntelliJ IDEA.
   User: ADMIN
@@ -9,6 +5,11 @@ Created by IntelliJ IDEA.
   Time: 00:55
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="model.Product" %>
+<%@ page import="service.manageUser.product.ProductService" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.SQLException" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
     .list-product {
@@ -92,7 +93,11 @@ Created by IntelliJ IDEA.
                             -12%</p>
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
-                        <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="<%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1">mua</a>
+                        <form action="../order" method="Post">
+                            <input type="hidden" name="id" value="<%=p.getId()%>">
+                            <input type="hidden" name="num" value="1">
+                            <button class="btn rounded-0 btn-d-none p-0 fw-bold" type="submit">mua</button>
+                        </form>
                         <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
                     </div>
                 </div>
