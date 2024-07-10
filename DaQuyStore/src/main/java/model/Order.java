@@ -25,7 +25,7 @@ public class Order implements IModel {
 //  ghi chu
     private String note;
 
-
+    public Order(){}
     public Order(model.User user, Map<Product,Integer> products, String status) {
         this.id = id;
         this.User = user;
@@ -172,6 +172,6 @@ public class Order implements IModel {
                 ", typePayment='" + typePayment + '\'' +
                 ", statusPayment='" + statusPayment + '\'' +
                 ", note='" + note + '\'' +
-                '}';
+                "} \n *** \n";
     }
 }

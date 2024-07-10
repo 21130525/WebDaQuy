@@ -9,6 +9,7 @@ Created by IntelliJ IDEA.
 <%@ page import="service.manageUser.product.ProductService" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="service.manageUser.order.OrderService" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
@@ -63,7 +64,7 @@ Created by IntelliJ IDEA.
     }
 </style>
 <section class="list-product container mt-3">
-    <p class="border-bottom fs-4">Sản Phẩm hot</p>
+    <p class="border-bottom fs-2 text-center ">Sản Phẩm hot</p>
     <div class="col">
     <%
         ProductService ps = new ProductService();
@@ -103,7 +104,7 @@ Created by IntelliJ IDEA.
                 </div>
                 <div class="card-body pt-1">
                     <p class="card-text text-center d-block fs-5 m-0"><%=p.getName()%></p>
-                    <p class="card-text text-center d-block fs-6 mt-1"><%=p.getPrice()%> đ</p>
+                    <p class="card-text text-center d-block fs-5 mt-1 text-info fw-bold"><%=OrderService.getInstance().formatNumber( p.getPrice())%></p>
                 </div>
             </div>
             <%
@@ -114,30 +115,7 @@ Created by IntelliJ IDEA.
                 }
         }
     %>
-
-        <!-- pagination -->
-        <div class="pagination d-flex justify-content-center mt-3">
-            <nav aria-label="...">
-                <ul class="pagination pagination-sm">
-                    <li class="page-item" aria-current="page">
-                        <button class="active page-link">1</button>
-                    </li>
-                    <li class="page-item"><button class="page-link" href="#">2</button></li>
-                    <li class="page-item"><button class="page-link" href="#">3</button></li>
-                </ul>
-            </nav>
-        </div>
     </div>
 
-    <script>
-        const pagination = document.querySelectorAll('.page-link');
-        pagination.forEach(item => {
-            item.addEventListener('click', function () {
-                pagination.forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                item.classList.add('active');
-            });
-        });
-    </script>
+
 </section>

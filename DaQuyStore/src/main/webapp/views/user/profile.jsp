@@ -1,4 +1,12 @@
-<%@ page import="model.User" %><%--
+<%@ page import="model.User" %>
+<%@ page import="dao.userDAO.OrderDao" %>
+<%@ page import="model.Order" %>
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Comparator" %>
+<%@ page import="service.manageUser.order.OrderService" %>
+<%@ page import="model.Product" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 20/3/2024
@@ -18,10 +26,9 @@
 if(u==null)
     u = new User();
 String gender = u.getGender();
-System.out.println("profile user:"+u);
 %>
 <jsp:include page="../header.jsp"/>
-<section id="profile" class="mt-2">
+<section id="profile" class="mb-5">
     <div class="container ">
         <div class="row">
             <!-- menu bar -->
@@ -174,7 +181,7 @@ System.out.println("profile user:"+u);
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <button id="nav-all" class="navButton nav-link active" aria-current="page"
-                                        href="#">Tất cả
+                                        >Tất cả
                                 </button>
                             </li>
                             <li class="nav-item">
@@ -219,86 +226,65 @@ System.out.println("profile user:"+u);
                         </form>
                     </div>
                     <!-- danh sách sản phẩmphẩm -->
-                    <div class="mt-3 ">
+                    <div id="danhSachSanPham" class="mt-3 scrollable-div  w-100" style="max-height: 460px;min-height: 400px; overflow-x: hidden;overflow-y:auto  ">
+                        <%
+                            ArrayList<Order> orders = OrderDao.getInstance().selectOrderByidUser(u.getId(),"");
+                            orders.sort(new Comparator<Order>() {
+                                @Override
+                                public int compare(Order o1, Order o2) {
+                                    return o2.getId()-o1.getId();
+                                }
+                            });
+                            int i = 0;
+                            for(Order o : orders){
+                                i++;
+                            if(i==11){
+//                                break;
+                            }
+                        %>
                         <!-- 1 san pham -->
-                        <div class="product my-3 mt-4  border-top">
-                            <div class="text-end border-bottom m-3">
-                                Đơn hàng đã hoàn thành
+                        <div class="product my-3 mt-4  border-top  ">
+<%--                            status don hang--%>
+                            <div class="text-end border-bottom m-3 d-flex justify-content-between">
+                                <span><STRONG>id Đơn hàng:</STRONG><%=o.getId()%></span>
+                                <span><strong>Tình Trạng đơn hàng:</strong> <%=o.getStatus()%></span>
+                                <span>Đơn hàng <%=o.getStatusPayment()%></span>
                             </div>
 
                             <!-- list product -->
-                            <div class="row product ">
-                                <div class="col-2 mx-auto ">
+                            <%
+                                for(Map.Entry<Product,Integer> en : o.getProducts().entrySet()){
+                            %>
+                                <div class="row product ">
+                                    <div class="col-2 mx-auto ">
                                     <img class=" "
-                                         src="../src/main/webapp/img/gemstone/spinel/Vien-Spinel-sac-cobalt-sieu-VIP-175ct-IRSI65-231117500000.jpg"
+                                         src="<%=en.getKey().getImg_main()%>"
                                          alt="" style="height: 100px; width: 100px;">
                                 </div>
                                 <div class="col-7 my-3">
-                                    <p class="mb-3"><Strong>Tên sản phẩm</Strong></p>
+                                    <p class="mb-3"><Strong><%=en.getKey().getName()%></Strong></p>
                                     <span class="align-text-bottom">
-                                            <p class="">số lượng: 1</p>
+                                            <p class="">số lượng: <%=en.getValue()%></p>
                                         </span>
 
                                 </div>
-                                <p class="col-2 text-end mx-auto ">100 000 đ </p>
-                                <p class="border mx-3 w-75 mx-auto"></p>
+                                <p class="col-2 text-end mx-auto "><%=OrderService.getInstance().formatNumber( en.getKey().getPrice()*en.getValue())%> </p>
+                                <p class="border  w-75 mx-auto fw-bold"></p>
                             </div>
+                            <%
+                                }
+                            %>
 
                             <!-- thanh tien -->
-                            <div>
-                                <p class="text-end mx-4"><Strong> Thành tiền:</Strong> 10000 đ</p>
+                            <div class="">
+                                <p class="text-end mx-4"><Strong> Thành tiền:</Strong> <%=OrderService.getInstance().formatNumber(o.getTotal_price())%></p>
                             </div>
                         </div>
-
-                        <!-- 1 san pham -->
-                        <div class="product my-3 mt-4  border-top">
-                            <div class="text-end border-bottom m-3">
-                                Đơn hàng đã hoàn thành
-                            </div>
-
-                            <!-- list product -->
-                            <div class="row product ">
-                                <div class="col-2 mx-auto ">
-                                    <img class=" "
-                                         src="../src/main/webapp/img/gemstone/spinel/Vien-Spinel-sac-cobalt-sieu-VIP-175ct-IRSI65-231117500000.jpg"
-                                         alt="" style="height: 100px; width: 100px;">
-                                </div>
-                                <div class="col-7 my-3">
-                                    <p class="mb-3"><Strong>Tên sản phẩm</Strong></p>
-                                    <span class="align-text-bottom">
-                                            <p class="">số lượng: 1</p>
-                                        </span>
-
-                                </div>
-                                <p class="col-2 text-end mx-auto ">100 000 đ </p>
-                                <p class="border mx-3 w-75 mx-auto"></p>
-                            </div>
-
-                            <!-- thanh tien -->
-                            <div>
-                                <p class="text-end mx-4"><Strong> Thành tiền:</Strong> 10000 đ</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center text-dark">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        <%
+                            }
+                        %>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -320,7 +306,6 @@ System.out.println("profile user:"+u);
 
         div1.style.display = "block";
         div2.style.display = "none";
-
     });
 
     btnOrder.addEventListener('click', function () {
@@ -425,20 +410,10 @@ System.out.println("profile user:"+u);
             alert('Vui lòng chọn một tập tin hình ảnh.');
         }
     };
-    // lấy cùng lúc nhiều button
-    const navButton = document.querySelectorAll('.navButton');
-    // thêm sự kiên cho các button
-    navButton.forEach(button => {
-        // xóa active
-        button.addEventListener('click', function () {
-            navButton.forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // thêm active
-            this.classList.add('active')
-        })
-    });
-    const gender = <%=u.getGender()%>;
+
+
+
+    const gender = '<%=u.getGender()%>';
     var gender_nu =  document.getElementById('gender_nu');
     var gender_nam =  document.getElementById('gender_nam');
     var gender_khac =  document.getElementById('gender_khac');
@@ -454,6 +429,48 @@ System.out.println("profile user:"+u);
             gender_khac.checked= true;
         }
     });
+
+    // // lấy cùng lúc nhiều button
+    // const navButton = document.querySelectorAll('.navButton');
+    // // thêm sự kiên cho các button
+    // navButton.forEach(button => {
+    //     // xóa active
+    //     button.addEventListener('click', function () {
+    //         navButton.forEach(btn => {
+    //             btn.classList.remove('active');
+    //         });
+    //         // thêm active
+    //         this.classList.add('active')
+    //         alert('button da chon'+button.id)
+    //     })
+    // });
+
+    $('.navButton').click(function (){
+        var buttinId = $(this).attr('id')
+        var data = {
+            data: buttinId
+        }
+        $('.navButton').removeClass('active')
+        $(this).addClass('active')
+
+        fetchListOrder(data)
+    })
+    function fetchListOrder(data){
+        $.ajax({
+            url:'../../getOrderByStatus',
+            type:'GET',
+            data: data,
+            success: function (response){
+                $('#danhSachSanPham').empty()
+                $('#danhSachSanPham').html(response)
+            },
+            error: function (){
+                alert('that bai')
+            }
+        })
+    }
+
+
 </script>
 </body>
 </html>

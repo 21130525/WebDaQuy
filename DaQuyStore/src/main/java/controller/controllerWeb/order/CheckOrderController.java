@@ -93,7 +93,7 @@ public class CheckOrderController extends HttpServlet {
         if(accept_nhantaicuahang != null){
 //        nhan tai cua hang
             order.setTypeShip("Pick up at the shop");
-            order.setStatusPayment("chua thanh toan");
+            order.setStatusPayment("chưa thanh toán");
             if(note2!=null)order.setNote(note2);
         }else{
 //            nhan qua shiper
@@ -103,7 +103,7 @@ public class CheckOrderController extends HttpServlet {
 //                TODO trang error
             }
             order.setTypeShip("ship");
-            order.setStatusPayment("chua thanh toan");
+            order.setStatusPayment("chưa thanh toán");
             if(note!=null)order.setNote(note);
         }
         int orderID = -1;

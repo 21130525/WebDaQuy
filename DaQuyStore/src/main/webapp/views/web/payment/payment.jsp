@@ -156,7 +156,6 @@
 
     </section>
     <jsp:include page="../../footer.jsp"/>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 <%--    thanh toan--%>
         $('#btnSubmit').click(function (){

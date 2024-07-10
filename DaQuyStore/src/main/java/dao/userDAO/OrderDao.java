@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
@@ -153,4 +154,85 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
         }
         return Integer.parseInt(idOrder);
     }
+
+    public ArrayList<Order> selectOrderByidUser(String id, String type) throws SQLException {
+        ArrayList<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.id AS orderID ,o.total_price,o.`status`,o.statusPayment,\n" +
+                "od.quantity_total, \n" +
+                "p.id AS product_id, p.product_name,p.price, \n" +
+                "i.img_main  FROM orders o\n" +
+                "JOIN order_details od ON o.id = od.order_id\n" +
+                "JOIN products p ON od.product_id = p.id\n" +
+                "JOIN product_image i ON p.image_product = i.id\n" +
+                "WHERE o.user_id =  ?";
+        if(!type.equals("")){
+            sql += " AND o.status=?";
+        }
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, id);
+        if(!type.equals("")){
+            pstmt.setString(2, type);
+        }
+        ResultSet rs = pstmt.executeQuery();
+        while(rs.next()) {
+        Order order = null;
+            String orderId = rs.getString("orderID");
+            double totalPrice = rs.getDouble("total_price");
+            String status = rs.getString("status");
+            String statusPayment = rs.getString("statusPayment");
+            int quantityTotal = rs.getInt("quantity_total");
+            int idproduct = rs.getInt("product_id");
+            double price = rs.getDouble("price");
+            String productName = rs.getString("product_name");
+            String imgMain = rs.getString("img_main");
+            if (!orderId.equals("")) {
+                if(orders.size()<1 || orders.getLast().getId()!=Integer.parseInt(orderId)) {
+                    order = new Order();
+                    order.setId(Integer.parseInt(orderId));
+                    order.setTotal_price(totalPrice);
+                    order.setStatus(status);
+                    order.setStatusPayment(statusPayment);
+
+                    Product p = new Product();
+                    p.setId(idproduct);
+                    p.setName(productName);
+                    p.setImg_main(imgMain);
+                    p.setPrice(price);
+
+                    Map<Product , Integer> products = new HashMap<Product , Integer>();
+                    products.put(p, quantityTotal);
+
+                    order.setProducts(products);
+
+                    orders.add(order);
+
+                }else{
+                    order = orders.getLast();
+                    Map<Product , Integer> products = order.getProducts();
+                    Product p = new Product();
+                    p.setId(idproduct);
+                    p.setName(productName);
+                    p.setImg_main(imgMain);
+                    p.setPrice(price);
+                    if(checkProductContai(products,p))
+                        products.put(p, quantityTotal);
+                }
+            }
+        }
+        return orders;
+    }
+
+    private boolean checkProductContai(Map<Product, Integer> products, Product p) {
+        for (Map.Entry<Product , Integer> entry : products.entrySet()) {
+            if(entry.getKey().getId()!=p.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        OrderDao.getInstance().selectOrderByidUser("27","");
+    }
+
 }
