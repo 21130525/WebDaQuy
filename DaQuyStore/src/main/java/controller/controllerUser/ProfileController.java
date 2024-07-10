@@ -21,25 +21,28 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-
+        String fullName = req.getParameter("fullName");
         String phoneNumber = req.getParameter("phoneNumber");
         String address = req.getParameter("address");
         String gender = req.getParameter("gender");
         String birthday = req.getParameter("birthday");
-        if (phoneNumber != null)
+        if(fullName != null && !fullName.trim().equals("")){
+            user.setFullName(fullName);
+        }
+        if (phoneNumber != null && !phoneNumber.trim().equals("")){}
             user.setPhoneNumber(phoneNumber);
-        if (address != null) {
+        if (address != null && !address.trim().equals("")) {
             user.setAddress(address);
         }
-        if (gender != null) {
+        if (gender != null && !gender.trim().equals("")) {
             user.setGender(gender);
         }
-        if (birthday != null) {
+        if (birthday != null && !birthday.trim().equals("")) {
             Date birthdayThenPartDate = Date.valueOf(birthday);
             user.setBirthday(birthdayThenPartDate);
         }
-
-        System.out.println( service.updateProfile(user,req.getRemoteAddr()));
+//        session.setAttribute("user", user);
+        service.updateProfile(user,req.getRemoteAddr());
         req.getRequestDispatcher("/views/user/profile.jsp").forward(req, resp);
     }
 

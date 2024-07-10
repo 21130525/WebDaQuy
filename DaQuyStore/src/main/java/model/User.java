@@ -69,7 +69,8 @@ public class User implements IModel {
         this.email = email;
         this.role = "user";
         this.typeLogin = typeLogin;
-        this.avatar = "../img/avatar.png";
+        this.avatar = "/DaQuyStore_war/img/avatar.png";
+//        https://hinhnen4k.com/wp-content/uploads/2023/03/avatar-vo-danh-4.jpg
         setData();
     }
 

@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UpdateProfileService {
-    UserDAO userDAO = UserDAO.getInstance();
     public static  UpdateProfileService instance;
     public static UpdateProfileService getInstance() {
         if (instance == null) {
@@ -32,6 +31,6 @@ public class UpdateProfileService {
 
     public boolean updateProfile(User user, String remoteAddr) {
         System.out.println("user:+ "+user);
-        return userDAO.update(user,"update profile",remoteAddr);
+        return UserDAO.getInstance().update(user,"update profile",remoteAddr);
     }
 }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style>
+
     footer .bg-footer {
         background-color: #454242;
     }
@@ -10,10 +11,10 @@
         height: 20px;
     }
 </style>
-<footer class="pt-3 mt-4">
+<footer class="pt-3 mt-4 w-100">
     <div class="col">
-        <div class="row">
-            <div class="row text-center ">
+        <div class="row w-100">
+            <div class="row text-center w-100">
                 <p class="text-center fs-3">Liên Lạc Thông Qua Mạng Xã Hội</p>
             </div>
             <div class="row text-center fs-4">
@@ -51,8 +52,8 @@
 
             </div>
         </div>
-        <div class="bg-footer text-white mt-3">
-            <div class="row P-3">
+        <div class="bg-footer text-white mt-3 w-100">
+            <div class="row py-3 w-100">
                 <div class="col-4 text-center ">
                     CHĂM SÓC KHÁCH HÀNG
                 </div>
@@ -60,7 +61,7 @@
                     VỀ CHÚNG TÔI
                 </div>
             </div>
-            <div class="row">
+            <div class="row w-100">
                 <div class="col-4 text-center">
                     <div class="row">
                         <a href="#" class="btn text-white">Câu hỏi thương gặp</a>

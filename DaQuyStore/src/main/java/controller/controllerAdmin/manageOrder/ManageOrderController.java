@@ -169,7 +169,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 } else if (selected_status.equals("waiting_giving")) {
-                    String translated_status = "Đang chờ giao";
+                    String translated_status = "chờ giao";
                     updateOrderService.updateStatusOrder(id, translated_status);
                     Gson gson = new Gson();
                     String result = "Cập nhật thành công";
@@ -184,7 +184,7 @@ public class ManageOrderController extends HttpServlet {
                     adminLogService.addLogDanger(adminLog, new AdminOrderDetail());
                     resp.getWriter().println(json);
                 } else if (selected_status.equals("giving")) {
-                    String translated_status = "Đang giao";
+                    String translated_status = "đang giao";
                     updateOrderService.updateStatusOrder(id, translated_status);
                     Gson gson = new Gson();
                     String result = "Cập nhật thành công";

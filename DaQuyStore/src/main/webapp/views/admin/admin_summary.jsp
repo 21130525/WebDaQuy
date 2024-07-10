@@ -22,6 +22,9 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
+    #table_id_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <body>
 <jsp:include page="admin_header.jsp"></jsp:include>
@@ -67,6 +70,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<%=request.getContextPath()%>/views/admin/admin_inventory.jsp" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-warehouse"></i><span class="ms-1 d-none d-sm-inline">Quản lí số lượng tồn kho</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<%=request.getContextPath()%>/views/admin/admin_log.jsp"
                            class="nav-link px-0 align-middle">
                             <i class="fa-solid fa-note-sticky"></i> <span
@@ -86,7 +94,7 @@
                 <hr>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col py-3" style="width: 70%">
 
 
             <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>

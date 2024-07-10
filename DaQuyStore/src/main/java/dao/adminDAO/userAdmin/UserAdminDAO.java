@@ -60,7 +60,7 @@ public class UserAdminDAO extends AbsAdminDAO<AdminUser> {
     @Override
     public ArrayList select(AdminUser obj) throws SQLException {
         ArrayList<AdminUser> adminUserslist = new ArrayList<>();
-        String sql = "Select users.id,username,password,full_name,gender,birthday,email,phone,address,created_at,updated_at,role,type_login from users where status='chua xoa'";
+        String sql = "Select users.id,username,password,full_name,gender,birthday,email,phone,address,created_at,updated_at,role,type_login from users where status='chưa xóa'";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
 
         ResultSet rs = pr.executeQuery();

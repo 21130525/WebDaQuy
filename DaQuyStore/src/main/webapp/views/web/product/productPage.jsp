@@ -13,6 +13,15 @@ To change this template use File | Settings | File Templates.
 <html>
 <head>
     <title>Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    <link rel="stylesheet" href="<%=request.getContextPath()%>/font/fontawesome-free-6.4.2/css/all.css">
+
 </head>
 <style>
     .list-product {
@@ -70,71 +79,72 @@ To change this template use File | Settings | File Templates.
 <jsp:include page="../../header.jsp"/>
 
 <section class="list-product container mt-3">
-    <p class="border-bottom fs-4">Sản Phẩm hot</p>
+    <p class="border-bottom fs-4">Sản Phẩm</p>
     <div class="col">
-
-        <!-- row 1 -->
+        <%
+            ProductService ps = new ProductService();
+            ArrayList<Product> lists = null;
+            try {
+                lists = ps.getProductPerPage(1);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        %>
+        <%
+            int index =0;
+            for (Product p : lists) {
+                index++;
+                if(index==1 || index==5)   {
+        %>
         <div class="row products">
             <%
-                ProductService ps = new ProductService();
-                ArrayList<Product> lists = null;
-                try {
-                    lists = ps.getProductPerPage(1);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                int index =0;
-                for(Product p : lists) {
-                    if(index==4){
-            %>
-        </div>
-        <div class="row products">
-            <%
-                }else{
-                    index++;
                 }
             %>
             <!-- product -->
-            <div class="product col card  border-0 d-flex align-items-center justify-content-center m-0 p-0 ">
+            <div class="product col card border-0 d-flex align-items-center justify-content-center m-0 p-0">
                 <div class="position-relative">
                     <a href="<%=request.getContextPath()%>/productDetail?id=<%=p.getId()%>">
-                        <img class="card-img-top border-2 "
-                             src="<%=p.getImg_main()%>"
-                             alt="anh">
-                        <p
-                                class="d-inline position-absolute top-0 start-0 ms-2 mt-2  bg-danger text-white rounded fw-bold fs-6">
-                            -12%</p>
+                        <img class="card-img-top border-2" src="<%=p.getImg_main()%>" alt="anh">
+                        <p class="d-inline position-absolute top-0 start-0 ms-2 mt-2 bg-danger text-white rounded fw-bold fs-6">
+                            -12%
+                        </p>
                     </a>
-                    <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0 "
-                         style="width: 100%;">
-                        <a class="btn  rounded-0  btn-d-none p-0 fw-bold " href="<%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1">mua</a>
-                        <a class="btn  rounded-0  btn-d-none p-0 fw-bold " href="#">gio hang</a>
+                    <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
+                        <form action="../../../order" method="Post">
+                            <input type="hidden" name="id" value="<%=p.getId()%>">
+                            <input type="hidden" name="num" value="1">
+                            <button class="btn rounded-0 btn-d-none p-0 fw-bold" type="submit">mua</button>
+                        </form>
+
+                        <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
                     </div>
                 </div>
                 <div class="card-body pt-1">
-                    <p class="card-text text-center d-block fs-5  m-0 "><%=p.getName()%></p>
+                    <p class="card-text text-center d-block fs-5 m-0"><%=p.getName()%></p>
                     <p class="card-text text-center d-block fs-6 mt-1"><%=p.getPrice()%> đ</p>
                 </div>
             </div>
             <%
-                }
+                if(index==4 || index==8)   {
             %>
         </div>
+        <%
+                }
+            }
+        %>
 
         <!-- pagination -->
         <div class="pagination d-flex justify-content-center mt-3">
             <nav aria-label="...">
                 <ul class="pagination pagination-sm">
-                    <li class="page-item " aria-current="page">
-                        <button class=" active page-link">1</button>
+                    <li class="page-item" aria-current="page">
+                        <button class="active page-link">1</button>
                     </li>
                     <li class="page-item"><button class="page-link" href="#">2</button></li>
                     <li class="page-item"><button class="page-link" href="#">3</button></li>
                 </ul>
             </nav>
         </div>
-
-    </div>
     </div>
     <script>
         const pagination = document.querySelectorAll('.page-link');
