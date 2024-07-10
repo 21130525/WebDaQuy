@@ -103,12 +103,13 @@
             </div>
         </div>
         <div class="col py-3" style="width: 70%;">
+
             <button class="button-status text-black" name="btn" value="Chờ xác nhận" id="waiting">Chờ xác nhận</button>
             <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Đang chờ giao</button>
             <button class="button-status text-black" name="btn" value="Đang giao" id="giving">Đang giao</button>
             <button class="button-status text-black" name="btn" id="gived" value="Đã giao">Đã giao</button>
             <button class="button-status text-black" name="btn" id="canceled" value="Hủy">Hủy</button>
-
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
 
             <table id="table_id" class="table table-striped">
                 <thead>
@@ -135,6 +136,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
+
 <script>
     var $tbody = $('#body')
     $(document).ready(function () {
@@ -523,5 +526,11 @@
             });
         });
     })
+</script>
+<script>
+    function converttoExcel(){
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table"));
+    }
 </script>
 </html>

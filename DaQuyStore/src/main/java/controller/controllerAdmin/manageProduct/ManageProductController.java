@@ -2,6 +2,7 @@ package controller.controllerAdmin.manageProduct;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.gson.Gson;
 import dao.adminDAO.adminImage.ImageAdminDAO;
 import dao.adminDAO.categoryAdmin.CategoryAdminDAO;
 import dao.adminDAO.inventoryAdmin.InventoryAdminDAO;
@@ -142,7 +143,7 @@ public class ManageProductController extends HttpServlet {
                                                                             adminProduct_result.setCutting_form(cutting_form);
                                                                             adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
                                                                             ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
-                                                                                InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
+                                                                            InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
                                                                             resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
                                                                         }
                                                                     }
@@ -407,15 +408,19 @@ public class ManageProductController extends HttpServlet {
             adminLog.setPrevValue("Chưa xóa ngày" + new Timestamp(new Date().getTime()) + "sản phẩm có id" + id);
             adminLog.setCurrentValue("Đã xóa  ngày:" + new Timestamp(new Date().getTime()) + "sản phẩm có id" + id);
             try {
-                productAdminLogService.addLogDanger(adminLog, new AdminProduct());
+                if (ProductAdminDAO.getInstance().deletebyID(new AdminProduct(), id)) {
+                    productAdminLogService.addLogDanger(adminLog, new AdminProduct());
+                    resp.getWriter().println(new Gson().toJson("Xóa thành công "));
+                }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            try {
-                deleteProductService.delete(req, resp, id);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+//            try {
+//                deleteProductService.delete(req, resp, id);
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
 
         } else if (uri.endsWith("/redirect_update")) {
             int id = Integer.parseInt(req.getParameter("id"));
