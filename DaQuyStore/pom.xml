@@ -13,9 +13,10 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
+<!--              TODO co doi tu 9 dang 21 neu say ra loi thi doi lai-->
               <configuration>
-                  <source>9</source>
-                  <target>9</target>
+                  <source>21</source>
+                  <target>21</target>
               </configuration>
           </plugin>
       </plugins>
