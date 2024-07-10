@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class GetOrderByStatus extends HttpServlet {
                 status = "Hủy";
                 break;
             case "nav-returnProduct":
+                status="Hoàn trả";
                 break;
         }
         ArrayList<Order> orders = null;
@@ -97,6 +99,32 @@ public class GetOrderByStatus extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println(stringBuilder.toString());
         out.flush();
+    }
+
+    public static void main(String[] args) {
+        String data = "ruby";
+        ArrayList<Order> orders;
+        try {
+            orders = OrderDao.getInstance().selectOrderByidUser(27+"","Chờ xác nhận");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<Order> res = new ArrayList<>();
+        for (Order order : orders){
+//        data is  orderId
+            if((order.getId()+"").equals(data)){
+                res.add(order);
+            }else {
+                for(Map.Entry<Product,Integer> entry : order.getProducts().entrySet()){
+                    Product product = entry.getKey();
+                    if(product.getName().toLowerCase().contains(data)){
+                        res.add(order);
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println(res.toString());
     }
 
 }

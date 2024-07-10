@@ -189,9 +189,9 @@ String gender = u.getGender();
                                     toán
                                 </button>
                             </li>
-                            <li class="nav-item">
-                                <button id="nav-transport" class="navButton nav-link" href="#">Vận chuyển</button>
-                            </li>
+<%--                            <li class="nav-item">--%>
+<%--                                <button id="nav-transport" class="navButton nav-link" href="#">Vận chuyển</button>--%>
+<%--                            </li>--%>
                             <li class="nav-item">
                                 <button id="nav-waitingForDelivery" class="navButton nav-link" href="#">chờ Giao
                                     Hàng
@@ -212,18 +212,16 @@ String gender = u.getGender();
                     </div>
                     <!-- thanh tìm kiếm -->
                     <div>
-                        <form action="/SearchProduct">
-                            <nav class="mt-3 bg-body-tertiary">
-                                <div class="container">
-                                    <div class="d-flex" role="search">
-                                        <input class="form-control me-2 w-100" type="search"
-                                               placeholder="Bạn có thể tìm kiếm sản phẩm theo tên hoặc id "
-                                               aria-label="Search" name="searchInput">
-                                        <button class="btn btn-outline-success" type="submit">Search</button>
-                                    </div>
+                        <nav class="mt-3 bg-body-tertiary">
+                            <div class="container">
+                                <div class="d-flex" role="search">
+                                    <input id="inputSearch" class="form-control me-2 w-100" type="search"
+                                           placeholder="Bạn có thể tìm kiếm sản phẩm theo tên hoặc id "
+                                           aria-label="Search" name="searchInput">
+                                    <button id="btnSearch" class="btn btn-outline-success" type="button">Search</button>
                                 </div>
-                            </nav>
-                        </form>
+                            </div>
+                        </nav>
                     </div>
                     <!-- danh sách sản phẩmphẩm -->
                     <div id="danhSachSanPham" class="mt-3 scrollable-div  w-100" style="max-height: 460px;min-height: 400px; overflow-x: hidden;overflow-y:auto  ">
@@ -445,13 +443,17 @@ String gender = u.getGender();
     //     })
     // });
 
+
+// chuyen tap
+    var tapId = 'nav-all';
     $('.navButton').click(function (){
-        var buttinId = $(this).attr('id')
+       tapId= $(this).attr('id')
         var data = {
-            data: buttinId
+            data: tapId
         }
         $('.navButton').removeClass('active')
         $(this).addClass('active')
+        $('#inputSearch').val("")
 
         fetchListOrder(data)
     })
@@ -469,6 +471,30 @@ String gender = u.getGender();
             }
         })
     }
+//  search order
+    $('#btnSearch').click(function (){
+        var key = $('#inputSearch').val();
+        var data ={
+            data: key,
+            tapId: tapId
+        }
+        $.ajax({
+            url:'../../searchOrder',
+            type: 'POST',
+            data: data,
+            success: function (resp){
+                $('#danhSachSanPham').empty()
+                $('#danhSachSanPham').html(resp)
+            },
+            error: function (){
+                alert('Tìm Kiếm Thất bại')
+            }
+        })
+
+
+    })
+
+
 
 
 </script>
