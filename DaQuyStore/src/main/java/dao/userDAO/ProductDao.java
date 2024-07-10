@@ -335,7 +335,7 @@ public class ProductDao implements IDAO<Product> {
             product_name = rs.getString("product_name");
             price = rs.getDouble("price");
             img_main = rs.getString("img_main");
-            Product p = new Product(id, product_name, price,  img_main);
+            Product p = new Product(id, product_name, price,img_main);
             list.add(p);
         }
         rs.close();
@@ -372,8 +372,8 @@ public class ProductDao implements IDAO<Product> {
                 p.setImg_main(rs.getString("img_main"));
                 listProducts.add(p);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return listProducts;
 
@@ -393,8 +393,8 @@ public class ProductDao implements IDAO<Product> {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return sum;
     }
@@ -407,7 +407,7 @@ public class ProductDao implements IDAO<Product> {
                     String sql = "SELECT p.id, p.product_name, p.price, pi.img_main " +
                             "FROM products p " +
                             "JOIN product_image pi ON p.id = pi.id " +
-                            "WHERE p.id = ?";
+                            "WHERE p.id =?";
                     PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
                     ps.setInt(1, item.getId());
                     ResultSet rs = ps.executeQuery();
@@ -416,24 +416,70 @@ public class ProductDao implements IDAO<Product> {
                         c.setId(rs.getInt("id"));
                         c.setImg_main(rs.getString("img_main"));
                         c.setName(rs.getString("product_name"));
-                        c.setPrice(rs.getDouble("price")*item.getPrice());
+                        c.setPrice(rs.getDouble("price")*item.getQuantity());
                         c.setQuantity(item.getQuantity());
                         listProduct.add(c);
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getStackTrace();
         }
         return listProduct;
+    }
+    public int getTotalProduct(){
+        try{
+            String sql = "select count(*) from products";
+            PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt(1);
+
+            }
+
+        }catch(Exception e){
+
+        }
+        return 0;
+    }
+    public List<Product> pagingProduct(int index){
+        List<Product> list = new ArrayList<>();
+        String sql= "SELECT p.id, p.product_name, p.price, pi.img_main " +
+                "FROM products p " +
+                "JOIN product_image pi ON p.id = pi.id " +
+                "ORDER BY p.id " +
+                "LIMIT 8 OFFSET ?";
+        try{
+            PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1,(index-1)*8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setImg_main(rs.getString("img_main"));
+                p.setName(rs.getString("product_name"));
+                p.setPrice(rs.getDouble("price"));
+                list.add(p);
+            }
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public static void main(String[] args) throws SQLException {
 //        System.out.println( (new ProductDao()).selectAll());
-//        System.out.println(new ProductDao().getProductByCategory("Ruby"));
+//        System.out.println(new ProductDao().getProductByCategory("Zircon"));
 //        System.out.println(new ProductDao().getListProductForSearch("Đôi"));
-        System.out.println(new ProductDao().getListProductForEachPage("Đôi", 1));
-        System.out.println(new ProductDao().getAllProduct());
+//        System.out.println(new ProductDao().getListProductForEachPage("Đôi", 1));
+//        System.out.println(new ProductDao().getAllProduct());
+//        System.out.println(new ProductDao().getTotalProduct());
+        ProductDao dao = new ProductDao();
+        List<Product> list = dao.pagingProduct(12);
+        for (Product p : list){
+            System.out.println(p);
+
+        }
     }
 
 
