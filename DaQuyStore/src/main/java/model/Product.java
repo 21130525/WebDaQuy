@@ -45,21 +45,12 @@ public class Product implements IModel{
 
     }
 
-    public Product(int id, String category, String name, double price, String status, int sale, int hot, String description, Map<String, String> infor, Date create_at, Date update_at, Date delete_at, String img_main, String status_deleted) {
+    public Product(int id, String name, double price, String img_main) {
         this.id = id;
         this.category = category;
         this.name = name;
         this.price = price;
-        this.status = status;
-        this.sale = sale;
-        this.hot = hot;
-        this.description = description;
-        this.create_at = create_at;
-        this.update_at = update_at;
-        this.delete_at = delete_at;
         this.img_main = img_main;
-        this.infor = infor;
-
     }
     public Product(int id, String category, String name, double price, String status, int sale, int hot, String description, Map<String, String> infor, Date create_at, Date update_at, Date delete_at, String img_main) {
         this.id = id;

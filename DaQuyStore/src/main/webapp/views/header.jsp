@@ -76,22 +76,28 @@
                     <a class="nav-link" aria-current="page" href="#">Trang sức</a>
                 </li>
                 <!-- dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/Category" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Đá quý
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Spinel">Spinel</a></li>
-                        <li><a class="dropdown-item" href="#">Kim cương</a></li>
-                        <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Ruby">Ruby</a></li>
-                        <li><a class="dropdown-item" href="#">Hổ phách</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/Category" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Đá quý
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Ruby">Ruby</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Sapphire">Sapphire</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Ngọc%20lục%20bảo">Ngọc lục bảo</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Spinel">Spinel</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Tourmaline">Tourmaline</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Aquamarine">Aquamarine</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Peridot">Peridot</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Garnet">Garnet</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Zircon">Zircon</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Topaz">Topaz</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">Liên hệ</a>
                 </li>
@@ -127,15 +133,17 @@
                     </button>
                 </li>
                 <% } else { %>
-                <li class="nav-item pt-2" style="list-style-type: none;">
-                    <button class="btn btn-outline-primary border-0">
-                        <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/shoppingcart.jsp">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                    </button>
-                </li>
+                 <!-- cart -->
+                    <li class="nav-item  pt-2" style="list-style-type: none;">
+                        <button class="btn btn-outline-primary border-0">
+                            <a class="nav-link" aria-current="page"
+                               href="${pageContext.request.contextPath}/views/web/cart/shoppingcart.jsp">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="badge bg-danger px-1">${ cart_list.size() }</span>
+                            </a>
+                        </button>
+                    </li>
                 <% } %>
-
 
 
                 <!-- login -->
@@ -189,5 +197,4 @@
 
         </div>
     </div>
-
 </header>
