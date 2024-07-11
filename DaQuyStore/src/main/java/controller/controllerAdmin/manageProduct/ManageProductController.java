@@ -47,7 +47,7 @@ public class ManageProductController extends HttpServlet {
                 Part image_2 = req.getPart("image-2");
                 Part image_3 = req.getPart("image-3");
                 Part image_4 = req.getPart("image-4");
-//                String number_import = req.getParameter("number_import");
+                String number_import = req.getParameter("number_import");
                 String description = req.getParameter("description");
                 String product_type = req.getParameter("productType");
                 String status = req.getParameter("status");
@@ -74,78 +74,81 @@ public class ManageProductController extends HttpServlet {
                                                                 if (!size.isEmpty()) {
                                                                     if (!opactity.isEmpty()) {
                                                                         if (!color.isEmpty()) {
-                                                                            //ten cac buc anh
-                                                                            String name_image_main = image_main.getSubmittedFileName();
-                                                                            String name_image_1 = image_1.getSubmittedFileName();
-                                                                            String name_image_2 = image_2.getSubmittedFileName();
-                                                                            String name_image_3 = image_3.getSubmittedFileName();
-                                                                            String name_image_4 = image_4.getSubmittedFileName();
-                                                                            // Khởi tạo một mảng byte để lưu dữ liệu từ phần tải lên
-                                                                            byte[] data_image_main = new byte[(int) image_main.getSize()];
-                                                                            byte[] data_image_1 = new byte[(int) image_1.getSize()];
-                                                                            byte[] data_image_2 = new byte[(int) image_2.getSize()];
-                                                                            byte[] data_image_3 = new byte[(int) image_3.getSize()];
-                                                                            byte[] data_image_4 = new byte[(int) image_4.getSize()];
-                                                                            //đưa dữ lieu anh vao mảng nhi phan
-                                                                            image_main.getInputStream().read(data_image_main);
-                                                                            image_1.getInputStream().read(data_image_1);
-                                                                            image_2.getInputStream().read(data_image_2);
-                                                                            image_3.getInputStream().read(data_image_3);
-                                                                            image_4.getInputStream().read(data_image_4);
-                                                                            // Khởi tạo Cloudinary object
-                                                                            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                                                                                    "cloud_name", "dvarqsigv",
-                                                                                    "api_key", "312676887848818",
-                                                                                    "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
+                                                                            if (!number_import.isEmpty()) {
+                                                                                //ten cac buc anh
+                                                                                String name_image_main = image_main.getSubmittedFileName();
+                                                                                String name_image_1 = image_1.getSubmittedFileName();
+                                                                                String name_image_2 = image_2.getSubmittedFileName();
+                                                                                String name_image_3 = image_3.getSubmittedFileName();
+                                                                                String name_image_4 = image_4.getSubmittedFileName();
+                                                                                // Khởi tạo một mảng byte để lưu dữ liệu từ phần tải lên
+                                                                                byte[] data_image_main = new byte[(int) image_main.getSize()];
+                                                                                byte[] data_image_1 = new byte[(int) image_1.getSize()];
+                                                                                byte[] data_image_2 = new byte[(int) image_2.getSize()];
+                                                                                byte[] data_image_3 = new byte[(int) image_3.getSize()];
+                                                                                byte[] data_image_4 = new byte[(int) image_4.getSize()];
+                                                                                //đưa dữ lieu anh vao mảng nhi phan
+                                                                                image_main.getInputStream().read(data_image_main);
+                                                                                image_1.getInputStream().read(data_image_1);
+                                                                                image_2.getInputStream().read(data_image_2);
+                                                                                image_3.getInputStream().read(data_image_3);
+                                                                                image_4.getInputStream().read(data_image_4);
+                                                                                // Khởi tạo Cloudinary object
+                                                                                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                                                                                        "cloud_name", "dvarqsigv",
+                                                                                        "api_key", "312676887848818",
+                                                                                        "api_secret", "mDYfyME8asyBQJJe6VFENakGoOc"));
 
-                                                                            // Upload ảnh lên Cloudinary
-                                                                            Map uploadresult_main = cloudinary.uploader().upload(data_image_main, ObjectUtils.asMap("public_id", name_image_main));
-                                                                            Map uploadresult_1 = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id", name_image_1));
-                                                                            Map uploadresult_2 = cloudinary.uploader().upload(data_image_2, ObjectUtils.asMap("public_id", name_image_2));
-                                                                            Map uploadresult_3 = cloudinary.uploader().upload(data_image_3, ObjectUtils.asMap("public_id", name_image_3));
-                                                                            Map uploadresult_4 = cloudinary.uploader().upload(data_image_4, ObjectUtils.asMap("public_id", name_image_4));
-                                                                            // Lấy đường dẫn URL của ảnh
-                                                                            String imageUrl = uploadresult_main.get("url").toString();
-                                                                            String imageUrl1 = uploadresult_1.get("url").toString();
-                                                                            String imageUrl2 = uploadresult_2.get("url").toString();
-                                                                            String imageUrl3 = uploadresult_3.get("url").toString();
-                                                                            String imageUrl4 = uploadresult_4.get("url").toString();
-                                                                            System.out.println("Đường dẫn ảnh: " + imageUrl);
-                                                                            System.out.println("Đường dẫn ảnh: " + imageUrl1);
-                                                                            System.out.println("Đường dẫn ảnh: " + imageUrl2);
-                                                                            System.out.println("Đường dẫn ảnh: " + imageUrl3);
-                                                                            System.out.println("Đường dẫn ảnh: " + imageUrl4);
-                                                                            ImageAdminDAO.getInstance().addImage(imageUrl, imageUrl1, imageUrl2, imageUrl3, imageUrl4);
-                                                                            AdminLog adminLog = new AdminLog();
-                                                                            adminLog.setLevel(LogLevel.INFORM.toString());
-                                                                            adminLog.setIpaddress(req.getRemoteAddr());
-                                                                            adminLog.setPrevValue("Chưa thêm dữ liệu");
-                                                                            adminLog.setCurrentValue("Đã thêm sản phẩm thảnh công" + new Timestamp(new Date().getTime()));
-                                                                            adminLog.setCreated_at(new Timestamp(new Date().getTime()));
-                                                                            // Gửi thông báo thành công về client
-                                                                            LogService<AdminProduct> adminLogService = new LogService<>();
-                                                                            AdminProduct adminProduct = new AdminProduct();
-                                                                            adminLogService.addLogAlert(adminLog, adminProduct);
-                                                                            //bien nay dung de cap nhat thong tin o bang product
-                                                                            AdminProduct adminProduct_result = new AdminProduct();
-                                                                            //set up cac thong so cho 1 product
-                                                                            adminProduct_result.setProduct_name(productName);
-                                                                            adminProduct_result.setPrice(Float.parseFloat(price));
-                                                                            adminProduct_result.setDescription(description);
-                                                                            adminProduct_result.setCreated_at(new Timestamp(new Date().getTime()));
-                                                                            adminProduct_result.setUpdated_at(new Timestamp(new Date().getTime()));
-                                                                            adminProduct_result.setStatus(status);
-                                                                            adminProduct_result.setId_product_type(CategoryAdminDAO.getInstance().getProductType(product_type));
-                                                                            adminProduct_result.setColor(color);
-                                                                            adminProduct_result.setWeight(weight);
-                                                                            adminProduct_result.setSize(size);
-                                                                            adminProduct_result.setOpactity(opactity);
-                                                                            adminProduct_result.setCutting_form(cutting_form);
-                                                                            adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
-                                                                            ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
-                                                                            InventoryAdminDAO.getInstance().insertInventory();
-                                                                            InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
-                                                                            resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
+                                                                                // Upload ảnh lên Cloudinary
+                                                                                Map uploadresult_main = cloudinary.uploader().upload(data_image_main, ObjectUtils.asMap("public_id", name_image_main));
+                                                                                Map uploadresult_1 = cloudinary.uploader().upload(data_image_1, ObjectUtils.asMap("public_id", name_image_1));
+                                                                                Map uploadresult_2 = cloudinary.uploader().upload(data_image_2, ObjectUtils.asMap("public_id", name_image_2));
+                                                                                Map uploadresult_3 = cloudinary.uploader().upload(data_image_3, ObjectUtils.asMap("public_id", name_image_3));
+                                                                                Map uploadresult_4 = cloudinary.uploader().upload(data_image_4, ObjectUtils.asMap("public_id", name_image_4));
+                                                                                // Lấy đường dẫn URL của ảnh
+                                                                                String imageUrl = uploadresult_main.get("url").toString();
+                                                                                String imageUrl1 = uploadresult_1.get("url").toString();
+                                                                                String imageUrl2 = uploadresult_2.get("url").toString();
+                                                                                String imageUrl3 = uploadresult_3.get("url").toString();
+                                                                                String imageUrl4 = uploadresult_4.get("url").toString();
+                                                                                System.out.println("Đường dẫn ảnh: " + imageUrl);
+                                                                                System.out.println("Đường dẫn ảnh: " + imageUrl1);
+                                                                                System.out.println("Đường dẫn ảnh: " + imageUrl2);
+                                                                                System.out.println("Đường dẫn ảnh: " + imageUrl3);
+                                                                                System.out.println("Đường dẫn ảnh: " + imageUrl4);
+                                                                                ImageAdminDAO.getInstance().addImage(imageUrl, imageUrl1, imageUrl2, imageUrl3, imageUrl4);
+                                                                                AdminLog adminLog = new AdminLog();
+                                                                                adminLog.setLevel(LogLevel.INFORM.toString());
+                                                                                adminLog.setIpaddress(req.getRemoteAddr());
+                                                                                adminLog.setPrevValue("Chưa thêm dữ liệu");
+                                                                                adminLog.setCurrentValue("Đã thêm sản phẩm thảnh công" + new Timestamp(new Date().getTime()));
+                                                                                adminLog.setCreated_at(new Timestamp(new Date().getTime()));
+                                                                                // Gửi thông báo thành công về client
+                                                                                LogService<AdminProduct> adminLogService = new LogService<>();
+                                                                                AdminProduct adminProduct = new AdminProduct();
+                                                                                adminLogService.addLogAlert(adminLog, adminProduct);
+                                                                                //bien nay dung de cap nhat thong tin o bang product
+                                                                                AdminProduct adminProduct_result = new AdminProduct();
+                                                                                //set up cac thong so cho 1 product
+                                                                                adminProduct_result.setProduct_name(productName);
+                                                                                adminProduct_result.setPrice(Float.parseFloat(price));
+                                                                                adminProduct_result.setDescription(description);
+                                                                                adminProduct_result.setCreated_at(new Timestamp(new Date().getTime()));
+                                                                                adminProduct_result.setUpdated_at(new Timestamp(new Date().getTime()));
+                                                                                adminProduct_result.setStatus(status);
+                                                                                adminProduct_result.setId_product_type(CategoryAdminDAO.getInstance().getProductType(product_type));
+                                                                                adminProduct_result.setColor(color);
+                                                                                adminProduct_result.setWeight(weight);
+                                                                                adminProduct_result.setSize(size);
+                                                                                adminProduct_result.setOpactity(opactity);
+                                                                                adminProduct_result.setCutting_form(cutting_form);
+                                                                                adminProduct_result.setQuantity(Integer.parseInt(number_import));
+                                                                                adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
+                                                                                ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
+                                                                                InventoryAdminDAO.getInstance().insertInventory();
+                                                                                InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
+                                                                                resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
