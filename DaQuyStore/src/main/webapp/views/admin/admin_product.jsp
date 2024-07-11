@@ -209,6 +209,7 @@
                                             text: "Sản phẩm đã được xóa.",
                                             icon: "success"
                                         })
+                                        $row.hide()
                                     }
 
                                 })
