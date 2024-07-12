@@ -8,134 +8,58 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8" ;type="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+    minimum-scale=1,maximum-scale=1, user-scalable-no">
     <title>Liên hệ</title>
-    <link rel="stylesheet" href="css/contact.css?v=2">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-            rel="stylesheet">
-    <link rel="icon" href="img/favicon.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet" href="font/fontawesome-free-6.4.2/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-xxx" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css" type="text/css">
 </head>
 <body>
-<div class="container">
+<div>
     <jsp:include page="header.jsp"></jsp:include>
-    <div class="place">
-        <div class="place-img">
-            <img src="${pageContext.request.contextPath}/img/dai-hoc-long-lam.jpg" alt="">
-        </div>
-        <div class="place-map">
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.1986922460546!2d106.78813967465993!3d10.872487157415222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175276398969f7b%3A0x9672b7efd0893fc4!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOw7RuZyBMw6JtIFRQLiBI4buTIENow60gTWluaA!5e0!3m2!1svi!2s!4v1698824490776!5m2!1svi!2s"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+</div>
+<div class="contact-wrap" style="margin-top: 10px;" >
+    <div class="contact-in">
+        <h1>THÔNG TIN LIÊN HỆ</h1>
+        <h2><i class="fa fa-phone" aria-hidden="true"></i>Hotline</h2>
+        <p>0564701860</p>
+        <h2><i class="fa fa-envelope" aria-hidden="true"></i>Email</h2>
+        <p>mintaeyeon1978@gmail.com</p>
+        <h2><i class="fa fa-map-marker" aria-hidden="true"></i>Địa chỉ</h2>
+        <p>Số 1, Khu phố 6, Linh Trung, Thủ Đức,Tp.Hồ Chí Minh</p>
+        <ul>
+            <li><a href="https://www.facebook.com/tai.votan.9655" target="_blank"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-google"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+
+        </ul>
     </div>
-    <div class="contact">
-        <div class="contact-label">
-            Liên Hệ
-        </div>
-        <div class="contact-number-choosing">
-            <a href="#" class="landline">
-                <div class="landline-label">
-                    Số máy bàn
-                </div>
-                <div class="landline-num">
-                    08856 174 581
-                </div>
-            </a>
-            <a href="#" class="hotline">
-                <div class="hotline-label">
-                    Hotline
-                </div>
-                <div class="hotline-num">
-                    0856 174 581
-                </div>
-                <div class="time-line">
-                    (8h00 - 21h00)
-                </div>
-            </a>
-            <a href="#" class="counselors">
-                <div class="counselors-label">
-                    Tư vấn viên
-                </div>
-                <div class="counselors-num">
-                    0988 458 352
-                </div>
-            </a>
-            <a href="#" class="chat-zalo-whatapp-wechat">
-                <div class="chat-zalo-whatapp-wechat-label">
-                    Chat Zalo/Whatapp/Wechat
-                </div>
-                <div class="chat-zalo-whatapp-wechat-num">
-                    0856 174 581
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="contact-us">
-        <div class="all-store-and-showroom">
-            <div class="showroom pull-up">
-                <div class="showroom-label normal-text">
-                    SHOWROOM
-                </div>
-                <div class="showroom-text small-text">
-                    Khu phố 6, phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh
-                </div>
-            </div>
-            <div class="store-1 pull-down">
-                <div class="store-1-label normal-text">
-                    STORE 1
-                </div>
-                <div class="store-1-text small-text">
-                    Tòa thiên lý (khu phố 6, phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh)
-                </div>
-            </div>
-            <div class="store-2 pull-up">
-                <div class="store-2-label normal-text">
-                    STORE 2
-                </div>
-                <div class="store-2-text small-text">
-                    Tòa Phượng Vỹ (khu phố 6, phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh)
-                </div>
-            </div>
-            <div class="store-3 pull-down">
-                <div class="store-3-label normal-text">
-                    STORE 3
-                </div>
-                <div class="store-3-text small-text">
-                    Khoa Công Nghệ Thông Tin (khu phố 6, phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí
-                    Minh)
-                </div>
-            </div>
-        </div>
-        <form method="post" action="<%=request.getContextPath()+"/feedback"%>" method="post">
-            <div class="contact-us-right-box">
-                <div class="contact-us-label">
-                    LIÊN HỆ VỚI CHÚNG TÔI
-                </div>
-                <input type="text" class="full-name input-box" placeholder="Họ tên(*)" name="fullname">
-                <input type="text" class="phone-num input-box" placeholder="Số điện thoại(*)" name="phone">
-                <input type="text" class="email input-box" placeholder="Email" name="email">
-                <input type="text" class="title input-box" placeholder="Tiêu đề" name="phone">
-                <textarea name="content" id="content" class="content input-box" cols="30" rows="10"
-                          placeholder="Nội dung" name="content"></textarea>
-                <button class="sending" type="submit">
-                    Gửi
-                </button>
-            </div>
+    <div class="contact-in">
+        <h1>Phản ánh từ khách hàng</h1>
+        <form>
+            <input type="text" placeholder="Họ và tên" class="contact-in-input">
+            <input type="text" placeholder="Email" class="contact-in-input">
+            <input type="text" placeholder="Chủ đề" class="contact-in-input">
+            <textarea placeholder="Nội dung" class="contact-in-textarea"></textarea>
+            <input type="submit" value="GỬI" class="contact-in-btn">
         </form>
     </div>
+    <div class="contact-in">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.2145947051063!2d106.78918677279343!3d10.871276389283322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175276398969f7b%3A0x9672b7efd0893fc4!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOw7RuZyBMw6JtIFRQLiBI4buTIENow60gTWluaA!5e0!3m2!1svi!2s!4v1720721454209!5m2!1svi!2s"
+                width="100%" height="auto" style="border:0;" allowfullscreen=""
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
 </div>
-<jsp:include page="footer.jsp"></jsp:include>
+<div>
+    <jsp:include page="footer.jsp"></jsp:include>
+</div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"--%>
+<%--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"--%>
+<%--        crossorigin="anonymous"></script>--%>
 </html>
