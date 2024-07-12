@@ -1,14 +1,19 @@
-.image-container {
-    text-align: center;
-    padding: 10px;
+a.active{
+    color: red;
+    font-weight: bold;
 }
-.image-container img {
-    max-width: 100%;
-    height: auto;
+.card-img-top {
+    width: 100%; /* Đặt chiều rộng là 100% để hình ảnh đầy đủ khung card */
+    height: 200px; /* Đặt chiều cao là 200px (hoặc bất kỳ giá trị nào bạn muốn) */
+    object-fit: cover; /* Đảm bảo hình ảnh bị cắt để phù hợp với kích thước được chỉ định */
+    object-position: center; /* Đặt vị trí của hình ảnh là giữa */
 }
-.image-container p {
-    margin-top: 10px;
+.card-title p {
+    white-space: nowrap; /* Ngăn không cho tên sản phẩm xuống dòng */
+    overflow: hidden; /* Ẩn phần vượt quá */
+    text-overflow: ellipsis; /* Thêm dấu chấm 3 nếu quá dài */
 }
-body{
-    background-color: #F1E7D0;
+
+.price p {
+    margin-bottom: 0; /* Để giá sản phẩm không bị căn lề dưới */
 }

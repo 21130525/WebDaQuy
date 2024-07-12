@@ -1,7 +1,3 @@
-<%@ page import="model.Product" %>
-<%@ page import="service.manageUser.product.ProductService" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.sql.SQLException" %>
 <%--
 Created by IntelliJ IDEA.
   User: ADMIN
@@ -9,6 +5,12 @@ Created by IntelliJ IDEA.
   Time: 00:55
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="model.Product" %>
+<%@ page import="service.manageUser.product.ProductService" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="service.manageUser.order.OrderService" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
     .list-product {
@@ -62,7 +64,7 @@ Created by IntelliJ IDEA.
     }
 </style>
 <section class="list-product container mt-3">
-    <p class="border-bottom fs-4">Sản Phẩm hot</p>
+    <p class="border-bottom fs-2 text-center ">Sản Phẩm hot</p>
     <div class="col">
     <%
         ProductService ps = new ProductService();
@@ -92,13 +94,17 @@ Created by IntelliJ IDEA.
                             -12%</p>
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
-                        <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="<%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1">mua</a>
+                        <form action="../order" method="Post">
+                            <input type="hidden" name="id" value="<%=p.getId()%>">
+                            <input type="hidden" name="num" value="1">
+                            <button class="btn rounded-0 btn-d-none p-0 fw-bold" type="submit">mua</button>
+                        </form>
                         <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
                     </div>
                 </div>
                 <div class="card-body pt-1">
                     <p class="card-text text-center d-block fs-5 m-0"><%=p.getName()%></p>
-                    <p class="card-text text-center d-block fs-6 mt-1"><%=p.getPrice()%> đ</p>
+                    <p class="card-text text-center d-block fs-5 mt-1 text-info fw-bold"><%=OrderService.getInstance().formatNumber( p.getPrice())%></p>
                 </div>
             </div>
             <%
@@ -109,30 +115,7 @@ Created by IntelliJ IDEA.
                 }
         }
     %>
-
-        <!-- pagination -->
-        <div class="pagination d-flex justify-content-center mt-3">
-            <nav aria-label="...">
-                <ul class="pagination pagination-sm">
-                    <li class="page-item" aria-current="page">
-                        <button class="active page-link">1</button>
-                    </li>
-                    <li class="page-item"><button class="page-link" href="#">2</button></li>
-                    <li class="page-item"><button class="page-link" href="#">3</button></li>
-                </ul>
-            </nav>
-        </div>
     </div>
 
-    <script>
-        const pagination = document.querySelectorAll('.page-link');
-        pagination.forEach(item => {
-            item.addEventListener('click', function () {
-                pagination.forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                item.classList.add('active');
-            });
-        });
-    </script>
+
 </section>

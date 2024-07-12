@@ -226,7 +226,7 @@
                                                                            class="form-control form-control-lg"
                                                                            name="note"
                                                                            placeholder="Ghi Chú" size="1" minlength="10"
-                                                                           maxlength="10" />
+                                                                           maxlength="1000" />
 
                                                                 </div>
                                                             </div>
@@ -464,7 +464,7 @@
                 })
             },
             error: function (error){
-                alert('lay du lieu that bai')
+                alert('lay du lieu thanh pho that bai')
             }
 
         })
@@ -541,35 +541,36 @@
             alert("Bạn phải chọn thành pho trước");
         }
     }
-    //ham nay kiem tra gia tri trong o input phuong va lay du lieu tu servlet ve
-    function checkInputWard() {
-        if ($('#districtSeleted').val() === "" || $('#citySeleted').val() === "") {
-            alert("Bạn phải chọn theo thứ tự là thành phố trước, sau đó là quận/huyện");
-        } else {
-            $(document).ready(
-                function () {
-                    $.ajax({
-                            url: '/getshippingfee',
-                            method: 'GET',
-                            dataType: 'Json',
-                            data: {
-                                city: input_name_city.value,
-                                district: input_name_district.value,
-                                ward: input_name_district.value
-                            },
-                            success: function (response) {
-                                let announced_order = document.getElementById("announced-order")
-                                announced_order.innerHTML += response
-                            },
-                            error: function (error) {
-                                console.log('Lay du lieu khong thanh cong')
-                            }
-                        }
-                    )
-                }
-            )
-        }
-    }
+
+    // //ham nay kiem tra gia tri trong o input phuong va lay du lieu tu servlet ve
+    // function checkInputWard() {
+    //     if ($('#districtSeleted').val() === "" || $('#citySeleted').val() === "") {
+    //         alert("Bạn phải chọn theo thứ tự là thành phố trước, sau đó là quận/huyện");
+    //     } else {
+    //         $(document).ready(
+    //             function () {
+    //                 $.ajax({
+    //                         url: '/getshippingfee',
+    //                         method: 'GET',
+    //                         dataType: 'Json',
+    //                         data: {
+    //                             city: input_name_city.value,
+    //                             district: input_name_district.value,
+    //                             ward: input_name_district.value
+    //                         },
+    //                         success: function (response) {
+    //                             let announced_order = document.getElementById("announced-order")
+    //                             announced_order.innerHTML += response
+    //                         },
+    //                         error: function (error) {
+    //                             console.log('Lay du lieu khong thanh cong')
+    //                         }
+    //                     }
+    //                 )
+    //             }
+    //         )
+    //     }
+    // }
 
 </script>
 </html>
