@@ -202,14 +202,14 @@
                                     method: 'GET',
                                     dataType: 'JSON',
                                     data: {id:$row.prop('id') },
-                                    success: function(success) {
+                                    success: res => {
+                                        console.log(res)
                                         Swal.fire({
                                             title: "Xóa thành công!",
                                             text: "Sản phẩm đã được xóa.",
                                             icon: "success"
-                                        });
-
-                                       $row.hide()
+                                        })
+                                        $row.hide()
                                     }
 
                                 })

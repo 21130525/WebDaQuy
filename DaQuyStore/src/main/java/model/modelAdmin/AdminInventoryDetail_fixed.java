@@ -1,4 +1,7 @@
 package model.modelAdmin;
+
+import java.sql.Timestamp;
+
 /*
 class này dùng để đại diện cho việc lấy số lượng sản phẩm do class AdminInventoryDetail bị lỗi khi lấy dữ liệu
  */
@@ -8,8 +11,16 @@ public class AdminInventoryDetail_fixed {
     private String product_name;
     private int total_quantity;
     private String status;
-
+    private Timestamp created_at;
     public AdminInventoryDetail_fixed() {
+    }
+
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
     public int getProduct_id() {
@@ -44,13 +55,5 @@ public class AdminInventoryDetail_fixed {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "AdminInventoryDetail_v2_fixed{" +
-                "product_id=" + product_id +
-                ", product_name='" + product_name + '\'' +
-                ", total_quantity=" + total_quantity +
-                ", status='" + status + '\'' +
-                '}';
-    }
+
 }
