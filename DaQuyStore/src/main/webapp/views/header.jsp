@@ -19,6 +19,7 @@
 
 <!-- font owesome -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/font/fontawesome-free-6.4.2/css/all.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <!-- font -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet">
@@ -26,8 +27,8 @@
       rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <!-- style -->
 <style>
     header {
@@ -99,7 +100,7 @@
                         </ul>
                     </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Liên hệ</a>
+                    <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/sendmail">Liên hệ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính
@@ -194,7 +195,6 @@
                 </li>
                 <%}%>
             </ul>
-
         </div>
     </div>
 </header>
