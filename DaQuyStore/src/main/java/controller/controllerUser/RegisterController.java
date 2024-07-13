@@ -170,7 +170,8 @@ public class RegisterController extends HttpServlet {
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
         if(registerService.insertUser(u,"register account google",ipAddress)){
             session.setAttribute("user", u);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher(req.getContextPath()+"/views/index.jsp");
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher(req.getContextPath()+"/views/index.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/index.jsp");
             requestDispatcher.forward(req, resp);
         }
     }

@@ -39,7 +39,8 @@
         background-color: #0069d9;
         border-color: #0062cc;
     }
-    #table_id_wrapper{
+
+    #table_id_wrapper {
         overflow-x: auto;
     }
 </style>
@@ -113,12 +114,15 @@
         </div>
         <div class="col py-3" style="width: 70%">
             <!--form chỉnh sửa thông tin sản phẩm-->
+            <h2 style="color: #A80F23">Vui lòng không thay đổi ID của sản phẩm!Nếu thay đổi và báo lỗi,hãy liên hệ để
+                giải quyết</h2>
             <h2>Thông tin sản phẩm</h2>
             <form method="post" action="${pageContext.request.contextPath}/updateproduct_admin"
                   enctype="multipart/form-data" id="form">
                 <div class="form-group">
                     <label for="id">Mã sản phẩm:</label>
-                    <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id"  value="<%= session.getAttribute("id")%>" >
+                    <input type="text" class="form-control" id="id" placeholder="STT Sản phẩm" name="id"
+                           value="<%= session.getAttribute("id")%>">
                 </div>
                 <div class="form-group">
                     <label for="productName">Tên sản phẩm:</label>
@@ -194,11 +198,13 @@
                         <label class="form-check-label" for="ruby">Ruby</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="aquamarine" name="productType" value="Aquamarine">
+                        <input type="radio" class="form-check-input" id="aquamarine" name="productType"
+                               value="Aquamarine">
                         <label class="form-check-label" for="aquamarine">Aquamarine</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="tourmaline" name="productType" value="Tourmaline">
+                        <input type="radio" class="form-check-input" id="tourmaline" name="productType"
+                               value="Tourmaline">
                         <label class="form-check-label" for="tourmaline">Tourmaline</label>
                     </div>
                     <div class="form-check-inline">
@@ -222,7 +228,8 @@
                         <label class="form-check-label" for="garnet">Garnet</label>
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="emerald" name="productType" value="Ngọc lục bảo">
+                        <input type="radio" class="form-check-input" id="emerald" name="productType"
+                               value="Ngọc lục bảo">
                         <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
                     </div>
                     <div class="form-check-inline">

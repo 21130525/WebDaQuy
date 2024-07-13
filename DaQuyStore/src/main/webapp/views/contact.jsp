@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8" type="text/html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,
-    minimum-scale=1,maximum-scale=1, user-scalable-no">
+    minhttps://github.com/21130525/WebDaQuy/pull/67/conflict?name=DaQuyStore%252Fsrc%252Fmain%252Fwebapp%252Fviews%252Fheader.jsp&ancestor_oid=f725cab35f1ddb896f868d6ec2cca469fd325e30&base_oid=1b57d0fd567e2b1220f00b063858d6c21d49f61b&head_oid=63aab9405a073621a9aa847b179fe65f11b92e54imum-scale=1,maximum-scale=1, user-scalable-no">
     <title>Liên hệ</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css" type="text/css">
 </head>
@@ -49,7 +49,6 @@
                 width="100%" height="auto" style="border:0;" allowfullscreen=""
                 loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-</div>
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
