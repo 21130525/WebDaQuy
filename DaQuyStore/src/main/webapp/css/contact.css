@@ -12,13 +12,16 @@ body{
     align-items: center;
     font-family: 'Poppins', sans-serif;
 }
-
+body{
+    background-color: #F1E88B;
+}
 .contact-wrap{
     width: 90%;
     height: auto;
     margin: auto;
     display:flex;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .contact-in{
@@ -31,7 +34,7 @@ body{
 }
 .contact-in:nth-child(2){
     flex:45%;
-    background: #c31432;
+    background: #a89a58;
 
 }
 .contact-in:nth-child(3){
