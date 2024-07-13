@@ -147,14 +147,18 @@
                 </ul>
 
             </div>
+
             <div class="row thanhToan">
-                <button class="col me-2 btn btn-outline-warning fw-bold">
+                <button id="btnAddCart" class="col me-2 btn btn-outline-info fw-bold">
                     them vao gio
                 </button>
-                <button class="col  btn btn-outline-warning fw-bold">
-<%--                    <%=request.getContextPath()%>/order?id=<%=p.getId()%>&num=1" --%>
-                    Mua
-                </button>
+                <form class="col"  action="order" method="post">
+                    <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+                    <input id="inputNum" type="hidden" name="num" value="1">
+                    <button id="btnBuy" class="w-100  btn btn-outline-info fw-bold"  type="button">
+                        Mua
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -267,6 +271,29 @@
         var largeImage = document.getElementById('largeImage');
         largeImage.style.display = 'none';
     }
+    $('#btnBuy').click(function (){
+
+        Swal.fire({
+            title: 'Nhập số lượng sản phẩm',
+            input: 'number',
+            inputValue: 1,
+            showCancelButton: true,
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+                if (!value || value < 1) {
+                    return 'Số lượng không hợp lệ';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var newQuantity = parseInt(result.value);
+                $('#inputNum').val(newQuantity);
+                $('#btnBuy').attr('type','submit');
+                $(this).closest('form').submit();
+            }
+        });
+    })
 </script>
 </body>
 </html>
