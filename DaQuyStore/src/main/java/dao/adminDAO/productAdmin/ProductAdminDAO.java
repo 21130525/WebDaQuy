@@ -83,7 +83,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
     @Override
     public ArrayList select(AdminProduct obj) throws SQLException {
         ArrayList<AdminProduct_fixed> products = new ArrayList<>();
-        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where products.status_deleted='chưa xóa'";
+        String sql = "Select products.id,categories.category_name,products.product_name,products.price,products.status,products.sale,products.hot from products join categories on products.category_id=categories.id where products.status_deleted='chưa xóa' order by id asc ";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {

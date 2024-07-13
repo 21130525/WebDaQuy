@@ -97,13 +97,6 @@
         </div>
         <div class="col py-3" style="width: 70%">
             <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Mục lục</option>
-                <option value="1">Loại</option>
-                <option value="2">Giá</option>
-                <option value="3">Bán chạy</option>
-                <option value="4">Giảm gia</option>
-            </select>
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>

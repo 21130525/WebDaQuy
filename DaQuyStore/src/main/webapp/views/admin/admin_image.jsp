@@ -97,6 +97,8 @@
             </div>
         </div>
         <div class="col py-3" style="width: 70%">
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
+
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
@@ -125,6 +127,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $("#table_id").DataTable()
@@ -220,5 +225,11 @@
     })
 
 </script>
+<script>
+    function converttoExcel(){
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table"));
+    }
 
+</script>
 </html>
