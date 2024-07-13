@@ -97,7 +97,7 @@
                         </ul>
                     </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Liên hệ</a>
+                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/contact.jsp">Liên hệ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính
