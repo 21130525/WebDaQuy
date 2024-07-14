@@ -234,7 +234,7 @@
                                 }
                         });
                     });
-                    $row.append($('<td>').append($edit,$trash));
+                    $row.append($('<td>').append($edit));
                     $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },
