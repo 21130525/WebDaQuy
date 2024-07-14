@@ -54,7 +54,7 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
         ps.setString(8, user.getAddress());
         ps.setString(9, user.getAvatar());
         ps.setString(10, user.getRole());
-        ps.setString(11, user.getStatus());
+        ps.setString(11, "chưa xóa");
         ps.setString(12, user.getTypeLogin());
 
         int res = ps.executeUpdate();

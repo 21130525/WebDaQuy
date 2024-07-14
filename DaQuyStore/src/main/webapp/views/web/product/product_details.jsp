@@ -1,5 +1,7 @@
 <%@ page import="model.Product" %>
-<%@ page import="model.Product_Detail" %><%--
+<%@ page import="model.Product_Detail" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 1/5/2024
@@ -74,6 +76,7 @@
     </style>
 </head>
 <body>
+<% NumberFormat numberFormat=NumberFormat.getCurrencyInstance(new Locale("vi","VN"));%>
 <%
     Product_Detail p = (Product_Detail) request.getAttribute("product_detail");
 %>
@@ -113,7 +116,7 @@
             <div class="line"></div>
 
             <div class="gia fs-4 fw-bold my-4">
-               <%=p.getPrice()%>
+               <%= numberFormat.format(p.getPrice())%>
             </div>
             <div class="moTa">
 <%--                <p class="lh-base fw-bold">--%>
@@ -126,7 +129,7 @@
                 <ul>
                     <li>
                         <p class="fs-6">
-                            Ruby tự nhiên 100%
+                            Đá tự nhiên 100%
                         </p>
                     </li>
                     <li>
@@ -149,8 +152,10 @@
             </div>
 
             <div class="row thanhToan">
-                <button id="btnAddCart" class="col me-2 btn btn-outline-info fw-bold">
-                    them vao gio
+
+                <button class="col me-2 btn btn-outline-warning fw-bold">
+                    Thêm vào giỏ
+
                 </button>
                 <form class="col"  action="order" method="post">
                     <input type="hidden" name="id" value="<%=request.getParameter("id")%>">

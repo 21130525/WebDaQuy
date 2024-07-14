@@ -48,6 +48,8 @@ public class User implements IModel {
         setData();
     }
 
+
+
     private void setData() {
         this.data = this;
     }
