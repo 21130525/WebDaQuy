@@ -97,6 +97,14 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
+                    <% if(session.getAttribute("user")!=null){%>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/admin_logout"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-door-open"></i><span
+                                class="ms-1 d-none d-sm-inline">Đăng xuất</span>
+                        </a>
+                    </li><%}%>
                 </ul>
 
                 <hr>
@@ -173,21 +181,21 @@
                             $row.append($cell);
                         });
 
-                        var $delete = $('<i class="fa-solid fa-trash"></i>').click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
+                        <%--var $delete = $('<i class="fa-solid fa-trash"></i>').click(function () {--%>
+                        <%--    $.ajax({--%>
+                        <%--        url: '<%=request.getContextPath()%>/deleteorder',--%>
+                        <%--        method: 'GET',--%>
+                        <%--        data: {id: $row.prop('id')},--%>
+                        <%--        dataType: 'JSON',--%>
+                        <%--        success: function (response) {--%>
+                        <%--            alert('Xóa thành công');--%>
+                        <%--            $row.hide();--%>
+                        <%--        },--%>
+                        <%--        error: function (error) {--%>
+                        <%--            alert('Xóa không thành công');--%>
+                        <%--        }--%>
+                        <%--    });--%>
+                        <%--});--%>
 
                         var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
                             Swal.fire({
@@ -229,7 +237,7 @@
                             });
                         });
 
-                        var $actionCell = $('<td>').append($delete, $edit);
+                        var $actionCell = $('<td>').append($edit);
                         $row.append($actionCell);
                         $tbody.append($row);
                     });
@@ -271,26 +279,26 @@
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
                         });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        // var $delete = $('<i class="fa-solid fa-trash"></i>');
                         var $edit = $('<i class="fa-solid fa-wrench"></i>');
                         var $cell = $('<td>');
-                        $cell.append($delete, $edit);
+                        $cell.append( $edit);
                         $row.append($cell);
-                        $delete.click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
+                        <%--$delete.click(function () {--%>
+                        <%--    $.ajax({--%>
+                        <%--        url: '<%=request.getContextPath()%>/deleteorder',--%>
+                        <%--        method: 'GET',--%>
+                        <%--        data: {id: $row.prop('id')},--%>
+                        <%--        dataType: 'JSON',--%>
+                        <%--        success: function (response) {--%>
+                        <%--            alert('Xóa thành công');--%>
+                        <%--            $row.hide();--%>
+                        <%--        },--%>
+                        <%--        error: function (error) {--%>
+                        <%--            alert('Xóa không thành công');--%>
+                        <%--        }--%>
+                        <%--    });--%>
+                        <%--});--%>
                         $edit.click(function () {
                             Swal.fire({
                                 title: "Bạn có chắc chắn không?",
@@ -457,10 +465,10 @@
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
                         });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        // var $delete = $('<i class="fa-solid fa-trash"></i>');
                         var $edit = $('<i class="fa-solid fa-wrench"></i>');
                         var $cell = $('<td>');
-                        $cell.append($delete, $edit);
+                        $cell.append( $edit);
                         $row.append($cell);
                         $delete.click(function () {
                             $.ajax({

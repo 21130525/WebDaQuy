@@ -88,6 +88,14 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
+                    <% if(session.getAttribute("user")!=null){%>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/admin_logout"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-door-open"></i><span
+                                class="ms-1 d-none d-sm-inline">Đăng xuất</span>
+                        </a>
+                    </li><%}%>
                 </ul>
 
 
