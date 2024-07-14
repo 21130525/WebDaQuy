@@ -1,5 +1,7 @@
 package controller;
 
+import connector.DAOConnection;
+import dao.userDAO.ProductDao;
 import model.Cart;
 
 import javax.servlet.ServletException;
@@ -7,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet("/QuantityInDeCre")
@@ -17,47 +21,42 @@ public class QuantityInDeCreController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("application/json");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String action = request.getParameter("action");
 
-        response.setContentType("text/html;charset=UTF-8");
-        try {
-            PrintWriter out = response.getWriter();
-            String action = request.getParameter("action");
-            int id = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
+        ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
 
-            ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+        int newQuantity = 0;
+        double total = 0;
 
-            if (action != null && id >= 1) {
-                if (action.equals("inc")) {
-                    for (Cart c : cart_list) {
-                        if (c.getId() == id) {
-                            int quantity = c.getQuantity();
-                            quantity++;
-                            c.setQuantity(quantity);
-                            response.sendRedirect("shoppingcart.jsp");
-
-                        }
+        if (cart_list != null) {
+            for (Cart c : cart_list) {
+                if (c.getId() == id) {
+                    if ("inc".equals(action)) {
+                        c.setQuantity(c.getQuantity() + 1);
+                    } else if ("dec".equals(action) && c.getQuantity() > 1) {
+                        c.setQuantity(c.getQuantity() - 1);
                     }
+                    newQuantity = c.getQuantity();
+                    break;
                 }
-                if (action != null && id >= 1) {
-                    if (action.equals("dec")) {
-                        for (Cart c : cart_list) {
-                            if (c.getId() == id) {
-                                int quantity = c.getQuantity();
-                                quantity--;
-                                c.setQuantity(quantity);
-                                break;
-
-                            }
-                        }
-                    }
-                    response.sendRedirect("shoppingcart.jsp");
-                }
-            } else {
-                response.sendRedirect("shoppingcart.jsp");
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            ProductDao dao = null;
+            try {
+                dao = new ProductDao(DAOConnection.getConnection());
+                total = dao.getTotalCartPrice(cart_list);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        PrintWriter out = response.getWriter();
+        out.print("{\"newQuantity\": " + newQuantity + ", \"newTotal\": " + total + "}");
+        out.flush();
+    }
+
 }
-}
+
