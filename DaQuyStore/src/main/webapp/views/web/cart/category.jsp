@@ -1,14 +1,13 @@
-<%@ page import="model.User" %>
-<%@ page import="dao.userDAO.ProductDao" %>
 <%@ page import="model.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.CategoryDao" %>
-<%@ page import="model.Category" %>
-<%@ page import="connector.DAOConnection" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="model.Cart" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="dao.userDAO.ProductDao" %>
+<%@ page import="connector.DAOConnection" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Category" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--
@@ -20,8 +19,7 @@
 --%>
 
 <%
-    DecimalFormat df = new DecimalFormat("#.##");
-    request.setAttribute("df", df);
+    NumberFormat format = NumberFormat.getInstance(new Locale("vn", "VN"));
     ProductDao dao = new ProductDao(DAOConnection.getConnection());
     ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
     List<Cart> cartProduct = dao.getCartProduct(cart_list);
@@ -30,6 +28,7 @@
     }
 
 %>
+
 <!doctype html>
 <html>
 <head>
@@ -39,7 +38,7 @@
     <link href="<%=request.getContextPath()%>/css/cate.css" rel="stylesheet" type="text/html">
     <style>
         .cate {
-            background-color: #f0f8ff; /* Màu nền tổng thể */
+            background-color: #f0f8ff;
             padding: 20px;
         }
 
@@ -97,13 +96,11 @@
             color: #007bff; /* Màu chữ khi hover */
             font-weight: bolder; /* Làm cho chữ đậm hơn khi hover */
         }
+
     </style>
 </head>
-
 <body>
-<div class="page-header">
-    <jsp:include page="../../header.jsp"/>
-</div>
+<jsp:include page="../../header.jsp"/>
 <div class="cate">
     <section class="categories">
         <div class="container-fluid">
@@ -124,12 +121,11 @@
         </div>
     </section>
 </div>
-
 <div class="cate">
     <div class="container-fluid">
         <h3 style="text-align: center; font-size:50px;font-weight: bold ">Danh sách sản phẩm</h3>
         <div class="row">
-            <% List<Product> listProduct = (List<Product>) request.getAttribute("listA");
+            <% List<Product> listProduct = (List<Product>) request.getAttribute("listP");
                 for (Product p : listProduct) {
             %>
             <div class="col-md-3 my-3">
@@ -143,22 +139,22 @@
                             </p>
                         </h5>
                         <h6 class="price">
-                            <p><%=p.getPrice()%>
+                            <p><%= format.format(p.getPrice()) %>đ
                             </p>
                         </h6>
                         <div class="mt-3 d-flex justify-content-between">
                             <a class="btn btn-primary btn-custom" href="#"
                                style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Mua ngay</a>
-                            <a class="btn btn-dark btn-custom" href="AddToCartController?id=<%=p.getId()%>"
-                               style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Giỏ hàng</a>
+                            <a class="btn btn-dark btn-custom add-to-cart" href="#"
+                               data-id="<%=p.getId()%>" style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Giỏ
+                                hàng</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <%
-                }
-            %>
+            <% } %>
         </div>
+        <!-- Phân trang -->
         <div class="text-center">
             <nav aria-label="Page">
                 <ul class="pagination justify-content-center">
@@ -170,15 +166,38 @@
                 </ul>
             </nav>
         </div>
+
     </div>
 </div>
-
-<%--<div class="page-footer">--%>
-<%--    <jsp:include page="${request.getContextPath()}/views/footer.jsp"/>--%>
-<%--</div>--%>
 <!-- JS-->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".add-to-cart").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+            $.ajax({
+                url: '<%=request.getContextPath()%>/AddToCartController',
+                type: 'GET',
+                data: {id: id},
+                success: function (response) {
+                    if (response.status === "success") {
+                        alert("Sản phẩm đã được thêm vào giỏ hàng.");
+                    } else if (response.status === "exists") {
+                        alert("Sản phẩm đã tồn tại trong giỏ hàng.");
+                    } else {
+                        alert("Có lỗi xảy ra, vui lòng thử lại.");
+                    }
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra, vui lòng thử lại.");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
