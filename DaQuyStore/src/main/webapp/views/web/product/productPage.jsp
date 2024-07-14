@@ -72,6 +72,8 @@ To change this template use File | Settings | File Templates.
 <body>
 
 <jsp:include page="../../header.jsp"/>
+<!-- link bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 <section class="list-product container mt-3">
     <p class="border-bottom fs-4">Sản Phẩm</p>
@@ -106,9 +108,9 @@ To change this template use File | Settings | File Templates.
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
                         <form action="../../../order" method="Post">
-                            <input type="hidden" name="id" value="<%=p.getId()%>">
+                            <input id="inputNum" type="hidden" name="id" value="<%=p.getId()%>">
                             <input type="hidden" name="num" value="1">
-                            <button class="btn rounded-0 btn-d-none p-0 fw-bold" type="submit">mua</button>
+                            <button id="btnBuy" class="btnBuy btn rounded-0 btn-d-none p-0 fw-bold" type="button">mua</button>
                         </form>
                         <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
                     </div>
@@ -140,6 +142,10 @@ To change this template use File | Settings | File Templates.
             </nav>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
     <script>
         const pagination = document.querySelectorAll('.page-link');
         pagination.forEach(item =>{
@@ -149,6 +155,29 @@ To change this template use File | Settings | File Templates.
                 })
                 item.classList.add('active')
             })
+        })
+        $('.btnBuy').click(function (){
+            var button = this
+            Swal.fire({
+                title: 'Nhập số lượng sản phẩm',
+                input: 'number',
+                inputValue: 1,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                inputValidator: (value) => {
+                    if (!value || value < 1) {
+                        return 'Số lượng không hợp lệ';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var newQuantity = parseInt(result.value);
+                    $('#inputNum').val(newQuantity);
+                    $(button).attr('type','submit');
+                    $(button).closest('form').submit();
+                }
+            });
         })
     </script>
 </section>
