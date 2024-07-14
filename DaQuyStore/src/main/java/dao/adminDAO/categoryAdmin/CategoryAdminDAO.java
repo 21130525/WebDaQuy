@@ -24,6 +24,6 @@ public class CategoryAdminDAO {
     }
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(CategoryAdminDAO.getInstance().getProductType("Ruby"));
+        System.out.println(CategoryAdminDAO.getInstance().getProductType("Aquamarine"));
     }
 }

@@ -90,13 +90,22 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
+                    <% if(session.getAttribute("user")!=null){%>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/admin_logout"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-door-open"></i><span
+                                class="ms-1 d-none d-sm-inline">Đăng xuất</span>
+                        </a>
+                    </li><%}%>
                 </ul>
 
                 <hr>
 
             </div>
         </div>
-        <div class="col py-3" style="70%">
+        <div class="col py-3" style="width: 70%">
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
             <table id="table_id" class="table table-striped">
                 <thead>
                 <tr>
@@ -124,6 +133,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
 <script>
     $(document).ready(function () {
         $("#submenu_1").hide();
@@ -190,5 +200,12 @@
     $(document).ready(function () {
         $('.dt-empty').hide()
     })
+</script>
+<script>
+    function converttoExcel(){
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table"));
+    }
+
 </script>
 </html>

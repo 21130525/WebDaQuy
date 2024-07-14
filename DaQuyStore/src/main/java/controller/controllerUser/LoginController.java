@@ -78,6 +78,9 @@ public class LoginController  extends HttpServlet {
                         req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
                     } else if (user.getRole().equals("user")) {
                         req.getRequestDispatcher("/views/index.jsp").forward(req, resp);
+                    }else if(user.getRole().equals("prohibit")){
+                        session.removeAttribute("user");
+                        req.getRequestDispatcher("/views/notification/notificationThenCheckProhibit.jsp").forward(req,resp);
                     }
                 }
             } else {
@@ -101,6 +104,9 @@ public class LoginController  extends HttpServlet {
                 req.getRequestDispatcher("/views/admin/admin.jsp").forward(req, resp);
             } else if (account.getRole().equals("user")) {
                 req.getRequestDispatcher("/home").forward(req,resp);
+            }else if(account.getRole().equals("prohibit")){
+                session.removeAttribute("user");
+                req.getRequestDispatcher("/views/notification/notificationThenCheckProhibit.jsp").forward(req,resp);
             }
         }else{
             req.setAttribute("notify","tài khoản không tồn tại!");

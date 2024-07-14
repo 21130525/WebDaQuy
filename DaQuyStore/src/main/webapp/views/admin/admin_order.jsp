@@ -97,18 +97,27 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
+                    <% if(session.getAttribute("user")!=null){%>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/admin_logout"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-door-open"></i><span
+                                class="ms-1 d-none d-sm-inline">Đăng xuất</span>
+                        </a>
+                    </li><%}%>
                 </ul>
 
                 <hr>
             </div>
         </div>
         <div class="col py-3" style="width: 70%;">
+
             <button class="button-status text-black" name="btn" value="Chờ xác nhận" id="waiting">Chờ xác nhận</button>
             <button class="button-status text-black" name="btn" value="Cho giao" id="waiting-giving">Đang chờ giao</button>
             <button class="button-status text-black" name="btn" value="Đang giao" id="giving">Đang giao</button>
             <button class="button-status text-black" name="btn" id="gived" value="Đã giao">Đã giao</button>
             <button class="button-status text-black" name="btn" id="canceled" value="Hủy">Hủy</button>
-
+            <button type="button" class="btn btn-primary" id="convert" onclick="converttoExcel()">Xuất Excel</button>
 
             <table id="table_id" class="table table-striped">
                 <thead>
@@ -135,6 +144,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<%=request.getContextPath()%>/js/table2excel.js"></script>
+
 <script>
     var $tbody = $('#body')
     $(document).ready(function () {
@@ -170,21 +181,21 @@
                             $row.append($cell);
                         });
 
-                        var $delete = $('<i class="fa-solid fa-trash"></i>').click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
+                        <%--var $delete = $('<i class="fa-solid fa-trash"></i>').click(function () {--%>
+                        <%--    $.ajax({--%>
+                        <%--        url: '<%=request.getContextPath()%>/deleteorder',--%>
+                        <%--        method: 'GET',--%>
+                        <%--        data: {id: $row.prop('id')},--%>
+                        <%--        dataType: 'JSON',--%>
+                        <%--        success: function (response) {--%>
+                        <%--            alert('Xóa thành công');--%>
+                        <%--            $row.hide();--%>
+                        <%--        },--%>
+                        <%--        error: function (error) {--%>
+                        <%--            alert('Xóa không thành công');--%>
+                        <%--        }--%>
+                        <%--    });--%>
+                        <%--});--%>
 
                         var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
                             Swal.fire({
@@ -226,7 +237,7 @@
                             });
                         });
 
-                        var $actionCell = $('<td>').append($delete, $edit);
+                        var $actionCell = $('<td>').append($edit);
                         $row.append($actionCell);
                         $tbody.append($row);
                     });
@@ -268,26 +279,26 @@
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
                         });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        // var $delete = $('<i class="fa-solid fa-trash"></i>');
                         var $edit = $('<i class="fa-solid fa-wrench"></i>');
                         var $cell = $('<td>');
-                        $cell.append($delete, $edit);
+                        $cell.append( $edit);
                         $row.append($cell);
-                        $delete.click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
+                        <%--$delete.click(function () {--%>
+                        <%--    $.ajax({--%>
+                        <%--        url: '<%=request.getContextPath()%>/deleteorder',--%>
+                        <%--        method: 'GET',--%>
+                        <%--        data: {id: $row.prop('id')},--%>
+                        <%--        dataType: 'JSON',--%>
+                        <%--        success: function (response) {--%>
+                        <%--            alert('Xóa thành công');--%>
+                        <%--            $row.hide();--%>
+                        <%--        },--%>
+                        <%--        error: function (error) {--%>
+                        <%--            alert('Xóa không thành công');--%>
+                        <%--        }--%>
+                        <%--    });--%>
+                        <%--});--%>
                         $edit.click(function () {
                             Swal.fire({
                                 title: "Bạn có chắc chắn không?",
@@ -454,10 +465,10 @@
                             var $cell = $('<td>').text(value_item);
                             $row.append($cell);
                         });
-                        var $delete = $('<i class="fa-solid fa-trash"></i>');
+                        // var $delete = $('<i class="fa-solid fa-trash"></i>');
                         var $edit = $('<i class="fa-solid fa-wrench"></i>');
                         var $cell = $('<td>');
-                        $cell.append($delete, $edit);
+                        $cell.append( $edit);
                         $row.append($cell);
                         $delete.click(function () {
                             $.ajax({
@@ -523,5 +534,11 @@
             });
         });
     })
+</script>
+<script>
+    function converttoExcel(){
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("table"));
+    }
 </script>
 </html>

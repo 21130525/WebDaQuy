@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import model.modelAdmin.AdminSummary;
+import model.modelAdmin.AdminSummary_fixed;
 import service.manageAdmin.manageSummary.GetSummaryService;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class ManageSummaryController extends HttpServlet {
         Gson gson = new Gson();
         GetSummaryService getSummaryService = new GetSummaryService();
         try {
-            ArrayList<AdminSummary> list=getSummaryService.getList();
+            ArrayList<AdminSummary_fixed> list=getSummaryService.getList();
             String json=gson.toJson(list);
             JsonArray jsonArray= JsonParser.parseString(json).getAsJsonArray();
             resp.getWriter().println(jsonArray);
