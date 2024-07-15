@@ -53,22 +53,22 @@
                                             <div class="accordion-body">
                                                 <!-- thong tin khach hang -->
                                                 <div>
-                                                    <div class="d-flex">
+                                                    <div class="d-flex btn-group btn-group-toggle" data-toggle="buttons">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio"
-                                                                   name="gender_nam" id="gender_nam"
-                                                                   value="Nam"
-                                                                <%if(user != null){%>
-                                                                    <%=(user.getGender().equalsIgnoreCase("nam"))? "checked":"" %>
+                                                                   name="gender" id="gender_nam"
+                                                                   value="Nam" required
+                                                                <%if(user != null && user.getGender()!= null){%>
+                                                                    <%=((user.getGender()).equalsIgnoreCase("nam"))? "checked":"" %>
                                                                 <%}%>>
                                                             <label class="form-check-label" for="gender_nam">anh <span
                                                                     class="text-danger">*</span></label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio"
-                                                                   name="gender_nu" id="gender_nu"
-                                                                   value="Nu"
-                                                                <%if(user != null){%>
+                                                                   name="gender" id="gender_nu"
+                                                                   value="Nu" required
+                                                                <%if(user != null && user.getGender()!= null){%>
                                                                     <%=(user.getGender().equalsIgnoreCase("nu"))? "checked":"" %>
                                                                 <%}%>>
                                                             <label class="form-check-label" for="gender_nu">chi<span
@@ -87,9 +87,9 @@
                                                                        name="nameCustommer"
                                                                        placeholder="Họ và Tên (Bắt Buộc)"
                                                                 <%
-                                                                    if(user != null){
+                                                                    if(user != null && user.getFullName()!= null){
                                                                 %>
-                                                                    value="<%=user.getFullName()%>"
+                                                                    value="<%=(!user.getFullName().equalsIgnoreCase("null"))?user.getFullName():""%>"
                                                                  <%
                                                                     }
                                                                  %>
@@ -100,7 +100,7 @@
                                                                 <input type="text" class="form-control" id="email"
                                                                        placeholder="email" name="email"
                                                                     <%
-                                                                    if(user != null){
+                                                                    if(user != null ){
                                                                 %>
                                                                        value="<%=user.getEmail()%>"
                                                                     <%
@@ -115,15 +115,14 @@
                                                                 <label for="phoneNumber" class="form-label">Số Điện
                                                                     Thoại</label>
                                                                 <input type="text" class="form-control" id="phoneNumber"
-                                                                       placeholder="Số Điện Thoại (Bắt Buộc)" name="phoneNumber"
+                                                                       placeholder="Số Điện Thoại (Bắt Buộc)" name="phoneNumber" required
                                                                     <%
-                                                                    if(user != null){
-                                                                         if(user.getPhoneNumber()!=null)
-                                                                %>
-                                                                       value="<%=user.getPhoneNumber()%>"
+                                                                    if(user != null && user.getPhoneNumber()!= null){
+                                                                    %>
+                                                                       value="<%=!user.getPhoneNumber().equalsIgnoreCase("null")?user.getPhoneNumber():""%>"
                                                                     <%
                                                                     }
-                                                                 %>
+                                                                    %>
                                                                 >
                                                             </div>
                                                             <div class="mb-3">
@@ -356,7 +355,6 @@
     $(document).ready(function (){
         checkAndCollapse();
         fetchCitiesServlet();
-
     });
     // collapse yeu cau phai co ten va sdt
     $('#btnConfirmInfCustommer').click(function (e) {
@@ -418,6 +416,8 @@
         $('#NhanTaiCuaHang').addClass('d-none')
         $('#accept_giaohangtannoi').prop('required',true)
         $('#accept_nhantaicuahang').removeAttr('required')
+        $('#accept_nhantaicuahang').prop('checked',false)
+
 
         $('#citySeleted').prop('required',true)
         $('#wardSeleted').prop('required',true)
@@ -435,6 +435,8 @@
         $('#NhanTaiCuaHang').removeClass('d-none')
         $('#accept_nhantaicuahang').prop('required',true)
         $('#accept_giaohangtannoi').removeAttr('required')
+        $('#accept_giaohangtannoi').prop('checked',false)
+
 
         $('#citySeleted').removeAttr('required')
         $('#wardSeleted').removeAttr('required')

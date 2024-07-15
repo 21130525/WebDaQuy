@@ -1,6 +1,8 @@
 <%@ page import="model.Product" %>
 
-<%@ page import="java.util.Map" %><%--
+<%@ page import="java.util.Map" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %><%--
 
 <%@ page import="model.Product_Detail" %>
 <%@ page import="java.text.NumberFormat" %>

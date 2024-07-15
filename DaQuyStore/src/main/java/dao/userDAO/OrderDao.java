@@ -84,11 +84,67 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
 
     @Override
     public Order selectById(String id, String action, String ipAddress) throws SQLException {
-        return null;
+        Order order = null;
+        String sql = "SELECT o.id AS orderID ,o.total_price,o.`status`,o.statusPayment,o.typeShip,o.TypePayment,\n" +
+                "                p.id AS product_id, p.product_name,p.price,\n" +
+                "                od.quantity_total,                          \n" +
+                "                i.img_main  FROM orders o\n" +
+                "                JOIN order_details od ON o.id = od.order_id\n" +
+                "                JOIN products p ON od.product_id = p.id\n" +
+                "                JOIN product_image i ON p.image_product = i.id\n" +
+                "                WHERE o.id = ?";
+
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+
+            String orderId = id;
+            double totalPrice = rs.getDouble("total_price");
+            String status = rs.getString("status");
+            String statusPayment = rs.getString("statusPayment");
+            int quantityTotal = rs.getInt("quantity_total");
+            int idproduct = rs.getInt("product_id");
+            double price = rs.getDouble("price");
+            String productName = rs.getString("product_name");
+            String imgMain = rs.getString("img_main");
+            String typeShip = rs.getString("typeShip");
+            String typePayment = rs.getString("TypePayment");
+            if(order == null) {
+                order = new Order();
+                order.setId(Integer.parseInt(orderId));
+                order.setTotal_price(totalPrice);
+                order.setStatus(status);
+                order.setStatusPayment(statusPayment);
+                order.setTypeShip(typeShip);
+                order.setTypePayment(typePayment);
+
+                Product p = new Product();
+                p.setId(idproduct);
+                p.setName(productName);
+                p.setImg_main(imgMain);
+                p.setPrice(price);
+
+                Map<Product , Integer> products = new HashMap<Product , Integer>();
+                products.put(p, quantityTotal);
+
+                order.setProducts(products);
+            }else{
+                Product p = new Product();
+                p.setId(idproduct);
+                p.setName(productName);
+                p.setImg_main(imgMain);
+                p.setPrice(price);
+                order.getProducts().put(p, quantityTotal);
+            }
+        }
+        return order;
     }
 
     @Override
     public Order selectByName(String name, String action, String ipAddress) throws SQLException {
+
         return null;
     }
 
@@ -107,8 +163,8 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
     }
 
     public int insertAndGetOrderID(Order order, String taoDonHang, String remoteAddr) throws SQLException {
-        String sql = "INSERT INTO orders ( total_price, status, user_id, statusPayment, typeShip, address, shipCost, TypePayment, note) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO orders ( total_price, status, user_id, statusPayment, typeShip, address, shipCost, note) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?,  ?)";
 
 
         PreparedStatement pstmt = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -120,8 +176,8 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
         pstmt.setString(5, order.getTypeShip());
         pstmt.setString(6, (order.getAddress()==null)?"":order.getAddress());
         pstmt.setFloat(7, order.getShiping());
-        pstmt.setString(8, (order.getTypePayment()==null)?"":order.getTypePayment());
-        pstmt.setString(9, (order.getNote()!=null)?order.getNote():"");
+//        pstmt.setString(8, (order.getTypePayment()==null)?"":order.getTypePayment());
+        pstmt.setString(8, (order.getNote()!=null)?order.getNote():"");
 
         int rowsAffected = pstmt.executeUpdate();
         String idOrder = "";
@@ -166,7 +222,11 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
                 "JOIN product_image i ON p.image_product = i.id\n" +
                 "WHERE o.user_id =  ?";
         if(!type.equals("")){
-            sql += " AND o.status=?";
+            if(type.equalsIgnoreCase("Chưa thanh toán") || type.equalsIgnoreCase("đã thanh toán")){
+                sql += " AND o.statusPayment = ?";
+            }else{
+                sql += " AND o.status=?";
+            }
         }
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1, id);
@@ -232,7 +292,7 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
     }
 
     public static void main(String[] args) throws SQLException {
-        OrderDao.getInstance().selectOrderByidUser("27","");
+        System.out.println(OrderDao.getInstance().selectById("207","",""));
     }
 
 }
