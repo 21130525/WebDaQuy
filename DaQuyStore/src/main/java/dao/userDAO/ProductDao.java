@@ -86,14 +86,14 @@ public class ProductDao implements IDAO<Product> {
             created_at = rs.getDate("created_at");
             updated_at = rs.getDate("updated_at");
             deleted_at = rs.getDate("deleted_at");
-            img_id = rs.getInt("image_product");
-            if (img_id != 0) {
+//            img_id = rs.getInt("image_product");
+//            if (img_id != 0) {
                 img_main = rs.getString("img_main");
                 img_1 = rs.getString("img_1");
                 img_2 = rs.getString("img_2");
                 img_3 = rs.getString("img_3");
                 img_4 = rs.getString("img_4");
-            }
+//            }
 
             Map<String, String> inf = ProductService.StringToMap(infor);
             product = new Product(product_id, category_id, name, price, status, sale, hot, description, inf, created_at, updated_at, deleted_at, img_main, img_1, img_2, img_3, img_4);
