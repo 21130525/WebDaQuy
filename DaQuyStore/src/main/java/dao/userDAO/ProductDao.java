@@ -67,8 +67,8 @@ public class ProductDao implements IDAO<Product> {
         double price;
         Date created_at, updated_at, deleted_at;
         int sale, hot;
-        String sql = "SELECT * FROM products p\n" +
-                "JOIN product_image i ON p.image_product = i.id  " +
+        String sql = "SELECT * FROM products p \n" +
+                "JOIN product_image i ON p.id = i.id  " +
                 " where p.id = ? ";
         PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
         ps.setString(1, id);
