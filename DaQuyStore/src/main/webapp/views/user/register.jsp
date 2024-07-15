@@ -114,14 +114,14 @@
                             <label for="password">Mật khẩu*:</label>
                             <br>
                             <input type="password" name="pass" placeholder="Mật khẩu" id="password" value=""
-                                   pattern="^.{3,15}$"
-                                   title="Mật khẩu phải chứa 3 đến 15 ký tự khong chứa khoản trắng và ký tự đặt biệt."
+                                   pattern="^.{8,15}$"
+                                   title="Mật khẩu phải chứa 8 đến 15 ký tự khong chứa khoản trắng và ký tự đặt biệt."
                                    required>
                             <label class=" mt-2" for="repeat">Nhập lại mật khẩu*:</label>
                             <br>
                             <input type="password" name="repeat" placeholder="Nhập lại mật khẩu" id="repeat" value=""
-                                   pattern="^.{3,15}$"
-                                   title="Mật khẩu phải chứa 3 đến 15 ký tự khong chứa khoản trắng và ký tự đặt biệt."
+                                   pattern="^.{8,15}$"
+                                   title="Mật khẩu phải chứa 8 đến 15 ký tự khong chứa khoản trắng và ký tự đặt biệt."
                                    required>
                             <br>
                         </div>

@@ -17,12 +17,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @WebServlet("/checkOut")
 public class CheckOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        req.setCharacterEncoding("UTF-8");
         Map<Product,Integer> listOrder = new HashMap<>();
         if(session.getAttribute("listOrder") != null) {
             listOrder = (HashMap<Product,Integer>) session.getAttribute("listOrder");
@@ -32,8 +34,7 @@ public class CheckOrderController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         // lay thong tin
-        String gender_nam = req.getParameter("gender_nam");
-        String gender_nu = req.getParameter("gender_nu");
+        String gender = req.getParameter("gender")!=null?req.getParameter("gender"):"";
         String full_name = req.getParameter("nameCustommer");
         String email = req.getParameter("email");
         String phone = req.getParameter("phoneNumber");
@@ -55,21 +56,35 @@ public class CheckOrderController extends HttpServlet {
         }else{
 //            da dang nhap va thay doi thong tin
             int count =0;
+            // email
             if(!user.getEmail().equals(email)){
                 count++;
             }
-            if(!user.getFullName().equalsIgnoreCase(full_name)){
+            // fuul name
+            if(user.getFullName() == null){
+                count++;
+                user.setFullName(full_name);
+            }else if(!user.getFullName().equalsIgnoreCase(full_name)){
                 count++;
                 user.setFullName(full_name);
             }
-            if(!user.getPhoneNumber().equals(phone)){
+            // phone
+            if(user.getPhoneNumber()== null){
+                count++;
+                user.setPhoneNumber(phone);
+            }else  if(!user.getPhoneNumber().equals(phone)){
                 count++;
                 user.setPhoneNumber(phone);
             }
-            String gender = (gender_nam.equalsIgnoreCase("nam")?gender_nam:gender_nu);
-            if(!user.getGender().equalsIgnoreCase(gender)){
-                count++;
-                user.setGender(gender);
+            // gender
+            if(!gender.equalsIgnoreCase("")){
+                if(user.getGender() == null){
+                    count++;
+                    user.setGender(gender);
+                }else if(!user.getGender().equalsIgnoreCase(gender)){
+                    count++;
+                    user.setGender(gender);
+                }
             }
 //             thay doi thong tin
             if(count>0){
@@ -84,7 +99,7 @@ public class CheckOrderController extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        Order order = new Order(user ,listOrder,"Cho xac nhan");
+        Order order = new Order(user ,listOrder,"chờ xác nhận");
         /**
          *  phan biet loai nhan hang
          *  - nhan hang tai cua hang
@@ -92,7 +107,7 @@ public class CheckOrderController extends HttpServlet {
          */
         if(accept_nhantaicuahang != null){
 //        nhan tai cua hang
-            order.setTypeShip("Pick up at the shop");
+            order.setTypeShip("Nhận tại của hàng");
             order.setStatusPayment("chưa thanh toán");
             if(note2!=null)order.setNote(note2);
         }else{
@@ -102,7 +117,7 @@ public class CheckOrderController extends HttpServlet {
             }else{
 //                TODO trang error
             }
-            order.setTypeShip("ship");
+            order.setTypeShip("giao hàng");
             order.setStatusPayment("chưa thanh toán");
             if(note!=null)order.setNote(note);
         }
