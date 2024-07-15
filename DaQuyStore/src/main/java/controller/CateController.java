@@ -31,8 +31,8 @@ public class CateController extends HttpServlet {
 
         //Hiển thị category
         CategoryDao daCa = new CategoryDao();
-        List<model.Category> list = null;
-        list = daCa.listCategory();
+        List<model.Category> listCate = null;
+        listCate = daCa.listCategory();
 
         //Phân trang
         ProductDao dao = new ProductDao();
@@ -44,8 +44,8 @@ public class CateController extends HttpServlet {
         }
         List<Product> listP = dao.pagingProduct(index);
 
-        req.setAttribute("listA",listP);
-        req.setAttribute("cate",list);
+        req.setAttribute("listP",listP);
+        req.setAttribute("cate",listCate);
         req.setAttribute("endP",endPage);
         req.setAttribute("tag",index);
         req.getRequestDispatcher("views/web/cart/category.jsp").forward(req,resp);

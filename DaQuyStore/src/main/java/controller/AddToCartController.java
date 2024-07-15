@@ -18,7 +18,7 @@ public class AddToCartController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ArrayList<Cart> cartList = new ArrayList<>();
 
@@ -33,8 +33,11 @@ public class AddToCartController extends HttpServlet {
             if (cart_list == null) {
                 cartList.add(cart);
                 session.setAttribute("cart-list", cartList);
-                response.sendRedirect("category.jsp");
-
+                if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                    out.print("{\"status\":\"success\"}");
+                } else {
+                    response.sendRedirect("category.jsp");
+                }
             } else {
                 cartList = cart_list;
                 boolean exist = false;
@@ -42,18 +45,23 @@ public class AddToCartController extends HttpServlet {
                 for (Cart c : cart_list) {
                     if (c.getId() == id) {
                         exist = true;
-                        out.println("<h3 style='color:crimson; text-align:center'>Item already exist in Cart.<a href='cart.jsp'>Go to Cart page</a></h3>");
-
+                        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                            out.print("{\"status\":\"exists\"}");
+                        } else {
+                            out.println("<h3 style='color:crimson; text-align:center'>Item already exists in Cart.<a href='shoppingcart.jsp'>Go to Cart page</a></h3>");
+                        }
+                        break;
                     }
                 }
                 if (!exist) {
                     cartList.add(cart);
-                    response.sendRedirect("category.jsp");
-
+                    if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                        out.print("{\"status\":\"success\"}");
+                    } else {
+                        response.sendRedirect("category.jsp");
+                    }
                 }
             }
-
         }
-
     }
 }

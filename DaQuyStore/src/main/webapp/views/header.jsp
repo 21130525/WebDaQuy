@@ -15,7 +15,6 @@
 <!-- link bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 <%-- font chu--%>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet">
@@ -24,6 +23,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <%-- switch alert--%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <!-- style -->
 <style>
@@ -99,7 +99,8 @@
                         </ul>
                     </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/contact.jsp">Liên hệ</a>
+                    <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/sendmail">Liên hệ</a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính sách</a>
@@ -120,7 +121,6 @@
                 <button class="btn btn-outline-success" type="submit">Tìm</button>
             </form>
             <ul class="d-flex ">
-
                 <!-- cart -->
                 <% if (session.getAttribute("user") == null) { %>
                 <li class="nav-item pt-2" style="list-style-type: none;">
@@ -192,7 +192,6 @@
                 </li>
                 <%}%>
             </ul>
-
         </div>
     </div>
 </header>

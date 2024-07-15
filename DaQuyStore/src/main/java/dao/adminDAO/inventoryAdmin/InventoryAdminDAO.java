@@ -62,7 +62,7 @@ public class InventoryAdminDAO {
      */
     public ArrayList<AdminInventoryDetail_fixed> getListInventoryDetail() throws SQLException {
         ArrayList<AdminInventoryDetail_fixed> detailArrayList = new ArrayList<>();
-        String sql = "select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status,inventories.date from products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventories.id=inventory_detail.id group by inventory_detail.product_id";
+        String sql = "select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status,inventories.date from products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventories.id=inventory_detail.id  group by inventory_detail.product_id having sum(inventory_detail.remaining) > 0  ";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {

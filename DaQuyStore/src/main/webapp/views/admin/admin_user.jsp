@@ -80,6 +80,14 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí ảnh</span>
                         </a>
                     </li>
+                    <% if(session.getAttribute("user")!=null){%>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/admin_logout"
+                           class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-door-open"></i><span
+                                class="ms-1 d-none d-sm-inline">Đăng xuất</span>
+                        </a>
+                    </li><%}%>
                 </ul>
 
                 <hr>
@@ -157,38 +165,38 @@
                         $row.append($cell);
                     });
 
-                    var $trash = $('<i class="fa-solid fa-trash"></i>');
-                    $trash.click(function () {
-                        Swal.fire({
-                            title: "Are you sure?",
-                            text: "You won't be able to revert this!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, delete it!"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/deleteuser',
-                                    method: 'GET',
-                                    data: { id: $row.prop('id') },
-                                    dataType: 'JSON',
-                                    success: function (resp) {
-                                        Swal.fire({
-                                            title: "Deleted!",
-                                            text: "Your file has been deleted.",
-                                            icon: "success"
-                                        });
-                                        $row.hide();
-                                    }
+                    <%--var $trash = $('<i class="fa-solid fa-trash"></i>');--%>
+                    <%--$trash.click(function () {--%>
+                    <%--    Swal.fire({--%>
+                    <%--        title: "Are you sure?",--%>
+                    <%--        text: "You won't be able to revert this!",--%>
+                    <%--        icon: "warning",--%>
+                    <%--        showCancelButton: true,--%>
+                    <%--        confirmButtonColor: "#3085d6",--%>
+                    <%--        cancelButtonColor: "#d33",--%>
+                    <%--        confirmButtonText: "Yes, delete it!"--%>
+                    <%--    }).then((result) => {--%>
+                    <%--        if (result.isConfirmed) {--%>
+                    <%--            $.ajax({--%>
+                    <%--                url: '<%=request.getContextPath()%>/deleteuser',--%>
+                    <%--                method: 'GET',--%>
+                    <%--                data: { id: $row.prop('id') },--%>
+                    <%--                dataType: 'JSON',--%>
+                    <%--                success: function (resp) {--%>
+                    <%--                    Swal.fire({--%>
+                    <%--                        title: "Deleted!",--%>
+                    <%--                        text: "Your file has been deleted.",--%>
+                    <%--                        icon: "success"--%>
+                    <%--                    });--%>
+                    <%--                    $row.hide();--%>
+                    <%--                }--%>
 
-                                });
+                    <%--            });--%>
 
-                            }
-                        });
+                    <%--        }--%>
+                    <%--    });--%>
 
-                    });
+                    <%--});--%>
 
                     var $edit = $('<i class="fa-solid fa-wrench"></i>').click(function () {
                         Swal.fire({
@@ -226,7 +234,7 @@
                                 }
                         });
                     });
-                    $row.append($('<td>').append($edit,$trash));
+                    $row.append($('<td>').append($edit));
                     $tbody.append($row); // Thêm hàng vào tbody của bảng có id là table_id
                 });
             },

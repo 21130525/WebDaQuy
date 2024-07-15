@@ -4,6 +4,7 @@ import connector.DAOConnection;
 import model.LogLevel;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminSummary;
+import model.modelAdmin.AdminSummary_fixed;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,19 +33,33 @@ public class SummaryAdminDAO {
         ps.executeUpdate();
     }
 
-    public ArrayList<AdminSummary> getListSummarybyMonth() throws SQLException {
-        ArrayList<AdminSummary> list = new ArrayList<>();
+//    public ArrayList<AdminSummary> getListSummarybyMonth() throws SQLException {
+//        ArrayList<AdminSummary> list = new ArrayList<>();
+//        String sql = "select month(created_at) as month,sum(total_price) as total  from orders group by month(created_at)";
+//
+//        PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
+//        ResultSet rs = pr.executeQuery();
+//        AdminSummary adminSummary = null;
+//        while (rs.next()) {
+//            adminSummary = new AdminSummary();
+//          adminSummary.setSummary( rs.getLong("total"));
+//            adminSummary.setMonth(rs.getInt("month"));
+//            list.add(adminSummary);
+//        }
+//        return list;
+    public ArrayList<AdminSummary_fixed> getAllSummary() throws SQLException {
+        ArrayList<AdminSummary_fixed> list = new ArrayList<>();
         String sql = "select month(created_at) as month,sum(total_price) as total  from orders group by month(created_at)";
 
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
-        AdminSummary adminSummary = null;
+        AdminSummary_fixed adminSummary = null;
         while (rs.next()) {
-            adminSummary = new AdminSummary();
-            adminSummary.setSummary(rs.getInt("total"));
+            adminSummary = new AdminSummary_fixed();
+          adminSummary.setSummary( rs.getLong("total"));
             adminSummary.setMonth(rs.getInt("month"));
             list.add(adminSummary);
-        }
+    }
         return list;
     }
 
@@ -61,6 +76,6 @@ public class SummaryAdminDAO {
 
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(new SummaryAdminDAO().getListSummarybyMonth());
+        System.out.println(new SummaryAdminDAO().getAllSummary());
     }
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
 @WebFilter("/views/admin/*")
 //@WebFilter("/views/admin/admin.jsp")
 public class FilterAdmin implements Filter {
@@ -31,8 +32,12 @@ public class FilterAdmin implements Filter {
             User user = (User) session.getAttribute("user");
             if (user.getRole().equals("admin")) {
                 filterChain.doFilter(request, response);
+            } else if (user.getRole().equals("user")) {
+                response.sendRedirect(request.getContextPath() + "/views/index.jsp");
             }
         }
+
+
     }
 
     @Override
