@@ -30,7 +30,7 @@ public class ProductByCategory extends HttpServlet {
             list = dao.getProductByCategory(name);
             req.setAttribute("list", list);
             req.setAttribute("name", name);
-            req.getRequestDispatcher("category-product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/web/cart/category-product.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

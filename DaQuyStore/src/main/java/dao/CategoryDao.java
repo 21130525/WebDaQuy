@@ -11,6 +11,14 @@ import java.util.Date;
 import java.util.List;
 
 public class CategoryDao {
+    private static CategoryDao instance ;
+    public CategoryDao() {}
+    public static CategoryDao getInstance() {
+        if(instance == null) {
+            instance = new CategoryDao();
+        }
+        return instance;
+    }
     private int id ;
     private String category_name;
     private Date create_at;
