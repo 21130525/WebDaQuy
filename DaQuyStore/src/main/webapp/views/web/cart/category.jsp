@@ -21,11 +21,7 @@
 <%
     NumberFormat format = NumberFormat.getInstance(new Locale("vn", "VN"));
     ProductDao dao = new ProductDao(DAOConnection.getConnection());
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
-    List<Cart> cartProduct = dao.getCartProduct(cart_list);
-    if (cart_list != null) {
-        request.setAttribute("cart_list", cart_list);
-    }
+    Cart cart_list = (Cart) request.getSession().getAttribute("cart-list");
 
 %>
 
@@ -33,8 +29,6 @@
 <html>
 <head>
     <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/css/cate.css" rel="stylesheet" type="text/html">
     <style>
         .cate {
@@ -169,10 +163,7 @@
 
     </div>
 </div>
-<!-- JS-->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<jsp:include page="../../footer.jsp"/>
 <script>
     $(document).ready(function () {
         $(".add-to-cart").click(function (e) {
@@ -183,16 +174,22 @@
                 url: '<%=request.getContextPath()%>/AddToCartController',
                 type: 'GET',
                 data: {id: id},
-                success: function (response) {
-                    if (response.status === "success") {
+                success: function (data) {
+                    console.log(data.reponseCode)
+                    if (data.reponseCode === 200) {
                         alert("Sản phẩm đã được thêm vào giỏ hàng.");
-                    } else if (response.status === "exists") {
-                        alert("Sản phẩm đã tồn tại trong giỏ hàng.");
-                    } else {
-                        alert("Có lỗi xảy ra, vui lòng thử lại.");
+                        $("#quantitycart").each(function () {
+                            var quantity = $(this).text()
+                            console.log(quantity)
+                            $(this).text(parseInt(quantity) + 1)
+                        });
+
+                    } else if (data.reponseCode === 400) {
+                        alert("Sản phẩm không tồn tại");
                     }
                 },
                 error: function () {
+                    console.log(data.reponseCode)
                     alert("Có lỗi xảy ra, vui lòng thử lại.");
                 }
             });
