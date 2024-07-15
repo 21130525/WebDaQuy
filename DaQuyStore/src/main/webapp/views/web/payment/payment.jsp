@@ -118,18 +118,37 @@
                 </div>
                 <hr class="my-4">
                 <p>
-                    <span>Chọn phương Thức Thanh Toán:</span>
+                    <span>phương Thức Thanh Toán:</span>
+                <%
+                    if(order.getStatusPayment().equalsIgnoreCase("đã thanh toán")){%>
+                    <span> <%=order.getTypePayment()%> </span>
+                    <h3> Thanh toán đã hoàn thành</h3>
+                <%
+                    }else{
+                %>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input  type="radio" class="btn-check " name="typePayment" id="tienMatpayment" autocomplete="off" value="tiền mặt" >
+                        <input  type="radio" class="btn-check " name="typePayment" id="tienMatpayment" autocomplete="off" value="tiền mặt"
+                        >
                         <label class="btn btn-outline-info" for="tienMatpayment">Tiền Mặt</label>
 
-                        <input type="radio" class="btn-check" name="typePayment" id="chuyenKhoanPayment" autocomplete="off" value="chuyển khoản" checked>
+                        <input type="radio" class="btn-check" name="typePayment" id="chuyenKhoanPayment" autocomplete="off" value="chuyển khoản" checked
+                        >
                         <label class="btn btn-outline-info" for="chuyenKhoanPayment">Chuyển Khoản</label>
                     </div>
-
+                <%}%>
                 </p>
                 <hr class="my-4">
+                <%
+                    if(order.getStatusPayment().equalsIgnoreCase("đã thanh toán")){
+                %>
+                <div class="d-flex justify-content-center align-items-center">
+                <%
+                    }else{
+                %>
                 <div class="d-flex justify-content-between align-items-center">
+                <%
+                    }
+                %>
                     <div class="w-50">
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Tổng số Tiền</p>
@@ -144,11 +163,17 @@
                             <p class="mb-2"><%=orderService.formatNumber(total)%> Đ</p>
                         </div>
                     </div>
+                    <%
+                        if(!order.getStatusPayment().equalsIgnoreCase("đã thanh toán")){
+                    %>
                     <button id="btnSubmit" type="button" class="btn btn-info btn-block btn-lg" id="btn">
                         <div class="d-flex justify-content-between">
                             <span>Thanh Toan<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                         </div>
                     </button>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
         </div>
@@ -183,7 +208,7 @@
                         cancelButtonText: "tiếp tục mua sắm"
                     }).then((result) =>{
                         if(result.isDismissed){
-                            window.location.href = 'views/web/product/productPage.jsp'; // Điều hướng đến trang mua sắm (chỉnh sửa URL nếu cần)
+                            window.location.href = 'views/index.jsp'; // Điều hướng đến trang mua sắm (chỉnh sửa URL nếu cần)
                         }
                     })
                 },

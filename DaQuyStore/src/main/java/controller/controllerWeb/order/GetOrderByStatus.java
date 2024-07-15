@@ -34,7 +34,13 @@ public class GetOrderByStatus extends HttpServlet {
                 status = "Chờ xác nhận";
                 break;
             case "nav-transport":
-                status = "Đang chờ giao";
+                status = "chờ giao";
+                break;
+            case "nav-noPayment":
+                status= "chưa thanh toán";
+                break;
+            case "nav-paymentWas":
+                status = "đã thanh toán";
                 break;
             case "nav-waitingForDelivery":
                 status = "Đang giao";
@@ -68,7 +74,7 @@ public class GetOrderByStatus extends HttpServlet {
             stringBuilder.append("<div class=\"text-end border-bottom m-3 d-flex justify-content-between\">");
             stringBuilder.append("<span><STRONG>id Đơn hàng:</STRONG>" + o.getId() + "</span>");
             stringBuilder.append("<span><strong>Tình Trạng đơn hàng:</strong> " + o.getStatus() + "</span>");
-            stringBuilder.append("<span>Đơn hàng " + o.getStatusPayment() + "</span>");
+            stringBuilder.append("<span>Đơn hàng: " + o.getStatusPayment() + "</span>");
             stringBuilder.append("</div>");
 
             for (Map.Entry<Product, Integer> en : o.getProducts().entrySet()) {
@@ -87,8 +93,12 @@ public class GetOrderByStatus extends HttpServlet {
                 stringBuilder.append("</div>");
             }
 
-            stringBuilder.append("<div class=\"\">");
+            stringBuilder.append("<div class=\"d-flex justify-content-between\">");
             stringBuilder.append("<p class=\"text-end mx-4\"><Strong> Thành tiền:</Strong> " + OrderService.getInstance().formatNumber(o.getTotal_price()) + "</p>");
+            stringBuilder.append(" <form action=\"../../../showPayment\" method=\"post\">");
+            stringBuilder.append("<input type=\"hidden\" name=\"orderID\" value=\""+o.getId()+"\">");
+            stringBuilder.append(" <button type=\"submit\" class=\"btn btn-info\">Xem trang thanh toán</button>");
+            stringBuilder.append("</form>");
             stringBuilder.append("</div>");
             stringBuilder.append("</div>");
         }

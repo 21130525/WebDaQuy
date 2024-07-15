@@ -48,11 +48,7 @@ String gender = u.getGender();
                                     class="btn actived">Hồ sơ của tôi
                             </button>
                         </li>
-                        <li class="list-group-item" style="background-color: #F5F5F5;">
-                            <button id="btnOrder"
-                                    class="btn  ">Đơn đã mua
-                            </button>
-                        </li>
+
 
                     </ul>
                 </div>
@@ -65,7 +61,7 @@ String gender = u.getGender();
                         <Span class="fs-3">Hồ sơ Của tôi</Span>
                     </div>
                     <div>
-                        <form action="../../profile" method="get">
+                        <form action="../../profile" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
                             <div class="row">
                                 <div class="col-8">
                                     <!-- fill information -->
@@ -174,116 +170,6 @@ String gender = u.getGender();
                     </div>
                 </div>
 
-                <!-- sản phẩm đã mua -->
-                <div id="Order" class=" " style="display: none;">
-                    <!-- menu -->
-                    <div class="row ">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <button id="nav-all" class="navButton nav-link active" aria-current="page"
-                                        >Tất cả
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="nav-waitingPay" class="navButton nav-link" href="#">Chờ thanh
-                                    toán
-                                </button>
-                            </li>
-<%--                            <li class="nav-item">--%>
-<%--                                <button id="nav-transport" class="navButton nav-link" href="#">Vận chuyển</button>--%>
-<%--                            </li>--%>
-                            <li class="nav-item">
-                                <button id="nav-waitingForDelivery" class="navButton nav-link" href="#">chờ Giao
-                                    Hàng
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="nav-done" class="navButton nav-link" href="#">Hoàn thành</button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="nav-cancelled" class="navButton nav-link" href="#">Đã hủy</button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="nav-returnProduct" class="navButton nav-link" href="#">Trả hàng/Hoàn
-                                    tiền
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- thanh tìm kiếm -->
-                    <div>
-                        <nav class="mt-3 bg-body-tertiary">
-                            <div class="container">
-                                <div class="d-flex" role="search">
-                                    <input id="inputSearch" class="form-control me-2 w-100" type="search"
-                                           placeholder="Bạn có thể tìm kiếm sản phẩm theo tên hoặc id "
-                                           aria-label="Search" name="searchInput">
-                                    <button id="btnSearch" class="btn btn-outline-success" type="button">Search</button>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
-                    <!-- danh sách sản phẩmphẩm -->
-                    <div id="danhSachSanPham" class="mt-3 scrollable-div  w-100" style="max-height: 460px;min-height: 400px; overflow-x: hidden;overflow-y:auto  ">
-                        <%
-                            ArrayList<Order> orders = OrderDao.getInstance().selectOrderByidUser(u.getId(),"");
-                            orders.sort(new Comparator<Order>() {
-                                @Override
-                                public int compare(Order o1, Order o2) {
-                                    return o2.getId()-o1.getId();
-                                }
-                            });
-                            int i = 0;
-                            for(Order o : orders){
-                                i++;
-                            if(i==11){
-//                                break;
-                            }
-                        %>
-                        <!-- 1 san pham -->
-                        <div class="product my-3 mt-4  border-top  ">
-<%--                            status don hang--%>
-                            <div class="text-end border-bottom m-3 d-flex justify-content-between">
-                                <span><STRONG>id Đơn hàng:</STRONG><%=o.getId()%></span>
-                                <span><strong>Tình Trạng đơn hàng:</strong> <%=o.getStatus()%></span>
-                                <span>Đơn hàng <%=o.getStatusPayment()%></span>
-                            </div>
-
-                            <!-- list product -->
-                            <%
-                                for(Map.Entry<Product,Integer> en : o.getProducts().entrySet()){
-                            %>
-                                <div class="row product ">
-                                    <div class="col-2 mx-auto ">
-                                    <img class=" "
-                                         src="<%=en.getKey().getImg_main()%>"
-                                         alt="" style="height: 100px; width: 100px;">
-                                </div>
-                                <div class="col-7 my-3">
-                                    <p class="mb-3"><Strong><%=en.getKey().getName()%></Strong></p>
-                                    <span class="align-text-bottom">
-                                            <p class="">số lượng: <%=en.getValue()%></p>
-                                        </span>
-
-                                </div>
-                                <p class="col-2 text-end mx-auto "><%=OrderService.getInstance().formatNumber( en.getKey().getPrice()*en.getValue())%> </p>
-                                <p class="border  w-75 mx-auto fw-bold"></p>
-                            </div>
-                            <%
-                                }
-                            %>
-
-                            <!-- thanh tien -->
-                            <div class="">
-                                <p class="text-end mx-4"><Strong> Thành tiền:</Strong> <%=OrderService.getInstance().formatNumber(o.getTotal_price())%></p>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
@@ -292,27 +178,27 @@ String gender = u.getGender();
 
 <script>
     // Lấy tham chiếu đến các phần tử button và div
-    const BtnProfile = document.getElementById('btnProfile');
-    const btnOrder = document.getElementById('btnOrder');
-    const div1 = document.getElementById('ProfileInfo');
-    const div2 = document.getElementById('Order');
+    // const BtnProfile = document.getElementById('btnProfile');
+    // const btnOrder = document.getElementById('btnOrder');
+    // const div1 = document.getElementById('ProfileInfo');
+    // const div2 = document.getElementById('Order');
+    // //
+    // // Xử lý sự kiện khi nhấn vào button để vô hiệu hóa div tương ứng
+    // BtnProfile.addEventListener('click', function () {
+    //     BtnProfile.classList.add("actived")
+    //     btnOrder.classList.remove("actived")
+    //
+    //     div1.style.display = "block";
+    //     div2.style.display = "none";
+    // });
 
-    // Xử lý sự kiện khi nhấn vào button để vô hiệu hóa div tương ứng
-    BtnProfile.addEventListener('click', function () {
-        BtnProfile.classList.add("actived")
-        btnOrder.classList.remove("actived")
-
-        div1.style.display = "block";
-        div2.style.display = "none";
-    });
-
-    btnOrder.addEventListener('click', function () {
-        BtnProfile.classList.remove("actived")
-        btnOrder.classList.add("actived")
-
-        div1.style.display = "none";
-        div2.style.display = "inline";
-    });
+    // btnOrder.addEventListener('click', function () {
+    //     BtnProfile.classList.remove("actived")
+    //     btnOrder.classList.add("actived")
+    //
+    //     div1.style.display = "none";
+    //     div2.style.display = "inline";
+    // });
 
     // thay đổi số điện thoại
     const btnPhoneNumber = document.getElementById('btnPhoneNumber');
@@ -346,7 +232,7 @@ String gender = u.getGender();
             }
         }
     });
-
+    // kiem tra so dien thoai
     function isValidPhoneNumber(phone) {
         // Biểu thức chính quy kiểm tra xem chuỗi chỉ chứa ký tự chữ cái hay không
         const pattern = /^(\+\d{1,3}[- ]?)?\d{10}$/;
@@ -409,8 +295,6 @@ String gender = u.getGender();
         }
     };
 
-
-
     const gender = '<%=u.getGender()%>';
     var gender_nu =  document.getElementById('gender_nu');
     var gender_nam =  document.getElementById('gender_nam');
@@ -427,75 +311,13 @@ String gender = u.getGender();
             gender_khac.checked= true;
         }
     });
-
-    // // lấy cùng lúc nhiều button
-    // const navButton = document.querySelectorAll('.navButton');
-    // // thêm sự kiên cho các button
-    // navButton.forEach(button => {
-    //     // xóa active
-    //     button.addEventListener('click', function () {
-    //         navButton.forEach(btn => {
-    //             btn.classList.remove('active');
-    //         });
-    //         // thêm active
-    //         this.classList.add('active')
-    //         alert('button da chon'+button.id)
-    //     })
-    // });
-
-
-// chuyen tap
-    var tapId = 'nav-all';
-    $('.navButton').click(function (){
-       tapId= $(this).attr('id')
-        var data = {
-            data: tapId
-        }
-        $('.navButton').removeClass('active')
-        $(this).addClass('active')
-        $('#inputSearch').val("")
-
-        fetchListOrder(data)
+// xoa active tren menu
+    $(document).ready(function (){
+        nav_active()
     })
-    function fetchListOrder(data){
-        $.ajax({
-            url:'../../getOrderByStatus',
-            type:'GET',
-            data: data,
-            success: function (response){
-                $('#danhSachSanPham').empty()
-                $('#danhSachSanPham').html(response)
-            },
-            error: function (){
-                alert('that bai')
-            }
-        })
+    function nav_active() {
+        $('a.nav-link').removeClass('active')
     }
-//  search order
-    $('#btnSearch').click(function (){
-        var key = $('#inputSearch').val();
-        var data ={
-            data: key,
-            tapId: tapId
-        }
-        $.ajax({
-            url:'../../searchOrder',
-            type: 'POST',
-            data: data,
-            success: function (resp){
-                $('#danhSachSanPham').empty()
-                $('#danhSachSanPham').html(resp)
-            },
-            error: function (){
-                alert('Tìm Kiếm Thất bại')
-            }
-        })
-
-
-    })
-
-
-
 
 </script>
 </body>

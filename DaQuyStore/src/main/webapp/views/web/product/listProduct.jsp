@@ -94,7 +94,7 @@ Created by IntelliJ IDEA.
                             -12%</p>
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
-                        <form action="../order" method="Post">
+                        <form action="<%=request.getContextPath()%>/order" method="Post">
                             <input id="inputNum" type="hidden" name="id" value="<%=p.getId()%>">
                             <input type="hidden" name="num" value="1">
                             <button id="btnBuy" class="btnBuy btn rounded-0 btn-d-none p-0 fw-bold" type="button">mua</button>

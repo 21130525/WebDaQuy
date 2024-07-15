@@ -468,23 +468,23 @@
                         // var $delete = $('<i class="fa-solid fa-trash"></i>');
                         var $edit = $('<i class="fa-solid fa-wrench"></i>');
                         var $cell = $('<td>');
-                        $cell.append( $edit);
+                        $cell.append($edit);
                         $row.append($cell);
-                        $delete.click(function () {
-                            $.ajax({
-                                url: '<%=request.getContextPath()%>/deleteorder',
-                                method: 'GET',
-                                data: {id: $row.prop('id')},
-                                dataType: 'JSON',
-                                success: function (response) {
-                                    alert('Xóa thành công');
-                                    $row.hide();
-                                },
-                                error: function (error) {
-                                    alert('Xóa không thành công');
-                                }
-                            });
-                        });
+                        <%--$delete.click(function () {--%>
+                        <%--    $.ajax({--%>
+                        <%--        url: '<%=request.getContextPath()%>/deleteorder',--%>
+                        <%--        method: 'GET',--%>
+                        <%--        data: {id: $row.prop('id')},--%>
+                        <%--        dataType: 'JSON',--%>
+                        <%--        success: function (response) {--%>
+                        <%--            alert('Xóa thành công');--%>
+                        <%--            $row.hide();--%>
+                        <%--        },--%>
+                        <%--        error: function (error) {--%>
+                        <%--            alert('Xóa không thành công');--%>
+                        <%--        }--%>
+                        <%--    });--%>
+                        <%--});--%>
                         $edit.click(function () {
                             Swal.fire({
                                 title: "Bạn có chắc chắn không?",

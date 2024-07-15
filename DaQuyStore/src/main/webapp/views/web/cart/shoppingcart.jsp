@@ -112,6 +112,20 @@
         </tbody>
     </table>
 </div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function (){
+        nav_active()
+    })
+    function nav_active() {
+        $('a.nav-link').removeClass('active')
+    }
+
 <jsp:include page="/views/footer.jsp"/>
 </body>
 <script>

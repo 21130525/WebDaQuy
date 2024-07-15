@@ -2,7 +2,7 @@ package controller.controllerUser;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import jakarta.mail.internet.AddressException;
+//import jakarta.mail.internet.AddressException;
 import controller.controllerUser.google.GoogleInfo;
 import controller.controllerUser.google.TokenGoogle;
 import model.User;
@@ -13,6 +13,7 @@ import service.manageUser.ServiceIPAddress;
 import service.manageUser.security.EncryptAndDencrypt;
 import service.manageUser.registerAndLogin.LoginService;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

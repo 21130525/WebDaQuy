@@ -16,7 +16,7 @@ public class LoginService {
         if(u==null){
             return null;
         }
-        if (encryptAndDencrypt.decrypt(u.getPassword()).equals(password)) {
+        if (encryptAndDencrypt.checkPassword(password,u.getPassword())) {
             return u;
         }
         return null;

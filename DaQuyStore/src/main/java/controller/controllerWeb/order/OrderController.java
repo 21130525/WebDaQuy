@@ -1,12 +1,10 @@
 package controller.controllerWeb.order;
 
 import dao.userDAO.ProductDao;
-import jakarta.mail.*;
-import jakarta.mail.internet.AddressException;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+
+
 import model.Product;
-import model.User;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,13 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 
 @WebServlet("/order")
 public class OrderController extends HttpServlet {
