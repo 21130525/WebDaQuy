@@ -59,6 +59,18 @@
 </section>
 <%--footer--%>
 <jsp:include page="footer.jsp"/>
-
+<script>
+    $(document).ready(function (){
+        nav_active()
+    })
+    function nav_active() {
+        $('a.nav-link').removeClass('active')
+        $('a.nav-link').each(function() {
+            if ($(this).text().trim() === 'Chính sách') { // Dùng .trim() để loại bỏ khoảng trắng dư thừa
+                $(this).addClass('active').addClass('main-color');
+            }
+        });
+    }
+</script>
 </body>
 </html>

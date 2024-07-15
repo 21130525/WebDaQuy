@@ -6,6 +6,7 @@ import model.Product;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductService {
@@ -20,8 +21,16 @@ public class ProductService {
         return res;
     }
 
-    public static Map<String, String> StringToMap(String information) {
-        return null;
+    public static Map<String, String> StringToMap(String info) {
+        Map<String, String> map = new HashMap<>();
+        String[] split = info.substring(1, info.length() - 1).split(";");
+        for (String attribute : split) {
+            String[] keyValue = attribute.split(":");
+            String key = keyValue[0].trim();
+            String value = keyValue.length > 1 ? keyValue[1].trim() : "";
+            map.put(key, value);
+        }
+        return map;
     }
 
     public static void main(String[] args) throws SQLException {

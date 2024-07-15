@@ -59,36 +59,34 @@
     }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<%--<%--%>
-<%--    Product p = (Product) request.getAttribute("product");--%>
-
-<%--%>--%>
-<section class=" list-product container mt-3 text-center fs-3">
+<%
+    Product p = (Product) request.getAttribute("product");
+%>
+<section class=" list-product container-xl mt-3 text-center fs-3 ">
     <p class="border-bottom ">Sản phẩm liên quan</p>
-        <div class="row" id="listProduct">
-            <!-- product -->
+    <!-- product -->
+    <div class="row" id="listProduct">
 
     </div>
-    </div>
-<%--    <script>--%>
-<%--        var cate_id = <%=p.getCategory_id()%>;--%>
-<%--        var product_id = <%=p.getId()%>;--%>
+    <script>
+        var cate_id = '<%=p.getCategory_id()%>';
+        var product_id = '<%=p.getId()%>';
 
-<%--        $(document).ready(function (){--%>
-<%--         $.ajax({--%>
-<%--             type: 'POST',--%>
-<%--             url: "relatedProduct",--%>
-<%--             data: {--%>
-<%--                 category_id : cate_id,--%>
-<%--                 product_id : product_id--%>
-<%--             },--%>
-<%--             success: function (responseText) {--%>
-<%--                 $('#listProduct').html(responseText);--%>
-<%--             },--%>
-<%--             error: function (xhr, status, error) {--%>
-<%--                 console.error('An error occurred:', error);--%>
-<%--             }--%>
-<%--         });--%>
-<%--     });--%>
-<%--    </script>--%>
+        $(document).ready(function (){
+         $.ajax({
+             type: 'POST',
+             url: "relatedProduct",
+             data: {
+                 category_id : cate_id,
+                 product_id : product_id
+             },
+             success: function (responseText) {
+                 $('#listProduct').html(responseText);
+             },
+             error: function (xhr, status, error) {
+                 console.error('An error occurred:', error);
+             }
+         });
+     });
+    </script>
 </section>

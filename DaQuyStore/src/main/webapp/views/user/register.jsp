@@ -187,4 +187,11 @@
 </script>
 </body>
 
-</html>
+<script>
+    $(document).ready(function (){
+        nav_active()
+    })
+    function nav_active() {
+        $('a.nav-link').removeClass('active')
+    }
+</script></html>
