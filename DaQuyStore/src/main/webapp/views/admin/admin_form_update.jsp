@@ -200,50 +200,19 @@
                               name="description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Loại sản phẩm:</label><br>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="ruby" name="productType" value="Ruby">
-                        <label class="form-check-label" for="ruby">Ruby</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="aquamarine" name="productType"
-                               value="Aquamarine">
-                        <label class="form-check-label" for="aquamarine">Aquamarine</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="tourmaline" name="productType"
-                               value="Tourmaline">
-                        <label class="form-check-label" for="tourmaline">Tourmaline</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="spinel" name="productType" value="Spinel">
-                        <label class="form-check-label" for="spinel">Spinel</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="sapphire" name="productType" value="Sapphire">
-                        <label class="form-check-label" for="sapphire">Sapphire</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="zircon" name="productType" value="Zircon">
-                        <label class="form-check-label" for="zircon">Zircon</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="peridot" name="productType" value="Peridot">
-                        <label class="form-check-label" for="peridot">Peridot</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="garnet" name="productType" value="Garnet">
-                        <label class="form-check-label" for="garnet">Garnet</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="emerald" name="productType"
-                               value="Ngọc lục bảo">
-                        <label class="form-check-label" for="emerald">Ngọc lục bảo</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" id="topaz" name="productType" value="Topaz">
-                        <label class="form-check-label" for="topaz">Topaz</label>
-                    </div>
+                    <label for="productType">Select Product Type:</label>
+                    <select class="form-control" id="productType" name="productType">
+                        <option value="Ruby">Ruby</option>
+                        <option value="Aquamarine">Aquamarine</option>
+                        <option value="Tourmaline">Tourmaline</option>
+                        <option value="Spinel">Spinel</option>
+                        <option value="Sapphire">Sapphire</option>
+                        <option value="Zircon">Zircon</option>
+                        <option value="Peridot">Peridot</option>
+                        <option value="Garnet">Garnet</option>
+                        <option value="Ngọc lục bảo">Ngọc lục bảo</option>
+                        <option value="Topaz">Topaz</option>
+                    </select>
                 </div>
 
                 <!-- Thêm thêm radio button tương tự cho các loại sản phẩm khác -->
