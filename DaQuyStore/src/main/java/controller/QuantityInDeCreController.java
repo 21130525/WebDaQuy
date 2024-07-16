@@ -44,7 +44,7 @@ public class QuantityInDeCreController extends HttpServlet {
                 }
             }
 
-            ProductDao dao = null;
+            ProductDao dao;
             try {
                 dao = new ProductDao(DAOConnection.getConnection());
                 total = dao.getTotalCartPrice(cart_list);

@@ -31,7 +31,7 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>DANH MỤC SẢN PHẨM</title>
     <link href="<%=request.getContextPath()%>/css/cate.css" rel="stylesheet" type="text/html">
     <style>
         .cate {

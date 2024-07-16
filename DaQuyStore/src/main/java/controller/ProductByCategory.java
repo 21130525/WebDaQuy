@@ -20,22 +20,8 @@ public class ProductByCategory extends HttpServlet {
         String indexPage = req.getParameter("index");
         String category = req.getParameter("index");
         System.out.println(indexPage);
-        int index;
-        if (indexPage==null) {
-            index = 1;
-        } else {
-            index = Integer.parseInt(indexPage);
-        }
 
-        //Phân trang
         ProductDao dao = new ProductDao();
-        int count = dao.getTotalProductOfCategoy("");
-        int endPage = count/8;
-        if(count %8 !=0){
-            endPage++;
-
-        }
-        List<Product> listP = dao.pagingProduct(index);
         try {
             String pathInfo = req.getPathInfo(); // /{name}/{id}
             String name = null;
@@ -47,8 +33,6 @@ public class ProductByCategory extends HttpServlet {
             list = dao.getProductByCategory(name);
             req.setAttribute("listA", list);
             req.setAttribute("name", name);
-            req.setAttribute("endP",endPage);
-            req.setAttribute("tag",index);
             req.getRequestDispatcher("views/web/cart/category-product.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
