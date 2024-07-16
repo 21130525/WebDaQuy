@@ -6,9 +6,7 @@ import java.util.Properties;
 
 import controller.controllerUser.google.GoogleInfo;
 import controller.controllerUser.google.TokenGoogle;
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+
 import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
@@ -20,6 +18,9 @@ import service.manageUser.security.EncryptAndDencrypt;
 import service.manageUser.registerAndLogin.LoginService;
 import service.manageUser.registerAndLogin.RegisterService;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,22 +61,47 @@ public class RegisterController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-                String username = request.getParameter("user");
-                String password = encryptAndDencrypt.encrypt( request.getParameter("pass"));
-                String email = request.getParameter("email");
+        String username = request.getParameter("user");
+        String password =request.getParameter("pass");
+        String email = request.getParameter("email");
+        //kiểm tra mật khẩu
+        if (!checkPassword(password)) {
+            String announced = "Mật khẩu không hợp lệ!";
+            request.setAttribute("announced", announced);
+        }
+        password =  encryptAndDencrypt.encrypt(password);
                 //kiểm tra user namme và email
-                try {
-                    checkRegister(request,response,username,email);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                // đang ky
-                try {
-                    registerWeb(request,response,username,password,email);
-                } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                }
+        try {
+            checkRegister(request,response,username,email);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // đang ky
+        try {
+            registerWeb(request,response,username,password,email);
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+        }
     }
+
+    private boolean checkPassword(String password) {
+        // Kiểm tra độ dài của mật khẩu
+        if (password.length() < 8 || password.length() > 15) {
+            return false;
+        }
+        // Kiểm tra xem mật khẩu có chứa khoảng trắng hay không
+        if (password.contains(" ")) {
+            return false;
+        }
+        // Kiểm tra xem mật khẩu có chứa ký tự đặc biệt hay không
+        String specialCharacters = "[^a-zA-Z0-9]";
+        if (password.matches(".*" + specialCharacters + ".*")) {
+            return false;
+        }
+        // Tất cả các kiểm tra đều thành công
+        return true;
+    }
+
     /*
     * đăng ký tài khoản trên web
     * */
@@ -83,9 +109,10 @@ public class RegisterController extends HttpServlet {
         HttpSession session = request.getSession(false);
         checkRegister(request, response, username, email);
         String ipAddress = ServiceIPAddress.convertToIPv4(request.getRemoteAddr());
+        request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
         String code = registerService.createActivationCode(username,password,email,"login web",ipAddress);
         sendEmail(request,response,code,email);
-        request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
+
     }
 
     /*
@@ -142,14 +169,12 @@ public class RegisterController extends HttpServlet {
         String announced =null;
         if (registerService.checkDuplicatedUsername(username)) {
             announced= "Tài khoản đã tồn tại,";
-
         }
         if (registerService.checkDuplicatedEmail(email)) {
             announced += " email đã tồn tại";
-
         }
         if(announced!=null){
-            servletRequest.setAttribute("announced", " email đã tồn tại");
+            servletRequest.setAttribute("announced", announced);
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
             requestDispatcher.forward(servletRequest, servletResponse);
         }
@@ -170,7 +195,6 @@ public class RegisterController extends HttpServlet {
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
         if(registerService.insertUser(u,"register account google",ipAddress)){
             session.setAttribute("user", u);
-//            RequestDispatcher requestDispatcher = req.getRequestDispatcher(req.getContextPath()+"/views/index.jsp");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/index.jsp");
             requestDispatcher.forward(req, resp);
         }

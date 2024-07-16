@@ -49,6 +49,22 @@
                 width="100%" height="auto" style="border:0;" allowfullscreen=""
                 loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-<jsp:include page="footer.jsp"/>
+</div>
+<div>
+    <jsp:include page="footer.jsp"></jsp:include>
+    <script>
+        $(document).ready(function (){
+            nav_active()
+        })
+        function nav_active() {
+            $('a.nav-link').removeClass('active')
+            $('a.nav-link').each(function() {
+                if ($(this).text().trim() === 'Liên hệ') { // Dùng .trim() để loại bỏ khoảng trắng dư thừa
+                    $(this).addClass('active').addClass('main-color');
+                }
+            });
+        }
+    </script>
+</div>
 </body>
 </html>

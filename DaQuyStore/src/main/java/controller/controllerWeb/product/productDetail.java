@@ -2,14 +2,12 @@ package controller.controllerWeb.product;
 
 import dao.userDAO.ProductDao;
 import model.Product;
-import model.Product_Detail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -21,28 +19,19 @@ public class productDetail extends HttpServlet {
         //lấy thông tin thông qua tên sản phẩm
         String id=req.getParameter("id");
         int product_id=Integer.parseInt(id);
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
-        ProductDao dao = ProductDao.getInstance();
-//        Product p;
-//
-//        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        if (p != null) {
-//            req.setAttribute("product", p);
-//        }
-        Product_Detail p;
-        try {
-            p=dao.getInformationForPerProduct(product_id);
-            if (p!=null){
-                req.setAttribute("product_detail", p);
-                req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
 
-            }
+        ProductDao dao = ProductDao.getInstance();
+        Product p;
+
+        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        if (p != null) {
+            req.setAttribute("product", p);
+            req.getRequestDispatcher( "views/web/product/product_details.jsp").forward(req, resp);
+        }else{
+
         }
     }
 

@@ -62,7 +62,7 @@ public class InventoryAdminDAO {
      */
     public ArrayList<AdminInventoryDetail_fixed> getListInventoryDetail() throws SQLException {
         ArrayList<AdminInventoryDetail_fixed> detailArrayList = new ArrayList<>();
-        String sql = "select products.id,products.product_name,sum(inventory_detail.remaining) as total_quantity,products.status,inventories.date from products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventories.id=inventory_detail.id group by inventory_detail.product_id";
+        String sql = "select products.id,products.product_name,sum(inventory_detail.quantity) as total_quantity,products.status,inventories.date from products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventories.id=inventory_detail.id  group by inventory_detail.product_id having sum(inventory_detail.quantity) > 0  ";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
@@ -126,14 +126,12 @@ public class InventoryAdminDAO {
     }
 
     public void insertInventoryDetail(AdminProduct adminProduct) throws SQLException {
-        String sql = "Insert into inventory_detail(id,product_id,price,quantity,status_deleted,remaining) values(?,?,?,?,?,?)";
+        String sql = "Insert into inventory_detail(id,product_id,quantity,price) values(?,?,?,?)";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         preparedStatement.setInt(1, getMaxIDInventory() + 1);
         preparedStatement.setInt(2, adminProduct.getProduct_id());
-        preparedStatement.setFloat(3, adminProduct.getPrice());
-        preparedStatement.setInt(4, adminProduct.getQuantity());
-        preparedStatement.setString(5, "chưa xóa");
-        preparedStatement.setInt(6, adminProduct.getQuantity());
+        preparedStatement.setInt(3, adminProduct.getQuantity());
+        preparedStatement.setFloat(4, adminProduct.getPrice());
         preparedStatement.executeUpdate();
     }
 
@@ -142,7 +140,7 @@ public class InventoryAdminDAO {
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1, getMAXIDInventories() + 1);
         pr.setTimestamp(2, new Timestamp(new Date().getTime()));
-        pr.setString(3, "ADMIN");
+        pr.setString(3, "Admin");
         pr.executeUpdate();
     }
 

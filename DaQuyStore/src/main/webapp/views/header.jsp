@@ -13,22 +13,8 @@
 <%--jstl--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- link bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-
-<!-- font owesome -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/font/fontawesome-free-6.4.2/css/all.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-<!-- font -->
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <%-- font chu--%>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet">
@@ -63,6 +49,10 @@
     .logged .dropdown-toggle::after {
         display: none;
     }
+    .nav-link.active{
+        color: #0DCAF0 !important;
+        font-size: 20px;
+    }
 </style>
 
 <header class="container-fluid border-bottom border-dark navbar navbar-expand-lg bg-light">
@@ -83,18 +73,14 @@
                     <a class="nav-link active" aria-current="page"
                        href="<%=request.getContextPath()%>/views/index.jsp">Trang chủ</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%= request.getContextPath()%>/views/web/product/productPage.jsp">Sản phẩm</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Trang sức</a>
-                </li>
+<%--              --%>
+<%--                <li class="nav-item">--%>
+<%--                    <a class="nav-link" aria-current="page" href="#">Trang sức</a>--%>
+<%--                </li>--%>
                 <!-- dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/Category" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            Đá quý
-                        </a>
+                           aria-expanded="false">Đá quý</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Ruby">Ruby</a></li>
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ProductByCategory?name=Sapphire">Sapphire</a></li>
@@ -117,12 +103,10 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính
-                        sách</a>
+                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính sách</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/about.jsp">Giới
-                        thiệu</a>
+                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/about.jsp">Giới thiệu</a>
                 </li>
             </ul>
             <!-- search -->
@@ -198,7 +182,7 @@
                         <li>
                         <li>
                             <a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/views/user/profile.jsp">don hang</a></li>
+                               href="${pageContext.request.contextPath}/views/web/order/listOrder.jsp">don hang</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

@@ -1,7 +1,13 @@
 <%@ page import="model.Product" %>
+
+<%@ page import="java.util.Map" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %><%--
+
 <%@ page import="model.Product_Detail" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %><%--
+
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 1/5/2024
@@ -78,31 +84,31 @@
 <body>
 <% NumberFormat numberFormat=NumberFormat.getCurrencyInstance(new Locale("vi","VN"));%>
 <%
-    Product_Detail p = (Product_Detail) request.getAttribute("product_detail");
+    Product p = (Product) request.getAttribute("product");
 %>
 <jsp:include page="../../header.jsp"/>
-<section id="product-detail" class="container mt-5 mb-5">
+<section id="product-detail" class="container mt-2">
     <div class="container row mx-auto ">
         <div class="col-5 mx-4">
             <div class="img-product ">
-                <img src="<%=p.getImage_main()%>"
+                <img src="<%=p.getImg_main()%>"
                      alt="" onclick="displayIMage(this)">
             </div>
             <div class="d-flex">
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImage_1()%>"
+                    <img src="<%=p.getImg_extra1()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImage_2()%>"
+                    <img src="<%=p.getImg_extra2()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2">
-                    <img src="<%=p.getImage_3()%>"
+                    <img src="<%=p.getImg_extra3()%>"
                          alt="" onclick="displayIMage(this)">
                 </div>
                 <div class="sub-img ms-2 ">
-                    <img src="<%=p.getImage_4()%>"
+                    <img src="<%=p.getImg_extra4()%>"
                          alt="" onclick="displayIMage(this)">
 
                 </div>
@@ -111,7 +117,7 @@
         </div>
         <div class="col-5 ms-3">
             <div class="name fs-3">
-               <%=p.getProduct_name()%>
+               <%=p.getName()%>
             </div>
             <div class="line"></div>
 
@@ -168,90 +174,31 @@
         </div>
     </div>
     <!-- thông số kỹ thuật -->
-    <div class="row container mx-auto  mt-3">
+    <%
+        Map<String,String> info = p.getInfor();
+    %>
+    <div class="row container mx-auto  mt-3 ">
         <p class="text-center fs-3">
             THÔNG SỐ KỸ THUẬT
         </p>
-<%--        <div class="row d-flex">--%>
-<%--            <div class="col ">--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">Được kiểm định đầy đủ và viết phiếu bảo hành trọn đời về màu sắc và chất lượng</p>--%>
-<%--                </div>--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="col">--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-<%--                <div class="dataFlow m-3">--%>
-<%--                    <p class="key"> key aaaaaaa</p>--%>
-<%--                    <p class="value">value</p>--%>
-<%--                </div>--%>
-
-<%--            </div>--%>
-<%--        </div>--%>
-        <!--phan chinh sua cua tan-->
-                <div class="row d-flex">
-                    <div class="col ">
-                        <div class="dataFlow m-3">
-                            <p class="key">Màu sắc</p>
-                            <p class="value"><%=p.getColor()%></p>
-                        </div>
-                        <div class="dataFlow m-3">
-                            <p class="key"> Trọng lượng</p>
-                            <p class="value"><%=p.getWeight()%></p>
-                        </div>
-                        <div class="dataFlow m-3">
-                            <p class="key"> Kích cỡ</p>
-                            <p class="value"><%=p.getSize()%></p>
-                        </div>
-                        <div class="dataFlow m-3">
-                            <p class="key">Độ trong</p>
-                            <p class="value"><%=p.getOpacity()%></p>
-                        </div>
-                        <div class="dataFlow m-3">
-                            <p class="key">Giác cắt</p>
-                            <p class="value"><%=p.getCutting_form()%></p>
-                        </div>
-                    </div>
-<%--                    <div class="col">--%>
-<%--                        <div class="dataFlow m-3">--%>
-<%--                            <p class="key"> key</p>--%>
-<%--                            <p class="value">value</p>--%>
-<%--                        </div>--%>
-<%--                        <div class="dataFlow m-3">--%>
-<%--                            <p class="key"> key aaaaaaa</p>--%>
-<%--                            <p class="value">value</p>--%>
-<%--                        </div>--%>
-<%--                        <div class="dataFlow m-3">--%>
-<%--                            <p class="key"> key aaaaaaa</p>--%>
-<%--                            <p class="value">value</p>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
+        <div class="row d-flex ">
+            <div class="col mx-auto ">
+                <%
+                    for(Map.Entry<String,String> entry : info.entrySet()) {
+                %>
+                <div class="dataFlow m-3 ">
+                    <p class="key"> <%=entry.getKey().trim()%></p>
+                    <p class="value"><%=entry.getValue().trim()%></p>
                 </div>
+                <%
+                    }
+                %>
+            </div>
+        </div>
+
     </div>
     <!-- sản phẩm liên quan -->
     <jsp:include page="listRelatedProducts.jsp"/>
-
-    </div>
 </section>
 
 <jsp:include page="../../footer.jsp"/>

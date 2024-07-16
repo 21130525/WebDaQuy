@@ -143,8 +143,8 @@ public class ManageProductController extends HttpServlet {
                                                                                 adminProduct_result.setOpactity(opactity);
                                                                                 adminProduct_result.setCutting_form(cutting_form);
                                                                                 adminProduct_result.setQuantity(Integer.parseInt(number_import));
-                                                                                adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
                                                                                 ProductAdminDAO.getInstance().insertProduct(adminProduct_result);
+                                                                                adminProduct_result.setProduct_id(InventoryAdminDAO.getInstance().getProduct_ID(productName));
                                                                                 InventoryAdminDAO.getInstance().insertInventory();
                                                                                 InventoryAdminDAO.getInstance().insertInventoryDetail(adminProduct_result);
                                                                                 resp.getWriter().println("Đã gửi ảnh lên Cloudinary và gửi dữ liệu sản phẩm thành công  ");
