@@ -2,7 +2,7 @@ package dao.adminDAO.inventoryAdmin;
 
 import connector.DAOConnection;
 import model.LogLevel;
-import model.modelAdmin.AdminInventoryDetail_fixed;
+import model.modelAdmin.AdminInventoryDetailed_fixed;
 import model.modelAdmin.AdminLog;
 import model.modelAdmin.AdminProduct;
 
@@ -60,18 +60,27 @@ public class InventoryAdminDAO {
     /*
     hàm này dùng để lấy lên số lượng của sản phẩm
      */
-    public ArrayList<AdminInventoryDetail_fixed> getListInventoryDetail() throws SQLException {
-        ArrayList<AdminInventoryDetail_fixed> detailArrayList = new ArrayList<>();
-        String sql = "select products.id,products.product_name,sum(inventory_detail.quantity) as total_quantity,products.status,inventories.date from products join inventory_detail on products.id=inventory_detail.product_id join inventories on inventories.id=inventory_detail.id  group by inventory_detail.product_id having sum(inventory_detail.quantity) > 0  ";
+    public ArrayList<AdminInventoryDetailed_fixed> getListInventoryDetail() throws SQLException {
+        ArrayList<AdminInventoryDetailed_fixed> detailArrayList = new ArrayList<>();
+        String sql = "SELECT p.id,p.product_name, ifnull(xuat.sl_da_ban,0) , ifnull(nhap.sl_nhap,0) FROM products p\n" +
+                "left JOIN (SELECT  id.product_id as op,ifnull(SUM(id.quantity ),0)  AS sl_nhap\n" +
+                "\tFROM inventories i\n" +
+                "\tJOIN inventory_detail id ON i.id=id.id\n" +
+                "\tGROUP BY id.product_id) AS nhap \n" +
+                "\tON p.id = nhap.op\n" +
+                "left JOIN (SELECT d.product_id AS sa,sum(d.quantity_total) AS sl_da_ban  \n" +
+                "\tFROM orders o \n" +
+                "\tJOIN order_details d ON o.id = d.order_id\n" +
+                "\tGROUP BY d.product_id) AS xuat\n" +
+                "\tON p.id = xuat.sa ";
         PreparedStatement preparedStatement = DAOConnection.getConnection().prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            AdminInventoryDetail_fixed admindetail = new AdminInventoryDetail_fixed();
-            admindetail.setProduct_id(rs.getInt("products.id"));
-            admindetail.setProduct_name(rs.getString("products.product_name"));
-            admindetail.setTotal_quantity(rs.getInt("total_quantity"));
-            admindetail.setStatus(rs.getString("products.status"));
-            admindetail.setCreated_at(rs.getTimestamp("inventories.date"));
+            AdminInventoryDetailed_fixed admindetail = new AdminInventoryDetailed_fixed();
+            admindetail.setId(rs.getInt("p.id"));
+            admindetail.setProduct_name(rs.getString("p.product_name"));
+            admindetail.setSell_quantity(rs.getInt("ifnull(xuat.sl_da_ban,0)"));
+            admindetail.setImported_quantity(rs.getInt("ifnull(nhap.sl_nhap,0)"));
             detailArrayList.add(admindetail);
         }
         return detailArrayList;

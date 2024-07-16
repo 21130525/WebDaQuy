@@ -110,8 +110,8 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Tình trạng</th>
+                    <th>Số lượng đã bán</th>
+                    <th>Số lượng nhập </th>
                 </tr>
                 </thead>
                 <tbody id="body">
