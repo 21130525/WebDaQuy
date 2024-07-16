@@ -55,11 +55,15 @@
                         </p>
                     </h6>
                     <div class="mt-3 d-flex justify-content-between">
-                        <a class="btn btn-primary btn-custom" href="#"
-                           style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Mua ngay</a>
-                        <a class="btn btn-dark btn-custom add-to-cart" href="#"
-                           data-id="<%=p.getId()%>" style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Giỏ
-                            hàng</a>
+                        <form action="<%=request.getContextPath()%>/order" method="Post" id="<%=p.getId()%>">
+                            <input id="ipPro" type="hidden" name="id" value="<%=p.getId()%>">
+                            <input id="numPro" type="hidden" name="num" value="1">
+                            <button id="btnBuy" class="btnBuy btn btn-primary btn-custom" type="button">Mua ngay</button>
+                        </form>
+                        <div>
+                            <a class="btn btn-dark btn-custom add-to-cart" href="#"
+                               data-id="<%=p.getId()%>" style="padding: 5px 10px;font-size: 15px;white-space: nowrap">Giỏ hàng</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,6 +75,68 @@
 <jsp:include page="../../footer.jsp"/>
 <script>
     $(document).ready(function () {
+        // nhap so luong san pham
+        $('.btnBuy').click(function (){
+            var button = this
+            Swal.fire({
+                title: 'Nhập số lượng sản phẩm',
+                input: 'number',
+                inputValue: 1,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                inputValidator: (value) => {
+                    if (!value || value < 1) {
+                        return 'Số lượng không hợp lệ';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var numProduct = parseInt(result.value);
+                    $(button).closest('form').find('#numPro').val(numProduct);
+                    // $(button).attr('type','submit');
+                    var idform = $(button).closest('form').attr('id');
+                    checkQuanlityProduct(idform, numProduct)
+                }
+            });
+        })
+        // kiem tra so luong san pham con trong kho
+        function checkQuanlityProduct(id, num){
+            var form = $('#'+id)
+            var productID = id;
+            var numProduct = num;
+            var data = {
+                numProduct : numProduct,
+                productID : productID
+            }
+            $.ajax({
+                url: '<%=request.getContextPath()%>/checkQuanlityProduct',
+                type: 'POST',
+                data: data,
+                success: function (resp) {
+                    var res = resp.num
+                    var notification = resp.notification
+                    // alert(notification)
+                    if(notification === 'ok'){
+                        form.submit()
+                    }else{
+                        swal.fire({
+                            title: 'Thông Báo',
+                            html: notification + '<br>Số lượng bạn có thể mua: ' + res,
+                        })
+                    }
+                },
+                error: function (){
+                    swal.fire({
+                        title: 'Lỗi',
+                        text: 'Đã xảy ra lỗi khi kiểm tra số lượng sản phẩm.',
+                        icon: 'error'
+                    });
+                }
+            })
+            return false;
+        }
+
         $(".add-to-cart").click(function (e) {
             e.preventDefault();
             var id = $(this).data("id");
@@ -80,15 +146,31 @@
                 data: {id: id},
                 success: function (response) {
                     if (response.status === "success") {
-                        alert("Sản phẩm đã được thêm vào giỏ hàng.");
+                        swal.fire({
+                            icon: 'success',
+                            title:'Thông báo',
+                            text:'Sản phẩm đã được thêm vào giỏ hàng.'
+                        })
                     } else if (response.status === "exists") {
-                        alert("Sản phẩm đã tồn tại trong giỏ hàng.");
+                        swal.fire({
+                            icon: 'info',
+                            title:'Thông báo',
+                            text:'Sản phẩm đã tồn tại trong giỏ hàng.'
+                        })
                     } else {
-                        alert("Có lỗi xảy ra, vui lòng thử lại.");
+                        swal.fire({
+                            icon: 'warning',
+                            title:'Thông báo',
+                            text:'Có lỗi xảy ra, vui lòng thử lại.'
+                        })
                     }
                 },
                 error: function () {
-                    alert("Có lỗi xảy ra, vui lòng thử lại.");
+                    swal.fire({
+                        icon: 'warning',
+                        title:'Thông báo',
+                        text:'Có lỗi xảy ra, vui lòng thử lại.'
+                    })
                 }
             });
         });
