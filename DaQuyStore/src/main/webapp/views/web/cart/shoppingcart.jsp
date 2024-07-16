@@ -112,22 +112,13 @@
         </tbody>
     </table>
 </div>
-
-
-</body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script>
-    $(document).ready(function (){
-        nav_active()
-    })
-    function nav_active() {
-        $('a.nav-link').removeClass('active')
-    }
-
+<div class="container">
+    <div class="row">
+        <button class="btn btn-warning"><a href="<%=request.getContextPath()%>/Category">TIẾP TỤC MUA SẮM</a></button>
+    </div>
+</div>
 <jsp:include page="/views/footer.jsp"/>
-</body>
+
 <script>
     $(document).ready(function () {
         // Xử lý tăng/giảm số lượng
@@ -147,7 +138,10 @@
                     var newQuantity = response.newQuantity;
                     var newTotal = response.newTotal;
                     $quantityInput.val(newQuantity);
-                    $('#totalPrice').text(newTotal.toFixed(2));
+                    $('#totalPrice').text(Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(newTotal));
                 },
                 error: function () {
                     alert('Có lỗi xảy ra, vui lòng thử lại.');
@@ -172,7 +166,11 @@
                     var newItemCount = response.newItemCount;
 
                     $row.remove();
-                    $('#totalPrice').text(newTotal.toFixed(2));
+                    $('#totalPrice').text(Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(newTotal));
+
                     $('#cartItemCount').text(newItemCount);
                 },
                 error: function () {
@@ -182,4 +180,5 @@
         });
     });
 </script>
+</body>
 </html>

@@ -21,8 +21,11 @@
 <%
     NumberFormat format = NumberFormat.getInstance(new Locale("vn", "VN"));
     ProductDao dao = new ProductDao(DAOConnection.getConnection());
-    Cart cart_list = (Cart) request.getSession().getAttribute("cart-list");
-
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+    List<Cart> cartProduct = dao.getCartProduct(cart_list);
+    if (cart_list != null) {
+        request.setAttribute("cart_list", cart_list);
+    }
 %>
 
 <!doctype html>
@@ -174,22 +177,16 @@
                 url: '<%=request.getContextPath()%>/AddToCartController',
                 type: 'GET',
                 data: {id: id},
-                success: function (data) {
-                    console.log(data.reponseCode)
-                    if (data.reponseCode === 200) {
+                success: function (response) {
+                    if (response.status === "success") {
                         alert("Sản phẩm đã được thêm vào giỏ hàng.");
-                        $("#quantitycart").each(function () {
-                            var quantity = $(this).text()
-                            console.log(quantity)
-                            $(this).text(parseInt(quantity) + 1)
-                        });
-
-                    } else if (data.reponseCode === 400) {
-                        alert("Sản phẩm không tồn tại");
+                    } else if (response.status === "exists") {
+                        alert("Sản phẩm đã tồn tại trong giỏ hàng.");
+                    } else {
+                        alert("Có lỗi xảy ra, vui lòng thử lại.");
                     }
                 },
                 error: function () {
-                    console.log(data.reponseCode)
                     alert("Có lỗi xảy ra, vui lòng thử lại.");
                 }
             });
