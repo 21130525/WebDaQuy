@@ -269,4 +269,15 @@ public class UserDAO extends AbsDAO<User> implements IDAO<User> {
 //        super.selectById("login","loginGoogle",ip);
         return users;
     }
+
+    public String getUserid(String email) throws SQLException {
+        String sql = "select id from users where email=?";
+        PreparedStatement pst = DAOConnection.getConnection().prepareStatement(sql);
+        pst.setString(1, email);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            id = rs.getString("id");
+        }
+        return id;
+    }
 }
