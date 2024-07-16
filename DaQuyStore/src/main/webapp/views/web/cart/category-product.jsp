@@ -7,19 +7,15 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.Locale" %>
-<%@ page import="java.text.NumberFormat" %><%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/19/2024
-  Time: 11:36 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="model.Category" %>
+<%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     NumberFormat format = NumberFormat.getInstance(new Locale("vn", "VN"));
     ProductDao dao = new ProductDao(DAOConnection.getConnection());
     List<Product> listProduct = dao.getAllProduct();
-
+    String name = (String) request.getAttribute("name");
     ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
     List<Cart> cartProduct = dao.getCartProduct(cart_list);
     if (cart_list != null) {
@@ -29,16 +25,20 @@
 %>
 <html>
 <head>
-    <title>Title</title>
-    <link href="<%=request.getContextPath()%>/css/cate.css" rel="stylesheet" type="text/html">
+    <title>DANH MỤC :<%=name%>
+    </title>
 </head>
 <body>
 <jsp:include page="../../header.jsp"/>
+<div class="text" style="text-align: center;margin-top: 15px">
+    <h3 style="color: #555555; ">DANH SÁCH SẢN PHẨM:<%=name.toUpperCase()%>
+    </h3>
+</div>
 <div class="container">
     <div class="row">
         <%
-                List<Product> list = (List<Product>) request.getAttribute("listA");
-                for (Product p : list) {
+            List<Product> listS = (List<Product>) request.getAttribute("listA");
+            for (Product p : listS) {
         %>
         <div class="col-md-3 my-3">
             <div class="card w-100" style="width: 18rem;">
@@ -74,7 +74,6 @@
         $(".add-to-cart").click(function (e) {
             e.preventDefault();
             var id = $(this).data("id");
-
             $.ajax({
                 url: '<%=request.getContextPath()%>/AddToCartController',
                 type: 'GET',

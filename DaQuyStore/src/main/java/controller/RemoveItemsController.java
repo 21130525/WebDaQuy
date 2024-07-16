@@ -23,22 +23,25 @@ public class RemoveItemsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         int id = Integer.parseInt(request.getParameter("id"));
+        PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession();
         ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
 
-        if (cart_list != null) {
+        if (cart_list == null) {
+            cart_list = new ArrayList<>();
+        }else{
             cart_list.removeIf(c -> c.getId() == id);
         }
 
-        double newTotal = 0;
+        double newTotal =0;
         int newItemCount = 0;
         for (Cart c : cart_list) {
             newTotal += c.getPrice() * c.getQuantity();
             newItemCount += c.getQuantity();
         }
 
-        PrintWriter out = response.getWriter();
+
         out.print("{\"newTotal\": " + newTotal + ", \"newItemCount\": " + newItemCount + "}");
         out.flush();
     }
