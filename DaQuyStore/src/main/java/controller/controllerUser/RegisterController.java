@@ -112,7 +112,6 @@ public class RegisterController extends HttpServlet {
         request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
         String code = registerService.createActivationCode(username,password,email,"login web",ipAddress);
         sendEmail(request,response,code,email);
-
     }
 
     /*
