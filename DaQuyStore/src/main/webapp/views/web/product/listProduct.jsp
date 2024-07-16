@@ -94,12 +94,13 @@ Created by IntelliJ IDEA.
                             -12%</p>
                     </a>
                     <div class="d-flex justify-content-between border-0 position-absolute bottom-0 start-0" style="width: 100%;">
-                        <form action="<%=request.getContextPath()%>/order" method="Post">
-                            <input id="inputNum" type="hidden" name="id" value="<%=p.getId()%>">
-                            <input type="hidden" name="num" value="1">
+                        <form action="<%=request.getContextPath()%>/order" method="Post" id="<%=p.getId()%>" >
+                            <input id="ipPro" type="hidden" name="id" value="<%=p.getId()%>">
+                            <input id="numPro" type="hidden" name="num" value="1">
                             <button id="btnBuy" class="btnBuy btn rounded-0 btn-d-none p-0 fw-bold" type="button">mua</button>
                         </form>
-                        <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
+                        <a  class="btn rounded-0 btn-d-none p-0 fw-bold add-to-cart"  data-id="<%=p.getId()%>"
+                            href="#">gio hang</a>
                     </div>
                 </div>
                 <div class="card-body pt-1">
@@ -123,6 +124,8 @@ Created by IntelliJ IDEA.
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <script>
+    $(document).ready(function () {
+    // nhap so luong san pham
     $('.btnBuy').click(function (){
         var button = this
         Swal.fire({
@@ -139,12 +142,88 @@ Created by IntelliJ IDEA.
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                var newQuantity = parseInt(result.value);
-                $('#inputNum').val(newQuantity);
-                $(button).attr('type','submit');
-                $(button).closest('form').submit();
+                var numProduct = parseInt(result.value);
+                $(button).closest('form').find('#numPro').val(numProduct);
+                // $(button).attr('type','submit');
+                var idform = $(button).closest('form').attr('id');
+                checkQuanlityProduct(idform, numProduct)
             }
         });
     })
+    // kiem tra so luong san pham con trong kho
+    function checkQuanlityProduct(id, num){
+        var form = $('#'+id)
+        var productID = id;
+        var numProduct = num;
+        var data = {
+            numProduct : numProduct,
+            productID : productID
+        }
+        $.ajax({
+            url: '<%=request.getContextPath()%>/checkQuanlityProduct',
+            type: 'POST',
+            data: data,
+            success: function (resp) {
+                var res = resp.num
+                var notification = resp.notification
+                // alert(notification)
+                if(notification === 'ok'){
+                    form.submit()
+                }else{
+                    swal.fire({
+                        title: 'Thông Báo',
+                        html: notification + '<br>Số lượng bạn có thể mua: ' + res,
+                    })
+                }
+            },
+            error: function (){
+                swal.fire({
+                    title: 'Lỗi',
+                    text: 'Đã xảy ra lỗi khi kiểm tra số lượng sản phẩm.',
+                    icon: 'error'
+                });
+            }
+        })
+        return false;
+    }
+    // them gio hang
+    $(".add-to-cart").click(function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '<%=request.getContextPath()%>/AddToCartController',
+            type: 'GET',
+            data: {id: id},
+            success: function (response) {
+                if (response.status === "success") {
+                    swal.fire({
+                        icon: 'success',
+                        title:'Thông báo',
+                        text:'Sản phẩm đã được thêm vào giỏ hàng.'
+                    })
+                } else if (response.status === "exists") {
+                    swal.fire({
+                        icon: 'info',
+                        title:'Thông báo',
+                        text:'Sản phẩm đã tồn tại trong giỏ hàng.'
+                    })
+                } else {
+                    swal.fire({
+                        icon: 'warning',
+                        title:'Thông báo',
+                        text:'Có lỗi xảy ra, vui lòng thử lại.'
+                    })
+                }
+            },
+            error: function () {
+                swal.fire({
+                    icon: 'warning',
+                    title:'Thông báo',
+                    text:'Có lỗi xảy ra, vui lòng thử lại.'
+                })
+            }
+        });
+    });
+    });
 </script>
 </section>

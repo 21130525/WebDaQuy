@@ -325,7 +325,7 @@ public class ProductAdminDAO extends AbsAdminDAO<AdminProduct> {
 
     //hàm thêm dữ liệu sản phẩm
     public void insertProduct(AdminProduct product) throws SQLException {
-        String information_insert = "/color:" + product.getColor() + "," + "weight:" + product.getWeight() + "," + "size:" + product.getSize() + "," + "opacity:" + product.getOpactity() + "," + "cutting_form:" + product.getCutting_form()+"/";
+        String information_insert = "/color:" + product.getColor() + ";" + "weight:" + product.getWeight() + ";" + "size:" + product.getSize() + ";" + "opacity:" + product.getOpactity() + ";" + "cutting_form:" + product.getCutting_form()+"/";
         String sql = "Insert into products(id,category_id,product_name,price,status,description,information,created_at,updated_at,status_deleted) values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pr = DAOConnection.getConnection().prepareStatement(sql);
         pr.setInt(1,getMaxIDProduct()+1);

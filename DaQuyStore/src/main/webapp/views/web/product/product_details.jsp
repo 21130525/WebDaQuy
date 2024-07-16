@@ -159,17 +159,15 @@
 
             <div class="row thanhToan">
 
-                <button class="col me-2 btn btn-outline-warning fw-bold">
-                    Thêm vào giỏ
-
+                <button class="col me-2 btn btn-outline-warning fw-bold add-to-cart" data-id="<%=p.getId()%>">
+                    Giỏ hàng
                 </button>
-                <form class="col"  action="order" method="post">
-                    <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
-                    <input id="inputNum" type="hidden" name="num" value="1">
-                    <button id="btnBuy" class="w-100  btn btn-outline-info fw-bold"  type="button">
-                        Mua
-                    </button>
+                <form class="col" action="<%=request.getContextPath()%>/order" method="Post" id="<%=p.getId()%>">
+                    <input id="ipPro" type="hidden" name="id" value="<%=p.getId()%>">
+                    <input id="numPro" type="hidden" name="num" value="1">
+                    <button id="btnBuy" class="btnBuy w-100  btn btn-outline-info fw-bold" type="button">Mua ngay</button>
                 </form>
+
             </div>
         </div>
     </div>
@@ -223,29 +221,132 @@
         var largeImage = document.getElementById('largeImage');
         largeImage.style.display = 'none';
     }
-    $('#btnBuy').click(function (){
 
-        Swal.fire({
-            title: 'Nhập số lượng sản phẩm',
-            input: 'number',
-            inputValue: 1,
-            showCancelButton: true,
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
-            inputValidator: (value) => {
-                if (!value || value < 1) {
-                    return 'Số lượng không hợp lệ';
+    $(document).ready(function () {
+        // nhap so luong san pham
+        $('.btnBuy').click(function (){
+            var button = this
+            Swal.fire({
+                title: 'Nhập số lượng sản phẩm',
+                input: 'number',
+                inputValue: 1,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                inputValidator: (value) => {
+                    if (!value || value < 1) {
+                        return 'Số lượng không hợp lệ';
+                    }
                 }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var numProduct = parseInt(result.value);
+                    $(button).closest('form').find('#numPro').val(numProduct);
+                    // $(button).attr('type','submit');
+                    var idform = $(button).closest('form').attr('id');
+                    checkQuanlityProduct(idform, numProduct)
+                }
+            });
+        })
+        // kiem tra so luong san pham con trong kho
+        function checkQuanlityProduct(id, num){
+            var form = $('#'+id)
+            var productID = id;
+            var numProduct = num;
+            var data = {
+                numProduct : numProduct,
+                productID : productID
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var newQuantity = parseInt(result.value);
-                $('#inputNum').val(newQuantity);
-                $('#btnBuy').attr('type','submit');
-                $(this).closest('form').submit();
-            }
+            $.ajax({
+                url: '<%=request.getContextPath()%>/checkQuanlityProduct',
+                type: 'POST',
+                data: data,
+                success: function (resp) {
+                    var res = resp.num
+                    var notification = resp.notification
+                    // alert(notification)
+                    if(notification === 'ok'){
+                        form.submit()
+                    }else{
+                        swal.fire({
+                            title: 'Thông Báo',
+                            text:notification + ', ' +
+                                'Số lượng bạn có thể mua:'+ res,
+                        })
+                    }
+                },
+                error: function (){
+                    swal.fire({
+                        title: 'Lỗi',
+                        text: 'Đã xảy ra lỗi khi kiểm tra số lượng sản phẩm.',
+                        icon: 'error'
+                    });
+                }
+            })
+            return false;
+        }
+        // them gio hang
+        $(".add-to-cart").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $.ajax({
+                url: '<%=request.getContextPath()%>/checkQuanlityProduct',
+                type:'POST',
+                data:{
+                    productID : id,
+                    numProduct : 1,
+                },
+                success: function (resp) {
+                    var res = resp.num
+                    var notification = resp.notification
+                    // alert(notification)
+                    if(notification === 'ok'){
+                        $.ajax({
+                            url: '<%=request.getContextPath()%>/AddToCartController',
+                            type: 'GET',
+                            data: {id: id},
+                            success: function (response) {
+                                if (response.status === "success") {
+                                    swal.fire({
+                                        icon: 'success',
+                                        title: 'Thông báo',
+                                        text: 'Sản phẩm đã được thêm vào giỏ hàng.'
+                                    })
+                                } else if (response.status === "exists") {
+                                    swal.fire({
+                                        icon: 'info',
+                                        title: 'Thông báo',
+                                        text: 'Sản phẩm đã tồn tại trong giỏ hàng.'
+                                    })
+                                } else {
+                                    swal.fire({
+                                        icon: 'warning',
+                                        title: 'Thông báo',
+                                        text: 'Có lỗi xảy ra, vui lòng thử lại.'
+                                    })
+                                }
+                            },
+                            error: function () {
+                                swal.fire({
+                                    icon: 'warning',
+                                    title: 'Thông báo',
+                                    text: 'Có lỗi xảy ra, vui lòng thử lại.'
+                                })
+                            }
+                        });
+                    }else{
+                        swal.fire({
+                            title: 'Thông Báo',
+                            html: notification + '<br>Số lượng bạn có thể mua: ' + res,
+                        })
+                    }
+                },
+                error: function (){
+
+                }
+            });
         });
-    })
+    });
 </script>
 </body>
 </html>

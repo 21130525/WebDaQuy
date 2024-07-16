@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import service.manageUser.ServiceIPAddress;
 import service.manageUser.security.EncryptAndDencrypt;
-import service.manageUser.registerAndLogin.LoginService;
 import service.manageUser.registerAndLogin.RegisterService;
 
 import javax.mail.*;
@@ -56,8 +55,6 @@ public class RegisterController extends HttpServlet {
             // Xử lý khi không phân biệt được URL
         }
     }
-
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -112,7 +109,6 @@ public class RegisterController extends HttpServlet {
         request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
         String code = registerService.createActivationCode(username,password,email,"login web",ipAddress);
         sendEmail(request,response,code,email);
-
     }
 
     /*
@@ -177,6 +173,7 @@ public class RegisterController extends HttpServlet {
             servletRequest.setAttribute("announced", announced);
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
             requestDispatcher.forward(servletRequest, servletResponse);
+            return;
         }
 
     }

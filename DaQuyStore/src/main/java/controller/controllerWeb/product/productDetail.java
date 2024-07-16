@@ -18,12 +18,13 @@ public class productDetail extends HttpServlet {
 //        String id = req.getParameter("id");
         //lấy thông tin thông qua tên sản phẩm
         String id=req.getParameter("id");
-        int product_id=Integer.parseInt(id);
 
         ProductDao dao = ProductDao.getInstance();
         Product p;
 
-        try { p = dao.selectById(id,"get product",req.getRemoteAddr());
+        try {
+            p = dao.selectById(id,"get product",req.getRemoteAddr());
+            System.out.println(p);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

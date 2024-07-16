@@ -22,6 +22,8 @@ public class OrderDao extends AbsDAO<Order> implements IDAO<Order>{
         return instance;
     }
     Connection connection = DAOConnection.getConnection();
+
+
     @Override
     public boolean insert(Order order, String action, String ipAddress) throws SQLException {
 

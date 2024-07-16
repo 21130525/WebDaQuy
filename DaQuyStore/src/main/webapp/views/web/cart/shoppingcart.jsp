@@ -61,7 +61,10 @@
 <div class="container">
     <div class="d-flex py-3">
         <h3>Tổng tiền: <span id="totalPrice"><%= cart_list != null ? format.format(total) + "đ" : 0 + "đ" %></span></h3>
-        <a class="mx-3 btn btn-primary" href="#">Thanh toán</a>
+        <form method="post" action="<%=request.getContextPath()%>/createOrderFromCart">
+            <button type="submit" class="mx-3 btn btn-primary" href="#">Thanh toán</button>
+        </form>
+
     </div>
     <table class="table table-light">
         <thead>
@@ -178,6 +181,8 @@
                 }
             });
         });
+
+
     });
 </script>
 </body>
