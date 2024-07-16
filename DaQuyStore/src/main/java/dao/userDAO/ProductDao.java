@@ -474,6 +474,32 @@ public class ProductDao implements IDAO<Product> {
         }
         return products;
     }
+//    kiem tra so luong san pham con ton tai
+    public  int checkQualityProduct(int id) throws SQLException {
+        String sql = "SELECT p.id, ifnull(xuat.sl_da_ban,0) as sl_xuat , ifnull(nhap.sl_nhap,0) as sl_ban FROM products p\n" +
+                "left JOIN (SELECT  id.product_id as op,ifnull(SUM(id.quantity ),0)  AS sl_nhap\n" +
+                "\tFROM inventories i\n" +
+                "\tJOIN inventory_detail id ON i.id=id.id\n" +
+                "\tGROUP BY id.product_id) AS nhap \n" +
+                "\tON p.id = nhap.op\n" +
+                "left JOIN (SELECT d.product_id AS sa,sum(d.quantity_total) AS sl_da_ban  \n" +
+                "\tFROM orders o \n" +
+                "\tJOIN order_details d ON o.id = d.order_id\n" +
+                "\tGROUP BY d.product_id) AS xuat\n" +
+                "\tON p.id = xuat.sa\n" +
+                "\tWHERE p.id= ?\n";
+        PreparedStatement ps = DAOConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int slNhap = rs.getInt("sl_ban");
+            int slDaBan = rs.getInt("sl_xuat");
+            int res = slNhap - slDaBan ;
+            return res;
+        }
+        return 0;
+    }
+
 }
 
 

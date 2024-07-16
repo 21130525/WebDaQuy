@@ -283,7 +283,6 @@
                                          for(Map.Entry<Product,Integer> entry : listOrder.entrySet()){%>
                                         <%--product--%>
                                         <% Product p = entry.getKey(); %>
-                                        <% System.out.println(p);%>
                                         <div class="d-flex justify-content-between" id="product_<%=p.getId()%>">
 
                                             <div class="d-flex flex-row align-items-center">
