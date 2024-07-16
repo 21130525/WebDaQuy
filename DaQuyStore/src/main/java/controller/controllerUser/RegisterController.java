@@ -7,6 +7,7 @@ import java.util.Properties;
 import controller.controllerUser.google.GoogleInfo;
 import controller.controllerUser.google.TokenGoogle;
 
+import dao.userDAO.UserDAO;
 import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
@@ -190,6 +191,8 @@ public class RegisterController extends HttpServlet {
         // email: username; id: password;
         User u = new User(user.getEmail(),encryptAndDencrypt.encrypt(user.getId()),user.getEmail(),"google",user.getPicture(),user.getFamily_name()+" "+user.getGiven_name());
         if(registerService.insertUser(u,"register account google",ipAddress)){
+            String id = UserDAO.getInstance().getUserid(u.getEmail());
+            u.setId(id);
             session.setAttribute("user", u);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/index.jsp");
             requestDispatcher.forward(req, resp);
@@ -213,5 +216,6 @@ public class RegisterController extends HttpServlet {
         String response = Request.Get(link).execute().returnContent().asString();
         return new Gson().fromJson(response, GoogleInfo.class);
     }
+
 
 }
