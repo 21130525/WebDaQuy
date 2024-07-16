@@ -99,7 +99,8 @@ Created by IntelliJ IDEA.
                             <input id="numPro" type="hidden" name="num" value="1">
                             <button id="btnBuy" class="btnBuy btn rounded-0 btn-d-none p-0 fw-bold" type="button">mua</button>
                         </form>
-                        <a class="btn rounded-0 btn-d-none p-0 fw-bold" href="#">gio hang</a>
+                        <a  class="btn rounded-0 btn-d-none p-0 fw-bold add-to-cart"  data-id="<%=p.getId()%>"
+                            href="#">gio hang</a>
                     </div>
                 </div>
                 <div class="card-body pt-1">
@@ -123,7 +124,8 @@ Created by IntelliJ IDEA.
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <script>
-
+    $(document).ready(function () {
+    // nhap so luong san pham
     $('.btnBuy').click(function (){
         var button = this
         Swal.fire({
@@ -148,6 +150,7 @@ Created by IntelliJ IDEA.
             }
         });
     })
+    // kiem tra so luong san pham con trong kho
     function checkQuanlityProduct(id, num){
         var form = $('#'+id)
         var productID = id;
@@ -169,8 +172,7 @@ Created by IntelliJ IDEA.
                 }else{
                     swal.fire({
                         title: 'Thông Báo',
-                        text:notification + ', ' +
-                            'Số lượng bạn có thể mua:'+ res,
+                        html: notification + '<br>Số lượng bạn có thể mua: ' + res,
                     })
                 }
             },
@@ -184,5 +186,44 @@ Created by IntelliJ IDEA.
         })
         return false;
     }
+    // them gio hang
+    $(".add-to-cart").click(function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '<%=request.getContextPath()%>/AddToCartController',
+            type: 'GET',
+            data: {id: id},
+            success: function (response) {
+                if (response.status === "success") {
+                    swal.fire({
+                        icon: 'success',
+                        title:'Thông báo',
+                        text:'Sản phẩm đã được thêm vào giỏ hàng.'
+                    })
+                } else if (response.status === "exists") {
+                    swal.fire({
+                        icon: 'info',
+                        title:'Thông báo',
+                        text:'Sản phẩm đã tồn tại trong giỏ hàng.'
+                    })
+                } else {
+                    swal.fire({
+                        icon: 'warning',
+                        title:'Thông báo',
+                        text:'Có lỗi xảy ra, vui lòng thử lại.'
+                    })
+                }
+            },
+            error: function () {
+                swal.fire({
+                    icon: 'warning',
+                    title:'Thông báo',
+                    text:'Có lỗi xảy ra, vui lòng thử lại.'
+                })
+            }
+        });
+    });
+    });
 </script>
 </section>
