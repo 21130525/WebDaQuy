@@ -21,7 +21,6 @@ public class CateController extends HttpServlet {
         resp.setContentType("html/css;charset=UTF8");
 
         String indexPage = req.getParameter("index");
-        System.out.println(indexPage);
         int index;
         if (indexPage==null) {
             index = 1;

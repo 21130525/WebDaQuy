@@ -11,6 +11,7 @@
 <%@ page import="model.Category" %>
 <%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     NumberFormat format = NumberFormat.getInstance(new Locale("vn", "VN"));
     ProductDao dao = new ProductDao(DAOConnection.getConnection());
@@ -27,6 +28,7 @@
 <head>
     <title>DANH MỤC :<%=name%>
     </title>
+    <link href="<%=request.getContextPath()%>/css/cate.css" rel="stylesheet" type="text/html">
 </head>
 <body>
 <jsp:include page="../../header.jsp"/>
@@ -34,10 +36,10 @@
     <h3 style="color: #555555; ">DANH SÁCH SẢN PHẨM:<%=name.toUpperCase()%>
     </h3>
 </div>
-<div class="container">
+<div class="container" id="product-list">
     <div class="row">
         <%
-            List<Product> listS = (List<Product>) request.getAttribute("listA");
+            List<Product> listS = (List<Product>) request.getAttribute("listCat");
             for (Product p : listS) {
         %>
         <div class="col-md-3 my-3">
@@ -66,6 +68,23 @@
         </div>
         <% }
         %>
+    </div>
+    <!-- Phân trang -->
+    <%
+        Integer id = (Integer) request.getAttribute("id");
+//        Category c = new Category();
+    %>
+    <div class="text-center">
+        <nav aria-label="Page">
+            <ul class="pagination justify-content-center">
+                <c:forEach var="i" begin="1" end="${ endPage }">
+                    <li class="${status == i?"active":""}">
+                        <a class="page-link pagination-link"
+                           href="<%= request.getContextPath() %>/ProductByCategory?name=<%=name%>&id=<%=id%>&indexP=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </nav>
     </div>
 </div>
 <jsp:include page="../../footer.jsp"/>
