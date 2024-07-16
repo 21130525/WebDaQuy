@@ -650,22 +650,3 @@ public class ProductDao implements IDAO<Product> {
     }
 
 }
-
-
-    public static void main(String[] args) throws SQLException {
-//        System.out.println( (new ProductDao()).selectAll());
-//        System.out.println(new ProductDao().getProductByCategory("Zircon"));
-//        System.out.println(new ProductDao().getListProductForSearch("Đôi"));
-//        System.out.println(new ProductDao().getListProductForEachPage("Đôi", 1));
-//        System.out.println(new ProductDao().getAllProduct());
-//        System.out.println(new ProductDao().getTotalProduct());
-        ProductDao dao = new ProductDao();
-        List<Product> list = dao.pagingProduct(12);
-        for (Product p : list){
-            System.out.println(p);
-        }
-        System.out.println(new ProductDao().getTotalProductOfCate(3));
-    }
-
-
-}
