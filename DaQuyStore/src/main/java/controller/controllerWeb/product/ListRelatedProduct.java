@@ -32,7 +32,7 @@ public class ListRelatedProduct extends HttpServlet {
         for (Product p : list) {
             out.println(" <div class=\"product col card  border-0 d-flex align-items-center justify-content-center m-0 p-0 \">\n" +
                     "                <div class=\"position-relative\">\n" +
-                    "                    <a href=\"#chitiet\">\n" +
+                    "                    <a href=\""+req.getContextPath()+"/productDetail?id="+p.getId()+"\">\n" +
                     "                        <img class=\"card-img-top border-2 \"\n" +
                     "                             src=\""+p.getImg_main()+"\"\n" +
                     "                             alt=\"anh\">\n" +
