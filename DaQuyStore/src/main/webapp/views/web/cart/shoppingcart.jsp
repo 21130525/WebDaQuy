@@ -1,11 +1,11 @@
-<%@ page import="model.User" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Cart" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.userDAO.ProductDao" %>
 <%@ page import="connector.DAOConnection" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="model.Cart" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: ngoke
@@ -25,7 +25,7 @@
     if (cart_list != null) {
         ProductDao dao = new ProductDao(DAOConnection.getConnection());
         cartProduct = dao.getCartProduct(cart_list);
-         total = dao.getTotalCartPrice(cart_list);
+        total = dao.getTotalCartPrice(cart_list);
         request.setAttribute("cart_list", cart_list);
         request.setAttribute("total", total);
     }
@@ -35,18 +35,6 @@
     <title>Giỏ hàng</title>
     <style type="text/css">
         .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            width: 20%;
-        }
-
-        .form-control {
-            width: 20%;
             text-align: center;
         }
 
@@ -112,9 +100,18 @@
         </tbody>
     </table>
 </div>
+<div class="container">
+    <div class="row">
+        <button class="btn btn-warning"><a href="<%=request.getContextPath()%>/Category">TIẾP TỤC MUA SẮM</a></button>
+    </div>
+</div>
+
 <jsp:include page="/views/footer.jsp"/>
-</body>
 <script>
+
+</script>
+<script>
+
     $(document).ready(function () {
         // Xử lý tăng/giảm số lượng
         $('.change-quantity').on('click', function (e) {
@@ -132,8 +129,13 @@
                 success: function (response) {
                     var newQuantity = response.newQuantity;
                     var newTotal = response.newTotal;
+
                     $quantityInput.val(newQuantity);
-                    $('#totalPrice').text(newTotal.toFixed(2));
+
+                    $('#totalPrice').text(Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(newTotal));
                 },
                 error: function () {
                     alert('Có lỗi xảy ra, vui lòng thử lại.');
@@ -156,9 +158,13 @@
                 success: function (response) {
                     var newTotal = response.newTotal;
                     var newItemCount = response.newItemCount;
-
                     $row.remove();
-                    $('#totalPrice').text(newTotal.toFixed(2));
+
+                    $('#totalPrice').text(Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(newTotal));
+
                     $('#cartItemCount').text(newItemCount);
                 },
                 error: function () {
@@ -168,4 +174,5 @@
         });
     });
 </script>
+</body>
 </html>
