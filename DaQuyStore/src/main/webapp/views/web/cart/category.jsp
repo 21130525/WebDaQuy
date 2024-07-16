@@ -107,7 +107,7 @@
                     for (Category category : list) {
                 %>
                 <div class="col-6 col-md-2 image-container">
-                    <a href="<%=request.getContextPath()%>/ProductByCategory?name=<%=category.getCategory_name()%>">
+                    <a href="<%=request.getContextPath()%>/ProductByCategory?name=<%=category.getCategory_name()%>&id=<%=category.getId()%>">
                         <img class="category-image" src="<%=category.getImg()%>" alt="">
                         <p class="category-name"><%= category.getCategory_name()%>
                         </p>
@@ -119,7 +119,7 @@
     </section>
 </div>
 <div class="cate">
-    <div class="container-fluid">
+    <div class="container-fluid" id="product-list">
         <h3 style="text-align: center; font-size:50px;font-weight: bold ">Danh sách sản phẩm</h3>
         <div class="row">
             <% List<Product> listProduct = (List<Product>) request.getAttribute("listP");
@@ -161,8 +161,9 @@
             <nav aria-label="Page">
                 <ul class="pagination justify-content-center">
                     <c:forEach var="i" begin="1" end="${ endP }">
-                        <li class="${tag == i?"active":""}"><a class="page-link"
-                                                               href="Category?index=${i}">${i}</a>
+                        <li class="${tag == i?"active":""}">
+                            <a class="page-link pagination-link"
+                               href="<%= request.getContextPath() %>/Category?id=${i}&index=${i}">${i}</a>
                         </li>
                     </c:forEach>
                 </ul>
@@ -272,6 +273,32 @@
                         title:'Thông báo',
                         text:'Có lỗi xảy ra, vui lòng thử lại.'
                     })
+                }
+            });
+        });
+        $(".pagination-link").click(function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+            var url = $(this).attr("href");
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    // Cập nhật phần danh sách sản phẩm
+                    var productListHtml = $(response).find("#product-list .row").html();
+                    $("#product-list .row").html(productListHtml);
+
+                    // Đánh dấu chỉ mục trang hiện tại là active
+                    $(".pagination-link").parent().removeClass("active"); // Xóa active class khỏi tất cả các thẻ <li>
+                    $(e.target).parent().addClass("active"); // Thêm active class vào thẻ <li> đã click
+
+                    // Cuộn trang lên đầu
+                    $('html, body').animate({
+                        scrollTop: $("#product-list").offset().top
+                    }, 500); // Thời gian cuộn là 500ms
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra, vui lòng thử lại.");
                 }
             });
         });
