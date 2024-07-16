@@ -115,17 +115,17 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/sendmail">Liên
-                        hệ</a>
+                    <a class="nav-link" aria-current="page"
+                       href="${pageContext.request.contextPath}/sendmail">Liên hệ</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/policy.jsp">Chính
-                        sách</a>
+                    <a class="nav-link" aria-current="page"
+                       href="<%=request.getContextPath()%>/views/policy.jsp">Chính sách</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/views/about.jsp">Giới
-                        thiệu</a>
+                    <a class="nav-link" aria-current="page"
+                       href="<%=request.getContextPath()%>/views/about.jsp">Giới thiệu</a>
                 </li>
             </ul>
             <!-- search -->

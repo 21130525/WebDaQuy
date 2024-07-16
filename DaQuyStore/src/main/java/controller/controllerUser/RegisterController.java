@@ -103,11 +103,11 @@ public class RegisterController extends HttpServlet {
     * đăng ký tài khoản trên web
     * */
     private void registerWeb(HttpServletRequest request, HttpServletResponse response,String username,String password,String email) throws ServletException, IOException, SQLException {
-        HttpSession session = request.getSession(false);
-        checkRegister(request, response, username, email);
         String ipAddress = ServiceIPAddress.convertToIPv4(request.getRemoteAddr());
         request.getRequestDispatcher("/notificationThenRegister").forward(request,response);
+
         String code = registerService.createActivationCode(username,password,email,"login web",ipAddress);
+
         sendEmail(request,response,code,email);
     }
 
@@ -173,7 +173,6 @@ public class RegisterController extends HttpServlet {
             servletRequest.setAttribute("announced", announced);
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/views/login/register.jsp");
             requestDispatcher.forward(servletRequest, servletResponse);
-            return;
         }
 
     }
